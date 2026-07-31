@@ -2,21 +2,24 @@
 #include <string>
 
 #include "Character_Creator.h"
-#include "Player.h"
 #include "Job_Selection.h"
-using namespace std;
+#include "JYJ.h"
 
 Player* Character_Creator()
 {
-	const int SIZE = 7;
-	int stat[SIZE] = {100, 100, 20, 20, 20, 20, 20};
+    std::string name;
 
-	string name;
+    std::cout << "캐릭터의 이름을 정해주세요: ";
+    std::cin >> name;
 
-	cout << "캐릭터의 이름을 정해주세요: ";
+    int jobChoice = Job_Selection();
 
-	cin >> name;
+    switch (jobChoice)
+    {
+    case 1:
+        return new JYJ(name);
 
-	return Job_Selection();
-
+    default:
+        return nullptr;
+    }
 }

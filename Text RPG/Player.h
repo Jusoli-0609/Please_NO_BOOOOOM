@@ -21,17 +21,35 @@ protected:
     int maxexp;
     int exp;
 
-public:
-    Player(const std::string& name, const int stat[]);
+    void Set_Start_Stat(
+        int hp,
+        int mp,
+        int atk,
+        int def,
+        int ap,
+        int sne,
+        int agi
+    );
 
+    int Calculate_Damage(
+        float atkRatio,
+        float defRatio,
+        float hpRatio,
+        float mpRatio,
+        float sneRatio,
+        float agiRatio,
+        int targetDef
+    ) const;
+
+public:
+    Player(const std::string& name);
     virtual ~Player() {}
 
-    // 직업마다 구현
-    virtual void attack(Monster* monster) = 0;
-
-    //==========================
-    // 기존 함수
-    //==========================
+    virtual void Attack(Monster* monster) = 0;
+    virtual void Skill1(Monster* monster) = 0;
+    virtual void Skill2(Monster* monster) = 0;
+    virtual void Skill3(Monster* monster) = 0;
+    virtual void Groggy_Attack(Monster* monster) = 0;
 
     void Print_Status() const;
 
@@ -47,6 +65,7 @@ public:
     int Get_SNE() const;
     int Get_AGI() const;
     int Get_Exp() const;
+    int Get_MaxExp() const;
 
     void Set_Hp(int hp);
     void Set_Mp(int mp);
@@ -57,71 +76,42 @@ public:
     void Set_AGI(int agi);
     void Set_Level(int level);
     void Set_Exp(int exp);
+    void Set_MaxExp(int maxexp);
 
     void Gain_Exp(int amount);
     void Level_Up();
 
-    //==========================
-    // Battle_System 호환 함수
-    //==========================
+    // Battle_System 및 기존 조원 코드 호환용 함수
+    std::string getName() const;
+    std::string getJob() const;
 
-    std::string getName() const
-    {
-        return Get_Name();
-    }
+    int getLevel() const;
+    int getHp() const;
+    int getHP() const;
+    int getMp() const;
+    int getMP() const;
+    int getPower() const;
+    int getAtk() const;
+    int getDefence() const;
+    int getDef() const;
+    int getAp() const;
+    int getSne() const;
+    int getAgi() const;
+    int getExp() const;
+    int getMaxExp() const;
 
-    std::string getJob() const
-    {
-        return Get_Job();
-    }
-
-    int getHp() const
-    {
-        return Get_Hp();
-    }
-
-    int getMp() const
-    {
-        return Get_Mp();
-    }
-
-    int getPower() const
-    {
-        return Get_ATK();
-    }
-
-    int getDefence() const
-    {
-        return Get_DEF();
-    }
-
-    int getLevel() const
-    {
-        return Get_Level();
-    }
-
-    void setHp(int value)
-    {
-        Set_Hp(value);
-    }
-
-    void setMp(int value)
-    {
-        Set_Mp(value);
-    }
-
-    void setPower(int value)
-    {
-        Set_ATK(value);
-    }
-
-    void setDefence(int value)
-    {
-        Set_DEF(value);
-    }
-
-    void printPlayerStatus() const
-    {
-        Print_Status();
-    }
+    void setHp(int hp);
+    void setHP(int hp);
+    void setMp(int mp);
+    void setMP(int mp);
+    void setPower(int atk);
+    void setAtk(int atk);
+    void setDefence(int def);
+    void setDef(int def);
+    void setAp(int ap);
+    void setSne(int sne);
+    void setAgi(int agi);
+    void setLevel(int level);
+    void setExp(int exp);
+    void setMaxExp(int maxexp);
 };
