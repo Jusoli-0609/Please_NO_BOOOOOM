@@ -9,7 +9,7 @@ struct Elite_Question
 {
 	std::string question;
 	std::string choices[4];
-	int correct_Answer;
+	int correct_Answer = 1;
 };
 
 struct Tutor_Dialogue
@@ -64,6 +64,8 @@ private:
 	Elite_Question Get_Elite_Question(Chapter_Type chapter_Type) const;
 
 	bool Run_Elite_Quiz(Monster& elite_Monster);
+
+	bool Run_Elite_Question(const Elite_Question& elite_Question);
 
 	void Get_Current_Chapter_Monsters(Monster_Type monster_Types[]) const;
 

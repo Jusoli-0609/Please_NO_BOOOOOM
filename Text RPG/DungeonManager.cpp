@@ -527,83 +527,222 @@ bool Dungeon_Manager::Check_Elite_Monster_Appearance() const
 
 Elite_Question Dungeon_Manager::Get_Elite_Question(Chapter_Type chapter_Type) const
 {
-	Elite_Question elite_Question;
+	Elite_Question elite_Questions[3];
 
 	switch (chapter_Type)
 	{
 	case Chapter_Type::VARIABLE_CONDITION_FOREST:
 	{
-		elite_Question.question = "정답은 2";
-		elite_Question.choices[0] = "0";
-		elite_Question.choices[1] = "2";
-		elite_Question.choices[2] = "0";
-		elite_Question.choices[3] = "0";
-		elite_Question.correct_Answer = 2;
+		elite_Questions[0].question = "다음 중 정수값을 저장하는 자료형은 무엇인가?";
+
+		elite_Questions[0].choices[0] = "int";
+		elite_Questions[0].choices[1] = "bool";
+		elite_Questions[0].choices[2] = "if";
+		elite_Questions[0].choices[3] = "while";
+
+		elite_Questions[0].correct_Answer = 1;
+
+
+		elite_Questions[1].question =
+			"다음 코드에서 출력되는 결과는 무엇인가?\n"
+			"int number = 10;\n"
+			"if (number > 5)\n"
+			"{\n"
+			"\tcout << \"통과\";\n"
+			"}";
+
+		elite_Questions[1].choices[0] = "아무것도 출력되지 않음";
+		elite_Questions[1].choices[1] = "통과";
+		elite_Questions[1].choices[2] = "10";
+		elite_Questions[1].choices[3] = "오류 발생";
+
+		elite_Questions[1].correct_Answer = 2;
+
+
+		elite_Questions[2].question = "참 또는 거짓만 저장할 수 있는 자료형은 무엇인가?";
+
+		elite_Questions[2].choices[0] = "int";
+		elite_Questions[2].choices[1] = "string";
+		elite_Questions[2].choices[2] = "bool";
+		elite_Questions[2].choices[3] = "float";
+
+		elite_Questions[2].correct_Answer = 3;
+
 		break;
 	}
 
 	case Chapter_Type::ARRAY_LOOP_OCEAN:
 	{
-		elite_Question.question = "정답은 0";
-		elite_Question.choices[0] = "0";
-		elite_Question.choices[1] = "0";
-		elite_Question.choices[2] = "0";
-		elite_Question.choices[3] = "4";
-		elite_Question.correct_Answer = 4;
+		elite_Questions[0].question = "다음 배열에서 두 번째 값은 무엇인가?\n" "int numbers[3] = { 10, 20, 30 };";
+
+		elite_Questions[0].choices[0] = "10";
+		elite_Questions[0].choices[1] = "20";
+		elite_Questions[0].choices[2] = "30";
+		elite_Questions[0].choices[3] = "3";
+
+		elite_Questions[0].correct_Answer = 2;
+
+
+		elite_Questions[1].question = "반복 횟수가 정해져 있을 때 주로 사용하는 반복문은 무엇인가?";
+
+		elite_Questions[1].choices[0] = "if";
+		elite_Questions[1].choices[1] = "switch";
+		elite_Questions[1].choices[2] = "for";
+		elite_Questions[1].choices[3] = "return";
+
+		elite_Questions[1].correct_Answer = 3;
+
+
+		elite_Questions[2].question =
+			"다음 반복문은 몇 번 실행되나요?\n"
+			"int count = 0;\n"
+			"while (count < 3)\n"
+			"{\n"
+			"\tcount++;\n"
+			"}";
+
+		elite_Questions[2].choices[0] = "1번";
+		elite_Questions[2].choices[1] = "2번";
+		elite_Questions[2].choices[2] = "3번";
+		elite_Questions[2].choices[3] = "무한 반복";
+
+		elite_Questions[2].correct_Answer = 3;
 
 		break;
 	}
 
 	case Chapter_Type::FUNCTION_RUINS:
 	{
-		elite_Question.question = "정답은 1";
-		elite_Question.choices[0] = "1";
-		elite_Question.choices[1] = "0";
-		elite_Question.choices[2] = "0";
-		elite_Question.choices[3] = "0";
-		elite_Question.correct_Answer = 1;
+		elite_Questions[0].question = "함수에 값을 전달하기 위해 사용하는 것은 무엇인가?";
+
+		elite_Questions[0].choices[0] = "반환값";
+		elite_Questions[0].choices[1] = "매개변수";
+		elite_Questions[0].choices[2] = "조건문";
+		elite_Questions[0].choices[3] = "배열";
+
+		elite_Questions[0].correct_Answer = 2;
+
+
+		elite_Questions[1].question = "함수에서 계산한 결과를 돌려줄 때 사용하는 키워드는 무엇인가?";
+
+		elite_Questions[1].choices[0] = "return";
+		elite_Questions[1].choices[1] = "break";
+		elite_Questions[1].choices[2] = "continue";
+		elite_Questions[1].choices[3] = "switch";
+
+		elite_Questions[1].correct_Answer = 1;
+
+
+		elite_Questions[2].question =
+			"다음 함수의 반환값은 무엇인가요?\n"
+			"int Add(int number_A, int number_B)\n"
+			"{\n"
+			"\treturn number_A + number_B;\n"
+			"}\n"
+			"Add(3, 5);";
+
+		elite_Questions[2].choices[0] = "2";
+		elite_Questions[2].choices[1] = "3";
+		elite_Questions[2].choices[2] = "5";
+		elite_Questions[2].choices[3] = "8";
+
+		elite_Questions[2].correct_Answer = 4;
 
 		break;
 	}
 
 	case Chapter_Type::POINTER_MEMORY_GRAVEYARD:
 	{
-		elite_Question.question = "정답은 1";
-		elite_Question.choices[0] ="1";
-		elite_Question.choices[1] ="0";
-		elite_Question.choices[2] ="0";
-		elite_Question.choices[3] ="0";
-		elite_Question.correct_Answer = 1;
+		elite_Questions[0].question = "변수의 메모리 주소를 저장하는 변수는 무엇인가?";
+
+		elite_Questions[0].choices[0] = "배열";
+		elite_Questions[0].choices[1] = "포인터";
+		elite_Questions[0].choices[2] = "함수";
+		elite_Questions[0].choices[3] = "반복문";
+
+		elite_Questions[0].correct_Answer = 2;
+
+
+		elite_Questions[1].question = "포인터가 아무 주소도 가리키지 않음을 나타내는 값은 무엇인가?";
+
+		elite_Questions[1].choices[0] = "false";
+		elite_Questions[1].choices[1] = "zero";
+		elite_Questions[1].choices[2] = "nullptr";
+		elite_Questions[1].choices[3] = "empty";
+
+		elite_Questions[1].correct_Answer = 3;
+
+
+		elite_Questions[2].question = "다음 코드에서 pointer에 저장되는 것은 무엇인가?\n" "int number = 10;\n" "int* pointer = &number;";
+
+		elite_Questions[2].choices[0] = "number의 값 10";
+		elite_Questions[2].choices[1] = "number의 메모리 주소";
+		elite_Questions[2].choices[2] = "pointer의 이름";
+		elite_Questions[2].choices[3] = "nullptr";
+
+		elite_Questions[2].correct_Answer = 2;
 
 		break;
 	}
 
 	case Chapter_Type::OBJECT_STL_FACTORY:
 	{
-		elite_Question.question = "정답은 2";
-		elite_Question.choices[0] = "0";
-		elite_Question.choices[1] = "2";
-		elite_Question.choices[2] = "0";
-		elite_Question.choices[3] = "0";
-		elite_Question.correct_Answer = 2;
+		elite_Questions[0].question = "데이터와 기능을 하나로 묶어 표현하는 문법은 무엇인가?";
+
+		elite_Questions[0].choices[0] = "class";
+		elite_Questions[0].choices[1] = "while";
+		elite_Questions[0].choices[2] = "return";
+		elite_Questions[0].choices[3] = "if";
+
+		elite_Questions[0].correct_Answer = 1;
+
+
+		elite_Questions[1].question = "기존 클래스의 기능을 새로운 클래스가 물려받는 것은 무엇인가?";
+
+		elite_Questions[1].choices[0] = "반복";
+		elite_Questions[1].choices[1] = "상속";
+		elite_Questions[1].choices[2] = "조건";
+		elite_Questions[1].choices[3] = "포인터";
+
+		elite_Questions[1].correct_Answer = 2;
+
+
+		elite_Questions[2].question = "크기를 자유롭게 늘리거나 줄일 수 있는 STL 컨테이너는 무엇인가?";
+
+		elite_Questions[2].choices[0] = "if";
+		elite_Questions[2].choices[1] = "int";
+		elite_Questions[2].choices[2] = "vector";
+		elite_Questions[2].choices[3] = "return";
+
+		elite_Questions[2].correct_Answer = 3;
 
 		break;
 	}
 
 	default:
 	{
-		elite_Question.question = "정답은 1";
-		elite_Question.choices[0] = "1";
-		elite_Question.choices[1] = "0";
-		elite_Question.choices[2] = "0";
-		elite_Question.choices[3] = "0";
-		elite_Question.correct_Answer = 1;
+		elite_Questions[0].question = "정수를 저장하는 자료형은 무엇인가?";
+
+		elite_Questions[0].choices[0] = "int";
+		elite_Questions[0].choices[1] = "bool";
+		elite_Questions[0].choices[2] = "if";
+		elite_Questions[0].choices[3] = "while";
+
+		elite_Questions[0].correct_Answer = 1;
+
+		elite_Questions[1] = elite_Questions[0];
+
+		elite_Questions[2] = elite_Questions[0];
 
 		break;
 	}
 	}
 
-	return elite_Question;
+	int random_Question_Index =
+		rand() % 3;
+
+	return
+		elite_Questions[random_Question_Index];
 }
 
 void Dungeon_Manager::Get_Tutor_Questions(Chapter_Type chapter_Type, Tutor_Question tutor_Questions[]) const
@@ -1314,4 +1453,55 @@ void Dungeon_Manager::Print_Tutor_Item_Status(Inventory<Item>& inventory) const
 		cout << "최종보스방은 아직 잠겨 있습니다." << endl;
 	}
 	cout << "========================================" << endl;
+}
+
+bool Run_Elite_Question(const Elite_Question& elite_Question);
+
+bool Dungeon_Manager::Run_Elite_Question(const Elite_Question& elite_Question)
+{
+	cout << endl;
+	cout << "========================================" << endl;
+	cout << "[ 코드스니펫의 망령 문제 ]" << endl;
+	cout << "========================================" << endl;
+	cout << elite_Question.question << endl;
+	cout << endl;
+
+	for
+		(
+			int choice_Index = 0;
+			choice_Index < 4;
+			choice_Index++
+			)
+	{
+		cout << choice_Index + 1 << ". " << elite_Question.choices[choice_Index] << endl;
+	}
+
+	cout << "----------------------------------------" << endl;
+	cout << "정답 번호 입력: ";
+
+	int player_Answer = 0;
+
+	cin >> player_Answer;
+
+	if
+		(
+			player_Answer
+			== elite_Question.correct_Answer
+			)
+	{
+		cout << endl;
+		cout << "정답입니다!" << endl;
+		cout << "코드스니펫의 망령을 물리쳤습니다." << endl;
+
+		return true;
+	}
+
+	cout << endl;
+	cout << "오답입니다." << endl;
+
+	cout << "정답은 " << elite_Question.correct_Answer << "번입니다." << endl;
+
+	cout << "코드스니펫의 망령이 도망갔습니다." << endl;
+
+	return false;
 }
