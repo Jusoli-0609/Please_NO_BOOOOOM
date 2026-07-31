@@ -32,7 +32,7 @@ void Dungeon_Manager::Open_Dungeon(Player* player, Inventory<Item>& inventory)
 
 	if (_is_All_Chapter_Cleared)
 	{
-		cout << "튜터님 5명의 코드 검증을 모두 통과했습니다." << endl;
+		cout << "튜터님 5명의 시험을 모두 통과했습니다." << endl;
 
 		Print_Tutor_Item_Status(inventory);
 
