@@ -1,5 +1,7 @@
 #pragma once
+#include "Item.h"
 #include <string>
+#include <vector>
 
 class Player;
 
@@ -99,6 +101,10 @@ public:
     int getDropItemCount() const;
     int getGoldReward() const;
 
+    const std::vector<Item>& getDropItems() const;
+
+    void Print_Drop_Reward() const;
+
     Monster_Type getMonsterType() const;
     Chapter_Type getChapterType() const;
 
@@ -147,4 +153,6 @@ private:
     int _drop_Item_Price;
     int _drop_Item_Count;
     int _gold_Reward;
+
+    std::vector<Item> _drop_Items;
 };

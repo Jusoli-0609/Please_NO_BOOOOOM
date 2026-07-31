@@ -11,6 +11,14 @@ namespace
 	constexpr int BASE_SCORE_REWARD = 100;
 
 	constexpr double CHAPTER_REWARD_MULTIPLIER = 1.3;
+
+	constexpr int CODE_FRAGMENT_DROP_CHANCE = 60;
+	constexpr int CUP_RAMEN_DROP_CHANCE = 60;
+	constexpr int ENERGY_DRINK_DROP_CHANCE = 60;
+
+	constexpr int CODE_FRAGMENT_WEIGHT = 1;
+	constexpr int CUP_RAMEN_WEIGHT = 1;
+	constexpr int ENERGY_DRINK_WEIGHT = 1;
 }
 
 Monster::Monster()
@@ -84,6 +92,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	_drop_Item_Price = 0;
 	_drop_Item_Count = 0;
 	_gold_Reward = 0;
+	_drop_Items.clear();
 
 	switch (_monster_Type)
 	{
@@ -526,40 +535,96 @@ int Monster::Calculate_Gold_Reward() const
 
 void Monster::Generate_Drop_Reward()
 {
-	_drop_Item_Count = 1;
+	_drop_Items.clear();
+	_drop_Item_Name = "";
+	_drop_Item_Price = 0;
+	_drop_Item_Count = 0;
 	_gold_Reward = Calculate_Gold_Reward();
 
-	int item_Roll = rand() % 3;
+	int code_Fragment_Roll = rand() % 100;
 
-	switch (item_Roll)
+	if
+		(code_Fragment_Roll< CODE_FRAGMENT_DROP_CHANCE)
 	{
-	case 0:
-	{
-		_drop_Item_Name = Get_Code_Fragment_Name();
+		Item code_Fragment;
 
-		break;
+		code_Fragment._Item_Name = Get_Code_Fragment_Name();
+		code_Fragment._Item_Price = 0;
+		code_Fragment._Item_Count = 1;
+		code_Fragment._Item_Weight = CODE_FRAGMENT_WEIGHT;
+		code_Fragment._Item_Type_Usable = false;
+		code_Fragment._Item_Type_Wearable = false;
+
+		_drop_Items.push_back(code_Fragment);
 	}
 
-	case 1:
-	{
-		_drop_Item_Name = "컵라면";
+	int cup_Ramen_Roll = rand() % 100;
 
-		break;
+	if
+		(cup_Ramen_Roll < CUP_RAMEN_DROP_CHANCE)
+	{
+		Item cup_Ramen;
+
+		cup_Ramen._Item_Name = "컵라면";
+		cup_Ramen._Item_Price = 0;
+		cup_Ramen._Item_Count = 1;
+		cup_Ramen._Item_Weight = CUP_RAMEN_WEIGHT;
+		cup_Ramen._Item_Type_Usable = false;
+		cup_Ramen._Item_Type_Wearable = false;
+
+		_drop_Items.push_back(cup_Ramen);
 	}
 
-	case 2:
-	{
-		_drop_Item_Name = "에너지드링크";
+	int energy_Drink_Roll = rand() % 100;
 
-		break;
+	if
+		(energy_Drink_Roll < ENERGY_DRINK_DROP_CHANCE)
+	{
+		Item energy_Drink;
+
+		energy_Drink._Item_Name = "에너지드링크";
+		energy_Drink._Item_Price = 0;
+		energy_Drink._Item_Count = 1;
+		energy_Drink._Item_Weight = ENERGY_DRINK_WEIGHT;
+		energy_Drink._Item_Type_Usable = false;
+		energy_Drink._Item_Type_Wearable = false;
+
+		_drop_Items.push_back(energy_Drink);
 	}
 
-	default:
+	if (_drop_Items.empty())
 	{
-		_drop_Item_Name = Get_Code_Fragment_Name();
+		Item minimum_Reward;
 
-		break;
+		minimum_Reward._Item_Name = Get_Code_Fragment_Name();
+		minimum_Reward._Item_Price = 0;
+		minimum_Reward._Item_Count = 1;
+		minimum_Reward._Item_Weight = CODE_FRAGMENT_WEIGHT;
+		minimum_Reward._Item_Type_Usable = false;
+		minimum_Reward._Item_Type_Wearable = false;
+
+		_drop_Items.push_back(minimum_Reward);
 	}
+	for
+		(
+			std::size_t item_Index = 0;
+			item_Index < _drop_Items.size();
+			item_Index++
+			)
+	{
+		const Item& drop_Item = _drop_Items[item_Index];
+
+		if (item_Index > 0)
+		{
+			_drop_Item_Name += ", ";
+		}
+
+		_drop_Item_Name += drop_Item._Item_Name;
+		_drop_Item_Name += " ";
+		_drop_Item_Name += std::to_string(drop_Item._Item_Count);
+		_drop_Item_Name += "개";
+		_drop_Item_Count += drop_Item._Item_Count;
+		_drop_Item_Price += drop_Item._Item_Price * drop_Item._Item_Count;
 	}
 }
 
@@ -747,6 +812,11 @@ int Monster::getDropItemCount() const
 	return _drop_Item_Count;
 }
 
+const std::vector<Item>& Monster::getDropItems() const
+{
+	return _drop_Items;
+}
+
 int Monster::getGoldReward() const
 {
 	return _gold_Reward;
@@ -820,6 +890,41 @@ void Monster::Print_Monster_Info() const
 		cout << "드롭 아이템: " << _drop_Item_Name << " " << _drop_Item_Count << "개" << endl;
         cout << "훈련장려금: " << _gold_Reward << "원" << endl;
 	}
+}
+
+void Monster::Print_Drop_Reward() const
+{
+	cout << "획득 아이템:" << endl;
+
+	if (_drop_Items.empty())
+	{
+		cout << "- 획득한 아이템이 없습니다." << endl;
+
+		return;
+	}
+
+	int total_Drop_Weight = 0;
+
+	for
+		(const Item& drop_Item :_drop_Items)
+	{
+		int item_Total_Weight = drop_Item._Item_Weight * drop_Item._Item_Count;
+
+		cout << "- "
+			<< drop_Item._Item_Name
+			<< " "
+			<< drop_Item._Item_Count
+			<< "개"
+			<< " / 개당 무게 "
+			<< drop_Item._Item_Weight
+			<< " / 총 무게 "
+			<< item_Total_Weight
+			<< endl;
+
+		total_Drop_Weight += item_Total_Weight;
+	}
+
+	cout << "드롭 아이템 총 무게: " << total_Drop_Weight << endl;
 }
 
 void Monster::Print_Attack_Message() const

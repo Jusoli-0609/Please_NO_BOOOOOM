@@ -139,6 +139,22 @@ void Dungeon_Manager::Record_Monster_Kill(const Monster& monster)
 	}
 }
 
+void Dungeon_Manager::Give_Drop_Items_To_Inventory(const Monster& monster, Inventory<Item>& inventory)
+{
+	const std::vector<Item>& drop_Items = monster.getDropItems();
+
+	for
+		(const Item& drop_Item : drop_Items)
+	{
+		bool is_Added = inventory.Add_Or_Increase_Item(drop_Item);
+
+		if (is_Added == false)
+		{
+			cout << drop_Item._Item_Name << " È¹µæÀ» Ãë¼ÒÇß½À´Ï´Ù." << endl;
+		}
+	}
+}
+
 void Dungeon_Manager::Print_Current_Chapter_Kill_Log() const
 {
 	cout << endl;
@@ -330,30 +346,36 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inven
 		if (is_Correct)
 		{
 			elite_Monster.Generate_Drop_Reward();
-
-			player->Gain_Exp(elite_Monster.getExpReward());
+			if (player != nullptr)
+			{
+				player->Gain_Exp(elite_Monster.getExpReward());
+			}
 
 			cout << endl;
 			cout << "========================================" << endl;
 			cout << "[ Á¤¿¹ ¸ó½ºÅÍ Ã³Ä¡ º¸»ó ]" << endl;
 			cout << "========================================" << endl;
 			cout << "È¹µæ °æÇèÄ¡: " << elite_Monster.getExpReward() << endl;
-			cout << "È¹µæ Ã©ÅÍ Á¡¼ö: " << elite_Monster.getScoreReward() << endl;
-			cout << "È¹µæ ¾ÆÀÌÅÛ: " << elite_Monster.getDropItemName() << " " << elite_Monster.getDropItemCount() << "°³" << endl;
-			cout << "È¹µæ ÈÆ·ÃÀå·Á±Ý: " << elite_Monster.getGoldReward() << " ¿ø" << endl;
+			cout << "È¹µæ Á¡¼ö: " << elite_Monster.getScoreReward() << endl;
+
+			elite_Monster.Print_Drop_Reward();
+
+			Give_Drop_Items_To_Inventory
+			(elite_Monster, inventory);
+
+			cout << "È¹µæ ÈÆ·ÃÀå·Á±Ý: " << elite_Monster.getGoldReward() << "¿ø" << endl;
+			cout << "========================================" << endl;
 
 			Record_Monster_Kill(elite_Monster);
 		}
 		else
 		{
 			cout << endl;
-
-			cout << "ÄÚµå ½º´ÏÆêÀÇ ¸Á·ÉÀÌ µµ¸Á°¬½À´Ï´Ù." << endl;
-
-			cout << "ÀÌ¹ø ´øÀü¿¡¼­´Â º¸»óÀ» È¹µæÇÏÁö ¸øÇß½À´Ï´Ù." << endl;
+			cout << "ÄÚµå½º´ÏÆêÀÇ ¸Á·ÉÀÌ µµ¸Á°¬½À´Ï´Ù." << endl;
+			cout << "º¸»óÀ» È¹µæÇÏÁö ¸øÇß½À´Ï´Ù." << endl;
 		}
+
 		return;
-	}
 
 	Monster_Type random_Monster_Type = Get_Random_Normal_Monster();
 
@@ -388,17 +410,21 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inven
 
 		return;
 	}
-
 	cout << endl;
+	cout << "========================================" << endl;
+	cout << "[ ÀÏ¹Ý ¸ó½ºÅÍ Ã³Ä¡ º¸»ó ]" << endl;
+	cout << "========================================" << endl;
 
+	monster.Print_Drop_Reward();
+
+	Give_Drop_Items_To_Inventory(monster,inventory);
+
+	cout << "È¹µæ ÈÆ·ÃÀå·Á±Ý: " << monster.getGoldReward() << "¿ø" << endl;
+	cout << "========================================" << endl;
+	cout << endl;
 	cout << monster.getName() << " Ã³Ä¡ ¿Ï·á!" << endl;
 
 	Record_Monster_Kill(monster);
-
-	cout << "È¹µæ ÈÆ·ÃÀå·Á±Ý: " << monster.getGoldReward() << "¿ø" << endl;
-	cout << endl;
-	cout << "========================================" << endl;
-	cout << "ÇöÀç Ã©ÅÍ Á¡¼ö: " << _current_Chapter_Score << " / " << Get_Required_Tutor_Score() << endl;
 
 	if (Check_Tutor_Challenge_Available())
 	{
@@ -840,7 +866,7 @@ bool Dungeon_Manager::Run_Elite_Quiz(Monster& elite_Monster)
 	cout << "========================================" << endl;
 	cout << "[ Á¤¿¹ ¸ó½ºÅÍ µîÀå ]" << endl;
 	cout << elite_Monster.getName() << "ÀÌ(°¡) ³ªÅ¸³µ½À´Ï´Ù!" << endl;
-	cout << "\"ÄÚµå ½º´ÏÆêÀ» º¹»çÇß½À´Ï´Ù.\"" << endl;
+	cout << "\"ÄÚµå½º´ÏÆêÀ» º¹»çÇß½À´Ï´Ù.\"" << endl;
 	cout << "========================================" << endl;
 	cout << endl;
 	cout << elite_Question.question << endl;
@@ -887,14 +913,14 @@ bool Dungeon_Manager::Run_Elite_Quiz(Monster& elite_Monster)
 	{
 		cout << endl;
 		cout << "Á¤´äÀÔ´Ï´Ù!" << endl;
-		cout << "ÄÚµå ½º´ÏÆêÀÇ ¸Á·ÉÀ» Ã³Ä¡Çß½À´Ï´Ù." << endl;
+		cout << "ÄÚµå½º´ÏÆêÀÇ ¸Á·ÉÀ» Ã³Ä¡Çß½À´Ï´Ù." << endl;
 
 		return true;
 	}
 
 	cout << endl;
 	cout << "¿À´äÀÔ´Ï´Ù!" << endl;
-	cout << "ÄÚµå ½º´ÏÆêÀÇ ¸Á·ÉÀÌ ºñ¿ôÀ¸¸ç µµ¸Á°¬½À´Ï´Ù.¤»" << endl;
+	cout << "ÄÚµå½º´ÏÆêÀÇ ¸Á·ÉÀÌ ºñ¿ôÀ¸¸ç µµ¸Á°¬½À´Ï´Ù.¤»" << endl;
 
 	return false;
 }

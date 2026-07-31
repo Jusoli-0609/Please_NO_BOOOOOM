@@ -81,6 +81,8 @@ private:
 
 	void Record_Monster_Kill(const Monster& monster);
 
+	void Give_Drop_Items_To_Inventory(const Monster& monster, Inventory<Item>& inventory);
+
 	void Add_Chapter_Score(int score_Reward);
 
 	int Get_Required_Tutor_Score() const;
