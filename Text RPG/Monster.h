@@ -35,7 +35,13 @@ enum class Monster_Type
     INHERITANCE_CHIMERA,
     VECTOR_DRONE,
 
-    CODE_SNIPPET_WRAITH
+    CODE_SNIPPET_WRAITH,
+
+    VARIABLE_CONDITION_TUTOR,
+    ARRAY_LOOP_TUTOR,
+    FUNCTION_TUTOR,
+    POINTER_MEMORY_TUTOR,
+    OBJECT_STL_TUTOR
 };
 
 enum class Monster_Grade
@@ -62,8 +68,9 @@ public:
     Monster();
     Monster(Monster_Type monster_Type);
 
-    void Initialize_Elite_Monster
-    (Chapter_Type chapter_Type);
+    void Initialize_Elite_Monster(Chapter_Type chapter_Type);
+    void Initialize_Tutor_Monster(Chapter_Type chapter_Type);
+
     Monster
     (
         std::string monster_Name,

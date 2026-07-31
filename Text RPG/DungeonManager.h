@@ -12,14 +12,26 @@ struct Elite_Question
 	int correct_Answer;
 };
 
+struct Tutor_Question
+{
+	std::string description;
+	std::string code;
+	std::string correct_Answer;
+};
+
 struct Monster_Kill_Record
 {
 	std::string monster_Name;
+
+	Monster_Grade monster_Grade =Monster_Grade::NORMAL;
+
 	int kill_Count = 0;
 	int earned_Score = 0;
 };
 
 constexpr int MONSTERS_PER_CHAPTER = 3;
+constexpr int TUTOR_QUESTION_COUNT = 3;
+constexpr int TUTOR_CLEAR_CORRECT_COUNT = 2;
 
 class Dungeon_Manager
 {
@@ -39,8 +51,7 @@ public:
 private:
 	void Print_Current_Chapter() const;
 
-	void Run_Current_Chapter
-	(Player* player, Inventory<Item>& inventory);
+	void Run_Current_Chapter(Player* player, Inventory<Item>& inventory);
 
 	Elite_Question Get_Elite_Question(Chapter_Type chapter_Type) const;
 
@@ -52,7 +63,16 @@ private:
 
 	bool Check_Elite_Monster_Appearance() const;
 
+	void Get_Tutor_Questions(Chapter_Type chapter_Type, Tutor_Question tutor_Questions[]) const;
+
+	Tutor_Dialogue Get_Tutor_Dialogue(Chapter_Type chapter_Type) const;
+
+	bool Run_Tutor_Code_Challenge(const Monster& tutor_Monster);
+
+	void Run_Tutor_Challenge(Player* player);
+
 	void Record_Monster_Kill(const Monster& monster);
+
 	void Add_Chapter_Score(int score_Reward);
 
 	int Get_Required_Tutor_Score() const;
@@ -60,6 +80,7 @@ private:
 	bool Check_Tutor_Challenge_Available() const;
 
 	void Clear_Current_Chapter();
+
 	void Move_Next_Chapter();
 
 	std::string Get_Chapter_Name(Chapter_Type chapter_Type) const;

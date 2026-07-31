@@ -45,15 +45,7 @@ Monster::Monster(Monster_Type monster_Type)
 	Initialize_Monster(monster_Type);
 }
 
-Monster::Monster
-(
-	string monster_Name,
-	int monster_HP,
-	int monster_Power,
-	int monster_Defence,
-	string drop_Item_Name,
-	int drop_Item_Price
-)
+Monster::Monster(string monster_Name, int monster_HP, int monster_Power, int monster_Defence, string drop_Item_Name, int drop_Item_Price)
 	: _monster_Type(Monster_Type::INT_SLIME),
 	_chapter_Type(Chapter_Type::VARIABLE_CONDITION_FOREST),
 	_monster_Grade(Monster_Grade::NORMAL),
@@ -391,6 +383,88 @@ void Monster::Initialize_Elite_Monster(Chapter_Type chapter_Type)
 	_gold_Reward = 0;
 }
 
+void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
+{
+	_chapter_Type = chapter_Type;
+
+	_monster_Grade = Monster_Grade::TUTOR;
+
+	_stat[MONSTER_HP] = 0;
+	_stat[MONSTER_MP] = 0;
+	_stat[MONSTER_POWER] = 0;
+	_stat[MONSTER_DEFENCE] = 0;
+	_stat[MONSTER_SPEED] = 0;
+
+	_evasion = 0;
+	_accuracy = 0;
+
+	switch (_chapter_Type)
+	{
+	case Chapter_Type::VARIABLE_CONDITION_FOREST:
+	{
+		_monster_Type = Monster_Type::VARIABLE_CONDITION_TUTOR;
+		_monster_Name = "변수·조건문 튜터";
+		_attack_Message = "변수와 조건문 코드 검증을 시작합니다.";
+
+		break;
+	}
+
+	case Chapter_Type::ARRAY_LOOP_OCEAN:
+	{
+		_monster_Type = Monster_Type::ARRAY_LOOP_TUTOR;
+		_monster_Name = "배열·반복문 튜터";
+		_attack_Message = "배열과 반복문 코드 검증을 시작합니다.";
+
+		break;
+	}
+
+	case Chapter_Type::FUNCTION_RUINS:
+	{
+		_monster_Type = Monster_Type::FUNCTION_TUTOR;
+		_monster_Name = "함수 튜터";
+		_attack_Message ="함수 코드 검증을 시작합니다.";
+
+		break;
+	}
+
+	case Chapter_Type::POINTER_MEMORY_GRAVEYARD:
+	{
+		_monster_Type = Monster_Type::POINTER_MEMORY_TUTOR;
+		_monster_Name = "포인터·메모리 튜터";
+		_attack_Message = "포인터와 메모리 코드 검증을 시작합니다.";
+
+		break;
+	}
+
+	case Chapter_Type::OBJECT_STL_FACTORY:
+	{
+		_monster_Type = Monster_Type::OBJECT_STL_TUTOR;
+		_monster_Name = "객체지향·STL 튜터";
+		_attack_Message = "객체지향과 STL 코드 검증을 시작합니다.";
+
+		break;
+	}
+
+	default:
+	{
+		_chapter_Type = Chapter_Type::VARIABLE_CONDITION_FOREST;
+		_monster_Type = Monster_Type::VARIABLE_CONDITION_TUTOR;
+		_monster_Name = "변수·조건문 튜터";
+		_attack_Message = "변수와 조건문 코드 검증을 시작합니다.";
+
+		break;
+	}
+	}
+
+	_monster_Level = Get_Chapter_Number() * 3 + 2;
+	_exp_Reward = Calculate_Exp_Reward() * 3;
+	_score_Reward = 0;
+	_drop_Item_Name = "";
+	_drop_Item_Price = 0;
+	_drop_Item_Count = 0;
+	_gold_Reward = 0;
+}
+
 std::string Monster::Get_Code_Fragment_Name() const
 {
 	switch (_chapter_Type)
@@ -672,10 +746,7 @@ Monster_Grade Monster::getMonsterGrade() const
 	return _monster_Grade;
 }
 
-void Monster::setMonsterGrade
-(
-	Monster_Grade monster_Grade
-)
+void Monster::setMonsterGrade(Monster_Grade monster_Grade)
 {
 	_monster_Grade = monster_Grade;
 }
