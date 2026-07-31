@@ -527,7 +527,7 @@ void Inventory<T>::Increase_Max_Capacity(int new_max_capacity)
         return;
     }
     T* new_items = new T[new_max_capacity];
-    for (int = i = 0; i < _Current_Quantity_Of_Items; i++)
+    for (int i = 0; i < _Current_Quantity_Of_Items; i++)
     {
         new_items[i] = _Inventory_Items[i];
     }
