@@ -77,7 +77,7 @@ private:
 
 	bool Run_Tutor_Code_Challenge(const Monster& tutor_Monster);
 
-	void Run_Tutor_Challenge(Player* player);
+	void Run_Tutor_Challenge(Player* player, Inventory<Item>& inventory);
 
 	void Record_Monster_Kill(const Monster& monster);
 
@@ -92,6 +92,16 @@ private:
 	void Clear_Current_Chapter();
 
 	void Move_Next_Chapter();
+
+	Item Create_Tutor_Clear_Item(Chapter_Type chapter_Type) const;
+
+	bool Has_Item_In_Inventory(Inventory<Item>& inventory, const std::string& item_Name) const;
+
+	bool Give_Tutor_Clear_Item(Chapter_Type chapter_Type,Inventory<Item>& inventory);
+
+	bool Check_Final_Boss_Room_Available(Inventory<Item>& inventory) const;
+
+	void Print_Tutor_Item_Status(Inventory<Item>& inventory) const;
 
 	std::string Get_Chapter_Name(Chapter_Type chapter_Type) const;
 
