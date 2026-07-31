@@ -407,7 +407,6 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inven
 	cout << "========================================" << endl;
 }
 
-
 void Dungeon_Manager::Get_Current_Chapter_Monsters(Monster_Type monster_Types[]) const
 {
 	switch (_current_Chapter)
@@ -936,7 +935,7 @@ void Dungeon_Manager::Run_Tutor_Challenge(Player* player)
 
 	cout << endl;
 	cout << "========================================" << endl;
-	cout << "[ " << tutor_Monster.getName() << " Å¬¸®¾î º¸»ó ]" << endl;
+	cout << "[ " << tutor_Monster.getName() << " Å¬¸®¾î º¸»ó ]"<< endl;
 	cout << "========================================" << endl;
 	cout << "È¹µæ °æÇèÄ¡: " << tutor_Monster.getExpReward() << endl;
 	cout << "È¹µæ ¾ÆÀÌÅÛ: " << tutor_Monster.getDropItemName() << " " << tutor_Monster.getDropItemCount() << "°³" << endl;

@@ -403,7 +403,7 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 	case Chapter_Type::VARIABLE_CONDITION_FOREST:
 	{
 		_monster_Type = Monster_Type::VARIABLE_CONDITION_TUTOR;
-		_monster_Name = "변수·조건문 튜터";
+		_monster_Name = "손승현 튜터님";
 		_attack_Message = "변수와 조건문 코드 검증을 시작합니다.";
 
 		break;
@@ -412,7 +412,7 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 	case Chapter_Type::ARRAY_LOOP_OCEAN:
 	{
 		_monster_Type = Monster_Type::ARRAY_LOOP_TUTOR;
-		_monster_Name = "배열·반복문 튜터";
+		_monster_Name = "박은일 튜터님";
 		_attack_Message = "배열과 반복문 코드 검증을 시작합니다.";
 
 		break;
@@ -421,7 +421,7 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 	case Chapter_Type::FUNCTION_RUINS:
 	{
 		_monster_Type = Monster_Type::FUNCTION_TUTOR;
-		_monster_Name = "함수 튜터";
+		_monster_Name = "강신호 튜터님";
 		_attack_Message ="함수 코드 검증을 시작합니다.";
 
 		break;
@@ -430,7 +430,7 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 	case Chapter_Type::POINTER_MEMORY_GRAVEYARD:
 	{
 		_monster_Type = Monster_Type::POINTER_MEMORY_TUTOR;
-		_monster_Name = "포인터·메모리 튜터";
+		_monster_Name = "문승현 튜터님";
 		_attack_Message = "포인터와 메모리 코드 검증을 시작합니다.";
 
 		break;
@@ -439,7 +439,7 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 	case Chapter_Type::OBJECT_STL_FACTORY:
 	{
 		_monster_Type = Monster_Type::OBJECT_STL_TUTOR;
-		_monster_Name = "객체지향·STL 튜터";
+		_monster_Name = "김하늘 튜터님";
 		_attack_Message = "객체지향과 STL 코드 검증을 시작합니다.";
 
 		break;
@@ -449,7 +449,7 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 	{
 		_chapter_Type = Chapter_Type::VARIABLE_CONDITION_FOREST;
 		_monster_Type = Monster_Type::VARIABLE_CONDITION_TUTOR;
-		_monster_Name = "변수·조건문 튜터";
+		_monster_Name = "손승현 튜터님";
 		_attack_Message = "변수와 조건문 코드 검증을 시작합니다.";
 
 		break;

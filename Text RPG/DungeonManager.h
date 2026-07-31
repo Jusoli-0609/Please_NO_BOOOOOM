@@ -12,6 +12,14 @@ struct Elite_Question
 	int correct_Answer;
 };
 
+struct Tutor_Dialogue
+{
+	std::string appearance_Message;
+	std::string correct_Message;
+	std::string wrong_Message;
+	std::string exit_Message;
+};
+
 struct Tutor_Question
 {
 	std::string description;
