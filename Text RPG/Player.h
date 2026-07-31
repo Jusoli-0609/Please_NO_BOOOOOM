@@ -16,6 +16,8 @@ protected:
     int ap;
     int sne;
     int agi;
+    int maxhp;
+    int maxmp;
 
     int level;
     int maxexp;
@@ -28,7 +30,9 @@ protected:
         int def,
         int ap,
         int sne,
-        int agi
+        int agi,
+        int maxhp,
+        int maxmp
     );
 
     int Calculate_Damage(
@@ -66,7 +70,14 @@ public:
     int Get_AGI() const;
     int Get_Exp() const;
     int Get_MaxExp() const;
+    int GetMaxHP() const;
+    int GetMaxMP() const;
+    int GetPower() const;
+    int GetHP() const;
 
+    void SetHP(int hp);
+    void SetMaxHP(int maxHp);
+    void SetMaxMP(int maxMp);
     void Set_Hp(int hp);
     void Set_Mp(int mp);
     void Set_ATK(int atk);
@@ -77,7 +88,7 @@ public:
     void Set_Level(int level);
     void Set_Exp(int exp);
     void Set_MaxExp(int maxexp);
-
+    void SetPower(int atk);
     void Gain_Exp(int amount);
     void Level_Up();
 
