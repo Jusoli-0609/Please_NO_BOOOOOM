@@ -18,7 +18,7 @@ class Dungeon_Manager
 public:
 	Dungeon_Manager();
 
-	void Open_Dungeon(Player* player, Inventory& inventory);
+	void Open_Dungeon(Player* player, Inventory<Item>& inventory);
 
 	bool Check_All_Chapter_Cleared() const;
 
@@ -28,7 +28,7 @@ private:
 	void Print_Current_Chapter() const;
 
 	void Run_Current_Chapter
-	(Player* player, Inventory& inventory);
+	(Player* player, Inventory<Item>& inventory);
 
 	Elite_Question Get_Elite_Question(Chapter_Type chapter_Type) const;
 

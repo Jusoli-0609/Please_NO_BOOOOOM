@@ -21,7 +21,7 @@ Dungeon_Manager::Dungeon_Manager()
 {
 }
 
-void Dungeon_Manager::Open_Dungeon(Player* player, Inventory& inventory)
+void Dungeon_Manager::Open_Dungeon(Player* player, Inventory<Item>& inventory)
 {
 	if (player == nullptr)
 	{
@@ -215,7 +215,7 @@ void Dungeon_Manager::Print_Current_Chapter() const
 	cout << "========================================" << endl;
 }
 
-void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory& inventory)
+void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inventory)
 {
 	cout << endl;
     cout << Get_Chapter_Name(_current_Chapter) << "에 입장했습니다." << endl;
