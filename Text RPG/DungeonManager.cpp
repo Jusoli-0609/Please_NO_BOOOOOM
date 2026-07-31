@@ -8,7 +8,7 @@ using namespace std;
 
 namespace
 {
-	constexpr int BASE_TUTOR_REQUIRED_SCORE = 300;
+	constexpr int BASE_TUTOR_REQUIRED_SCORE = 500;
 	constexpr double CHAPTER_SCORE_MULTIPLIER = 1.3;
 	constexpr int NORMAL_MONSTER_TYPE_COUNT = 3;
 	constexpr int ELITE_APPEARANCE_RATE = 20;
@@ -383,6 +383,7 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inven
 		}
 
 		return;
+	}
 
 		Monster_Type random_Monster_Type = Get_Random_Normal_Monster();
 		Monster monster(random_Monster_Type);
@@ -443,7 +444,6 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inven
 
 		cout << "========================================" << endl;
 	}
-}
 
 void Dungeon_Manager::Get_Current_Chapter_Monsters(Monster_Type monster_Types[]) const
 {
