@@ -1,6 +1,8 @@
 #include "Console_Manager.h"
+#include "DungeonManager.h"
 #include <iostream>
 #include <string>
+
 
 using namespace std;
 
@@ -12,8 +14,10 @@ void Intro();
 
 int main()
 {
+  
     Console_Manager Console(120, 40);
-
+   
+    
     Console.Set_Console_Size();
     Console.Clear();
     Console.Set_Cursor_Position(15, 10);
@@ -21,6 +25,6 @@ int main()
     PrintLine();
     Intro();
     //직업 선택
-
+ 
     return 0;
 }

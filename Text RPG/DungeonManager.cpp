@@ -286,7 +286,7 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inven
 	cout << endl;
 
 	cout << monster.getName() << " 처치 완료!" << endl;
-
+	Monster_Kill_Count += 1;
 	Add_Chapter_Score(monster.getScoreReward());
 
 	cout << endl;

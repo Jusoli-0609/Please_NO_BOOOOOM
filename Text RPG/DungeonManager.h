@@ -24,6 +24,8 @@ public:
 
 	int Get_Current_Chapter_Score() const;
 
+	int Monster_Kill_Count=0;
+
 private:
 	void Print_Current_Chapter() const;
 
