@@ -359,6 +359,11 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inven
 
 	Monster monster(random_Monster_Type);
 
+	if (player != nullptr)
+	{
+		monster.Apply_Player_Level_Scaling(player->getLevel());
+	}
+
 	cout << endl;
 	cout << "========================================" << endl;
 	cout << "[ 일반 몬스터 등장 ]" << endl;

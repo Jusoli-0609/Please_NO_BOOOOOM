@@ -356,14 +356,40 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	_score_Reward = Calculate_Score_Reward();
 }
 
+void Monster::Apply_Player_Level_Scaling(int player_Level)
+{
+	if
+		(_monster_Grade!= Monster_Grade::NORMAL)
+	{
+		return;
+	}
+
+	if (player_Level < 1)
+	{
+		player_Level = 1;
+	}
+
+	constexpr int HP_BONUS_PER_PLAYER_LEVEL = 1;
+	constexpr int POWER_BONUS_PER_PLAYER_LEVEL = 1;
+	constexpr int DEFENCE_BONUS_PER_PLAYER_LEVEL = 1;
+	constexpr int PLAYER_LEVELS_PER_SPEED_BONUS = 1;
+
+	int player_Level_Up_Count = player_Level - 1;
+
+	_stat[MONSTER_HP] += player_Level_Up_Count * HP_BONUS_PER_PLAYER_LEVEL;
+	_stat[MONSTER_POWER] += player_Level_Up_Count * POWER_BONUS_PER_PLAYER_LEVEL;
+	_stat[MONSTER_DEFENCE] += player_Level_Up_Count * DEFENCE_BONUS_PER_PLAYER_LEVEL;
+	_stat[MONSTER_SPEED] += player_Level_Up_Count / PLAYER_LEVELS_PER_SPEED_BONUS;
+}
+
 void Monster::Initialize_Elite_Monster(Chapter_Type chapter_Type)
 {
 	_monster_Type = Monster_Type::CODE_SNIPPET_WRAITH;
 	_chapter_Type = chapter_Type;
 	_monster_Grade = Monster_Grade::ELITE;
 	_monster_Level = Get_Chapter_Number() * 3 + 1;
-	_monster_Name = "코드 스니펫의 망령";
-	_attack_Message = "코드 스니펫의 망령이 문제를 제시했다.";
+	_monster_Name = "코드스니펫의 망령";
+	_attack_Message = "코드스니펫의 망령이 문제를 제시했다.";
 
 	_stat[MONSTER_HP] = 0;
 	_stat[MONSTER_MP] = 0;

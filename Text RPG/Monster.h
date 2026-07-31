@@ -70,6 +70,7 @@ public:
 
     void Initialize_Elite_Monster(Chapter_Type chapter_Type);
     void Initialize_Tutor_Monster(Chapter_Type chapter_Type);
+    void Apply_Player_Level_Scaling(int player_Level);
 
     Monster
     (
