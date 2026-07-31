@@ -86,7 +86,7 @@ private:
 
 	// 12. 챕터 점수 및 이동 파트
 	void Add_Chapter_Score(int score_Reward); // 12-1. 현재 챕터 점수 추가
-	int Get_Required_Tutor_Score() const; // 12-2. 챕터별 튜터 도전 요구 명성치 계산
+	int Get_Required_Tutor_Score() const; // 12-2. 챕터별 튜터 도전 요구 점수 계산
 	bool Check_Tutor_Challenge_Available() const; // 12-3. 튜터 도전 가능 여부 확인
 	void Clear_Current_Chapter(); // 12-4. 현재 챕터 클리어 처리
 	void Move_Next_Chapter(); // 12-5. 다음 챕터 이동
