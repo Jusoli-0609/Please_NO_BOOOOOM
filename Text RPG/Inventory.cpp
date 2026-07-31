@@ -26,7 +26,15 @@ template<typename T>//1- 2복사 생성자
 Inventory<T>::Inventory(const Inventory<T>& other)// 기존 객체와 같은 상태를 가진 새 객체가 필요할 때 쓰임)
 {
     _Max_Inventory_Size = other._Max_Inventory_Size;
-    _Current_Quantity_Of_Items = other._Current_Quantity_Of_Items;
+    if (other._Current_Quantity_Of_Items > other._Max_Inventory_Size)
+    {
+        _Current_Quantity_Of_Items = other._Max_Inventory_Size;
+    }
+    else
+    {
+        _Current_Quantity_Of_Items =
+            min(other._Current_Quantity_Of_Items, other._Max_Inventory_Size);
+    }
     _Max_Capacity = other._Max_Capacity;
     _Inventory_Items = new T[_Max_Inventory_Size];
     for (int i = 0; i < _Current_Quantity_Of_Items; i++)
@@ -45,9 +53,10 @@ Inventory<T>& Inventory<T>::operator=(const Inventory<T>& other)//(다른 Inventor
     delete[] _Inventory_Items;
     _Max_Inventory_Size = other._Max_Inventory_Size;
     _Max_Capacity = other._Max_Capacity;
-    _Current_Quantity_Of_Items = other._Current_Quantity_Of_Items;
+    _Current_Quantity_Of_Items = min(other._Current_Quantity_Of_Items, other._Max_Inventory_Size);
     _Inventory_Items = new T[_Max_Inventory_Size];
-    for (int i = 0; i < _Current_Quantity_Of_Items; i++)
+    int Safe_Item_Count = min(_Current_Quantity_Of_Items, _Max_Inventory_Size);
+    for (int i = 0; i < Safe_Item_Count; i++)
     {
         _Inventory_Items[i] = other._Inventory_Items[i];
     }

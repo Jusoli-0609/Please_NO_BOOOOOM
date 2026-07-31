@@ -8,11 +8,11 @@ class Item
 {
 public:
     std::string _Item_Name;
-    int _Item_Price;
-    int _Item_Count;
-    int _Item_Weight;
-    bool _Item_Type_Usable;
-    bool _Item_Type_Wearable;
+    int _Item_Price=0;
+    int _Item_Count=0;
+    int _Item_Weight=0;
+    bool _Item_Type_Usable=false;
+    bool _Item_Type_Wearable=false;
     bool _Need_Item_Reverse_Effect=false;
     bool _Need_Reverse_Effect_Of_Attack_Potion_Buff = false;
     void Print_Info() const;//1.아이템 정보 내보내기
