@@ -1,4 +1,4 @@
-#include "PotionRecipe.h"
+#include "All_Recipes.h"
 #include <iostream>
 
 using namespace std;

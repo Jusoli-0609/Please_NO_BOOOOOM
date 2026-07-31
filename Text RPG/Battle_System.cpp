@@ -22,7 +22,7 @@ void Battle(Player* player, Monster& monster, Inventory<Item>& inventory)
 
     while (true)
     {
-        Show_Battle_Status(player, monster);
+        Show_Battle_Status(player, monster, turnCount);
 
         Player_Turn(player, monster, inventory);
 
