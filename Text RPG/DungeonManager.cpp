@@ -8,19 +8,24 @@ using namespace std;
 
 namespace
 {
-	constexpr int BASE_TUTOR_REQUIRED_SCORE = 500;
-	constexpr double CHAPTER_SCORE_MULTIPLIER = 1.3;
-	constexpr int NORMAL_MONSTER_TYPE_COUNT = 3;
-	constexpr int ELITE_APPEARANCE_RATE = 20;
+	constexpr int BASE_TUTOR_REQUIRED_SCORE = 500; // 챕터 1 튜터 도전에 필요한 기본 점수
+	constexpr double CHAPTER_SCORE_MULTIPLIER = 1.3; // 다음 챕터 요구 명성치 증가 배율
+	constexpr int NORMAL_MONSTER_TYPE_COUNT = 3; // 챕터별 일반 몬스터 종류 수
+	constexpr int ELITE_APPEARANCE_RATE = 20; // 정예 몬스터 등장 확률
 }
 
+//=============================================================================
+// 1. 던전 생성 및 메뉴 실행 파트
+//=============================================================================
+
+// 1-1. 던전 매니저 생성자
 Dungeon_Manager::Dungeon_Manager()
 	: _current_Chapter(Chapter_Type::VARIABLE_CONDITION_FOREST),
 	_is_All_Chapter_Cleared(false),
 	_current_Chapter_Score(0)
 {
 }
-
+// 1-2. 던전 메뉴 열기
 void Dungeon_Manager::Open_Dungeon(Player* player, Inventory<Item>& inventory)
 {
 	if (player == nullptr)
@@ -108,225 +113,21 @@ void Dungeon_Manager::Open_Dungeon(Player* player, Inventory<Item>& inventory)
 	}
 }
 
+//=============================================================================
+// 2. 챕터 상태 조회 및 출력 파트
+//=============================================================================
+
+// 2-1. 전체 챕터 클리어 여부 조회
 bool Dungeon_Manager::Check_All_Chapter_Cleared() const
 {
 	return _is_All_Chapter_Cleared;
 }
-
+// 2-2. 현재 챕터 점수 조회
 int Dungeon_Manager::Get_Current_Chapter_Score() const
 {
 	return _current_Chapter_Score;
 }
-
-void Dungeon_Manager::Record_Monster_Kill(const Monster& monster)
-{
-	Monster_Type monster_Type = monster.getMonsterType();
-
-	Monster_Kill_Record& kill_Record = _monster_Kill_Log
-		[_current_Chapter]
-		[monster_Type];
-
-	if (kill_Record.monster_Name.empty())
-	{
-		kill_Record.monster_Name = monster.getName();
-	}
-
-	kill_Record.monster_Grade = monster.getMonsterGrade();
-
-	kill_Record.kill_Count += 1;
-
-	kill_Record.earned_Score += monster.getScoreReward();
-
-	Monster_Kill_Count += 1;
-
-	if
-		(monster.getMonsterGrade() != Monster_Grade::TUTOR)
-	{
-		Add_Chapter_Score(monster.getScoreReward());
-	}
-}
-
-void Dungeon_Manager::Give_Drop_Items_To_Inventory(const Monster& monster, Inventory<Item>& inventory)
-{
-	const std::vector<Item>& drop_Items = monster.getDropItems();
-
-	for
-		(const Item& drop_Item : drop_Items)
-	{
-		bool is_Added = inventory.Add_Or_Increase_Item(drop_Item);
-
-		if (is_Added == false)
-		{
-			cout << drop_Item._Item_Name << " 획득을 취소했습니다." << endl;
-		}
-	}
-}
-
-void Dungeon_Manager::Print_Current_Chapter_Kill_Log() const
-{
-	cout << endl;
-	cout << "========================================" << endl;
-	cout << "[ " << Get_Chapter_Name(_current_Chapter) << " 처치 기록 ]" << endl;
-	cout << "========================================" << endl;
-
-	auto chapter_Log = _monster_Kill_Log.find (_current_Chapter);
-
-	if
-		(
-			chapter_Log
-			== _monster_Kill_Log.end()
-			|| chapter_Log->second.empty()
-			)
-	{
-		cout << "아직 처치한 몬스터가 없습니다." << endl;
-		cout << "========================================" << endl;
-
-		return;
-	}
-
-	int total_Kill_Count = 0;
-	int total_Earned_Score = 0;
-
-	for
-		(const auto& monster_Log : chapter_Log->second)
-	{
-		const Monster_Kill_Record& kill_Record = monster_Log.second;
-
-		cout << kill_Record.monster_Name << ": " << kill_Record.kill_Count;
-
-		if
-			(kill_Record.monster_Grade == Monster_Grade::TUTOR)
-		{
-			cout << "회 클리어";
-		}
-		else
-		{
-			cout << "마리";
-		}
-
-		cout << " / 획득 점수 " << kill_Record.earned_Score << endl;
-
-		total_Kill_Count += kill_Record.kill_Count;
-		total_Earned_Score += kill_Record.earned_Score;
-	}
-
-	cout << "----------------------------------------" << endl;
-	cout << "현재 챕터 총 처치 수: " << total_Kill_Count << "마리" << endl;
-	cout << "누적 획득 점수: " << total_Earned_Score << endl;
-	cout << "현재 적용 점수: " << _current_Chapter_Score << " / " << Get_Required_Tutor_Score() << endl;
-	cout << "========================================" << endl;
-}
-
-void Dungeon_Manager::Add_Chapter_Score(int score_Reward)
-{
-	if (score_Reward <= 0)
-	{
-		return;
-	}
-
-	int max_Chapter_Score =
-		Get_Required_Tutor_Score();
-
-	if
-		(_current_Chapter_Score >= max_Chapter_Score)
-	{
-		_current_Chapter_Score = max_Chapter_Score;
-		cout << "현재 챕터 점수가 이미 최대입니다." << endl;
-
-		return;
-	}
-
-	int previous_Score = _current_Chapter_Score;
-
-	_current_Chapter_Score += score_Reward;
-
-	if
-		(_current_Chapter_Score > max_Chapter_Score)
-	{
-		_current_Chapter_Score = max_Chapter_Score;
-	}
-
-	int added_Score = _current_Chapter_Score - previous_Score;
-
-	cout << "챕터 점수 +" << added_Score << endl;
-	cout << "현재 챕터 점수: " << _current_Chapter_Score << " / " << max_Chapter_Score << endl;
-
-	if
-		(_current_Chapter_Score >= max_Chapter_Score)
-	{
-		cout << "튜터님 시험 조건을 달성했습니다!" << endl;
-	}
-}
-
-int Dungeon_Manager::Get_Required_Tutor_Score() const
-{
-	int chapter_Number = 1;
-
-	switch (_current_Chapter)
-	{
-	case Chapter_Type::VARIABLE_CONDITION_FOREST:
-	{
-		chapter_Number = 1;
-
-		break;
-	}
-
-	case Chapter_Type::ARRAY_LOOP_OCEAN:
-	{
-		chapter_Number = 2;
-
-		break;
-	}
-
-	case Chapter_Type::FUNCTION_RUINS:
-	{
-		chapter_Number = 3;
-
-		break;
-	}
-
-	case Chapter_Type::POINTER_MEMORY_GRAVEYARD:
-	{
-		chapter_Number = 4;
-
-		break;
-	}
-
-	case Chapter_Type::OBJECT_STL_FACTORY:
-	{
-		chapter_Number = 5;
-
-		break;
-	}
-
-	default:
-	{
-		return 0;
-	}
-	}
-
-	double required_Score = BASE_TUTOR_REQUIRED_SCORE;
-
-	for
-		(
-			int chapter_Index = 1;
-			chapter_Index < chapter_Number;
-			chapter_Index++
-			)
-	{
-		required_Score *= CHAPTER_SCORE_MULTIPLIER;
-	}
-
-	return static_cast<int>
-		(required_Score + 0.5);
-}
-
-bool Dungeon_Manager::Check_Tutor_Challenge_Available() const
-{
-	return
-		_current_Chapter_Score >= Get_Required_Tutor_Score();
-}
-
+// 2-3. 현재 입장 가능한 챕터 출력
 void Dungeon_Manager::Print_Current_Chapter() const
 {
 	cout << endl;
@@ -335,7 +136,55 @@ void Dungeon_Manager::Print_Current_Chapter() const
 	cout << Get_Chapter_Name(_current_Chapter) << endl;
 	cout << "========================================" << endl;
 }
+// 2-4. 챕터 이름 변환
+string Dungeon_Manager::Get_Chapter_Name(Chapter_Type chapter_Type) const
 
+{
+	switch (chapter_Type)
+	{
+	case Chapter_Type::VARIABLE_CONDITION_FOREST:
+	{
+		return
+			"챕터 1 - 변수·조건문 숲";
+	}
+
+	case Chapter_Type::ARRAY_LOOP_OCEAN:
+	{
+		return
+			"챕터 2 - 배열·반복문 바다";
+	}
+
+	case Chapter_Type::FUNCTION_RUINS:
+	{
+		return
+			"챕터 3 - 함수 유적";
+	}
+
+	case Chapter_Type::POINTER_MEMORY_GRAVEYARD:
+	{
+		return
+			"챕터 4 - 포인터·메모리 묘지";
+	}
+
+	case Chapter_Type::OBJECT_STL_FACTORY:
+	{
+		return
+			"챕터 5 - 객체지향·STL 공장";
+	}
+
+	default:
+	{
+		return
+			"모든 일반 챕터 클리어";
+	}
+	}
+}
+
+//=============================================================================
+// 3. 현재 챕터 진행 파트
+//=============================================================================
+// 
+// 3-1. 현재 챕터 몬스터 및 정예 몬스터 이벤트 진행
 void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inventory)
 {
 	cout << endl;
@@ -385,66 +234,71 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inven
 		return;
 	}
 
-		Monster_Type random_Monster_Type = Get_Random_Normal_Monster();
-		Monster monster(random_Monster_Type);
+	Monster_Type random_Monster_Type = Get_Random_Normal_Monster();
+	Monster monster(random_Monster_Type);
 
-		if (player != nullptr)
-		{
-			monster.Apply_Player_Level_Scaling(player->getLevel());
-		}
-
-		cout << endl;
-		cout << "========================================" << endl;
-		cout << "[ 일반 몬스터 등장 ]" << endl;
-		cout << monster.getName() << "이(가) 나타났습니다!" << endl;
-		cout << "========================================" << endl;
-
-		monster.Print_Monster_Info();
-		monster.Generate_Drop_Reward();
-
-		Battle(player, monster, inventory);
-		if (player->getHp() <= 0)
-		{
-			cout << endl;
-			cout << "던전 공략에 실패했습니다." << endl;
-			return;
-		}
-
-		if (monster.getHP() > 0)
-		{
-			cout << endl;
-			cout << "몬스터를 처치하지 못했습니다." << endl;
-
-			return;
-		}
-		cout << endl;
-		cout << "========================================" << endl;
-		cout << "[ 일반 몬스터 처치 보상 ]" << endl;
-		cout << "========================================" << endl;
-
-		monster.Print_Drop_Reward();
-
-		Give_Drop_Items_To_Inventory(monster, inventory);
-
-		cout << "획득 훈련장려금: " << monster.getGoldReward() << "원" << endl;
-		cout << "========================================" << endl;
-		cout << endl;
-		cout << monster.getName() << " 처치 완료!" << endl;
-
-		Record_Monster_Kill(monster);
-
-		if (Check_Tutor_Challenge_Available())
-		{
-			cout << "튜터님 시험 조건을 달성했습니다!" << endl;
-		}
-		else
-		{
-			cout << "튜터님 시험까지 " << Get_Required_Tutor_Score() - _current_Chapter_Score << "점 남았습니다." << endl;
-		}
-
-		cout << "========================================" << endl;
+	if (player != nullptr)
+	{
+		monster.Apply_Player_Level_Scaling(player->getLevel());
 	}
 
+	cout << endl;
+	cout << "========================================" << endl;
+	cout << "[ 일반 몬스터 등장 ]" << endl;
+	cout << monster.getName() << "이(가) 나타났습니다!" << endl;
+	cout << "========================================" << endl;
+
+	monster.Print_Monster_Info();
+	monster.Generate_Drop_Reward();
+
+	Battle(player, monster, inventory);
+	if (player->getHp() <= 0)
+	{
+		cout << endl;
+		cout << "던전 공략에 실패했습니다." << endl;
+		return;
+	}
+
+	if (monster.getHP() > 0)
+	{
+		cout << endl;
+		cout << "몬스터를 처치하지 못했습니다." << endl;
+
+		return;
+	}
+	cout << endl;
+	cout << "========================================" << endl;
+	cout << "[ 일반 몬스터 처치 보상 ]" << endl;
+	cout << "========================================" << endl;
+
+	monster.Print_Drop_Reward();
+
+	Give_Drop_Items_To_Inventory(monster, inventory);
+
+	cout << "획득 훈련장려금: " << monster.getGoldReward() << "원" << endl;
+	cout << "========================================" << endl;
+	cout << endl;
+	cout << monster.getName() << " 처치 완료!" << endl;
+
+	Record_Monster_Kill(monster);
+
+	if (Check_Tutor_Challenge_Available())
+	{
+		cout << "튜터님 시험 조건을 달성했습니다!" << endl;
+	}
+	else
+	{
+		cout << "튜터님 시험까지 " << Get_Required_Tutor_Score() - _current_Chapter_Score << "점 남았습니다." << endl;
+	}
+
+	cout << "========================================" << endl;
+}
+
+//=============================================================================
+// 4. 일반 몬스터 선택 파트
+//=============================================================================
+
+// 4-1. 현재 챕터 일반 몬스터 목록 구성
 void Dungeon_Manager::Get_Current_Chapter_Monsters(Monster_Type monster_Types[]) const
 {
 	switch (_current_Chapter)
@@ -504,7 +358,7 @@ void Dungeon_Manager::Get_Current_Chapter_Monsters(Monster_Type monster_Types[])
 	}
 	}
 }
-
+// 4-2. 현재 챕터 일반 몬스터 랜덤 선택
 Monster_Type Dungeon_Manager::Get_Random_Normal_Monster() const
 {
 	Monster_Type monster_Types
@@ -517,6 +371,11 @@ Monster_Type Dungeon_Manager::Get_Random_Normal_Monster() const
 	return monster_Types[random_Index];
 }
 
+//=============================================================================
+// 5. 정예 몬스터 문제 파트
+//=============================================================================
+
+// 5-1. 정예 몬스터 등장 확률 판정
 bool Dungeon_Manager::Check_Elite_Monster_Appearance() const
 {
 	int appearance_Roll = rand() % 100 + 1;
@@ -524,7 +383,7 @@ bool Dungeon_Manager::Check_Elite_Monster_Appearance() const
 	return
 		appearance_Roll <= ELITE_APPEARANCE_RATE;
 }
-
+// 5-2. 챕터별 정예 문제 랜덤 선택
 Elite_Question Dungeon_Manager::Get_Elite_Question(Chapter_Type chapter_Type) const
 {
 	Elite_Question elite_Questions[3];
@@ -744,7 +603,83 @@ Elite_Question Dungeon_Manager::Get_Elite_Question(Chapter_Type chapter_Type) co
 	return
 		elite_Questions[random_Question_Index];
 }
+// 5-3. 정예 문제 출력 및 정답 판정
+bool Run_Elite_Question(const Elite_Question& elite_Question);
+// 5-4. 정예 몬스터 퀴즈 전체 진행
+bool Dungeon_Manager::Run_Elite_Quiz(Monster& elite_Monster)
+{
+	Elite_Question elite_Question = Get_Elite_Question(elite_Monster.getChapterType());
 
+	int player_Answer = 0;
+
+	cout << endl;
+	cout << "========================================" << endl;
+	cout << "[ 정예 몬스터 등장 ]" << endl;
+	cout << elite_Monster.getName() << "이(가) 나타났습니다!" << endl;
+	cout << "\"코드스니펫을 복사했습니다.\"" << endl;
+	cout << "========================================" << endl;
+	cout << endl;
+	cout << elite_Question.question << endl;
+	cout << endl;
+
+	for
+		(
+			int choice_Index = 0;
+			choice_Index < 4;
+			choice_Index++
+			)
+	{
+		cout << choice_Index + 1 << ". " << elite_Question.choices[choice_Index] << endl;
+	}
+
+	while (true)
+	{
+		cout << endl;
+		cout << "정답 입력 (1~4): ";
+
+		cin >> player_Answer;
+
+		if (cin.fail())
+		{
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+			cout << "숫자를 입력해주세요." << endl;
+
+			continue;
+		}
+
+		if
+			(player_Answer >= 1 && player_Answer <= 4)
+		{
+			break;
+		}
+
+		cout << "1번부터 4번 사이의 번호를 입력해주세요." << endl;
+	}
+
+	if
+		(player_Answer == elite_Question.correct_Answer)
+	{
+		cout << endl;
+		cout << "정답입니다!" << endl;
+		cout << "코드스니펫의 망령을 처치했습니다." << endl;
+
+		return true;
+	}
+
+	cout << endl;
+	cout << "오답입니다!" << endl;
+	cout << "코드스니펫의 망령이 비웃으며 도망갔습니다.ㅋ" << endl;
+
+	return false;
+}
+
+//=============================================================================
+// 6. 튜터 문제 및 대사 파트
+//=============================================================================
+
+// 6-1. 챕터별 튜터 문제 구성
 void Dungeon_Manager::Get_Tutor_Questions(Chapter_Type chapter_Type, Tutor_Question tutor_Questions[]) const
 {
 	switch (chapter_Type)
@@ -804,7 +739,7 @@ void Dungeon_Manager::Get_Tutor_Questions(Chapter_Type chapter_Type, Tutor_Quest
 	{
 		tutor_Questions[0].description = "메모리 주소를 저장하는 변수의 종류를 영어로 입력하세요.";
 		tutor_Questions[0].code = "int value = 10;\n" "int* value_Pointer = &value;\n" "// value_Pointer의 종류: ____";
-		tutor_Questions[0].correct_Answer ="pointer";
+		tutor_Questions[0].correct_Answer = "pointer";
 
 		tutor_Questions[1].description = "포인터가 아무 주소도 가리키지 않는 상태를 영어로 입력하세요.";
 		tutor_Questions[1].code = "int* value_Pointer = nullptr;\n" "// 값이 없는 상태: ____";
@@ -852,7 +787,7 @@ void Dungeon_Manager::Get_Tutor_Questions(Chapter_Type chapter_Type, Tutor_Quest
 	}
 	}
 }
-
+// 6-2. 챕터별 튜터 대사 구성
 Tutor_Dialogue Dungeon_Manager::Get_Tutor_Dialogue(Chapter_Type chapter_Type) const
 {
 	Tutor_Dialogue tutor_Dialogue;
@@ -864,7 +799,7 @@ Tutor_Dialogue Dungeon_Manager::Get_Tutor_Dialogue(Chapter_Type chapter_Type) co
 		tutor_Dialogue.appearance_Message = "등장";
 		tutor_Dialogue.correct_Message = "맞음";
 		tutor_Dialogue.wrong_Message = "틀림";
-		tutor_Dialogue.exit_Message ="퇴장";
+		tutor_Dialogue.exit_Message = "퇴장";
 
 		break;
 	}
@@ -922,14 +857,14 @@ Tutor_Dialogue Dungeon_Manager::Get_Tutor_Dialogue(Chapter_Type chapter_Type) co
 
 	return tutor_Dialogue;
 }
-
+// 6-3. 튜터 코드 문제 3개 진행
 bool Dungeon_Manager::Run_Tutor_Code_Challenge(const Monster& tutor_Monster)
 {
 	Tutor_Question tutor_Questions[TUTOR_QUESTION_COUNT];
 
 	Get_Tutor_Questions(_current_Chapter, tutor_Questions);
 
-	Tutor_Dialogue tutor_Dialogue =Get_Tutor_Dialogue(_current_Chapter);
+	Tutor_Dialogue tutor_Dialogue = Get_Tutor_Dialogue(_current_Chapter);
 
 	int correct_Count = 0;
 
@@ -1001,76 +936,7 @@ bool Dungeon_Manager::Run_Tutor_Code_Challenge(const Monster& tutor_Monster)
 
 	return is_Cleared;
 }
-
-bool Dungeon_Manager::Run_Elite_Quiz(Monster& elite_Monster)
-{
-	Elite_Question elite_Question = Get_Elite_Question(elite_Monster.getChapterType());
-
-	int player_Answer = 0;
-
-	cout << endl;
-	cout << "========================================" << endl;
-	cout << "[ 정예 몬스터 등장 ]" << endl;
-	cout << elite_Monster.getName() << "이(가) 나타났습니다!" << endl;
-	cout << "\"코드스니펫을 복사했습니다.\"" << endl;
-	cout << "========================================" << endl;
-	cout << endl;
-	cout << elite_Question.question << endl;
-	cout << endl;
-
-	for
-		(
-			int choice_Index = 0;
-			choice_Index < 4;
-			choice_Index++
-			)
-	{
-		cout << choice_Index + 1 << ". " << elite_Question.choices[choice_Index] << endl;
-	}
-
-	while (true)
-	{
-		cout << endl;
-		cout << "정답 입력 (1~4): ";
-
-		cin >> player_Answer;
-
-		if (cin.fail())
-		{
-			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-			cout << "숫자를 입력해주세요." << endl;
-
-			continue;
-		}
-
-		if
-			(player_Answer >= 1 && player_Answer <= 4)
-		{
-			break;
-		}
-
-		cout << "1번부터 4번 사이의 번호를 입력해주세요." << endl;
-	}
-
-	if
-		(player_Answer== elite_Question.correct_Answer)
-	{
-		cout << endl;
-		cout << "정답입니다!" << endl;
-		cout << "코드스니펫의 망령을 처치했습니다." << endl;
-
-		return true;
-	}
-
-	cout << endl;
-	cout << "오답입니다!" << endl;
-	cout << "코드스니펫의 망령이 비웃으며 도망갔습니다.ㅋ" << endl;
-
-	return false;
-}
-
+// 6-4. 튜터 도전 및 클리어 처리
 void Dungeon_Manager::Run_Tutor_Challenge(Player* player, Inventory<Item>& inventory)
 {
 	if
@@ -1128,6 +994,224 @@ void Dungeon_Manager::Run_Tutor_Challenge(Player* player, Inventory<Item>& inven
 	Clear_Current_Chapter();
 }
 
+//=============================================================================
+// 7. 처치 기록 및 일반 보상 파트
+//=============================================================================
+
+// 7-1. 몬스터 처치 및 튜터 클리어 기록 저장
+void Dungeon_Manager::Record_Monster_Kill(const Monster& monster)
+{
+	Monster_Type monster_Type = monster.getMonsterType();
+
+	Monster_Kill_Record& kill_Record = _monster_Kill_Log
+		[_current_Chapter]
+		[monster_Type];
+
+	if (kill_Record.monster_Name.empty())
+	{
+		kill_Record.monster_Name = monster.getName();
+	}
+
+	kill_Record.monster_Grade = monster.getMonsterGrade();
+
+	kill_Record.kill_Count += 1;
+
+	kill_Record.earned_Score += monster.getScoreReward();
+
+	Monster_Kill_Count += 1;
+
+	if
+		(monster.getMonsterGrade() != Monster_Grade::TUTOR)
+	{
+		Add_Chapter_Score(monster.getScoreReward());
+	}
+}
+// 7-2. 현재 챕터 처치 기록 출력
+void Dungeon_Manager::Print_Current_Chapter_Kill_Log() const
+{
+	cout << endl;
+	cout << "========================================" << endl;
+	cout << "[ " << Get_Chapter_Name(_current_Chapter) << " 처치 기록 ]" << endl;
+	cout << "========================================" << endl;
+
+	auto chapter_Log = _monster_Kill_Log.find(_current_Chapter);
+
+	if
+		(
+			chapter_Log
+			== _monster_Kill_Log.end()
+			|| chapter_Log->second.empty()
+			)
+	{
+		cout << "아직 처치한 몬스터가 없습니다." << endl;
+		cout << "========================================" << endl;
+
+		return;
+	}
+
+	int total_Kill_Count = 0;
+	int total_Earned_Score = 0;
+
+	for
+		(const auto& monster_Log : chapter_Log->second)
+	{
+		const Monster_Kill_Record& kill_Record = monster_Log.second;
+
+		cout << kill_Record.monster_Name << ": " << kill_Record.kill_Count;
+
+		if
+			(kill_Record.monster_Grade == Monster_Grade::TUTOR)
+		{
+			cout << "회 클리어";
+		}
+		else
+		{
+			cout << "마리";
+		}
+
+		cout << " / 획득 점수 " << kill_Record.earned_Score << endl;
+
+		total_Kill_Count += kill_Record.kill_Count;
+		total_Earned_Score += kill_Record.earned_Score;
+	}
+
+	cout << "----------------------------------------" << endl;
+	cout << "현재 챕터 총 처치 수: " << total_Kill_Count << "마리" << endl;
+	cout << "누적 획득 점수: " << total_Earned_Score << endl;
+	cout << "현재 적용 점수: " << _current_Chapter_Score << " / " << Get_Required_Tutor_Score() << endl;
+	cout << "========================================" << endl;
+}
+// 7-3. 드롭 아이템 인벤토리 지급
+void Dungeon_Manager::Give_Drop_Items_To_Inventory(const Monster& monster, Inventory<Item>& inventory)
+{
+	const std::vector<Item>& drop_Items = monster.getDropItems();
+
+	for
+		(const Item& drop_Item : drop_Items)
+	{
+		bool is_Added = inventory.Add_Or_Increase_Item(drop_Item);
+
+		if (is_Added == false)
+		{
+			cout << drop_Item._Item_Name << " 획득을 취소했습니다." << endl;
+		}
+	}
+}
+
+//=============================================================================
+// 8. 챕터 점수 및 이동 파트
+//=============================================================================
+// 8-1. 현재 챕터 점수 추가
+void Dungeon_Manager::Add_Chapter_Score(int score_Reward)
+{
+	if (score_Reward <= 0)
+	{
+		return;
+	}
+
+	int max_Chapter_Score =
+		Get_Required_Tutor_Score();
+
+	if
+		(_current_Chapter_Score >= max_Chapter_Score)
+	{
+		_current_Chapter_Score = max_Chapter_Score;
+		cout << "현재 챕터 점수가 이미 최대입니다." << endl;
+
+		return;
+	}
+
+	int previous_Score = _current_Chapter_Score;
+
+	_current_Chapter_Score += score_Reward;
+
+	if
+		(_current_Chapter_Score > max_Chapter_Score)
+	{
+		_current_Chapter_Score = max_Chapter_Score;
+	}
+
+	int added_Score = _current_Chapter_Score - previous_Score;
+
+	cout << "챕터 점수 +" << added_Score << endl;
+	cout << "현재 챕터 점수: " << _current_Chapter_Score << " / " << max_Chapter_Score << endl;
+
+	if
+		(_current_Chapter_Score >= max_Chapter_Score)
+	{
+		cout << "튜터님 시험 조건을 달성했습니다!" << endl;
+	}
+}
+// 8-2. 챕터별 튜터 도전 요구 점수 계산
+int Dungeon_Manager::Get_Required_Tutor_Score() const
+{
+	int chapter_Number = 1;
+
+	switch (_current_Chapter)
+	{
+	case Chapter_Type::VARIABLE_CONDITION_FOREST:
+	{
+		chapter_Number = 1;
+
+		break;
+	}
+
+	case Chapter_Type::ARRAY_LOOP_OCEAN:
+	{
+		chapter_Number = 2;
+
+		break;
+	}
+
+	case Chapter_Type::FUNCTION_RUINS:
+	{
+		chapter_Number = 3;
+
+		break;
+	}
+
+	case Chapter_Type::POINTER_MEMORY_GRAVEYARD:
+	{
+		chapter_Number = 4;
+
+		break;
+	}
+
+	case Chapter_Type::OBJECT_STL_FACTORY:
+	{
+		chapter_Number = 5;
+
+		break;
+	}
+
+	default:
+	{
+		return 0;
+	}
+	}
+
+	double required_Score = BASE_TUTOR_REQUIRED_SCORE;
+
+	for
+		(
+			int chapter_Index = 1;
+			chapter_Index < chapter_Number;
+			chapter_Index++
+			)
+	{
+		required_Score *= CHAPTER_SCORE_MULTIPLIER;
+	}
+
+	return static_cast<int>
+		(required_Score + 0.5);
+}
+// 8-3. 튜터 도전 가능 여부 확인
+bool Dungeon_Manager::Check_Tutor_Challenge_Available() const
+{
+	return
+		_current_Chapter_Score >= Get_Required_Tutor_Score();
+}
+// 8-4. 현재 챕터 클리어 처리
 void Dungeon_Manager::Clear_Current_Chapter()
 {
 	cout << endl;
@@ -1150,7 +1234,7 @@ void Dungeon_Manager::Clear_Current_Chapter()
 			<< Get_Chapter_Name (_current_Chapter) << "이(가) 열렸습니다!" << endl;
 	}
 }
-
+// 8-5. 다음 챕터 이동
 void Dungeon_Manager::Move_Next_Chapter()
 {
 	switch (_current_Chapter)
@@ -1198,49 +1282,11 @@ void Dungeon_Manager::Move_Next_Chapter()
 	}
 }
 
-string Dungeon_Manager::Get_Chapter_Name(Chapter_Type chapter_Type) const
+//=============================================================================
+// 9. 튜터 고유 아이템 및 최종보스방 조건 파트
+//=============================================================================
 
-{
-	switch (chapter_Type)
-	{
-	case Chapter_Type::VARIABLE_CONDITION_FOREST:
-	{
-		return
-			"챕터 1 - 변수·조건문 숲";
-	}
-
-	case Chapter_Type::ARRAY_LOOP_OCEAN:
-	{
-		return
-			"챕터 2 - 배열·반복문 바다";
-	}
-
-	case Chapter_Type::FUNCTION_RUINS:
-	{
-		return
-			"챕터 3 - 함수 유적";
-	}
-
-	case Chapter_Type::POINTER_MEMORY_GRAVEYARD:
-	{
-		return
-			"챕터 4 - 포인터·메모리 묘지";
-	}
-
-	case Chapter_Type::OBJECT_STL_FACTORY:
-	{
-		return
-			"챕터 5 - 객체지향·STL 공장";
-	}
-
-	default:
-	{
-		return
-			"모든 일반 챕터 클리어";
-	}
-	}
-}
-
+// 9-1. 챕터별 튜터 고유 아이템 생성
 Item Dungeon_Manager::Create_Tutor_Clear_Item(Chapter_Type chapter_Type) const
 {
 	Item tutor_Item;
@@ -1303,7 +1349,7 @@ Item Dungeon_Manager::Create_Tutor_Clear_Item(Chapter_Type chapter_Type) const
 
 	return tutor_Item;
 }
-
+// 9-2. 인벤토리 아이템 보유 여부 확인
 bool Dungeon_Manager::Has_Item_In_Inventory(Inventory<Item>& inventory, const std::string& item_Name) const
 {
 	for
@@ -1328,7 +1374,7 @@ bool Dungeon_Manager::Has_Item_In_Inventory(Inventory<Item>& inventory, const st
 
 	return false;
 }
-
+// 9-3. 튜터 고유 아이템 확정 지급
 bool Dungeon_Manager::Give_Tutor_Clear_Item(Chapter_Type chapter_Type, Inventory<Item>& inventory)
 {
 	Item tutor_Item =Create_Tutor_Clear_Item(chapter_Type);
@@ -1376,7 +1422,7 @@ bool Dungeon_Manager::Give_Tutor_Clear_Item(Chapter_Type chapter_Type, Inventory
 
 	return true;
 }
-
+// 9-4. 최종보스방 개방 조건 확인
 bool Dungeon_Manager::Check_Final_Boss_Room_Available(Inventory<Item>& inventory) const
 {
 	bool has_Mouse = Has_Item_In_Inventory(inventory, "손승현 튜터님의 로지텍 마우스");
@@ -1397,7 +1443,7 @@ bool Dungeon_Manager::Check_Final_Boss_Room_Available(Inventory<Item>& inventory
 		&& has_Virtual_Cat
 		&& has_Glasses;
 }
-
+// 튜터 아이템 5종 보유 여부 확인
 void Dungeon_Manager::Print_Tutor_Item_Status(Inventory<Item>& inventory) const
 {
 	cout << endl;
@@ -1454,9 +1500,7 @@ void Dungeon_Manager::Print_Tutor_Item_Status(Inventory<Item>& inventory) const
 	}
 	cout << "========================================" << endl;
 }
-
-bool Run_Elite_Question(const Elite_Question& elite_Question);
-
+// 9-5. 튜터 고유 아이템 수집 현황 출력
 bool Dungeon_Manager::Run_Elite_Question(const Elite_Question& elite_Question)
 {
 	cout << endl;
