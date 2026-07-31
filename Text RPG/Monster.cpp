@@ -714,6 +714,15 @@ void Monster::Print_Monster_Info() const
 	cout << "드롭 아이템: " << _drop_Item_Name << " " << _drop_Item_Count << "개" << endl;
 	cout << "훈련장려금: " << _gold_Reward << " 원" << endl;
 
+	if
+		(
+			_drop_Item_Count > 0
+			&& _drop_Item_Name.empty() == false
+			)
+	{
+		cout << "드롭 아이템: " << _drop_Item_Name << " " << _drop_Item_Count << "개" << endl;
+        cout << "훈련장려금: " << _gold_Reward << "원" << endl;
+	}
 }
 
 void Monster::Print_Attack_Message() const

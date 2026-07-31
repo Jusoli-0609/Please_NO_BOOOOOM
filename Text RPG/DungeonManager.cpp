@@ -233,6 +233,8 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inven
 		{
 			elite_Monster.Generate_Drop_Reward();
 
+			player->Gain_Exp(elite_Monster.getExpReward());
+
 			cout << endl;
 			cout << "========================================" << endl;
 			cout << "[ 정예 몬스터 처치 보상 ]" << endl;
@@ -266,6 +268,7 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inven
 	cout << "========================================" << endl;
 
 	monster.Print_Monster_Info();
+	monster.Generate_Drop_Reward();
 
 	Battle(player, monster, inventory);
 	if (player->getHp() <= 0)
@@ -286,6 +289,7 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inven
 	cout << endl;
 
 	cout << monster.getName() << " 처치 완료!" << endl;
+	cout << "획득 훈련장려금: " << monster.getGoldReward() << "원" << endl;
 	Monster_Kill_Count += 1;
 	Add_Chapter_Score(monster.getScoreReward());
 

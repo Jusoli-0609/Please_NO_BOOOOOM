@@ -42,7 +42,7 @@ enum class Monster_Grade
 {
     NORMAL,
     ELITE,
-    TUTODBR,
+    TUTOR,
     FINAL_BOSS
 };
 
@@ -78,7 +78,7 @@ public:
 
     int getHP() const;
     int getPower() const;
-    int getDefence() const;;
+    int getDefence() const;
     int getSpeed() const;
     int getEvasion() const;
     int getAccuracy() const;
