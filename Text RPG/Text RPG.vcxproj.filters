@@ -13,12 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="헤더 파일\Job">
-      <UniqueIdentifier>{20f10a61-dcdc-4978-b7ee-cd1a699291a4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Job">
-      <UniqueIdentifier>{dadad780-12bf-4d4f-970b-17e36d1dfcd9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Item">
       <UniqueIdentifier>{8988196a-4e5c-4e99-b320-05500c7e7f27}</UniqueIdentifier>
     </Filter>
@@ -41,18 +35,6 @@
     </ClCompile>
     <ClCompile Include="Battle_System.cpp">
       <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Archer.cpp">
-      <Filter>소스 파일\Job</Filter>
-    </ClCompile>
-    <ClCompile Include="Magician.cpp">
-      <Filter>소스 파일\Job</Filter>
-    </ClCompile>
-    <ClCompile Include="Thief.cpp">
-      <Filter>소스 파일\Job</Filter>
-    </ClCompile>
-    <ClCompile Include="Warrior.cpp">
-      <Filter>소스 파일\Job</Filter>
     </ClCompile>
     <ClCompile Include="Craft_Item.cpp">
       <Filter>소스 파일\Item</Filter>
@@ -112,18 +94,6 @@
     </ClInclude>
     <ClInclude Include="Craft_Item.h">
       <Filter>헤더 파일\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Warrior.h">
-      <Filter>헤더 파일\Job</Filter>
-    </ClInclude>
-    <ClInclude Include="Thief.h">
-      <Filter>헤더 파일\Job</Filter>
-    </ClInclude>
-    <ClInclude Include="Archer.h">
-      <Filter>헤더 파일\Job</Filter>
-    </ClInclude>
-    <ClInclude Include="Magician.h">
-      <Filter>헤더 파일\Job</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
       <Filter>헤더 파일\Item</Filter>
