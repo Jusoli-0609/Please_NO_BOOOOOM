@@ -22,7 +22,9 @@ JYJ::JYJ(const std::string& name)
         10,  // DEF
         100, // AP
         5,   // SNE
-        10   // AGI
+        10,   // AGI
+        200, //MAXHP
+        100 //MAXMP
     );
 }
 

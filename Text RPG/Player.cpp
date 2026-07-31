@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include "Player.h"
 
 Player::Player(const std::string& name)
@@ -11,12 +11,13 @@ Player::Player(const std::string& name)
     ap(100),
     sne(0),
     agi(0),
+    maxhp(200),
+    maxmp(100),
     level(1),
     maxexp(100),
     exp(0)
 {
 }
-
 void Player::Set_Start_Stat(
     int hp,
     int mp,
@@ -36,6 +37,8 @@ void Player::Set_Start_Stat(
     this->ap = ap;
     this->sne = sne;
     this->agi = agi;
+    this->maxhp = maxhp;
+    this->maxmp = maxmp;
 }
 
 int Player::Calculate_Damage(

@@ -35,15 +35,6 @@ protected:
         int maxmp
     );
 
-    int Calculate_Damage(
-        float atkRatio,
-        float defRatio,
-        float hpRatio,
-        float mpRatio,
-        float sneRatio,
-        float agiRatio,
-        int targetDef
-    ) const;
 
 public:
     Player(const std::string& name);
@@ -56,6 +47,17 @@ public:
     virtual void Groggy_Attack(Monster* monster) = 0;
 
     void Print_Status() const;
+
+    int Calculate_Damage(
+        float atkRatio,
+        float defRatio,
+        float hpRatio,
+        float mpRatio,
+        float sneRatio,
+        float agiRatio,
+        int targetDef
+    ) const;
+
 
     std::string Get_Name() const;
     std::string Get_Job() const;
