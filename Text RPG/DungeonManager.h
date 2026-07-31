@@ -3,12 +3,20 @@
 #include "Monster.h"
 #include "Player.h"
 #include <string>
+#include <map>
 
 struct Elite_Question
 {
 	std::string question;
 	std::string choices[4];
 	int correct_Answer;
+};
+
+struct Monster_Kill_Record
+{
+	std::string monster_Name;
+	int kill_Count = 0;
+	int earned_Score = 0;
 };
 
 constexpr int MONSTERS_PER_CHAPTER = 3;
@@ -23,6 +31,8 @@ public:
 	bool Check_All_Chapter_Cleared() const;
 
 	int Get_Current_Chapter_Score() const;
+
+	void Print_Current_Chapter_Kill_Log() const;
 
 	int Monster_Kill_Count=0;
 
@@ -42,6 +52,7 @@ private:
 
 	bool Check_Elite_Monster_Appearance() const;
 
+	void Record_Monster_Kill(const Monster& monster);
 	void Add_Chapter_Score(int score_Reward);
 
 	int Get_Required_Tutor_Score() const;
@@ -58,4 +69,14 @@ private:
 	bool _is_All_Chapter_Cleared;
 
 	int _current_Chapter_Score;
+
+	std::map
+		<
+		Chapter_Type,
+		std::map
+		<
+		Monster_Type,
+		Monster_Kill_Record
+		>
+		> _monster_Kill_Log;
 };

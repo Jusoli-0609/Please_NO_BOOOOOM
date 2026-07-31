@@ -39,9 +39,8 @@ void Dungeon_Manager::Open_Dungeon(Player* player, Inventory<Item>& inventory)
 
 	Print_Current_Chapter();
 
-	cout << "현재 챕터 점수: " << _current_Chapter_Score << endl;
-
-	cout << "튜터 도전 요구 점수: " << Get_Required_Tutor_Score() << endl;
+	cout << "튜터 도전까지 " << Get_Required_Tutor_Score() - _current_Chapter_Score << "점 남았습니다." << endl;
+	cout << "튜터 도전까지 점수 " << Get_Required_Tutor_Score() - _current_Chapter_Score << "이(가) 남았습니다." << endl;
 
 	if (Check_Tutor_Challenge_Available())
 	{
@@ -56,6 +55,7 @@ void Dungeon_Manager::Open_Dungeon(Player* player, Inventory<Item>& inventory)
 
 	cout << endl;
 	cout << "1. 현재 챕터 입장" << endl;
+	cout << "2. 몬스터 처치 기록 확인" << endl;
 	cout << "0. 메인 메뉴로 돌아가기" << endl;
 	cout << "선택: ";
 
@@ -66,6 +66,13 @@ void Dungeon_Manager::Open_Dungeon(Player* player, Inventory<Item>& inventory)
 	case 1:
 	{
 		Run_Current_Chapter(player, inventory);
+
+		break;
+	}
+
+	case 2:
+	{
+		Print_Current_Chapter_Kill_Log();
 
 		break;
 	}
@@ -94,6 +101,72 @@ bool Dungeon_Manager::Check_All_Chapter_Cleared() const
 int Dungeon_Manager::Get_Current_Chapter_Score() const
 {
 	return _current_Chapter_Score;
+}
+
+void Dungeon_Manager::Record_Monster_Kill(const Monster& monster)
+{
+	Monster_Type monster_Type = monster.getMonsterType();
+
+	Monster_Kill_Record& kill_Record =
+		_monster_Kill_Log
+		[_current_Chapter]
+		[monster_Type];
+
+	if (kill_Record.monster_Name.empty())
+	{
+		kill_Record.monster_Name = monster.getName();
+	}
+
+	kill_Record.kill_Count += 1;
+
+	kill_Record.earned_Score += monster.getScoreReward();
+
+	Monster_Kill_Count += 1;
+
+	Add_Chapter_Score(monster.getScoreReward());
+}
+
+void Dungeon_Manager::Print_Current_Chapter_Kill_Log() const
+{
+	cout << endl;
+	cout << "========================================" << endl;
+	cout << "[ " << Get_Chapter_Name(_current_Chapter) << " 처치 기록 ]" << endl;
+	cout << "========================================" << endl;
+
+	auto chapter_Log = _monster_Kill_Log.find (_current_Chapter);
+
+	if
+		(
+			chapter_Log
+			== _monster_Kill_Log.end()
+			|| chapter_Log->second.empty()
+			)
+	{
+		cout << "아직 처치한 몬스터가 없습니다." << endl;
+		cout << "========================================" << endl;
+
+		return;
+	}
+
+	int total_Kill_Count = 0;
+	int total_Earned_Score = 0;
+
+	for
+		(const auto& monster_Log : chapter_Log->second)
+	{
+		const Monster_Kill_Record& kill_Record = monster_Log.second;
+
+		cout << kill_Record.monster_Name << ": " << kill_Record.kill_Count << "마리" << " / 획득 점수 " << kill_Record.earned_Score << endl;
+
+		total_Kill_Count += kill_Record.kill_Count;
+		total_Earned_Score += kill_Record.earned_Score;
+	}
+
+	cout << "----------------------------------------" << endl;
+	cout << "현재 챕터 총 처치 수: " << total_Kill_Count << "마리" << endl;
+	cout << "누적 획득 점수: " << total_Earned_Score << endl;
+	cout << "현재 적용 점수: " << _current_Chapter_Score << " / " << Get_Required_Tutor_Score() << endl;
+	cout << "========================================" << endl;
 }
 
 void Dungeon_Manager::Add_Chapter_Score(int score_Reward)
@@ -244,7 +317,7 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inven
 			cout << "획득 아이템: " << elite_Monster.getDropItemName() << " " << elite_Monster.getDropItemCount() << "개" << endl;
 			cout << "획득 훈련장려금: " << elite_Monster.getGoldReward() << " 원" << endl;
 
-			Add_Chapter_Score(elite_Monster.getScoreReward());
+			Record_Monster_Kill(elite_Monster);
 		}
 		else
 		{
@@ -289,13 +362,12 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inven
 	cout << endl;
 
 	cout << monster.getName() << " 처치 완료!" << endl;
-	cout << "획득 훈련장려금: " << monster.getGoldReward() << "원" << endl;
-	Monster_Kill_Count += 1;
-	Add_Chapter_Score(monster.getScoreReward());
 
+	Record_Monster_Kill(monster);
+
+	cout << "획득 훈련장려금: " << monster.getGoldReward() << "원" << endl;
 	cout << endl;
 	cout << "========================================" << endl;
-
 	cout << "현재 챕터 점수: " << _current_Chapter_Score << " / " << Get_Required_Tutor_Score() << endl;
 
 	if (Check_Tutor_Challenge_Available())
@@ -614,6 +686,7 @@ string Dungeon_Manager::Get_Chapter_Name
 (
 	Chapter_Type chapter_Type
 ) const
+
 {
 	switch (chapter_Type)
 	{
