@@ -75,7 +75,7 @@
     <ClCompile Include="Equipment.cpp">
       <Filter>소스 파일\Item</Filter>
     </ClCompile>
-    <ClCompile Include="Item_Factory.cpp">
+    <ClCompile Include="Basic_Sword.cpp">
       <Filter>소스 파일\Item</Filter>
     </ClCompile>
   </ItemGroup>
@@ -134,7 +134,7 @@
     <ClInclude Include="Equipment.h">
       <Filter>헤더 파일\Item</Filter>
     </ClInclude>
-    <ClInclude Include="Item_Factory.h">
+    <ClInclude Include="Basic_Sword.h">
       <Filter>헤더 파일\Item</Filter>
     </ClInclude>
   </ItemGroup>
