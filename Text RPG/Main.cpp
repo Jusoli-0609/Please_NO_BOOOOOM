@@ -1,30 +1,37 @@
-#include "Console_Manager.h"
-#include "DungeonManager.h"
 #include <iostream>
-#include <string>
 
+#include "Battle_System.h"
+#include "JYJ.h"
+#include "Monster.h"
+#include "Inventory.h"
+#include "Item.h"
 
 using namespace std;
 
-void PrintLine()
-{
-    cout << string(50, '=') << endl;
-}
-void Intro();
-
 int main()
 {
-  
-    Console_Manager Console(120, 40);
-   
-    
-    Console.Set_Console_Size();
-    Console.Clear();
-    Console.Set_Cursor_Position(15, 10);
-    Console.Slow_Print("눈 떠보니 코드 마스터", 50);
-    PrintLine();
-    Intro();
-    //직업 선택
- 
+    // ==========================
+    // 테스트용 플레이어 생성
+    // ==========================
+    Player* player = new JYJ("테스터");
+
+    // ==========================
+    // 테스트용 몬스터 생성
+    // ==========================
+    Monster monster(Monster_Type::CODE_SNIPPET_WRAITH);
+
+    // ==========================
+    // 테스트용 인벤토리 생성
+    // ==========================
+    Inventory<Item> inventory(20, 100);
+
+    cout << "==============================" << endl;
+    cout << "      Battle Test Start" << endl;
+    cout << "==============================" << endl;
+
+    Battle(player, monster, inventory);
+
+    delete player;
+
     return 0;
 }

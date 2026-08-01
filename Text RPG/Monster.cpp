@@ -385,7 +385,7 @@ void Monster::Initialize_Elite_Monster(Chapter_Type chapter_Type)
 	_monster_Name = "코드스니펫의 망령";
 	_attack_Message = "코드스니펫의 망령이 문제를 제시했다.";
 
-	_stat[MONSTER_HP] = 0;
+	_stat[MONSTER_HP] = 1000;
 	_stat[MONSTER_MP] = 0;
 	_stat[MONSTER_POWER] = 0;
 	_stat[MONSTER_DEFENCE] = 0;

@@ -1,4 +1,4 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include "JYJ.h"
 #include "Monster.h"
 
@@ -13,7 +13,7 @@ namespace
 JYJ::JYJ(const std::string& name)
     : Player(name)
 {
-    job = "Ç³µĞ ÁÖµÕ¾Æ¸®¼ú ¸¶½ºÅÍ";
+    job = "í’ë‘” ì£¼ë‘¥ì•„ë¦¬ìˆ  ë§ˆìŠ¤í„°";
 
     Set_Start_Stat(
         200, // HP
@@ -32,7 +32,7 @@ void JYJ::Attack(Monster* monster)
 {
     if (monster == nullptr)
     {
-        std::cout << "°ø°İÇÒ ´ë»óÀÌ ¾ø½À´Ï´Ù.\n";
+        std::cout << "ê³µê²©í•  ëŒ€ìƒì´ ì—†ìŠµë‹ˆë‹¤.\n";
         return;
     }
 
@@ -48,9 +48,9 @@ void JYJ::Attack(Monster* monster)
 
     Apply_Damage(monster, damage);
 
-    std::cout << name << "ÀÇ ±âº» °ø°İ!\n";
-    std::cout << "ÆòÅ¸ ´ë»ç ÀÔ·Â\n";
-    std::cout << damage << "ÀÇ ÇÇÇØ¸¦ ÀÔÇû½À´Ï´Ù.\n";
+    std::cout << name << "ì˜ ê¸°ë³¸ ê³µê²©!\n";
+    std::cout << "í‰íƒ€ ëŒ€ì‚¬ ì…ë ¥\n";
+    std::cout << damage << "ì˜ í”¼í•´ë¥¼ ì…í˜”ìŠµë‹ˆë‹¤.\n";
 }
 
 void JYJ::Skill1(Monster* monster)
@@ -59,13 +59,13 @@ void JYJ::Skill1(Monster* monster)
 
     if (monster == nullptr)
     {
-        std::cout << "½ºÅ³À» »ç¿ëÇÒ ´ë»óÀÌ ¾ø½À´Ï´Ù.\n";
+        std::cout << "ìŠ¤í‚¬ì„ ì‚¬ìš©í•  ëŒ€ìƒì´ ì—†ìŠµë‹ˆë‹¤.\n";
         return;
     }
 
     if (mp < mpCost)
     {
-        std::cout << "MP°¡ ºÎÁ·ÇÕ´Ï´Ù.\n";
+        std::cout << "MPê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.\n";
         return;
     }
 
@@ -79,9 +79,9 @@ void JYJ::Skill1(Monster* monster)
 
     Apply_Damage(monster, damage);
 
-    std::cout << name << "ÀÇ ½ºÅ³ 1!\n";
-    std::cout << "½ºÅ³ 1 ´ë»ç ÀÔ·Â\n";
-    std::cout << damage << "ÀÇ ÇÇÇØ¸¦ ÀÔÇû½À´Ï´Ù.\n";
+    std::cout << name << "ì˜ ìŠ¤í‚¬ 1!\n";
+    std::cout << "ìŠ¤í‚¬ 1 ëŒ€ì‚¬ ì…ë ¥\n";
+    std::cout << damage << "ì˜ í”¼í•´ë¥¼ ì…í˜”ìŠµë‹ˆë‹¤.\n";
 }
 
 void JYJ::Skill2(Monster* monster)
@@ -90,13 +90,13 @@ void JYJ::Skill2(Monster* monster)
 
     if (monster == nullptr)
     {
-        std::cout << "½ºÅ³À» »ç¿ëÇÒ ´ë»óÀÌ ¾ø½À´Ï´Ù.\n";
+        std::cout << "ìŠ¤í‚¬ì„ ì‚¬ìš©í•  ëŒ€ìƒì´ ì—†ìŠµë‹ˆë‹¤.\n";
         return;
     }
 
     if (mp < mpCost)
     {
-        std::cout << "MP°¡ ºÎÁ·ÇÕ´Ï´Ù.\n";
+        std::cout << "MPê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.\n";
         return;
     }
 
@@ -110,9 +110,9 @@ void JYJ::Skill2(Monster* monster)
 
     Apply_Damage(monster, damage);
 
-    std::cout << name << "ÀÇ ½ºÅ³ 2!\n";
-    std::cout << "½ºÅ³ 2 ´ë»ç ÀÔ·Â\n";
-    std::cout << damage << "ÀÇ ÇÇÇØ¸¦ ÀÔÇû½À´Ï´Ù.\n";
+    std::cout << name << "ì˜ ìŠ¤í‚¬ 2!\n";
+    std::cout << "ìŠ¤í‚¬ 2 ëŒ€ì‚¬ ì…ë ¥\n";
+    std::cout << damage << "ì˜ í”¼í•´ë¥¼ ì…í˜”ìŠµë‹ˆë‹¤.\n";
 }
 
 void JYJ::Skill3(Monster* monster)
@@ -121,13 +121,13 @@ void JYJ::Skill3(Monster* monster)
 
     if (monster == nullptr)
     {
-        std::cout << "½ºÅ³À» »ç¿ëÇÒ ´ë»óÀÌ ¾ø½À´Ï´Ù.\n";
+        std::cout << "ìŠ¤í‚¬ì„ ì‚¬ìš©í•  ëŒ€ìƒì´ ì—†ìŠµë‹ˆë‹¤.\n";
         return;
     }
 
     if (mp < mpCost)
     {
-        std::cout << "MP°¡ ºÎÁ·ÇÕ´Ï´Ù.\n";
+        std::cout << "MPê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.\n";
         return;
     }
 
@@ -141,16 +141,16 @@ void JYJ::Skill3(Monster* monster)
 
     Apply_Damage(monster, damage);
 
-    std::cout << name << "ÀÇ ½ºÅ³ 3!\n";
-    std::cout << "½ºÅ³ 3 ´ë»ç ÀÔ·Â\n";
-    std::cout << damage << "ÀÇ ÇÇÇØ¸¦ ÀÔÇû½À´Ï´Ù.\n";
+    std::cout << name << "ì˜ ìŠ¤í‚¬ 3!\n";
+    std::cout << "ìŠ¤í‚¬ 3 ëŒ€ì‚¬ ì…ë ¥\n";
+    std::cout << damage << "ì˜ í”¼í•´ë¥¼ ì…í˜”ìŠµë‹ˆë‹¤.\n";
 }
 
 void JYJ::Groggy_Attack(Monster* monster)
 {
     if (monster == nullptr)
     {
-        std::cout << "°ø°İÇÒ ´ë»óÀÌ ¾ø½À´Ï´Ù.\n";
+        std::cout << "ê³µê²©í•  ëŒ€ìƒì´ ì—†ìŠµë‹ˆë‹¤.\n";
         return;
     }
 
@@ -162,7 +162,7 @@ void JYJ::Groggy_Attack(Monster* monster)
 
     Apply_Damage(monster, damage);
 
-    std::cout << name << "ÀÇ ±×·Î±â °ø°İ!\n";
-    std::cout << "±×·Î±â °ø°İ ´ë»ç ÀÔ·Â\n";
-    std::cout << damage << "ÀÇ ÇÇÇØ¸¦ ÀÔÇû½À´Ï´Ù.\n";
+    std::cout << name << "ì˜ ê·¸ë¡œê¸° ê³µê²©!\n";
+    std::cout << "ê·¸ë¡œê¸° ê³µê²© ëŒ€ì‚¬ ì…ë ¥\n";
+    std::cout << damage << "ì˜ í”¼í•´ë¥¼ ì…í˜”ìŠµë‹ˆë‹¤.\n";
 }
