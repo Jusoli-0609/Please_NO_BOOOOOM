@@ -284,12 +284,16 @@ void Monster_Attack(Player* player, Monster& monster)
 
     player->Set_Hp(Before_Player_HP - Damage);
 
-    cout << monster.getName()
-        << "의 공격!" << endl;
+    cout << endl;
+    cout << "[전투 로그]" << endl;
 
-    cout << "플레이어 HP : "
+    cout << monster.getName()
+        << "이(가) 공격했습니다!"
+        << endl;
+
+    cout << "HP : "
         << Before_Player_HP
-        << " -> "
+        << " → "
         << player->Get_Hp()
         << endl;
 }
@@ -303,29 +307,44 @@ bool Check_Battle_End(Player* player, Monster& monster, Inventory<Item>& invento
     if (monster.getHP() <= 0)
     {
         cout << endl;
-        cout << "전투 승리!" << endl;
+        cout << "==================================" << endl;
+        cout << "          전투 승리!" << endl;
+        cout << "==================================" << endl;
+
 
         player->Remove_Temporary_Modifiers();
 
+
         int exp = monster.getExpReward();
 
-        player->Gain_Exp(exp);
+
+        cout << "[보상 획득]" << endl;
 
         cout << exp
             << " 경험치를 획득했습니다."
             << endl;
 
-        Give_Battle_Item_Reward(player,monster,inventory);
+
+        Give_Battle_Item_Reward(player, monster, inventory);
+
 
         return true;
     }
 
+
     if (player->Get_Hp() <= 0)
     {
         cout << endl;
-        cout << "전투 패배!" << endl;
+        cout << "==================================" << endl;
+        cout << "          전투 패배!" << endl;
+        cout << "==================================" << endl;
+
+        cout << "플레이어가 쓰러졌습니다."
+            << endl;
+
 
         player->Remove_Temporary_Modifiers();
+
 
         return true;
     }
@@ -342,25 +361,44 @@ void Give_Battle_Item_Reward(Player* player, Monster& monster, Inventory<Item>& 
         return;
     }
 
+
     monster.Generate_Drop_Reward();
 
+
     const vector<Item>& dropItems = monster.getDropItems();
+
+
+    cout << endl;
+    cout << "[아이템 획득]" << endl;
+
 
     for (const Item& dropItem : dropItems)
     {
         inventory.Add_Or_Increase_Item(dropItem);
 
-        cout << dropItem._Item_Name
-            << " 획득!"
+
+        cout << "- "
+            << dropItem._Item_Name
             << endl;
     }
 
+
     int goldReward = monster.getGoldReward();
+
     int currentMoney = inventory.Get_Money();
 
-    inventory.Set_Money(currentMoney + goldReward);
 
-    cout << goldReward
-        << "훈련장려금을 획득했습니다!"
+    inventory.Set_Money(
+        currentMoney + goldReward
+    );
+
+
+    cout << endl;
+
+    cout << "[재화 획득]" << endl;
+
+    cout << "훈련장려금 "
+        << goldReward
+        << " 획득!"
         << endl;
 }

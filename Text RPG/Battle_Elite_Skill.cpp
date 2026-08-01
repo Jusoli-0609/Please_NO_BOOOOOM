@@ -130,14 +130,13 @@ void Code_Snippet_Question(Player* player, Monster& monster)
 {
     cout << endl;
     cout << "=================================" << endl;
-    cout << "코드 스니펫의 망령이 문제를 냅니다!" << endl;
+    cout << "코드 스니펫의 망령이 문제를 냈다!" << endl;
     cout << "=================================" << endl;
 
     cout << "객체지향 프로그래밍에서" << endl;
-    cout << "부모 클래스의 기능을 물려받는 것을 무엇이라고 할까요?" << endl;
+    cout << "부모 클래스의 기능을 물려받는 것을 무엇이라고 할까?" << endl;
 
-    cout << "총 4종류가 있으니까 잘 보고 입력하라고!" << endl;
-    cout << "-추상화, 다형성, 캡슐화, 상속-" << endl;
+    cout << "- 추상화, 다형성, 캡슐화, 상속 -" << endl;
 
     string answer;
 
@@ -145,29 +144,31 @@ void Code_Snippet_Question(Player* player, Monster& monster)
     cout << "정답 : ";
     cin >> answer;
 
+
     if (answer == "상속")
     {
-        cout << "정답이다!!!" << endl;
-        cout << "망령의 공격을 무효화했습니다." << endl;
-
-
+        cout << endl;
+        cout << "정답을 맞혔다!" << endl;
+        cout << "코드 스니펫의 망령 공격을 무효화했다!" << endl;
     }
     else
     {
-        cout << "틀렸어!!" << endl;
-        cout << "망령이 분노합니다!" << endl;
-
         int damage = monster.getPower() * 2;
 
         player->Set_Hp(player->Get_Hp() - damage);
 
-        cout << damage << " 피해를 받았습니다." << endl;
+        cout << endl;
+        cout << "정답을 틀렸다!" << endl;
+        cout << "코드 스니펫의 망령이 분노했다!" << endl;
+        cout << damage << " 피해를 받았다!" << endl;
+        cout << "(남은 체력 : " << player->Get_Hp() << ")" << endl;
     }
 }
 
 void Variable_Condition_Question(Player* player, Monster& monster)
 {
-    cout << "변수와 조건문 문제입니다." << endl;
+    cout << endl;
+    cout << "손승현 튜터님이 변수와 조건문 문제를 냈다!" << endl;
 
     string answer;
 
@@ -177,110 +178,139 @@ void Variable_Condition_Question(Player* player, Monster& monster)
 
     if (answer == "if")
     {
-        cout << "정답!" << endl;
+        cout << "정답을 맞혔다!" << endl;
+        cout << "손승현 튜터님의 공격을 막았다!" << endl;
     }
     else
     {
-        cout << "오답!" << endl;
-
         int damage = monster.getPower();
 
         player->Set_Hp(player->Get_Hp() - damage);
+
+        cout << "정답을 틀렸다!" << endl;
+        cout << "손승현 튜터님에게 " << damage << " 피해를 받았다!" << endl;
+        cout << "(남은 체력 : " << player->Get_Hp() << ")" << endl;
     }
-} //
+}
 
 void Array_Loop_Question(Player* player, Monster& monster)
 {
-    cout << "배열과 반복문 코드 문제입니다." << endl;
+    cout << player->Get_Name() << "은(는) 배열과 반복문 코드를 분석하기 시작했다!" << endl;
 
     string answer;
 
-    cout << "정답 : ";
+    cout << "코드 문제의 정답 : ";
     cin >> answer;
 
 
     if (answer == "if")
     {
-        cout << "정답!" << endl;
+        cout << player->Get_Name() << "은(는) 정답을 입력했다!" << endl;
+        cout << "코드 분석 성공!" << endl;
     }
     else
     {
-        cout << "오답!" << endl;
-
         int damage = monster.getPower();
 
+        cout << player->Get_Name() << "은(는) 오답을 입력했다!" << endl;
+        cout << monster.getName() << "이(가) " << damage << "의 피해를 입혔다!" << endl;
+
         player->Set_Hp(player->Get_Hp() - damage);
+
+        cout << "(남은 체력 : "
+            << player->Get_Hp()
+            << ")" << endl;
     }
 }
 
 void Function_Question(Player* player, Monster& monster)
 {
-    cout << "함수 코드 문제입니다." << endl;
+    cout << player->Get_Name() << "은(는) 함수 코드를 분석하기 시작했다!" << endl;
 
     string answer;
 
-    cout << "정답 : ";
+    cout << "코드 문제의 정답 : ";
     cin >> answer;
 
 
     if (answer == "if")
     {
-        cout << "정답!" << endl;
+        cout << player->Get_Name() << "은(는) 함수 분석에 성공했다!" << endl;
     }
     else
     {
-        cout << "오답!" << endl;
-
         int damage = monster.getPower();
 
+        cout << player->Get_Name() << "은(는) 함수 분석에 실패했다!" << endl;
+        cout << monster.getName() << "이(가) "
+            << damage << "의 피해를 입혔다!" << endl;
+
         player->Set_Hp(player->Get_Hp() - damage);
+
+        cout << "(남은 체력 : "
+            << player->Get_Hp()
+            << ")" << endl;
     }
 }
+
 
 void Pointer_Memory_Question(Player* player, Monster& monster)
 {
-    cout << "포인터와 메모리 코드 문제입니다." << endl;
+    cout << player->Get_Name() << "은(는) 포인터와 메모리 문제를 확인했다!" << endl;
 
     string answer;
 
-    cout << "정답 : ";
+    cout << "코드 문제의 정답 : ";
     cin >> answer;
 
 
     if (answer == "if")
     {
-        cout << "정답!" << endl;
+        cout << player->Get_Name() << "은(는) 메모리 구조를 이해했다!" << endl;
     }
     else
     {
-        cout << "오답!" << endl;
-
         int damage = monster.getPower();
 
+        cout << player->Get_Name() << "은(는) 메모리 문제를 해결하지 못했다!" << endl;
+        cout << monster.getName() << "이(가) "
+            << damage << "의 피해를 입혔다!" << endl;
+
         player->Set_Hp(player->Get_Hp() - damage);
+
+        cout << "(남은 체력 : "
+            << player->Get_Hp()
+            << ")" << endl;
     }
 }
 
+
 void Object_Stl_Question(Player* player, Monster& monster)
 {
-    cout << "객체지향과 STL 코드 문제입니다." << endl;
+    cout << player->Get_Name() << "은(는) 객체지향과 STL 문제를 분석했다!" << endl;
 
     string answer;
 
-    cout << "정답 : ";
+    cout << "코드 문제의 정답 : ";
     cin >> answer;
 
 
     if (answer == "if")
     {
-        cout << "정답!" << endl;
+        cout << player->Get_Name() << "은(는) 객체지향 개념을 이해했다!" << endl;
     }
     else
     {
-        cout << "오답!" << endl;
-
         int damage = monster.getPower();
 
+        cout << player->Get_Name() << "은(는) STL 활용에 실패했다!" << endl;
+        cout << monster.getName() << "이(가) "
+            << damage << "의 피해를 입혔다!" << endl;
+
         player->Set_Hp(player->Get_Hp() - damage);
+
+        cout << "(남은 체력 : "
+            << player->Get_Hp()
+            << ")" << endl;
     }
 }
