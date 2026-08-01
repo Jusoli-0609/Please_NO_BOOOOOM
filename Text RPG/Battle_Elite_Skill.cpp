@@ -1,4 +1,4 @@
-#include "Battle_Elite_Skill.h"
+ï»¿#include "Battle_Elite_Skill.h"
 #include <iostream>
 
 using namespace std;
@@ -12,20 +12,20 @@ bool Check_Elite_Skill(Monster& monster, int turnCount)
 		return false;
 	}
 
-	switch (monster.getMonsterType())
-	{
+    switch (monster.getMonsterType())
+    {
 
-	case Monster_Type::CODE_SNIPPET_WRAITH:
-	{
-		if (turnCount % 3 == 0)
-		{
-			return true;
-		}
+    case Monster_Type::CODE_SNIPPET_WRAITH: //ì½”ë“œìŠ¤ë‹ˆí«ì˜ ë§ë ¹
+    {
+        if (turnCount % 3 == 0)
+        {
+            return true;
+        }
 
-		break;
-	}
+        break;
+    }
 
-    case Monster_Type::VARIABLE_CONDITION_TUTOR:
+    case Monster_Type::VARIABLE_CONDITION_TUTOR: //ì†ìŠ¹í˜„ íŠœí„°ë‹˜
     {
         if (turnCount % 3 == 0)
         {
@@ -34,7 +34,7 @@ bool Check_Elite_Skill(Monster& monster, int turnCount)
         break;
     }
 
-    case Monster_Type::ARRAY_LOOP_TUTOR:
+    case Monster_Type::ARRAY_LOOP_TUTOR: //ë°•ì€ì¼ íŠœí„°ë‹˜
     {
         if (monster.getHP() <= 50)
         {
@@ -43,15 +43,46 @@ bool Check_Elite_Skill(Monster& monster, int turnCount)
         break;
     }
 
-	default:
-		break;
-	}
+    case Monster_Type::FUNCTION_TUTOR: //ê°•ì‹ í˜¸ íŠœí„°ë‹˜
+    {
+        if (monster.getHP() <= 50)
+        {
+            return true;
+        }
+        break;
+    }
 
+    case Monster_Type::POINTER_MEMORY_TUTOR: //ë¬¸ìŠ¹í˜„ íŠœí„°ë‹˜
+    {
+        if (monster.getHP() <= 50)
+        {
+            return true;
+        }
+        break;
+    }
+
+    case Monster_Type::OBJECT_STL_TUTOR: //ê¹€í•˜ëŠ˜ íŠœí„°ë‹˜
+    {
+        if (monster.getHP() <= 50)
+        {
+            return true;
+        }
+        break;
+    }
+
+    default:
+        break;
+    }
 	return false;
 }
 
 void Execute_Elite_Skill(Player* player, Monster& monster)
 {
+    if (player == nullptr)
+    {
+        return;
+    }
+
     switch (monster.getMonsterType())
     {
     case Monster_Type::CODE_SNIPPET_WRAITH:
@@ -66,6 +97,30 @@ void Execute_Elite_Skill(Player* player, Monster& monster)
         break;
     }
 
+    case Monster_Type::ARRAY_LOOP_TUTOR:
+    {
+        Array_Loop_Question(player, monster);
+        break;
+    }
+
+    case Monster_Type::FUNCTION_TUTOR:
+    {
+        Function_Question(player, monster);
+        break;
+    }
+
+    case Monster_Type::POINTER_MEMORY_TUTOR:
+    {
+        Pointer_Memory_Question(player, monster);
+        break;
+    }
+
+    case Monster_Type::OBJECT_STL_TUTOR:
+    {
+        Object_Stl_Question(player, monster);
+        break;
+    }
+
     default:
         break;
     }
@@ -75,58 +130,154 @@ void Code_Snippet_Question(Player* player, Monster& monster)
 {
     cout << endl;
     cout << "=================================" << endl;
-    cout << "ÄÚµå ½º´ÏÆêÀÇ ¸Á·ÉÀÌ ¹®Á¦¸¦ ³À´Ï´Ù!" << endl;
+    cout << "ì½”ë“œ ìŠ¤ë‹ˆí«ì˜ ë§ë ¹ì´ ë¬¸ì œë¥¼ ëƒ…ë‹ˆë‹¤!" << endl;
     cout << "=================================" << endl;
 
-    cout << "°´Ã¼ÁöÇâ ÇÁ·Î±×·¡¹Ö¿¡¼­" << endl;
-    cout << "ºÎ¸ğ Å¬·¡½ºÀÇ ±â´ÉÀ» ¹°·Á¹Ş´Â °ÍÀ» ¹«¾ùÀÌ¶ó°í ÇÒ±î¿ä?" << endl;
+    cout << "ê°ì²´ì§€í–¥ í”„ë¡œê·¸ë˜ë°ì—ì„œ" << endl;
+    cout << "ë¶€ëª¨ í´ë˜ìŠ¤ì˜ ê¸°ëŠ¥ì„ ë¬¼ë ¤ë°›ëŠ” ê²ƒì„ ë¬´ì—‡ì´ë¼ê³  í• ê¹Œìš”?" << endl;
 
-    cout << "ÃÑ 4Á¾·ù°¡ ÀÖÀ¸´Ï±î Àß º¸°í ÀÔ·ÂÇÏ¶ó°í!" << endl;
-    cout << "-Ãß»óÈ­, ´ÙÇü¼º, Ä¸½¶È­, »ó¼Ó-" << endl;
+    cout << "ì´ 4ì¢…ë¥˜ê°€ ìˆìœ¼ë‹ˆê¹Œ ì˜ ë³´ê³  ì…ë ¥í•˜ë¼ê³ !" << endl;
+    cout << "-ì¶”ìƒí™”, ë‹¤í˜•ì„±, ìº¡ìŠí™”, ìƒì†-" << endl;
 
     string answer;
 
     cout << endl;
-    cout << "Á¤´ä : ";
+    cout << "ì •ë‹µ : ";
     cin >> answer;
 
-    if (answer == "»ó¼Ó")
+    if (answer == "ìƒì†")
     {
-        cout << "Á¤´äÀÌ´Ù!!!" << endl;
-        cout << "¸Á·ÉÀÇ °ø°İÀ» ¹«È¿È­Çß½À´Ï´Ù." << endl;
+        cout << "ì •ë‹µì´ë‹¤!!!" << endl;
+        cout << "ë§ë ¹ì˜ ê³µê²©ì„ ë¬´íš¨í™”í–ˆìŠµë‹ˆë‹¤." << endl;
 
 
     }
     else
     {
-        cout << "Æ²·È¾î!!" << endl;
-        cout << "¸Á·ÉÀÌ ºĞ³ëÇÕ´Ï´Ù!" << endl;
+        cout << "í‹€ë ¸ì–´!!" << endl;
+        cout << "ë§ë ¹ì´ ë¶„ë…¸í•©ë‹ˆë‹¤!" << endl;
 
         int damage = monster.getPower() * 2;
 
         player->Set_Hp(player->Get_Hp() - damage);
 
-        cout << damage << " ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù." << endl;
+        cout << damage << " í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤." << endl;
     }
 }
 
 void Variable_Condition_Question(Player* player, Monster& monster)
 {
-    cout << "º¯¼ö¿Í Á¶°Ç¹® ¹®Á¦ÀÔ´Ï´Ù." << endl;
+    cout << "ë³€ìˆ˜ì™€ ì¡°ê±´ë¬¸ ë¬¸ì œì…ë‹ˆë‹¤." << endl;
 
     string answer;
 
-    cout << "Á¤´ä : ";
+    cout << "ì •ë‹µ : ";
     cin >> answer;
 
 
     if (answer == "if")
     {
-        cout << "Á¤´ä!" << endl;
+        cout << "ì •ë‹µ!" << endl;
     }
     else
     {
-        cout << "¿À´ä!" << endl;
+        cout << "ì˜¤ë‹µ!" << endl;
+
+        int damage = monster.getPower();
+
+        player->Set_Hp(player->Get_Hp() - damage);
+    }
+} //
+
+void Array_Loop_Question(Player* player, Monster& monster)
+{
+    cout << "ë°°ì—´ê³¼ ë°˜ë³µë¬¸ ì½”ë“œ ë¬¸ì œì…ë‹ˆë‹¤." << endl;
+
+    string answer;
+
+    cout << "ì •ë‹µ : ";
+    cin >> answer;
+
+
+    if (answer == "if")
+    {
+        cout << "ì •ë‹µ!" << endl;
+    }
+    else
+    {
+        cout << "ì˜¤ë‹µ!" << endl;
+
+        int damage = monster.getPower();
+
+        player->Set_Hp(player->Get_Hp() - damage);
+    }
+}
+
+void Function_Question(Player* player, Monster& monster)
+{
+    cout << "í•¨ìˆ˜ ì½”ë“œ ë¬¸ì œì…ë‹ˆë‹¤." << endl;
+
+    string answer;
+
+    cout << "ì •ë‹µ : ";
+    cin >> answer;
+
+
+    if (answer == "if")
+    {
+        cout << "ì •ë‹µ!" << endl;
+    }
+    else
+    {
+        cout << "ì˜¤ë‹µ!" << endl;
+
+        int damage = monster.getPower();
+
+        player->Set_Hp(player->Get_Hp() - damage);
+    }
+}
+
+void Pointer_Memory_Question(Player* player, Monster& monster)
+{
+    cout << "í¬ì¸í„°ì™€ ë©”ëª¨ë¦¬ ì½”ë“œ ë¬¸ì œì…ë‹ˆë‹¤." << endl;
+
+    string answer;
+
+    cout << "ì •ë‹µ : ";
+    cin >> answer;
+
+
+    if (answer == "if")
+    {
+        cout << "ì •ë‹µ!" << endl;
+    }
+    else
+    {
+        cout << "ì˜¤ë‹µ!" << endl;
+
+        int damage = monster.getPower();
+
+        player->Set_Hp(player->Get_Hp() - damage);
+    }
+}
+
+void Object_Stl_Question(Player* player, Monster& monster)
+{
+    cout << "ê°ì²´ì§€í–¥ê³¼ STL ì½”ë“œ ë¬¸ì œì…ë‹ˆë‹¤." << endl;
+
+    string answer;
+
+    cout << "ì •ë‹µ : ";
+    cin >> answer;
+
+
+    if (answer == "if")
+    {
+        cout << "ì •ë‹µ!" << endl;
+    }
+    else
+    {
+        cout << "ì˜¤ë‹µ!" << endl;
 
         int damage = monster.getPower();
 
