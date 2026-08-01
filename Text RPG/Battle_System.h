@@ -52,9 +52,14 @@ void Use_Item(Player* player, Inventory<Item>& inventory);
 
 void Monster_Turn(Player* player, Monster& monster, int turnCount);
 
+
 void Monster_Attack(Player* player, Monster& monster);
 
 void Monster_Skill(Player* player, Monster& monster);
+
+void Code_Snippet_Question(Player* player, Monster& monster);
+
+bool Check_Monster_Skill(Monster& monster, int turnCount);
 
 // =======================
 // 전투 종료
