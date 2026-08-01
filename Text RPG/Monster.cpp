@@ -7,12 +7,26 @@ using namespace std;
 
 namespace
 {
+	// 기본 경험치 및 명성치값
 	constexpr int BASE_EXP_REWARD = 100;
 	constexpr int BASE_SCORE_REWARD = 100;
-
+	// 챕터별 보상 증가 배율
 	constexpr double CHAPTER_REWARD_MULTIPLIER = 1.3;
+	// 아이템별 독립 드롭 확률
+	constexpr int CODE_FRAGMENT_DROP_CHANCE = 60;
+	constexpr int CUP_RAMEN_DROP_CHANCE = 60;
+	constexpr int ENERGY_DRINK_DROP_CHANCE = 60;
+	// 아이템별 무게값
+	constexpr int CODE_FRAGMENT_WEIGHT = 1;
+	constexpr int CUP_RAMEN_WEIGHT = 1;
+	constexpr int ENERGY_DRINK_WEIGHT = 1;
 }
 
+//=============================================================================
+// 1. 몬스터 생성 파트
+//=============================================================================
+
+// 1-1. 기본 몬스터 생성자
 Monster::Monster()
 	: _monster_Type(Monster_Type::INT_SLIME),
 	_chapter_Type(Chapter_Type::VARIABLE_CONDITION_FOREST),
@@ -38,13 +52,13 @@ Monster::Monster()
 	_exp_Reward = Calculate_Exp_Reward();
 	_score_Reward = Calculate_Score_Reward();
 }
-
+// 1-2. 몬스터 타입 지정 생성자
 Monster::Monster(Monster_Type monster_Type)
 	: Monster()
 {
 	Initialize_Monster(monster_Type);
 }
-
+// 1-3. 외부 데이터 입력 생성자
 Monster::Monster(string monster_Name, int monster_HP, int monster_Power, int monster_Defence, string drop_Item_Name, int drop_Item_Price)
 	: _monster_Type(Monster_Type::INT_SLIME),
 	_chapter_Type(Chapter_Type::VARIABLE_CONDITION_FOREST),
@@ -71,6 +85,11 @@ Monster::Monster(string monster_Name, int monster_HP, int monster_Power, int mon
 	_score_Reward = Calculate_Score_Reward();
 }
 
+//=============================================================================
+// 2. 몬스터 초기화 파트
+//=============================================================================
+
+// 2-1. 일반 몬스터 정보 초기화
 void Monster::Initialize_Monster(Monster_Type monster_Type)
 {
 	_monster_Type = monster_Type;
@@ -84,6 +103,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	_drop_Item_Price = 0;
 	_drop_Item_Count = 0;
 	_gold_Reward = 0;
+	_drop_Items.clear();
 
 	switch (_monster_Type)
 	{
@@ -355,15 +375,15 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	_exp_Reward = Calculate_Exp_Reward() + Calculate_Level_Exp_Bonus();
 	_score_Reward = Calculate_Score_Reward();
 }
-
+// 2-2. 정예 몬스터 정보 초기화
 void Monster::Initialize_Elite_Monster(Chapter_Type chapter_Type)
 {
 	_monster_Type = Monster_Type::CODE_SNIPPET_WRAITH;
 	_chapter_Type = chapter_Type;
 	_monster_Grade = Monster_Grade::ELITE;
 	_monster_Level = Get_Chapter_Number() * 3 + 1;
-	_monster_Name = "코드 스니펫의 망령";
-	_attack_Message = "코드 스니펫의 망령이 문제를 제시했다.";
+	_monster_Name = "코드스니펫의 망령";
+	_attack_Message = "코드스니펫의 망령이 문제를 제시했다.";
 
 	_stat[MONSTER_HP] = 0;
 	_stat[MONSTER_MP] = 0;
@@ -382,7 +402,7 @@ void Monster::Initialize_Elite_Monster(Chapter_Type chapter_Type)
 	_drop_Item_Count = 0;
 	_gold_Reward = 0;
 }
-
+// 2-3. 튜터 몬스터 정보 초기화
 void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 {
 	_chapter_Type = chapter_Type;
@@ -404,7 +424,7 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 	{
 		_monster_Type = Monster_Type::VARIABLE_CONDITION_TUTOR;
 		_monster_Name = "손승현 튜터님";
-		_attack_Message = "변수와 조건문 코드 검증을 시작합니다.";
+		_attack_Message = "변수와 조건문 코드 시험을 시작합니다.";
 
 		break;
 	}
@@ -413,7 +433,7 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 	{
 		_monster_Type = Monster_Type::ARRAY_LOOP_TUTOR;
 		_monster_Name = "박은일 튜터님";
-		_attack_Message = "배열과 반복문 코드 검증을 시작합니다.";
+		_attack_Message = "배열과 반복문 코드 시험을 시작합니다.";
 
 		break;
 	}
@@ -422,7 +442,7 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 	{
 		_monster_Type = Monster_Type::FUNCTION_TUTOR;
 		_monster_Name = "강신호 튜터님";
-		_attack_Message ="함수 코드 검증을 시작합니다.";
+		_attack_Message = "함수 코드 시험을 시작합니다.";
 
 		break;
 	}
@@ -431,7 +451,7 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 	{
 		_monster_Type = Monster_Type::POINTER_MEMORY_TUTOR;
 		_monster_Name = "문승현 튜터님";
-		_attack_Message = "포인터와 메모리 코드 검증을 시작합니다.";
+		_attack_Message = "포인터와 메모리 코드 시험을 시작합니다.";
 
 		break;
 	}
@@ -440,7 +460,7 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 	{
 		_monster_Type = Monster_Type::OBJECT_STL_TUTOR;
 		_monster_Name = "김하늘 튜터님";
-		_attack_Message = "객체지향과 STL 코드 검증을 시작합니다.";
+		_attack_Message = "객체지향과 STL 코드 시험을 시작합니다.";
 
 		break;
 	}
@@ -450,7 +470,7 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 		_chapter_Type = Chapter_Type::VARIABLE_CONDITION_FOREST;
 		_monster_Type = Monster_Type::VARIABLE_CONDITION_TUTOR;
 		_monster_Name = "손승현 튜터님";
-		_attack_Message = "변수와 조건문 코드 검증을 시작합니다.";
+		_attack_Message = "변수와 조건문 코드 시험을 시작합니다.";
 
 		break;
 	}
@@ -465,78 +485,37 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 	_gold_Reward = 0;
 }
 
-std::string Monster::Get_Code_Fragment_Name() const
+//=============================================================================
+// 3. 몬스터 레벨 및 능력치 보정 파트
+//=============================================================================
+
+// 3-1. 플레이어 레벨 비례 능력치 증가
+void Monster::Apply_Player_Level_Scaling(int player_Level)
 {
-	switch (_chapter_Type)
+	if
+		(_monster_Grade!= Monster_Grade::NORMAL)
 	{
-	case Chapter_Type::VARIABLE_CONDITION_FOREST:
-	case Chapter_Type::ARRAY_LOOP_OCEAN:
-	{
-		return "하급 코드 조각";
+		return;
 	}
 
-	case Chapter_Type::FUNCTION_RUINS:
-	case Chapter_Type::POINTER_MEMORY_GRAVEYARD:
+	if (player_Level < 1)
 	{
-		return "중급 코드 조각";
+		player_Level = 1;
 	}
 
-	case Chapter_Type::OBJECT_STL_FACTORY:
-	{
-		return "상급 코드 조각";
-	}
+	constexpr int HP_BONUS_PER_PLAYER_LEVEL = 1;
+	constexpr int POWER_BONUS_PER_PLAYER_LEVEL = 1;
+	constexpr int DEFENCE_BONUS_PER_PLAYER_LEVEL = 1;
+	constexpr int PLAYER_LEVELS_PER_SPEED_BONUS = 1;
 
-	default:
-	{
-		return "하급 코드 조각";
-	}
-	}
+	int player_Level_Up_Count = player_Level - 1;
+
+	_stat[MONSTER_HP] += player_Level_Up_Count * HP_BONUS_PER_PLAYER_LEVEL;
+	_stat[MONSTER_POWER] += player_Level_Up_Count * POWER_BONUS_PER_PLAYER_LEVEL;
+	_stat[MONSTER_DEFENCE] += player_Level_Up_Count * DEFENCE_BONUS_PER_PLAYER_LEVEL;
+	_stat[MONSTER_SPEED] += player_Level_Up_Count / PLAYER_LEVELS_PER_SPEED_BONUS;
 }
-
-int Monster::Calculate_Gold_Reward() const
-{
-	return rand() % 31 + 20;
-}
-
-void Monster::Generate_Drop_Reward()
-{
-	_drop_Item_Count = 1;
-	_gold_Reward = Calculate_Gold_Reward();
-
-	int item_Roll = rand() % 3;
-
-	switch (item_Roll)
-	{
-	case 0:
-	{
-		_drop_Item_Name = Get_Code_Fragment_Name();
-
-		break;
-	}
-
-	case 1:
-	{
-		_drop_Item_Name = "컵라면";
-
-		break;
-	}
-
-	case 2:
-	{
-		_drop_Item_Name = "에너지드링크";
-
-		break;
-	}
-
-	default:
-	{
-		_drop_Item_Name = Get_Code_Fragment_Name();
-
-		break;
-	}
-	}
-}
-
+// 3-2. 챕터 번호 변환
 int Monster::Get_Chapter_Number() const
 {
 	switch (_chapter_Type)
@@ -572,7 +551,7 @@ int Monster::Get_Chapter_Number() const
 	}
 	}
 }
-
+// 3-3. 챕터별 몬스터 랜덤 레벨 생성
 int Monster::Generate_Random_Level() const
 {
 	int chapter_Number = Get_Chapter_Number();
@@ -589,7 +568,7 @@ int Monster::Generate_Random_Level() const
 	return
 		rand() % level_Range + minimum_Level;
 }
-
+// 3-4. 몬스터 랜덤 레벨 보너스 적용
 void Monster::Apply_Level_Bonus()
 {
 	constexpr int LEVELS_PER_CHAPTER = 3;
@@ -611,6 +590,53 @@ void Monster::Apply_Level_Bonus()
 	_stat[MONSTER_DEFENCE] += level_Offset * DEFENCE_BONUS_PER_LEVEL;
 }
 
+//=============================================================================
+// 4. 몬스터 보상 계산 파트
+//=============================================================================
+
+// 4-1. 챕터별 코드 조각 이름 결정
+std::string Monster::Get_Code_Fragment_Name() const
+{
+	switch (_chapter_Type)
+	{
+	case Chapter_Type::VARIABLE_CONDITION_FOREST:
+	case Chapter_Type::ARRAY_LOOP_OCEAN:
+	{
+		return "하급 코드 조각";
+	}
+
+	case Chapter_Type::FUNCTION_RUINS:
+	case Chapter_Type::POINTER_MEMORY_GRAVEYARD:
+	{
+		return "중급 코드 조각";
+	}
+
+	case Chapter_Type::OBJECT_STL_FACTORY:
+	{
+		return "상급 코드 조각";
+	}
+
+	default:
+	{
+		return "하급 코드 조각";
+	}
+	}
+}
+// 4-2. 챕터별 기본 경험치 계산
+int Monster::Calculate_Exp_Reward() const
+{
+	double exp_Reward = static_cast<double>(BASE_EXP_REWARD);
+
+	int chapter_Number = Get_Chapter_Number();
+
+	for (int i = 1; i < chapter_Number; i++)
+	{
+		exp_Reward *= CHAPTER_REWARD_MULTIPLIER;
+	}
+
+	return static_cast<int>(exp_Reward + 0.5);
+}
+// 4-3. 랜덤 레벨 경험치 보너스 계산
 int Monster::Calculate_Level_Exp_Bonus() const
 {
 	constexpr int LEVELS_PER_CHAPTER = 3;
@@ -628,21 +654,7 @@ int Monster::Calculate_Level_Exp_Bonus() const
 	return
 		level_Offset * EXP_BONUS_PER_LEVEL;
 }
-
-int Monster::Calculate_Exp_Reward() const
-{
-	double exp_Reward = static_cast<double>(BASE_EXP_REWARD);
-
-	int chapter_Number = Get_Chapter_Number();
-
-	for (int i = 1; i < chapter_Number; i++)
-	{
-		exp_Reward *= CHAPTER_REWARD_MULTIPLIER;
-	}
-
-	return static_cast<int> (exp_Reward + 0.5);
-}
-
+// 4-4. 챕터별 점수 계산
 int Monster::Calculate_Score_Reward() const
 {
 	double score_Reward = static_cast<double>(BASE_SCORE_REWARD);
@@ -650,107 +662,233 @@ int Monster::Calculate_Score_Reward() const
 	int chapter_Number = Get_Chapter_Number();
 
 	for (int i = 1; i < chapter_Number; i++)
-	{ score_Reward *= CHAPTER_REWARD_MULTIPLIER;
+	{
+		score_Reward *= CHAPTER_REWARD_MULTIPLIER;
 	}
 
-	return static_cast<int> (score_Reward + 0.5);
+	return static_cast<int>(score_Reward + 0.5);
+}
+// 4-5. 훈련장려금 랜덤 계산
+int Monster::Calculate_Gold_Reward() const
+{
+	return rand() % 31 + 20;
 }
 
+//=============================================================================
+// 5. 몬스터 드롭 보상 생성 파트
+//=============================================================================
+
+// 5-1. 아이템별 독립 랜덤 드롭 생성
+void Monster::Generate_Drop_Reward()
+{
+	_drop_Items.clear();
+	_drop_Item_Name = "";
+	_drop_Item_Price = 0;
+	_drop_Item_Count = 0;
+	_gold_Reward = Calculate_Gold_Reward();
+
+	int code_Fragment_Roll = rand() % 100;
+
+	if
+		(code_Fragment_Roll< CODE_FRAGMENT_DROP_CHANCE)
+	{
+		Item code_Fragment;
+
+		code_Fragment._Item_Name = Get_Code_Fragment_Name();
+		code_Fragment._Item_Price = 0;
+		code_Fragment._Item_Count = 1;
+		code_Fragment._Item_Weight = CODE_FRAGMENT_WEIGHT;
+		code_Fragment._Item_Type_Usable = false;
+		code_Fragment._Item_Type_Wearable = false;
+
+		_drop_Items.push_back(code_Fragment);
+	}
+
+	int cup_Ramen_Roll = rand() % 100;
+
+	if
+		(cup_Ramen_Roll < CUP_RAMEN_DROP_CHANCE)
+	{
+		Item cup_Ramen;
+
+		cup_Ramen._Item_Name = "컵라면";
+		cup_Ramen._Item_Price = 0;
+		cup_Ramen._Item_Count = 1;
+		cup_Ramen._Item_Weight = CUP_RAMEN_WEIGHT;
+		cup_Ramen._Item_Type_Usable = false;
+		cup_Ramen._Item_Type_Wearable = false;
+
+		_drop_Items.push_back(cup_Ramen);
+	}
+
+	int energy_Drink_Roll = rand() % 100;
+
+	if
+		(energy_Drink_Roll < ENERGY_DRINK_DROP_CHANCE)
+	{
+		Item energy_Drink;
+
+		energy_Drink._Item_Name = "에너지드링크";
+		energy_Drink._Item_Price = 0;
+		energy_Drink._Item_Count = 1;
+		energy_Drink._Item_Weight = ENERGY_DRINK_WEIGHT;
+		energy_Drink._Item_Type_Usable = false;
+		energy_Drink._Item_Type_Wearable = false;
+
+		_drop_Items.push_back(energy_Drink);
+	}
+
+	if (_drop_Items.empty())
+	{
+		Item minimum_Reward;
+
+		minimum_Reward._Item_Name = Get_Code_Fragment_Name();
+		minimum_Reward._Item_Price = 0;
+		minimum_Reward._Item_Count = 1;
+		minimum_Reward._Item_Weight = CODE_FRAGMENT_WEIGHT;
+		minimum_Reward._Item_Type_Usable = false;
+		minimum_Reward._Item_Type_Wearable = false;
+
+		_drop_Items.push_back(minimum_Reward);
+	}
+	for
+		(
+			std::size_t item_Index = 0;
+			item_Index < _drop_Items.size();
+			item_Index++
+			)
+	{
+		const Item& drop_Item = _drop_Items[item_Index];
+
+		if (item_Index > 0)
+		{
+			_drop_Item_Name += ", ";
+		}
+
+		_drop_Item_Name += drop_Item._Item_Name;
+		_drop_Item_Name += " ";
+		_drop_Item_Name += std::to_string(drop_Item._Item_Count);
+		_drop_Item_Name += "개";
+		_drop_Item_Count += drop_Item._Item_Count;
+		_drop_Item_Price += drop_Item._Item_Price * drop_Item._Item_Count;
+	}
+}
+
+//=============================================================================
+// 6. 몬스터 기본 정보 조회 파트
+//=============================================================================
+
+// 6-1. 몬스터 이름 조회
 string Monster::getName() const
 {
 	return _monster_Name;
 }
-
+// 6-2. 몬스터 HP 조회
 int Monster::getHP() const
 {
 	return _stat[MONSTER_HP];
 }
-
+// 6-3. 몬스터 공격력 조회
 int Monster::getPower() const
 {
 	return _stat[MONSTER_POWER];
 }
-
+// 6-4. 몬스터 방어력 조회
 int Monster::getDefence() const
 {
 	return _stat[MONSTER_DEFENCE];
 }
-
+// 6-5. 몬스터 스피드 조회
 int Monster::getSpeed() const
 {
 	return _stat[MONSTER_SPEED];
 }
-
+// 6-6. 몬스터 회피율 조회
 int Monster::getEvasion() const
 {
 	return _evasion;
 }
-
+// 6-7. 몬스터 명중률 조회
 int Monster::getAccuracy() const
 {
 	return _accuracy;
 }
-
-int Monster::getExpReward() const
-{
-	return _exp_Reward;
-}
-
-int Monster::getScoreReward() const
-{
-	return _score_Reward;
-}
-
+// 6-8. 몬스터 레벨 조회
 int Monster::getMonsterLevel() const
 {
 	return _monster_Level;
 }
-
-string Monster::getDropItemName() const
-{
-	return _drop_Item_Name;
-}
-
-int Monster::getDropItemPrice() const
-{
-	return _drop_Item_Price;
-}
-
-int Monster::getDropItemCount() const
-{
-	return _drop_Item_Count;
-}
-
-int Monster::getGoldReward() const
-{
-	return _gold_Reward;
-}
-
+// 6-9. 몬스터 타입 조회
 Monster_Type Monster::getMonsterType() const
 {
 	return _monster_Type;
 }
-
+// 6-10. 몬스터 소속 챕터 조회
 Chapter_Type Monster::getChapterType() const
 {
 	return _chapter_Type;
 }
-
+// 6-11. 몬스터 등급 조회
+Monster_Grade Monster::getMonsterGrade() const
+{
+	return _monster_Grade;
+}
+// 6-12. 몬스터 공격 대사 조회
 string Monster::getAttackMessage() const
 {
 	return _attack_Message;
 }
 
-Monster_Grade Monster::getMonsterGrade() const
+//=============================================================================
+// 7. 몬스터 보상 정보 조회 파트
+//=============================================================================
+
+// 7-1. 경험치 보상 조회
+int Monster::getExpReward() const
 {
-	return _monster_Grade;
+	return _exp_Reward;
+}
+// 7-2. 점수 보상 조회
+int Monster::getScoreReward() const
+{
+	return _score_Reward;
+}
+// 7-3. 드롭 아이템 조회
+string Monster::getDropItemName() const
+{
+	return _drop_Item_Name;
+}
+// 7-4. 드롭 아이템 가격 합계 조회
+int Monster::getDropItemPrice() const
+{
+	return _drop_Item_Price;
+}
+// 7-5. 드롭 아이템 수량 합계 조회
+int Monster::getDropItemCount() const
+{
+	return _drop_Item_Count;
+}
+// 7-6. 드롭 아이템 목록 조회
+const std::vector<Item>& Monster::getDropItems() const
+{
+	return _drop_Items;
+}
+// 7-7. 훈련장려금 조회
+int Monster::getGoldReward() const
+{
+	return _gold_Reward;
 }
 
+//=============================================================================
+// 8. 몬스터 상태 변경 및 전투 파트
+//=============================================================================
+// 
+// 8-1. 몬스터 등급 변경
 void Monster::setMonsterGrade(Monster_Grade monster_Grade)
 {
 	_monster_Grade = monster_Grade;
 }
-
+// 8-2. 몬스터 HP 변경
 void Monster::setHP(int hp)
 {
 	_stat[MONSTER_HP] = hp;
@@ -760,7 +898,7 @@ void Monster::setHP(int hp)
 		_stat[MONSTER_HP] = 0;
 	}
 }
-
+// 8-3. 몬스터 공격 처리
 void Monster::attack(Player* player) const
 {
 	(void)player;
@@ -768,6 +906,16 @@ void Monster::attack(Player* player) const
 	Print_Attack_Message();
 }
 
+//=============================================================================
+// 9. 몬스터 정보 출력 파트
+//=============================================================================
+
+// 9-1. 몬스터 공격 대사 출력
+void Monster::Print_Attack_Message() const
+{
+	cout << _attack_Message << endl;
+}
+// 9-2. 몬스터 전체 정보 출력
 void Monster::Print_Monster_Info() const
 {
 	cout << "========================================" << endl;
@@ -795,8 +943,39 @@ void Monster::Print_Monster_Info() const
         cout << "훈련장려금: " << _gold_Reward << "원" << endl;
 	}
 }
-
-void Monster::Print_Attack_Message() const
+// 9-3. 드롭 아이템과 무게 출력
+void Monster::Print_Drop_Reward() const
 {
-	cout << _attack_Message << endl;
+	cout << "획득 아이템:" << endl;
+
+	if (_drop_Items.empty())
+	{
+		cout << "- 획득한 아이템이 없습니다." << endl;
+
+		return;
+	}
+
+	int total_Drop_Weight = 0;
+
+	for
+		(const Item& drop_Item :_drop_Items)
+	{
+		int item_Total_Weight = drop_Item._Item_Weight * drop_Item._Item_Count;
+
+		cout << "- "
+			<< drop_Item._Item_Name
+			<< " "
+			<< drop_Item._Item_Count
+			<< "개"
+			<< " / 개당 무게 "
+			<< drop_Item._Item_Weight
+			<< " / 총 무게 "
+			<< item_Total_Weight
+			<< endl;
+
+		total_Drop_Weight += item_Total_Weight;
+	}
+
+	cout << "드롭 아이템 총 무게: " << total_Drop_Weight << endl;
 }
+
