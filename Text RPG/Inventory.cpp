@@ -108,6 +108,7 @@ void Inventory<T>::Print_Inventory() const
         _Inventory_Items[i].Print_Info();
         Inventory_Order_Index++;
     }
+    cout << "현재 총 젬: " << Get_Money() << endl;
     cout << " 현재 무게  : " <<
         Get_Total_Weight() << "최대 허용 무게  : " <<
         _Max_Capacity << " 남은 허용 무게  : " <<
@@ -553,8 +554,15 @@ Inventory<T>::~Inventory()
     _Inventory_Items = nullptr;
 }
 
-template<typename T>//9.인벤토리 내 money 가져오기
-int Inventory<T>::Get_Money()
+template<typename T>//9-1.인벤토리 내 money 조회
+int Inventory<T>::Get_Money()const
 {
+    return _Money;
+}
+
+template<typename T>//9-2. 인벤토리 내 money 설정
+void Inventory<T>::Set_Money(int money)
+{
+    this->_Money = money;
 }
 template class Inventory<Item>; // 명시적 인스턴스화

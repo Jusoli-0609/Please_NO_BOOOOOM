@@ -15,6 +15,7 @@
 		int _Max_Inventory_Size;
 		int _Max_Capacity;
 		int _Current_Quantity_Of_Items;
+		int _Money;
 	public:
 		//1.인벤토리 생성 파트
 		Inventory(int max_inventory_size, int max_capacity);//1-1 인벤토리 기본 생성자
@@ -43,4 +44,7 @@
 		void Increase_Max_Capacity(int new_max_capacity);//7-1 아이템 용량 늘어나기
 	    // 8. 인벤토리 소멸자	
 		~Inventory();//8.소멸자
+		//9. 인벤토리 내 골드
+		int Get_Money()const;
+		void Set_Money(int money);
 	};
