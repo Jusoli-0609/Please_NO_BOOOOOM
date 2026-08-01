@@ -1,5 +1,7 @@
 #include "Battle_System.h"
+#include "Battle_Elite_Skill.h"
 #include "Item.h"
+
 #include <iostream>
 #include <string>
 
@@ -220,9 +222,9 @@ void Monster_Turn(Player* player, Monster& monster, int turnCount)
     cout << endl;
     cout << "------ 몬스터 턴 ------" << endl;
 
-    if (Check_Monster_Skill(monster, turnCount))
+    if (Check_Elite_Skill(monster, turnCount))
     {
-        Monster_Skill(player, monster);
+        Execute_Elite_Skill(player, monster);
     }
     else
     {
@@ -257,101 +259,9 @@ void Monster_Attack(Player* player, Monster& monster)
         << endl;
 }
 
-
-//======================================================
-// 몬스터 스킬
-//======================================================
-void Code_Snippet_Question(Player* player, Monster& monster)
-{
-    cout << endl;
-    cout << "=================================" << endl;
-    cout << "코드 스니펫의 망령이 문제를 냅니다!" << endl;
-    cout << "=================================" << endl;
-
-    cout << "다음 코드의 출력 결과를 입력하세요." << endl;
-    cout << endl;
-
-    cout << "게임 개발 시나리오에서 Character -> Warrior, Mage, Archer 구조를 설계할 때," << endl;
-    cout << "각 직업 클래스가Character로부터 공통 속성(HP,MP)과 이동 기능을 물려받아" << endl;
-    cout << "각자의 고유 스킬만 추가하였습니다. 이 설계에서 가장 주도적으로 활용된 OOP특성은?" << endl;
-
-    cout << "총 4종류가 있으니까 잘 보고 입력하라고!" << endl;
-    cout << "-추상화, 다형성, 캡슐화, 상속-" << endl;
-
-    string answer;
-
-    cout << endl;
-    cout << "정답 : ";
-    cin >> answer;
-
-    if (answer == "상속")
-    {
-        cout << "정답이다!!!" << endl;
-        cout << "망령의 공격을 무효화했습니다." << endl;
-
-
-    }
-    else
-    {
-        cout << "틀렸어!!" << endl;
-        cout << "망령이 분노합니다!" << endl;
-
-        int damage = monster.getPower() * 2;
-
-        player->Set_Hp(player->Get_Hp() - damage);
-
-        cout << damage << " 피해를 받았습니다." << endl;
-    }
-}
-
-void Monster_Skill(Player* player, Monster& monster)
-{
-    switch (monster.getMonsterType())
-    {
-    case Monster_Type::CODE_SNIPPET_WRAITH:
-    {
-        Code_Snippet_Question(player, monster);
-
-        break;
-    }
-
-    default:
-    {
-        break;
-    }
-     
-    }
-}
-
-
 //======================================================
 // 전투 종료
 //======================================================
-bool Check_Monster_Skill(Monster& monster, int turnCount)
-{
-    if (monster.getMonsterGrade() != Monster_Grade::ELITE)
-    {
-        return false;
-    }
-
-    switch (monster.getMonsterType())
-    {
-    case Monster_Type::CODE_SNIPPET_WRAITH:
-    {
-        if (turnCount % 3 == 0)
-        {
-            return true;
-        }
-
-        break;
-    }
-
-    default:
-        break;
-    }
-
-    return true;
-}
 
 bool Check_Battle_End(Player* player, Monster& monster, Inventory<Item>& inventory)
 {

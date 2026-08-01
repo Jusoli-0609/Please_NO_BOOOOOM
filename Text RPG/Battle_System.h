@@ -4,7 +4,7 @@
 #include "Monster.h"
 #include "Inventory.h"
 #include "Item.h"
-
+#include "Battle_Elite_Skill.h"
 // =======================
 // 전투 메뉴
 // =======================
@@ -52,17 +52,8 @@ void Use_Item(Player* player, Inventory<Item>& inventory);
 
 void Monster_Turn(Player* player, Monster& monster, int turnCount);
 
-
 void Monster_Attack(Player* player, Monster& monster);
 
-void Monster_Skill(Player* player, Monster& monster);
-
-void Code_Snippet_Question(Player* player, Monster& monster);
-
-bool Check_Monster_Skill(Monster& monster, int turnCount);
-
-// =======================
-// 전투 종료
-// =======================
+bool Check_Elite_Skill(Monster& monster, int turnCount);
 
 bool Check_Battle_End(Player* player, Monster& monster, Inventory<Item>& inventory);
