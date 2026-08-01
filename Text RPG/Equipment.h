@@ -12,6 +12,7 @@ enum class Equipment_Grade
     Best
 };
 
+
 class Equipment
 {
 private:
@@ -23,7 +24,7 @@ private:
 
 public:
     Equipment();//1.기본 생성자
-    Equipment(string equipment_name, int base_attack, int base_defence, Equipment_Grade grade);//2. 장비 이름, 기본 공격력, 기본 방어력, 등급을 받아 장비를 생성하는 생성자
+    Equipment(string equipment_name, int attack, int defence, Equipment_Grade grade);//2. 장비 이름,  공격력,  방어력, 등급을 받아 장비를 생성하는 생성자
     int Get_Enhance_Level() const;//3.강화 레벨 조회
     void Set_Enhance_Level(int enhance_level);//4.강화 레벨 설정
     int Get_Attack_Stat() const;//5.장비 공격 스텟 조회

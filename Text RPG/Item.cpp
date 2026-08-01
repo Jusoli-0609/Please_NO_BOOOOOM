@@ -21,7 +21,7 @@ void Item::Print_Info() const
 //2.아이템 효과 적용
 bool Item::Item_Effect(Player& player, Monster& monster)
 {
-    if (_Item_Name == "HP 포션")
+    if (_Item_Name == "컵라면")
     {
         player.Set_Hp(
                       min(player.Get_Hp() + 50, player.GetMaxHP()));
