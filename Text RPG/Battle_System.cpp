@@ -144,9 +144,10 @@ void Player_Turn(Player* player, Monster& monster, Inventory<Item>& inventory)
 
     case ITEM:
     {
-        Use_Item(player, inventory);
+        Use_Item(player, monster, inventory);
         break;
     }
+
 
 
 
@@ -158,11 +159,14 @@ void Player_Turn(Player* player, Monster& monster, Inventory<Item>& inventory)
     }
 }
 
-void Use_Item(Player* player, Inventory<Item>& inventory)
+void Use_Item(Player* player, Monster& monster, Inventory<Item>& inventory)
 {
-    // 인벤토리 아이템
+    if (player == nullptr)
+    {
+        return;
+    }
 
-    cout << "아이템 기능 준비 중입니다." << endl;
+    inventory.Use_Item_In_Battle(*player, monster);
 }
 
 //======================================================
@@ -171,37 +175,12 @@ void Use_Item(Player* player, Inventory<Item>& inventory)
 
 void Attack(Player* player, Monster& monster)
 {
-    int Before_Monster_HP = monster.getHP();
+    if (player == nullptr)
+    {
+        return;
+    }
 
-    int Damage = player->Calculate_Damage(
-        1.0f, // ATK 계수
-        0.0f, // DEF 계수
-        0.0f, // HP 계수
-        0.0f, // MP 계수
-        0.0f, // SNE  이거 용도가????
-        0.0f, // AGI 이건 또 뭐지????
-        monster.getDefence()
-    );
-
-
-    monster.setHP(Before_Monster_HP - Damage);
-
-
-    cout << endl;
-    cout << "공격!" << endl;
-
-    cout << monster.getName()
-        << "에게 "
-        << Damage
-        << " 데미지!" << endl;
-
-
-    cout << monster.getName()
-        << " HP : "
-        << Before_Monster_HP
-        << " -> "
-        << monster.getHP()
-        << endl;
+    player->Attack(&monster);
 }
 
 //======================================================
@@ -210,7 +189,44 @@ void Attack(Player* player, Monster& monster)
 
 void Skill(Player* player, Monster& monster)
 {
-    // 직업 스킬
+    if (player == nullptr)
+    {
+        return;
+    }
+
+    int menu;
+
+    cout << endl;
+    cout << "------ 스킬 ------" << endl;
+    cout << "1. 스킬 1" << endl;
+    cout << "2. 스킬 2" << endl;
+    cout << "3. 스킬 3" << endl;
+    cout << "0. 뒤로가기" << endl;
+    cout << "선택 : ";
+
+    cin >> menu;
+
+    switch (menu)
+    {
+    case 1:
+        player->Skill1(&monster);
+        break;
+
+    case 2:
+        player->Skill2(&monster);
+        break;
+
+    case 3:
+        player->Skill3(&monster);
+        break;
+
+    case 0:
+        return;
+
+    default:
+        cout << "잘못된 입력입니다." << endl;
+        break;
+    }
 }
 
 //======================================================
@@ -219,7 +235,10 @@ void Skill(Player* player, Monster& monster)
 
 void Monster_Turn(Player* player, Monster& monster, int turnCount)
 {
-    // 몬스터 차례
+    if (player == nullptr)
+    {
+        return;
+    }
 
     cout << endl;
     cout << "------ 몬스터 턴 ------" << endl;
@@ -240,6 +259,11 @@ void Monster_Turn(Player* player, Monster& monster, int turnCount)
 
 void Monster_Attack(Player* player, Monster& monster)
 {
+    if (player == nullptr)
+    {
+        return;
+    }
+
     int Before_Player_HP = player->Get_Hp();
 
     int Damage = monster.getPower() - player->Get_DEF();
@@ -247,6 +271,13 @@ void Monster_Attack(Player* player, Monster& monster)
     if (Damage < 1)
     {
         Damage = 1;
+    }
+
+    int After_HP = Before_Player_HP - Damage;
+
+    if (After_HP < 0)
+    {
+        After_HP = 0;
     }
 
     player->Set_Hp(Before_Player_HP - Damage);
@@ -282,14 +313,10 @@ bool Check_Battle_End(Player* player, Monster& monster, Inventory<Item>& invento
             << " 경험치를 획득했습니다."
             << endl;
 
-
-        cout << monster.getDropItemName()
-            << " 획득!" << endl;
         Give_Battle_Item_Reward(player,monster,inventory);
 
         return true;
     }
-
 
     if (player->Get_Hp() <= 0)
     {
@@ -310,15 +337,25 @@ void Give_Battle_Item_Reward(Player* player, Monster& monster, Inventory<Item>& 
     {
         return;
     }
+
     monster.Generate_Drop_Reward();
+
     const vector<Item>& dropItems = monster.getDropItems();
+
     for (const Item& dropItem : dropItems)
     {
         inventory.Add_Or_Increase_Item(dropItem);
+
+        cout << dropItem._Item_Name
+            << " 획득!"
+            << endl;
     }
+
     int goldReward = monster.getGoldReward();
     int currentMoney = inventory.Get_Money();
+
     inventory.Set_Money(currentMoney + goldReward);
+
     cout << goldReward
         << "훈련장려금을 획득했습니다!"
         << endl;

@@ -40,13 +40,13 @@ void Give_Battle_Item_Reward(Player* player, Monster& monster, Inventory<Item>& 
 // 플레이어 턴
 // =======================
 
-void Player_Turn(Player*, Monster& monster, Inventory<Item>& inventory);
+void Player_Turn(Player* player, Monster& monster, Inventory<Item>& inventory);
 
 void Attack(Player* player, Monster& monster);
 
 void Skill(Player* player, Monster& monster);
 
-void Use_Item(Player* player, Inventory<Item>& inventory);
+void Use_Item(Player* player, Monster& monster, Inventory<Item>& inventory);
 
 // =======================
 // 몬스터 턴
