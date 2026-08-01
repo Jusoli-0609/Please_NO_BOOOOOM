@@ -30,6 +30,9 @@
     <ClCompile Include="Player.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Battle_System.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
     <ClCompile Include="Craft_Item.cpp">
       <Filter>소스 파일\Item</Filter>
     </ClCompile>
@@ -41,6 +44,9 @@
     </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>소스 파일\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="DungeonManager.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Character_Creator.cpp">
       <Filter>소스 파일</Filter>
@@ -66,19 +72,11 @@
     <ClCompile Include="Battle_Elite_Skill.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="Equipment.cpp">
       <Filter>소스 파일\Item</Filter>
     </ClCompile>
     <ClCompile Include="Item_Factory.cpp">
       <Filter>소스 파일\Item</Filter>
-=======
-    <ClCompile Include="Battle_System.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="DungeonManager.cpp">
-      <Filter>소스 파일</Filter>
->>>>>>> Player
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -133,16 +131,11 @@
     <ClInclude Include="Battle_Elite_Skill.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="Equipment.h">
       <Filter>헤더 파일\Item</Filter>
     </ClInclude>
     <ClInclude Include="Item_Factory.h">
       <Filter>헤더 파일\Item</Filter>
-=======
-    <ClInclude Include="Stat_Modifier.h">
-      <Filter>헤더 파일</Filter>
->>>>>>> Player
     </ClInclude>
   </ItemGroup>
 </Project>
