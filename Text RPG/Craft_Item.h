@@ -4,14 +4,14 @@
 #include <string>
 #include <map>
 
-class AlchemyWorkshop
+class Craft_Work_Shop
 {
 private:
-    std::vector<PotionRecipe> recipes;
+    std::vector<All_Recipes> recipes;
     std::map<std::string, int> ingredients;
 
 public:
-    AlchemyWorkshop();
+    Craft_Work_Shop();
 
     void PrintAllRecipes() const;
     void FindRecipeByPotionName(const std::string& potionName) const;
