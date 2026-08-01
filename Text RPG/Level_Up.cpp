@@ -1,7 +1,9 @@
 ﻿#include "Level_Up.h"
 #include "Player.h"
-#include "Monster.h" // cpp 파일에서 Monster의 멤버 함수(getExpReward)를 사용해야 하므로 헤더 포함
+#include "Monster.h"
+#include "Console_Manager.h" // 팀원이 만든 Console_Manager 헤더 포함
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -24,15 +26,18 @@ void Level_Up::GainExp(Player* player, const Monster& monster)
     if (player == nullptr) return;
 
     // [요구사항 1] 최대 레벨 10 제한 체크
-    // 이미 10레벨에 도달했다면 더 이상 경험치를 얻지 못하고 안내 메시지 출력 후 종료
     if (_current_level >= 10)
     {
-        cout << "\n[!] 이미 최고 레벨(Lv.10)에 도달하여 더 이상 경험치를 얻을 수 없습니다.\n";
+        // 비정적 멤버 함수 호출을 위해 Console_Manager 객체 생성
+        Console_Manager console;
+        console.Slow_Print("\n[!] 이미 최고 레벨(Lv.10)에 도달하여 더 이상 경험치를 얻을 수 없습니다.\n", 50);
         return;
     }
 
     // [핵심 로직] 몬스터의 자체 경험치 보상 함수(getExpReward)를 직접 호출하여 누적
     _current_exp += monster.getExpReward();
+
+    // 수치 및 단순 정보 로그는 답답하지 않게 일반 cout으로 빠른 출력
     cout << "  -> 경험치 +" << monster.getExpReward() << " 획득! (현재 경험치: "
         << _current_exp << " / " << _max_exp << ")\n";
 
@@ -52,14 +57,18 @@ void Level_Up::ProcessLevelUp(Player* player)
     // [안전장치 2] 플레이어 객체 유효성 검사
     if (player == nullptr) return;
 
+    // Console_Manager 객체 생성
+    Console_Manager console;
+
     // 1. 소모한 목표 경험치만큼 차감 및 레벨/스탯포인트 상승
     _current_exp -= _max_exp;
     _current_level++;
     _stat_points += 5;
 
-    // 레벨업 연출 출력
+    // 레벨업 축하 타이틀 연출 (팀원 요청: 스토리/연출 텍스트이므로 console.Slow_Print 사용)
     cout << "\n====================================\n";
-    cout << "  ★ LEVEL UP! (Lv." << _current_level - 1 << " -> Lv." << _current_level << ") ★\n";
+    string levelUpMsg = "  ★ LEVEL UP! (Lv." + to_string(_current_level - 1) + " -> Lv." + to_string(_current_level) + ") ★\n";
+    console.Slow_Print(levelUpMsg, 50);
     cout << "====================================\n";
 
     // [요구사항 2] 레벨 비례 스탯 보상 공식 계산
@@ -70,23 +79,22 @@ void Level_Up::ProcessLevelUp(Player* player)
     player->SetMaxHP(player->GetMaxHP() + addedHp);
     player->SetPower(player->GetPower() + addedPower);
 
-    // 수치 상승 메시지 출력
+    // 수치 상승 정보 로그는 일반 cout 사용
     cout << "  -> 레벨업 보너스: 최대 체력 +" << addedHp << " (최대 HP: " << player->GetMaxHP() << ")\n";
     cout << "  -> 레벨업 보너스: 공격력 +" << addedPower << " (공격력: " << player->GetPower() << ")\n";
 
     // [요구사항 3] 체력 풀회복 처리
-    // 레벨업 직후 현재 체력을 새로 늘어난 최대 체력으로 충전
     player->SetHP(player->GetMaxHP());
     cout << "  -> 체력이 최대치로 회복되었습니다! (현재 HP: " << player->GetHP() << ")\n";
 
-    // [게임성 요소] 다음 레벨업에 필요한 요구 경험치를 1.5배 상향 (명시적 형변환으로 경고 방지)
+    // [게임성 요소] 다음 레벨업에 필요한 요구 경험치를 1.5배 상향
     _max_exp = static_cast<int>(_max_exp * 1.5);
 
-    // [요구사항 4] 10레벨 만렙 달성 시 경험치 0 고정 및 축하 문구 출력
+    // [팀 요구사항 ] 10레벨 만렙 달성 시 축하 문구 (연출 문구이므로 console.Slow_Print 사용)
     if (_current_level >= 10)
     {
         _current_exp = 0;
-        cout << "  ★ 축하합니다! 최고 레벨(Lv.10)에 도달했습니다! ★\n";
+        console.Slow_Print("  ★ 축하합니다! 최고 레벨(Lv.10)에 도달했습니다! ★\n", 50);
     }
     cout << "====================================\n\n";
 }
