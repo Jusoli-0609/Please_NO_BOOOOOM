@@ -1,7 +1,8 @@
 #pragma once
-#include <iostream>
+#include "Player.h"
 
-class Player; // 전방 선언
+// Monster 클래스가 존재한다는 것을 미리 알려줌 (전방 선언)
+class Monster;
 
 class Level_Up
 {
@@ -15,11 +16,7 @@ public:
     Level_Up();
     ~Level_Up();
 
-    int GetCurrentLevel() const { return _current_level; }
-    int GetCurrentExp() const { return _current_exp; }
-    int GetMaxExp() const { return _max_exp; }
-    int GetStatPoints() const { return _stat_points; }
-
-    void GainExp(Player* player, int amount);
+    // Monster 참조(&) 전달
+    void GainExp(Player* player, const Monster& monster);
     void ProcessLevelUp(Player* player);
 };

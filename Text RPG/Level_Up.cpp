@@ -1,5 +1,7 @@
 ﻿#include "Level_Up.h"
-#include "Player.h" // Player 멤버 함수 접근용
+#include "Player.h"
+#include "Monster.h"
+#include <iostream>
 
 using namespace std;
 
@@ -12,7 +14,7 @@ Level_Up::~Level_Up()
 {
 }
 
-void Level_Up::GainExp(Player* player, int amount)
+void Level_Up::GainExp(Player* player, const Monster& monster)
 {
     if (player == nullptr) return;
 
@@ -22,9 +24,12 @@ void Level_Up::GainExp(Player* player, int amount)
         return;
     }
 
-    _current_exp += amount;
-    cout << "  -> 경험치 +" << amount << " 획득! (현재 경험치: " << _current_exp << " / " << _max_exp << ")\n";
+    // 경험치 획득 및 출력 (getExpReward 함수 호출)
+    _current_exp += monster.getExpReward();
+    cout << "  -> 경험치 +" << monster.getExpReward() << " 획득! (현재 경험치: "
+        << _current_exp << " / " << _max_exp << ")\n";
 
+    // 경험치가 차오르면 레벨업 실행
     while (_current_exp >= _max_exp && _current_level < 10)
     {
         ProcessLevelUp(player);
@@ -33,6 +38,8 @@ void Level_Up::GainExp(Player* player, int amount)
 
 void Level_Up::ProcessLevelUp(Player* player)
 {
+    if (player == nullptr) return;
+
     _current_exp -= _max_exp;
     _current_level++;
     _stat_points += 5;
@@ -44,6 +51,7 @@ void Level_Up::ProcessLevelUp(Player* player)
     int addedHp = _current_level * 20;
     int addedPower = _current_level * 5;
 
+    // Player 클래스에 존재하는 SetMaxHP, SetPower, SetHP, GetMaxHP, GetPower 멤버 함수 사용
     player->SetMaxHP(player->GetMaxHP() + addedHp);
     player->SetPower(player->GetPower() + addedPower);
 
