@@ -715,7 +715,7 @@ void Monster::Generate_Drop_Reward()
 		cup_Ramen._Item_Price = 0;
 		cup_Ramen._Item_Count = 1;
 		cup_Ramen._Item_Weight = CUP_RAMEN_WEIGHT;
-		cup_Ramen._Item_Type_Usable = false;
+		cup_Ramen._Item_Type_Usable = true;
 		cup_Ramen._Item_Type_Wearable = false;
 
 		_drop_Items.push_back(cup_Ramen);
@@ -732,7 +732,7 @@ void Monster::Generate_Drop_Reward()
 		energy_Drink._Item_Price = 0;
 		energy_Drink._Item_Count = 1;
 		energy_Drink._Item_Weight = ENERGY_DRINK_WEIGHT;
-		energy_Drink._Item_Type_Usable = false;
+		energy_Drink._Item_Type_Usable = true;
 		energy_Drink._Item_Type_Wearable = false;
 
 		_drop_Items.push_back(energy_Drink);
