@@ -2,6 +2,7 @@
 #include <vector>
 #include "Stat_Modifier.h"
 #include <string>
+#include "Level_Up.h"
 
 class Monster;
 
@@ -10,6 +11,8 @@ class Player
 protected:
     std::string name;
     std::string job;
+
+    Level_Up levelUp;
 
     int hp;
     int mp;
@@ -65,6 +68,8 @@ public:
     virtual void Skill2(Monster* monster) = 0;
     virtual void Skill3(Monster* monster) = 0;
     virtual void Groggy_Attack(Monster* monster) = 0;
+
+    void Gain_Exp(int amount);
 
     // 상태 출력
     void Print_Status() const;
@@ -149,6 +154,9 @@ public:
     // 기존 코드 호환용 Getter
     int GetPower() const;
     int GetHP() const;
+
+    int Get_Exp() const;
+    int Get_Max_Exp() const;
 
     // 기본 Setter
     void Set_Hp(int hp);
