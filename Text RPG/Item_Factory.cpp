@@ -1,5 +1,6 @@
 #pragma once
-#include "ItemFactory.h"
+#include "Item_Factory.h"
+#include "Equipment.h"
 
 Equipment ItemFactory::Create_Basic_Sword()
 {

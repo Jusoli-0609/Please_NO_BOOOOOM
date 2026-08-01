@@ -5,6 +5,7 @@ using namespace std;
 
 enum class Equipment_Grade
 {
+    Empty,
     Worst,
     Low,
     Middle,
