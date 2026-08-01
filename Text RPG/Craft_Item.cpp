@@ -8,21 +8,21 @@ Craft_Work_Shop::Craft_Work_Shop()
 {
     All_Recipes hpPotion;
 
-    hpPotion.potionName = "HP포션";
-    hpPotion.ingredient1Name = "허브";
-    hpPotion.ingredient1Count = 1;
-    hpPotion.ingredient2Name = "맑은물";
-    hpPotion.ingredient2Count = 1;
+    hpPotion._Recipe_Name = "컵라면";
+    hpPotion._First_Ingredient_Name = "허브";
+    hpPotion._First_Ingredient_Count = 1;
+    hpPotion._Second_Ingredient_Name = "맑은물";
+    hpPotion._Second_Ingredient_Count = 1;
 
     recipes.push_back(hpPotion);
 
     All_Recipes staminaPotion;
 
-    staminaPotion.potionName = "스태미나포션";
-    staminaPotion.ingredient1Name = "허브";
-    staminaPotion.ingredient1Count = 1;
-    staminaPotion.ingredient2Name = "베리";
-    staminaPotion.ingredient2Count = 1;
+    staminaPotion._Recipe_Name = "스태미나포션";
+    staminaPotion._First_Ingredient_Name = "허브";
+    staminaPotion._First_Ingredient_Count = 1;
+    staminaPotion._Second_Ingredient_Name = "베리";
+    staminaPotion._Second_Ingredient_Count = 1;
 
     recipes.push_back(staminaPotion);
 
@@ -39,13 +39,13 @@ void Craft_Work_Shop::Print_All_Recipes() const
     }
 }
 
-void Craft_Work_Shop::Find_Recipe_By_Potion_Name(const string& potionName) const
+void Craft_Work_Shop::Find_Recipe_By_Potion_Name(const string& _Recipe_Name) const
 {
     bool found = false;
 
     for (const All_Recipes& recipe : recipes)
     {
-        if (recipe.potionName == potionName)
+        if (recipe._Recipe_Name == _Recipe_Name)
         {
             recipe.PrintInfo();
             found = true;
@@ -64,7 +64,7 @@ void Craft_Work_Shop::Find_Recipes_By_Ingredient_Name(const string& ingredientNa
 
     for (const All_Recipes& recipe : recipes)
     {
-        if (recipe.ingredient1Name == ingredientName || recipe.ingredient2Name == ingredientName)
+        if (recipe._First_Ingredient_Name == ingredientName || recipe._Second_Ingredient_Name == ingredientName)
         {
             recipe.PrintInfo();
             found = true;
@@ -77,23 +77,23 @@ void Craft_Work_Shop::Find_Recipes_By_Ingredient_Name(const string& ingredientNa
     }
 }
  
-bool Craft_Work_Shop::Craft_Potion(const std::string& potionName)
+bool Craft_Work_Shop::Craft_Potion(const std::string& _Recipe_Name)
 {
     for (const All_Recipes& recipe : recipes)
     {
-        if (recipe.potionName == potionName)
+        if (recipe._Recipe_Name == _Recipe_Name)
         {
-            if (ingredients[recipe.ingredient1Name] < recipe.ingredient1Count ||
-                ingredients[recipe.ingredient2Name] < recipe.ingredient2Count)
+            if (ingredients[recipe._First_Ingredient_Name] < recipe._First_Ingredient_Count ||
+                ingredients[recipe._Second_Ingredient_Name] < recipe._Second_Ingredient_Count)
             {
                 cout << "재료가 부족합니다." << endl;
                 return false;
             }
 
-            ingredients[recipe.ingredient1Name] -= recipe.ingredient1Count;
-            ingredients[recipe.ingredient2Name] -= recipe.ingredient2Count;
+            ingredients[recipe._First_Ingredient_Name] -= recipe._First_Ingredient_Count;
+            ingredients[recipe._Second_Ingredient_Name] -= recipe._Second_Ingredient_Count;
 
-            cout << potionName << " 제작 성공!" << endl;
+            cout << _Recipe_Name << " 제작 성공!" << endl;
             return true;
         }
     }

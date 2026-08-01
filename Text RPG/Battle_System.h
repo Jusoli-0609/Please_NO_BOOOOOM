@@ -34,6 +34,8 @@ void Show_Battle_Menu();
 
 void Show_Battle_End(Player* player, Monster& monster);
 
+void Give_Battle_Item_Reward(Player* player, Monster& monster, Inventory<Item>& Inventory);
+
 // =======================
 // 플레이어 턴
 // =======================
@@ -57,3 +59,4 @@ void Monster_Attack(Player* player, Monster& monster);
 bool Check_Elite_Skill(Monster& monster, int turnCount);
 
 bool Check_Battle_End(Player* player, Monster& monster, Inventory<Item>& inventory);
+

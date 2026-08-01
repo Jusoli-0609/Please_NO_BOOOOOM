@@ -17,6 +17,7 @@ Inventory<T>::Inventory(int max_inventory_size, int max_capacity)
     _Max_Inventory_Size = max_inventory_size;
     _Max_Capacity = max_capacity;
     _Current_Quantity_Of_Items = 0;
+    _Money = 0;
     {
         _Inventory_Items = new T[_Max_Inventory_Size];
     }
@@ -36,6 +37,7 @@ Inventory<T>::Inventory(const Inventory<T>& other)// 기존 객체와 같은 상태를 가�
             min(other._Current_Quantity_Of_Items, other._Max_Inventory_Size);
     }
     _Max_Capacity = other._Max_Capacity;
+    _Money = other._Money;
     _Inventory_Items = new T[_Max_Inventory_Size];
     for (int i = 0; i < _Current_Quantity_Of_Items; i++)
     {
@@ -53,6 +55,7 @@ Inventory<T>& Inventory<T>::operator=(const Inventory<T>& other)//(다른 Inventor
     delete[] _Inventory_Items;
     _Max_Inventory_Size = other._Max_Inventory_Size;
     _Max_Capacity = other._Max_Capacity;
+    _Money = other._Money;
     _Current_Quantity_Of_Items = min(other._Current_Quantity_Of_Items, other._Max_Inventory_Size);
     _Inventory_Items = new T[_Max_Inventory_Size];
     int Safe_Item_Count = min(_Current_Quantity_Of_Items, _Max_Inventory_Size);

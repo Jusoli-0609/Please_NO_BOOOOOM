@@ -1,6 +1,8 @@
 #include "Battle_System.h"
 #include "Battle_Elite_Skill.h"
 #include "Item.h"
+#include "Inventory.h"
+#include "Monster.h"
 
 #include <iostream>
 #include <string>
@@ -271,6 +273,7 @@ bool Check_Battle_End(Player* player, Monster& monster, Inventory<Item>& invento
         cout << "ÀüÅõ ½Â¸®!" << endl;
 
 
+
         int exp = monster.getExpReward();
 
         player->Gain_Exp(exp);
@@ -282,7 +285,7 @@ bool Check_Battle_End(Player* player, Monster& monster, Inventory<Item>& invento
 
         cout << monster.getDropItemName()
             << " È¹µæ!" << endl;
-
+        Give_Battle_Item_Reward(player,monster,inventory);
 
         return true;
     }
@@ -300,3 +303,23 @@ bool Check_Battle_End(Player* player, Monster& monster, Inventory<Item>& invento
     return false;
 }
 
+
+void Give_Battle_Item_Reward(Player* player, Monster& monster, Inventory<Item>& inventory)
+{
+    if (player == nullptr)
+    {
+        return;
+    }
+    monster.Generate_Drop_Reward();
+    const vector<Item>& dropItems = monster.getDropItems();
+    for (const Item& dropItem : dropItems)
+    {
+        inventory.Add_Or_Increase_Item(dropItem);
+    }
+    int goldReward = monster.getGoldReward();
+    int currentMoney = inventory.Get_Money();
+    inventory.Set_Money(currentMoney + goldReward);
+    cout << goldReward
+        << "ÈÆ·ÃÀå·Á±ÝÀ» È¹µæÇß½À´Ï´Ù!"
+        << endl;
+}
