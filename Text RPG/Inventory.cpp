@@ -167,6 +167,7 @@ void Inventory<T>::Print_Inventory_Menu()
 template<typename T>//5-1 아이템 추가 및 갯수 증가
 bool Inventory<T>::Add_Or_Increase_Item(const T& new_item)
 {
+    new_item.Print_Info();
     int New_Item_Weight = new_item._Item_Weight * new_item._Item_Count;
     T* Found_Item = nullptr;  //  같은 아이템을 가리킬 포인터 변수 선언
     for (int i = 0; i < _Current_Quantity_Of_Items; i++)//순회 반복문
@@ -215,7 +216,9 @@ bool Inventory<T>::Add_Or_Increase_Item(const T& new_item)
     }
     while (_Current_Quantity_Of_Items >= _Max_Inventory_Size)
     {
-        cout << "인벤토리 슬롯이 가득 찼다! 어떤 물건을 버릴 것인가?" << endl;
+        cout << "인벤토리 슬롯이 가득 찼다!" << endl;
+        cout << "슬롯을 비우려면 아이템 한 종류의 개수를 0개로 만들어야 한다." << endl;
+        cout << "일부만 버리면 슬롯은 그대로 남아 있다. 물건을 버릴 것인가?" << endl;
         cout << "1. 버리기" << endl;
         cout << "2. 취소" << endl;
         int Choose_Item_To_Get_Rid_Of;
@@ -223,6 +226,10 @@ bool Inventory<T>::Add_Or_Increase_Item(const T& new_item)
         if (Choose_Item_To_Get_Rid_Of == 1)
         {
             Throw_Away_Item();
+            if (_Current_Quantity_Of_Items >= _Max_Inventory_Size)
+            {
+                cout << "아직 슬롯이 부족하다!" << endl;
+            }
         }
         else if (Choose_Item_To_Get_Rid_Of == 2)
         {

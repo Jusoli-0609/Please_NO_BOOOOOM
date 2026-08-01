@@ -11,6 +11,8 @@ public:
     int _Item_Price=0;
     int _Item_Count=0;
     int _Item_Weight=0;
+    std::string _Item_Ascii_Art;
+    std::string _Item_Description;
     bool _Item_Type_Usable=false;
     bool _Item_Type_Wearable=false;
     bool _Need_Item_Reverse_Effect=false;
@@ -18,6 +20,8 @@ public:
     void Print_Info() const;//1.아이템 정보 내보내기
     bool Item_Effect(Player& player, Monster& monster);//2.아이템 효과 적용
     bool Item_Effect_Reverse(Player& player, Monster& monster);//3.아이템 효과 해제
+    void Print_Ascii_Art() const;
+ 
    
 };
 
