@@ -553,4 +553,8 @@ Inventory<T>::~Inventory()
     _Inventory_Items = nullptr;
 }
 
+template<typename T>//9.인벤토리 내 money 가져오기
+int Inventory<T>::Get_Money()
+{
+}
 template class Inventory<Item>; // 명시적 인스턴스화
