@@ -3,7 +3,7 @@
 
 using namespace std;
 
-void PotionRecipe::PrintInfo() const
+void All_Recipes::PrintInfo() const
 {
     cout << potionName << ": "
         << ingredient1Name << " x" << ingredient1Count << ", "

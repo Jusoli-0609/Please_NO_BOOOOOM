@@ -1,8 +1,9 @@
 #pragma once
 #include <string>
 
-struct PotionRecipe
+class All_Recipes
 {
+public:
     std::string potionName;
     std::string ingredient1Name;
     int ingredient1Count;

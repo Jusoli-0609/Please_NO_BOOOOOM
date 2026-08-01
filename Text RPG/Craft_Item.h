@@ -13,8 +13,8 @@ private:
 public:
     Craft_Work_Shop();
 
-    void PrintAllRecipes() const;
-    void FindRecipeByPotionName(const std::string& potionName) const;
-    void FindRecipesByIngredientName(const std::string& ingredientName) const;
-    bool CraftPotion(const std::string& potionName);
+    void Print_All_Recipes() const;
+    void Find_Recipe_By_Potion_Name(const std::string& potionName) const;
+    void Find_Recipes_By_Ingredient_Name(const std::string& ingredientName) const;
+    bool Craft_Potion(const std::string& potionName);
 };
