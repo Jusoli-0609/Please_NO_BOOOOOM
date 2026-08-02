@@ -3,6 +3,94 @@
 
 using namespace std;
 
+vector<Quiz> EliteQuiz =
+{
+
+};
+vector<Quiz> VariableTutorQuiz =
+{
+
+};
+vector<Quiz> ArrayTutorQuiz =
+{
+
+};
+vector<Quiz> FunctionTutorQuiz =
+{
+
+};
+vector<Quiz> PointerTutorQuiz =
+{
+
+};
+vector<Quiz> ObjectTutorQuiz =
+{
+
+};
+
+vector<Quiz> Elite_Quiz =
+{
+    {
+        "객체지향에서 부모의 기능을 물려받는 것을 무엇이라고 하는가?",
+        {"추상화","다형성","캡슐화","상속"},
+        "상속"
+    },
+
+    {
+        "C++에서 동적할당 키워드는?",
+        {"malloc","new","create","alloc"},
+        "new"
+    },
+
+    {
+        "반복문이 아닌 것은?",
+        {"for","while","if","do while"},
+        "if"
+    },
+
+    {
+        "배열의 시작 인덱스는?",
+        {"0","1","2","-1"},
+        "0"
+    },
+
+    {
+        "함수를 호출할 때 사용하는 것은?",
+        {"()","[]","{}","<>"},
+        "()"
+    },
+
+    {
+        "포인터 연산자는?",
+        {"*","&","%","@"},
+        "*"
+    },
+
+    {
+        "클래스를 생성하는 키워드는?",
+        {"class","struct","object","newclass"},
+        "class"
+    },
+
+    {
+        "STL vector 헤더는?",
+        {"<vector>","<array>","<list>","<map>"},
+        "<vector>"
+    },
+
+    {
+        "조건문 키워드는?",
+        {"if","for","switch","while"},
+        "if"
+    },
+
+    {
+        "상수를 만드는 키워드는?",
+        {"const","final","static","define"},
+        "const"
+    }
+};
+
 bool Check_Elite_Skill(Monster& monster, int turnCount)
 {
 	if (monster.getMonsterGrade() != Monster_Grade::ELITE &&
@@ -76,6 +164,51 @@ bool Check_Elite_Skill(Monster& monster, int turnCount)
 	return false;
 }
 
+bool Ask_Random_Elite_Question(Player* player, Monster& monster)
+{
+    int random = rand() % Elite_Quiz.size();
+
+    Quiz quiz = Elite_Quiz[random];
+
+    cout << endl;
+    cout << "==============================" << endl;
+    cout << "        엘리트 문제" << endl;
+    cout << "==============================" << endl;
+
+    cout << quiz.question << endl;
+
+    for (const string& choice : quiz.choices)
+    {
+        cout << "- " << choice << endl;
+    }
+
+    string answer;
+
+    cout << endl;
+    cout << "정답 : ";
+    cin >> answer;
+
+    if (answer == quiz.answer)
+    {
+        cout << endl;
+        cout << "정답!" << endl;
+        cout << "몬스터의 특수공격을 막았다!" << endl;
+
+        return true;
+    }
+
+    int damage = monster.getPower() * 2;
+
+    player->Set_Hp(player->Get_Hp() - damage);
+
+    cout << endl;
+    cout << "오답!" << endl;
+    cout << damage << "의 피해를 입었다." << endl;
+    cout << "남은 체력 : " << player->Get_Hp() << endl;
+
+    return false;
+}
+
 void Execute_Elite_Skill(Player* player, Monster& monster)
 {
     if (player == nullptr)
@@ -125,6 +258,9 @@ void Execute_Elite_Skill(Player* player, Monster& monster)
         break;
     }
 }
+
+
+bool Tutor_Test(Player* player, Monster& monster);
 
 void Code_Snippet_Question(Player* player, Monster& monster)
 {
