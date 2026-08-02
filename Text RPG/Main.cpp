@@ -1,10 +1,12 @@
-#include "Console_Manager.h"
+ï»¿#include "Console_Manager.h"
 #include "DungeonManager.h"
 #include "Inventory.h"
 #include "Item.h"
+#include "Character_Creator.h"
+#include "Player.h"
 
 #include <iostream>
-#include <string>
+#include <ctime>
 
 using namespace std;
 
@@ -12,91 +14,78 @@ void PrintLine()
 {
     cout << string(50, '=') << endl;
 }
+
 void Intro();
 
 int main()
 {
-    Console_Manager Console(120, 40);
+    srand(static_cast<unsigned int>(time(nullptr)));
 
-    Console.Set_Console_Size();
-    Console.Clear();
-    Console.Set_Cursor_Position(15, 10);
-    Console.Slow_Print("´« ¶°º¸´Ï ÄÚµå ¸¶½ºÅÍ", 50);
+    Console_Manager console(120, 40);
+
+    console.Set_Console_Size();
+    console.Clear();
+    console.Set_Cursor_Position(15, 10);
 
     PrintLine();
     Intro();
 
-    // ===========================
-    // Å×½ºÆ®¿ë ÀÎº¥Åä¸® »ı¼º
-    // ===========================
+    // í”Œë ˆì´ì–´ ìƒì„±
+    Player* player = Character_Creator();
+
+    if (player == nullptr)
+    {
+        cout << "ìºë¦­í„° ìƒì„± ì‹¤íŒ¨!" << endl;
+        return 0;
+    }
 
     Inventory<Item> inventory(10, 9999);
 
-    // ½½·Ô 10Ä­ Ã¤¿ì±â
-    for (int i = 0; i < 10; i++)
+    Dungeon_Manager dungeonManager;
+
+    bool gameRunning = true;
+
+    while (gameRunning)
     {
-        Item item;
-        item._Item_Name = "¾²·¹±â" + to_string(i + 1);
-        item._Item_Count = 20;
-        item._Item_Weight = 1;
-        item._Item_Price = 1;
-        item._Item_Type_Usable = false;
-        item._Item_Description = "¾²·¹±â´Ù!";
-        item._Item_Ascii_Art = R"(
+        int menu;
 
-        .-""""-.
-      .'  ____  '.
-     /   / __ \   \
-    |   | (__) |   |
-    |   |      |   |
-    |   |______|   |
-     \    ____    /
-      '._/____\_.'
-         /||||\
-        /_||||_\
+        cout << endl;
+        cout << "==============================" << endl;
+        cout << "         ë©”ì¸ ë©”ë‰´" << endl;
+        cout << "==============================" << endl;
+        cout << "1. ë˜ì „" << endl;
+        cout << "2. ì¸ë²¤í† ë¦¬" << endl;
+        cout << "3. ìƒíƒœì°½" << endl;
+        cout << "0. ì¢…ë£Œ" << endl;
+        cout << "==============================" << endl;
+        cout << "ì„ íƒ : ";
 
-)";
+        cin >> menu;
 
-        inventory.Add_Or_Increase_Item(item);
+        switch (menu)
+        {
+        case 1:
+            dungeonManager.Open_Dungeon(player, inventory);
+            break;
+
+        case 2:
+            inventory.Print_Inventory();
+            break;
+
+        case 3:
+            player->Print_Status();
+            break;
+
+        case 0:
+            gameRunning = false;
+            break;
+
+        default:
+            cout << "ì˜ëª»ëœ ì…ë ¥ì…ë‹ˆë‹¤." << endl;
+            break;
+        }
     }
 
-    cout << "\n===== ÇöÀç ÀÎº¥Åä¸® =====\n";
-    inventory.Print_Inventory();
-
-    // »õ ¾ÆÀÌÅÛ È¹µæ
-
-    Item newItem;
-    newItem._Item_Name = "Àü¼³ÀÇ °Ë";
-    newItem._Item_Count = 1;
-    newItem._Item_Weight = 1;
-    newItem._Item_Price = 9999;
-    newItem._Item_Type_Usable = false;
-    newItem._Item_Description = "Àü¼³ÀÇ °ËÀÌ´Ù!";
-    newItem._Item_Ascii_Art = 
-    R"(
-
-       /\
-      /  \
-     /====\
-    /======\
-       ||
-       ||
-       ||
-       ||
-       ||
-=================
-   \\______//
-      ||||
-      ||||
-     /____\
-
-)";
-
-    cout << "\n»õ ¾ÆÀÌÅÛÀ» È¹µæÇÕ´Ï´Ù.\n";
-    inventory.Add_Or_Increase_Item(newItem);
-
-    cout << "\n===== °á°ú =====\n";
-    inventory.Print_Inventory();
-
-    return 0;
+    delete player;
 }
+    
