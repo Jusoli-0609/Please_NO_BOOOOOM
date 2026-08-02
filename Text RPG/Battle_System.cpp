@@ -205,9 +205,9 @@ void Skill(Player* player, Monster& monster)
 
     cout << endl;
     cout << "------ 스킬 ------" << endl;
-    cout << "1. 스킬 1" << endl;
-    cout << "2. 스킬 2" << endl;
-    cout << "3. 스킬 3" << endl;
+    cout << "1." << player->Get_Skill1_Name() << endl;
+    cout << "2." << player->Get_Skill2_Name() << endl;
+    cout << "3." << player->Get_Skill3_Name() << endl;
     cout << "0. 뒤로가기" << endl;
     cout << "선택 : ";
 
