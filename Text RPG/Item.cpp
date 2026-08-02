@@ -12,18 +12,16 @@ using namespace std;
 void Item::Print_Info() const
 {
     cout << "아이템 이름: "
-        << _Item_Name << ", 설명: "
-        << _Item_Description<< ", 가격: "
+        << _Item_Name << ", 가격: "
         << _Item_Price << ", 갯수:"
         << _Item_Count << ", 갯수당 무게: "
         << _Item_Weight << endl;
-    Print_Ascii_Art();
 }
 
 //2.아이템 효과 적용
 bool Item::Item_Effect(Player& player, Monster& monster)
 {
-    if (_Item_Name == "컵라면")
+    if (_Item_Name == "HP 포션")
     {
         player.Set_Hp(
                       min(player.Get_Hp() + 50, player.GetMaxHP()));
@@ -35,7 +33,7 @@ bool Item::Item_Effect(Player& player, Monster& monster)
 
         return true;
     }
-    else if (_Item_Name == "에너지드링크")
+    else if (_Item_Name == "MP 포션")
     {
         player.Set_Mp(min(player.Get_Mp() + 50, player.GetMaxMP()));
 
@@ -70,9 +68,4 @@ bool Item::Item_Effect_Reverse(Player& player, Monster& monster)
        return false;
     }
     return false;
-}
-
-void Item::Print_Ascii_Art() const
-{
-    cout << _Item_Ascii_Art << endl;
 }

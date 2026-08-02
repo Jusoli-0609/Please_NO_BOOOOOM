@@ -1,29 +1,22 @@
-﻿#pragma once
+#pragma once
 #include "Player.h"
 
-// [핵심] 순환 참조 방지 (전방 선언)
-// Level_Up.h와 Monster.h가 서로 include하는 꼬임 에러를 막기 위해
-// 자세한 내부 정보 없이 "Monster라는 클래스가 존재한다"는 이름만 미리 알려줍니다.
+// Monster Ŭ������ �����Ѵٴ� ���� �̸� �˷��� (���� ����)
 class Monster;
-class Player;
 
 class Level_Up
 {
 private:
-    int _current_level; // 현재 플레이어의 레벨
-    int _current_exp;   // 현재 축적된 경험치
-    int _max_exp;       // 레벨업에 필요한 목표 경험치
-    int _stat_points;   // 레벨업 시 얻는 스탯 포인트
+    int _current_level;
+    int _current_exp;
+    int _max_exp;
+    int _stat_points;
 
 public:
-    Level_Up();  // 생성자
-    ~Level_Up(); // 소멸자
+    Level_Up();
+    ~Level_Up();
 
-    // [핵심] 경험치 획득 함수
-    // 1. const : 몬스터 담당 팀원의 영역(HP, 스탯 등)을 이 함수 내부에서 절대 수정하지 못하게 잠금 (안전성)
-    // 2. & (참조자) : 무거운 Monster 객체를 복사하지 않고 원본 주소로 바로 접근하여 속도 최적화 (성능)
+    // Monster ����(&) ����
     void GainExp(Player* player, const Monster& monster);
-
-    // 레벨업 조건 충족 시 실제 능력치 상승 및 HP 회복을 처리하는 함수
     void ProcessLevelUp(Player* player);
 };
