@@ -10,16 +10,19 @@ Equipment::Equipment()
     _Defence_Stat = 0 ;
     _Grade= Equipment_Grade::Empty ;
     _Enhance_Level = 0 ;
+    _Equipment_Type = Equipment_Type::Empty;
 }
 
 //아이템 다 대입 생성자 뭔말알?
-Equipment::Equipment(string equipment_name, int attack, int defence, Equipment_Grade grade)
+Equipment::Equipment(string equipment_name, int attack, int defence, Equipment_Grade grade, Equipment_Type type, string art)
 {
     _Equipment_Name = equipment_name ;
     _Attack_Stat = attack ;
     _Defence_Stat = defence ;
     _Grade = grade ;
     _Enhance_Level = 0 ;
+    _Equipment_Type = type;
+    _Equipment__Ascii_Art = art;
 }
 
 //장비 등급을 문자열 출력으로~~!
@@ -56,6 +59,36 @@ string Equipment:: Equipment_Grade_To_String(Equipment_Grade grade) const
         return "Unknown";
     }
     }
+}
+
+//장비 타입을 문자열 출력으로~!
+string Equipment::Equipment_Type_To_String(Equipment_Type type) const
+{
+    switch (type)
+    {
+    case Equipment_Type::CPU:
+        return "CPU";
+
+    case Equipment_Type::GPU:
+        return "GPU";
+
+    case Equipment_Type::Keyboard:
+        return "Keyboard";
+
+    case Equipment_Type::Mouse:
+        return "Mouse";
+
+    case Equipment_Type::BlueLight_Glasses:
+        return "BlueLight Glasses";
+
+    case Equipment_Type::Headset:
+        return "Headset";
+
+    case Equipment_Type::Virtual_Character:
+        return "Virtual Character";
+
+    default:
+        return "Empty";
 }
 
 //강화도 조회
@@ -98,6 +131,7 @@ void Equipment::Set_Defence_Stat(int defence_stat)
 void Equipment::Print_Equipment_Info() const
 {
     cout << "장비 이름: " << _Equipment_Name << endl;
+    cout << "장비 타입: " << Equipment_Type_To_String(_Equipment_Type) << endl;
     cout << "공격력: " << _Attack_Stat << endl;
     cout << "방어력: " << _Defence_Stat << endl;
     cout << "등급: " << Equipment_Grade_To_String(_Grade) << endl;
@@ -137,7 +171,7 @@ void Equipment::Set_Equipment_Name(string name)
 //장비 설명 조회
 string Equipment::Get_Equipment_Description()const
 {
-    return _Equipment_Name;
+    return _Equipment_Description;
 }
 
 //장비 설명 설정
@@ -146,11 +180,23 @@ void Equipment::Set_Equipment_Description(string description)
     _Equipment_Description = description;
 }
 
-//-----------------장비창------------------------------------
+//장비 타입 조회
+Equipment_Type Equipment::Get_Equipment_Type()const
+{
+    return _Equipment_Type;
+}
+
+//장비 타입 설정
+void Equipment::Set_Equipment_Type(Equipment_Type type)
+{
+    _Equipment_Type = type;
+}
+
+//-----------------현재 장착 중인 아이템 장비창------------------------------------
 
 
 //장비창 기본 생성자
-Equipment_Inventory::Equipment_Inventory(int max_count)
+Currently_Equipped_Equipments::Currently_Equipped_Equipments()
 {
     _Max_Count = max_count;
     _Current_Count = 0;
@@ -158,13 +204,13 @@ Equipment_Inventory::Equipment_Inventory(int max_count)
 }
 
 //장비창 소멸자
-Equipment_Inventory::~Equipment_Inventory()
+Currently_Equipped_Equipments::~Currently_Equipped_Equipments()
 {
     delete[] _Equipments;
 }
 
 //장비 착용
-bool Equipment_Inventory::Equip_Equipment(const Equipment& equipment)
+bool Currently_Equipped_Equipments::Equip_Equipment(const Equipment& equipment)
 {
     if (_Current_Count >= _Max_Count)
     {
@@ -177,7 +223,7 @@ bool Equipment_Inventory::Equip_Equipment(const Equipment& equipment)
 }
 
 //장비 이름 인덱스로 조회하기
-Equipment* Equipment_Inventory::Get_Equipment_By_Index(int index)
+Equipment* Currently_Equipped_Equipments::Get_Equipment_By_Index(int index)
 {
     if (index < 0 || index >= _Current_Count)
     {
@@ -187,7 +233,7 @@ Equipment* Equipment_Inventory::Get_Equipment_By_Index(int index)
 }
 
 //장비창 출력
-void Equipment_Inventory::Print_Equipment_Inventory() const
+void Currently_Equipped_Equipments::Print_Currently_Equipped_Equipments() const
 {
     return;
 }

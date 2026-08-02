@@ -124,13 +124,15 @@ void Inventory<T>::Print_Inventory_Menu()
     cout << R"(
     무엇을 할까?
     1. 전체 인벤토리 보기
-    2. 아이템 정렬
-    3. 아이템 순서 바꾸기
-    4. 아이템 버리기
+    2. 현재 착용 중인 아이템 보기
+    3. 장비 전용 인벤토리 보기
+    4. 조합 아이템 및 소비 아이템 전용 인벤토리 보기
     0. 되돌아가기)" << endl;
     int Choose_Inventory_Menu;
     cin >> Choose_Inventory_Menu;
-    switch (Choose_Inventory_Menu)
+    switch (Choose_Inventory_Menu
+        int Choose_Inventory_Menu_For_Usable_And_Ingredients_Items;
+    switch (Choose_Inventory_Menu_For_Usable_And_Ingredients_Items)
     {
     case 1:
     {
