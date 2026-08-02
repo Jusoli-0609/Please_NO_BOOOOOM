@@ -78,6 +78,9 @@
     <ClCompile Include="Basic_Sword.cpp">
       <Filter>소스 파일\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Quiz_Bank.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h">
@@ -138,6 +141,9 @@
       <Filter>헤더 파일\Item</Filter>
     </ClInclude>
     <ClInclude Include="Stat_Modifier.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Quiz_Bank.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

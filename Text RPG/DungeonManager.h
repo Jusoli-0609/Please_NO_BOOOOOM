@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 #include "Inventory.h"
 #include "Monster.h"
 #include "Player.h"
 #include <string>
 #include <map>
 
-// 1. Á¤¿¹ ¸ó½ºÅÍ ¹®Á¦ µ¥ÀÌÅÍ ÆÄÆ®
+// 1. ì •ì˜ˆ ëª¬ìŠ¤í„° ë¬¸ì œ ë°ì´í„° íŒŒíŠ¸
 struct Elite_Question
 {
 	std::string question;
@@ -13,7 +13,7 @@ struct Elite_Question
 	int correct_Answer = 1;
 };
 
-// 2. Æ©ÅÍ ¹®Á¦ ¹× ´ë»ç µ¥ÀÌÅÍ ÆÄÆ®
+// 2. íŠœí„° ë¬¸ì œ ë° ëŒ€ì‚¬ ë°ì´í„° íŒŒíŠ¸
 struct Tutor_Dialogue
 {
 	std::string appearance_Message;
@@ -29,18 +29,16 @@ struct Tutor_Question
 	std::string correct_Answer;
 };
 
-// 3. ¸ó½ºÅÍ Ã³Ä¡ ±â·Ï µ¥ÀÌÅÍ ÆÄÆ®
+// 3. ëª¬ìŠ¤í„° ì²˜ì¹˜ ê¸°ë¡ ë°ì´í„° íŒŒíŠ¸
 struct Monster_Kill_Record
 {
 	std::string monster_Name;
-
-	Monster_Grade monster_Grade =Monster_Grade::NORMAL;
-
+	Monster_Grade monster_Grade = Monster_Grade::NORMAL;
 	int kill_Count = 0;
 	int earned_Score = 0;
 };
 
-// 4. ´øÀü °øÅë »ó¼ö ÆÄÆ®
+// 4. ë˜ì „ ê³µí†µ ìƒìˆ˜ íŒŒíŠ¸
 constexpr int MONSTERS_PER_CHAPTER = 3;
 constexpr int TUTOR_QUESTION_COUNT = 3;
 constexpr int TUTOR_CLEAR_CORRECT_COUNT = 2;
@@ -48,70 +46,63 @@ constexpr int TUTOR_CLEAR_CORRECT_COUNT = 2;
 class Dungeon_Manager
 {
 public:
-	// 5. ´øÀü »ı¼º ¹× ¸Ş´º ½ÇÇà ÆÄÆ®
-	Dungeon_Manager(); // 5-1. ´øÀü ¸Å´ÏÀú »ı¼ºÀÚ
-	void Open_Dungeon(Player* player, Inventory<Item>& inventory); // 5-2. ´øÀü ¸Ş´º ¿­±â
+	// 5. ë˜ì „ ìƒì„± ë° ë©”ë‰´ ì‹¤í–‰ íŒŒíŠ¸
+	Dungeon_Manager();
+	void Open_Dungeon(Player* player, Inventory<Item>& inventory);
 
-	// 6. ´øÀü »óÅÂ Á¶È¸ ¹× ±â·Ï Ãâ·Â ÆÄÆ®
-	bool Check_All_Chapter_Cleared() const; // 6-1. ÀüÃ¼ Ã©ÅÍ Å¬¸®¾î ¿©ºÎ Á¶È¸
-	int Get_Current_Chapter_Score() const; // 6-2. ÇöÀç Ã©ÅÍ Á¡¼ö Á¶È¸
-	void Print_Current_Chapter_Kill_Log() const; // 6-3. ÇöÀç Ã©ÅÍ Ã³Ä¡ ±â·Ï Ãâ·Â
-	int Monster_Kill_Count=0; // 6-4. ÀüÃ¼ ¸ó½ºÅÍ Ã³Ä¡ ¼ö È£È¯ º¯¼ö
+	// 6. ë˜ì „ ìƒíƒœ ì¡°íšŒ ë° ê¸°ë¡ ì¶œë ¥ íŒŒíŠ¸
+	bool Check_All_Chapter_Cleared() const;
+	int Get_Current_Chapter_Score() const;
+	void Print_Current_Chapter_Kill_Log() const;
+	int Monster_Kill_Count = 0;
+
+	// ì™¸ë¶€ ì°¸ì¡° public ìœ í‹¸ë¦¬í‹°
+	Item Create_Tutor_Clear_Item(Chapter_Type chapter_Type) const;
+	bool Check_Final_Boss_Room_Available(Inventory<Item>& inventory) const;
+	void Print_Tutor_Item_Status(Inventory<Item>& inventory) const;
 
 private:
-	// 7. ÇöÀç Ã©ÅÍ ½ÇÇà ÆÄÆ®
-	void Print_Current_Chapter() const; // 7-1. ÇöÀç ÀÔÀå °¡´ÉÇÑ Ã©ÅÍ Ãâ·Â
-	void Run_Current_Chapter(Player* player, Inventory<Item>& inventory); // 7-2. ÇöÀç Ã©ÅÍ ÀÌº¥Æ® ÁøÇà
-	std::string Get_Chapter_Name(Chapter_Type chapter_Type) const; // 7-3. Ã©ÅÍ ÀÌ¸§ º¯È¯
+	// 7. í˜„ì¬ ì±•í„° ì‹¤í–‰ íŒŒíŠ¸
+	void Print_Current_Chapter() const;
+	void Run_Current_Chapter(Player* player, Inventory<Item>& inventory);
+	std::string Get_Chapter_Name(Chapter_Type chapter_Type) const;
 
-	// 8. ÀÏ¹İ ¸ó½ºÅÍ ¼±ÅÃ ÆÄÆ®
-	void Get_Current_Chapter_Monsters(Monster_Type monster_Types[]) const; // 8-1. ÇöÀç Ã©ÅÍ ÀÏ¹İ ¸ó½ºÅÍ ¸ñ·Ï ±¸¼º
-	Monster_Type Get_Random_Normal_Monster() const; // 8-2. ÀÏ¹İ ¸ó½ºÅÍ ·£´ı ¼±ÅÃ
+	// 8. ì¼ë°˜ ëª¬ìŠ¤í„° ì„ íƒ íŒŒíŠ¸
+	void Get_Current_Chapter_Monsters(Monster_Type monster_Types[]) const;
+	Monster_Type Get_Random_Normal_Monster() const;
 
-	// 9. Á¤¿¹ ¸ó½ºÅÍ ¹®Á¦ ÆÄÆ®
-	bool Check_Elite_Monster_Appearance() const; // 9-1. Á¤¿¹ ¸ó½ºÅÍ µîÀå È®·ü ÆÇÁ¤
-	Elite_Question Get_Elite_Question(Chapter_Type chapter_Type) const; // 9-2. Ã©ÅÍº° Á¤¿¹ ¹®Á¦ ·£´ı ¼±ÅÃ
-	bool Run_Elite_Question(const Elite_Question& elite_Question); // 9-3. Á¤¿¹ ¹®Á¦ Ãâ·Â ¹× Á¤´ä ÆÇÁ¤
-	bool Run_Elite_Quiz(Monster& elite_Monster); // 9-4. Á¤¿¹ ¸ó½ºÅÍ ÄûÁî ÀüÃ¼ ÁøÇà
+	// 9. ì •ì˜ˆ ëª¬ìŠ¤í„° ë¬¸ì œ íŒŒíŠ¸ (cpp ì •ì˜ì™€ 1:1 ì¼ì¹˜ ì™„ë£Œ)
+	bool Check_Elite_Monster_Appearance() const;
+	Elite_Question Get_Elite_Question(Chapter_Type chapter_Type) const;
+	bool Run_Elite_Question(const Elite_Question& elite_Question);
+	bool Run_Elite_Quiz(Player* player, Monster& elite_Monster); // [ìˆ˜ì •] Player*ì™€ Monster& ìˆ˜ì‹ 
 
-	// 10. Æ©ÅÍ ¹®Á¦ ¹× ´ë»ç ÆÄÆ®
-	void Get_Tutor_Questions(Chapter_Type chapter_Type, Tutor_Question tutor_Questions[]) const; // 10-1. Ã©ÅÍº° Æ©ÅÍ ¹®Á¦ ±¸¼º
-	Tutor_Dialogue Get_Tutor_Dialogue(Chapter_Type chapter_Type) const; // 10-2. Ã©ÅÍº° Æ©ÅÍ ´ë»ç ±¸¼º
-	bool Run_Tutor_Code_Challenge(const Monster& tutor_Monster); // 10-3. Æ©ÅÍ ÄÚµå ¹®Á¦ 3°³ ÁøÇà
-	void Run_Tutor_Challenge(Player* player, Inventory<Item>& inventory); // 10-4. Æ©ÅÍ µµÀü ¹× Å¬¸®¾î Ã³¸®
+	// 10. íŠœí„° ë¬¸ì œ ë° ëŒ€ì‚¬ íŒŒíŠ¸ (cpp ì •ì˜ì™€ 1:1 ì¼ì¹˜ ì™„ë£Œ)
+	void Get_Tutor_Questions(Chapter_Type chapter_Type, Tutor_Question tutor_Questions[]) const;
+	Tutor_Dialogue Get_Tutor_Dialogue(Chapter_Type chapter_Type) const;
+	bool Run_Tutor_Code_Challenge(Player* player, Monster& tutor_Monster); // [ìˆ˜ì •] Player* ìˆ˜ì‹ 
+	void Run_Tutor_Challenge(Player* player, Inventory<Item>& inventory);
 
-	// 11. Ã³Ä¡ ±â·Ï ¹× ÀÏ¹İ º¸»ó ÆÄÆ®
-	void Record_Monster_Kill(const Monster& monster); // 11-1. ¸ó½ºÅÍ Ã³Ä¡ ¹× Å¬¸®¾î ±â·Ï ÀúÀå
-	void Give_Drop_Items_To_Inventory(const Monster& monster, Inventory<Item>& inventory); // 11-2. µå·Ó ¾ÆÀÌÅÛ ÀÎº¥Åä¸® Áö±Ş
+	// 11. ì²˜ì¹˜ ê¸°ë¡ ë° ì¼ë°˜ ë³´ìƒ íŒŒíŠ¸
+	void Record_Monster_Kill(const Monster& monster);
+	void Give_Drop_Items_To_Inventory(const Monster& monster, Inventory<Item>& inventory);
 
-	// 12. Ã©ÅÍ Á¡¼ö ¹× ÀÌµ¿ ÆÄÆ®
-	void Add_Chapter_Score(int score_Reward); // 12-1. ÇöÀç Ã©ÅÍ Á¡¼ö Ãß°¡
-	int Get_Required_Tutor_Score() const; // 12-2. Ã©ÅÍº° Æ©ÅÍ µµÀü ¿ä±¸ Á¡¼ö °è»ê
-	bool Check_Tutor_Challenge_Available() const; // 12-3. Æ©ÅÍ µµÀü °¡´É ¿©ºÎ È®ÀÎ
-	void Clear_Current_Chapter(); // 12-4. ÇöÀç Ã©ÅÍ Å¬¸®¾î Ã³¸®
-	void Move_Next_Chapter(); // 12-5. ´ÙÀ½ Ã©ÅÍ ÀÌµ¿
+	// 12. ì±•í„° ì ìˆ˜ ë° ì´ë™ íŒŒíŠ¸
+	void Add_Chapter_Score(int score_Reward);
+	int Get_Required_Tutor_Score() const;
+	bool Check_Tutor_Challenge_Available() const;
+	void Clear_Current_Chapter();
+	void Move_Next_Chapter();
 
-	// 13. Æ©ÅÍ °íÀ¯ ¾ÆÀÌÅÛ ¹× ÃÖÁ¾º¸½º¹æ Á¶°Ç ÆÄÆ®
-	Item Create_Tutor_Clear_Item(Chapter_Type chapter_Type) const; // 13-1. Ã©ÅÍº° Æ©ÅÍ °íÀ¯ ¾ÆÀÌÅÛ »ı¼º
-	bool Has_Item_In_Inventory(Inventory<Item>& inventory, const std::string& item_Name) const; // 13-2. ÀÎº¥Åä¸® ¾ÆÀÌÅÛ º¸À¯ ¿©ºÎ È®ÀÎ
-	bool Give_Tutor_Clear_Item(Chapter_Type chapter_Type,Inventory<Item>& inventory); // 13-3. Æ©ÅÍ °íÀ¯ ¾ÆÀÌÅÛ È®Á¤ Áö±Ş
-	bool Check_Final_Boss_Room_Available(Inventory<Item>& inventory) const; // 13-4. ÃÖÁ¾º¸½º¹æ °³¹æ Á¶°Ç È®ÀÎ
-	void Print_Tutor_Item_Status(Inventory<Item>& inventory) const; // 13-5. Æ©ÅÍ °íÀ¯ ¾ÆÀÌÅÛ ¼öÁı ÇöÈ² Ãâ·Â
+	// 13. íŠœí„° ê³ ìœ  ì•„ì´í…œ ë‚´ë¶€ ìœ í‹¸ë¦¬í‹°
+	bool Has_Item_In_Inventory(Inventory<Item>& inventory, const std::string& item_Name) const;
+	bool Give_Tutor_Clear_Item(Chapter_Type chapter_Type, Inventory<Item>& inventory);
 
-	
-	// 14. ´øÀü ÁøÇà »óÅÂ µ¥ÀÌÅÍ ÆÄÆ®
+	// 14. ë˜ì „ ì§„í–‰ ìƒíƒœ ë°ì´í„° íŒŒíŠ¸
 	Chapter_Type _current_Chapter;
 	bool _is_All_Chapter_Cleared;
 	int _current_Chapter_Score;
 
-	// 15. Ã©ÅÍº° ¸ó½ºÅÍ Ã³Ä¡ ±â·Ï µ¥ÀÌÅÍ ÆÄÆ®
-	std::map
-	<
-		Chapter_Type,
-		std::map
-		<
-		    Monster_Type,
-		    Monster_Kill_Record
-		>
-	> _monster_Kill_Log;
+	// 15. ì±•í„°ë³„ ëª¬ìŠ¤í„° ì²˜ì¹˜ ê¸°ë¡ ë°ì´í„° íŒŒíŠ¸
+	std::map<Chapter_Type, std::map<Monster_Type, Monster_Kill_Record>> _monster_Kill_Log;
 };
