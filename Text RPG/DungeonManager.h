@@ -68,17 +68,19 @@ private:
 	void Get_Current_Chapter_Monsters(Monster_Type monster_Types[]) const; // 8-1. 현재 챕터 일반 몬스터 목록 구성
 	Monster_Type Get_Random_Normal_Monster() const; // 8-2. 일반 몬스터 랜덤 선택
 
-	// 9. 정예 몬스터 문제 파트
+	// 9. 정예 몬스터 파트
 	bool Check_Elite_Monster_Appearance() const; // 9-1. 정예 몬스터 등장 확률 판정
 	Elite_Question Get_Elite_Question(Chapter_Type chapter_Type) const; // 9-2. 챕터별 정예 문제 랜덤 선택
 	bool Run_Elite_Question(const Elite_Question& elite_Question); // 9-3. 정예 문제 출력 및 정답 판정
 	bool Run_Elite_Quiz(Monster& elite_Monster); // 9-4. 정예 몬스터 퀴즈 전체 진행
+	void Apply_Elite_Gimmick_Failure_Penalty(Player* player); // 9-5. 정예 몬스터 실패 시 패널티 적용
 
-	// 10. 튜터 문제 및 대사 파트
+	// 10. 튜터보스 파트
 	void Get_Tutor_Questions(Chapter_Type chapter_Type, Tutor_Question tutor_Questions[]) const; // 10-1. 챕터별 튜터 문제 구성
 	Tutor_Dialogue Get_Tutor_Dialogue(Chapter_Type chapter_Type) const; // 10-2. 챕터별 튜터 대사 구성
 	bool Run_Tutor_Code_Challenge(const Monster& tutor_Monster); // 10-3. 튜터 코드 문제 3개 진행
 	void Run_Tutor_Challenge(Player* player, Inventory<Item>& inventory); // 10-4. 튜터 도전 및 클리어 처리
+	void Apply_Tutor_Gimmick_Failure_Penalty(); // 10-5. 튜터 도전 실패 시 패널티 적용
 
 	// 11. 처치 기록 및 일반 보상 파트
 	void Record_Monster_Kill(const Monster& monster); // 11-1. 몬스터 처치 및 클리어 기록 저장

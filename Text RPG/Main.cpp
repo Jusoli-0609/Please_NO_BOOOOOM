@@ -12,24 +12,12 @@ using namespace std;
 
 int main()
 {
-	srand
-	(
-		static_cast<unsigned int>
-		(
-			time(nullptr)
-			)
-	);
+	srand(static_cast<unsigned int>(time(nullptr)));
 
-	JYJ player
-	(
-		"테스트 플레이어"
-	);
+	JYJ player("테스트 플레이어");
 
 	Inventory<Item> inventory
-	(
-		30,
-		100
-	);
+	(30, 100);
 
 	Dungeon_Manager dungeon_Manager;
 
@@ -53,12 +41,7 @@ int main()
 		if (cin.fail())
 		{
 			cin.clear();
-
-			cin.ignore
-			(
-				numeric_limits<streamsize>::max(),
-				'\n'
-			);
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
 			cout << "숫자를 입력해주세요." << endl;
 
@@ -69,11 +52,7 @@ int main()
 		{
 		case 1:
 		{
-			dungeon_Manager.Open_Dungeon
-			(
-				&player,
-				inventory
-			);
+			dungeon_Manager.Open_Dungeon(&player, inventory);
 
 			break;
 		}
@@ -94,19 +73,10 @@ int main()
 
 		case 4:
 		{
-			player.Set_Hp
-			(
-				player.GetMaxHP()
-			);
+			player.Set_Hp(player.GetMaxHP());
+			player.Set_Mp(player.GetMaxMP());
 
-			player.Set_Mp
-			(
-				player.GetMaxMP()
-			);
-
-			cout
-				<< "HP와 MP를 모두 회복했습니다."
-				<< endl;
+			cout << "HP와 MP를 모두 회복했습니다." << endl;
 
 			break;
 		}
