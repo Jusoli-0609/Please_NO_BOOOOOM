@@ -7,7 +7,7 @@ using namespace std;
 
 namespace
 {
-	// 기본 경험치 및 명성치값
+	// 기본 경험치 및 점수
 	constexpr int BASE_EXP_REWARD = 100;
 	constexpr int BASE_SCORE_REWARD = 100;
 	// 챕터별 보상 증가 배율
@@ -484,6 +484,96 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 	_drop_Item_Count = 0;
 	_gold_Reward = 0;
 }
+// 2-4. 최종보스 정보 초기화
+void Monster::Initialize_Final_Boss(Monster_Type final_Boss_Type)
+{
+	_monster_Type = final_Boss_Type;
+	_chapter_Type = Chapter_Type::ALL_CHAPTER_CLEARED;
+	_monster_Grade = Monster_Grade::FINAL_BOSS;
+
+	_stat[MONSTER_HP] = 0;
+	_stat[MONSTER_MP] = 0;
+	_stat[MONSTER_POWER] = 0;
+	_stat[MONSTER_DEFENCE] = 0;
+	_stat[MONSTER_SPEED] = 0;
+
+	_evasion = 0;
+	_accuracy = 0;
+
+	_exp_Reward = 0;
+	_score_Reward = 0;
+
+	_drop_Item_Name = "";
+	_drop_Item_Price = 0;
+	_drop_Item_Count = 0;
+	_gold_Reward = 0;
+
+	_drop_Items.clear();
+
+	switch (_monster_Type)
+	{
+	case Monster_Type::KIM_DONG_HYUN_MANAGER:
+	{
+		_monster_Name = "김동현 매니저님";
+		_monster_Level = 16;
+
+		_stat[MONSTER_HP] = 250;
+		_stat[MONSTER_MP] = 0;
+		_stat[MONSTER_POWER] = 30;
+		_stat[MONSTER_DEFENCE] = 15;
+		_stat[MONSTER_SPEED] = 12;
+
+		_evasion = 85;
+		_accuracy = 90;
+
+		_attack_Message = "대사 추천 받음";
+
+		break;
+	}
+
+	case Monster_Type::MOON_SEUNG_HO_MANAGER:
+	{
+		_monster_Name = "문승호 매니저님";
+		_monster_Level = 18;
+
+		_stat[MONSTER_HP] = 320;
+		_stat[MONSTER_MP] = 0;
+		_stat[MONSTER_POWER] = 38;
+		_stat[MONSTER_DEFENCE] = 20;
+		_stat[MONSTER_SPEED] = 15;
+
+		_evasion = 90;
+		_accuracy = 95;
+
+		_attack_Message = "대사 추천 받음";
+
+		break;
+	}
+
+	default:
+	{
+		_monster_Type = Monster_Type::KIM_DONG_HYUN_MANAGER;
+
+		_monster_Name = "김동현 매니저님";
+
+		_monster_Level = 16;
+
+		_stat[MONSTER_HP] = 250;
+		_stat[MONSTER_MP] = 0;
+		_stat[MONSTER_POWER] = 30;
+		_stat[MONSTER_DEFENCE] = 15;
+		_stat[MONSTER_SPEED] = 12;
+
+		_evasion = 85;
+		_accuracy = 90;
+
+		_attack_Message = "대사 추천 받음";
+
+		break;
+	}
+	}
+}
+
 
 //=============================================================================
 // 3. 몬스터 레벨 및 능력치 보정 파트
