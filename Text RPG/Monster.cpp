@@ -7,7 +7,7 @@ using namespace std;
 
 namespace
 {
-	// 기본 경험치 및 명성치값
+	// 기본 경험치 및 점수
 	constexpr int BASE_EXP_REWARD = 100;
 	constexpr int BASE_SCORE_REWARD = 100;
 	// 챕터별 보상 증가 배율

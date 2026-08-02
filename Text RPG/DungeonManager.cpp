@@ -9,7 +9,7 @@ using namespace std;
 namespace
 {
 	constexpr int BASE_TUTOR_REQUIRED_SCORE = 500; // 챕터 1 튜터 도전에 필요한 기본 점수
-	constexpr double CHAPTER_SCORE_MULTIPLIER = 1.3; // 다음 챕터 요구 명성치 증가 배율
+	constexpr double CHAPTER_SCORE_MULTIPLIER = 1.3; // 다음 챕터 요구 점수 증가 배율
 	constexpr int NORMAL_MONSTER_TYPE_COUNT = 3; // 챕터별 일반 몬스터 종류 수
 	constexpr int ELITE_APPEARANCE_RATE = 20; // 정예 몬스터 등장 확률
 }
