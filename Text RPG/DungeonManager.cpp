@@ -46,11 +46,44 @@ void Dungeon_Manager::Open_Dungeon(Player* player, Inventory<Item>& inventory)
 
 		Print_Tutor_Item_Status(inventory);
 
-		if
-			(Check_Final_Boss_Room_Available(inventory))
+		if(Check_Final_Boss_Room_Available(inventory)== false)
 		{
-			cout << "최종보스까지 할 수 있을까요..?" << endl;
+			return;
 		}
+
+		cout << endl;
+		cout << "1. 최종보스방 입장" << endl;
+		cout << "0. 돌아가기" << endl;
+		cout << "선택: ";
+
+		int final_Boss_Choice = 0;
+
+		cin >> final_Boss_Choice;
+
+		switch (final_Boss_Choice)
+		{
+		case 1:
+		{
+			Run_Final_Boss_Room(player, inventory);
+
+			break;
+		}
+
+		case 0:
+		{
+			cout << "최종보스방 입장을 취소했습니다." << endl;
+
+			break;
+		}
+
+		default:
+		{
+			cout << "잘못된 선택입니다." << endl;
+
+			break;
+		}
+		}
+
 		return;
 	}
 
@@ -1038,7 +1071,6 @@ void Dungeon_Manager::Apply_Elite_Gimmick_Failure_Penalty(Player* player)
 	cout << "현재 HP: " << previous_HP << " -> " << player->Get_Hp() << endl;
 	cout << "========================================" << endl;
 }
-
 // 8-2. 중간보스 튜터 기믹 실패 시 현재 챕터 점수 감소
 void Dungeon_Manager::Apply_Tutor_Gimmick_Failure_Penalty()
 {
@@ -1351,6 +1383,56 @@ void Dungeon_Manager::Move_Next_Chapter()
 		break;
 	}
 	}
+}
+// 9-6. 최종보스방 입장 및 최종보스 생성
+void Dungeon_Manager::Run_Final_Boss_Room(Player* player,Inventory<Item>& inventory)
+{
+	if (_is_All_Chapter_Cleared == false)
+	{
+		cout << endl;
+		cout << "아직 모든 챕터를 클리어하지 못했습니다." << endl;
+
+		return;
+	}
+
+	if
+		(Check_Final_Boss_Room_Available(inventory) == false)
+	{
+		cout << endl;
+		cout << "튜터님들의 고유 아이템이 부족합니다." << endl;
+		cout << "고유 아이템 5종을 모두 모아야 최종보스방에 입장할 수 있습니다." << endl;
+
+		return;
+	}
+
+	Monster kim_Dong_Hyun_Manager;
+
+	kim_Dong_Hyun_Manager.Initialize_Final_Boss(Monster_Type::KIM_DONG_HYUN_MANAGER);
+
+	Monster moon_Seung_Ho_Manager;
+
+	moon_Seung_Ho_Manager.Initialize_Final_Boss(Monster_Type::MOON_SEUNG_HO_MANAGER);
+
+	cout << endl;
+	cout << "========================================" << endl;
+	cout << "[ 최종보스방 ]" << endl;
+	cout << "========================================" << endl;
+	cout << "튜터님들의 고유 아이템이 하나의 열쇠로 반응합니다." << endl;
+	cout << "잠겨 있던 최종보스방의 문이 열렸습니다." << endl;
+	cout << endl;
+	cout << "첫 번째 최종보스 " << kim_Dong_Hyun_Manager.getName() << "이(가) 등장했습니다!" << endl;
+
+	kim_Dong_Hyun_Manager.Print_Attack_Message();
+
+	cout << endl;
+	cout << "[ 1차 최종보스 정보 ]" << endl;
+
+	kim_Dong_Hyun_Manager.Print_Monster_Info();
+
+	cout << endl;
+	cout << "두 번째 최종보스는 " << moon_Seung_Ho_Manager.getName() << "입니다." << endl;
+	cout << "김동현 매니저님을 물리치면 두 번째 전투가 시작됩니다." << endl;
+	cout << "========================================" << endl;
 }
 
 //=============================================================================

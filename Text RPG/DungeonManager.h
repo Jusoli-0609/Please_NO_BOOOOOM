@@ -99,6 +99,7 @@ private:
 	bool Give_Tutor_Clear_Item(Chapter_Type chapter_Type,Inventory<Item>& inventory); // 13-3. 튜터 고유 아이템 확정 지급
 	bool Check_Final_Boss_Room_Available(Inventory<Item>& inventory) const; // 13-4. 최종보스방 개방 조건 확인
 	void Print_Tutor_Item_Status(Inventory<Item>& inventory) const; // 13-5. 튜터 고유 아이템 수집 현황 출력
+	void Run_Final_Boss_Room(Player* player, Inventory<Item>& inventory); // 13-6. 최종보스방 이벤트 진행
 
 	
 	// 14. 던전 진행 상태 데이터 파트
