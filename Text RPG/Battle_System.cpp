@@ -322,8 +322,7 @@ bool Check_Battle_End(Player* player, Monster& monster, Inventory<Item>& invento
 
         int exp = monster.getExpReward();
 
-
-        cout << "[보상 획득]" << endl;
+        player->Gain_Exp(exp);
 
         cout << exp
             << " 경험치를 획득했습니다."
@@ -332,6 +331,7 @@ bool Check_Battle_End(Player* player, Monster& monster, Inventory<Item>& invento
 
         Give_Battle_Item_Reward(player, monster, inventory);
 
+        cout << "[보상 획득]" << endl;
 
         return true;
     }
