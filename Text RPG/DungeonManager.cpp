@@ -14,6 +14,9 @@ namespace
 	constexpr double CHAPTER_SCORE_MULTIPLIER = 1.3;
 	constexpr int NORMAL_MONSTER_TYPE_COUNT = 3;
 	constexpr int ELITE_APPEARANCE_RATE = 20;
+	constexpr int ELITE_GIMMICK_HP_PENALTY =20;
+	constexpr int TUTOR_GIMMICK_SCORE_PENALTY =50;
+	constexpr int MINIMUM_BATTLE_HP =1;
 }
 
 //=============================================================================
@@ -40,10 +43,46 @@ void Dungeon_Manager::Open_Dungeon(Player* player, Inventory<Item>& inventory)
 		cout << "튜터님 5명의 시험을 모두 통과했습니다." << endl;
 		Print_Tutor_Item_Status(inventory);
 
-		if (Check_Final_Boss_Room_Available(inventory))
+		if(Check_Final_Boss_Room_Available(inventory) == false)
 		{
-			cout << "최종보스까지 할 수 있을까요..?" << endl;
+			return;
 		}
+
+		int final_Boss_Choice = -1;
+
+		cout << endl;
+		cout << "1. 최종보스방 입장" << endl;
+		cout << "0. 메인 메뉴로 돌아가기" << endl;
+		cout << "선택: ";
+
+		cin >> final_Boss_Choice;
+
+		switch (final_Boss_Choice)
+		{
+		case 1:
+		{
+			Run_Final_Boss_Room(player, inventory);
+
+			break;
+		}
+
+		case 0:
+		{
+			cout
+				<< "메인 메뉴로 돌아갑니다." << endl;
+
+			break;
+		}
+
+		default:
+		{
+			cout
+				<< "잘못된 선택입니다." << endl;
+
+			break;
+		}
+		}
+
 		return;
 	}
 
@@ -149,7 +188,6 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inven
 		Monster elite_Monster;
 		elite_Monster.Initialize_Elite_Monster(_current_Chapter);
 
-		// [수정/추가된 부분] 정예 몬스터 조우 안내 출력
 		cout << endl;
 		cout << "========================================" << endl;
 		cout << "[ 정예 몬스터 등장! ]" << endl;
@@ -180,6 +218,8 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inven
 		}
 		else
 		{
+			Apply_Elite_Gimmick_Failure_Penalty(player);
+
 			cout << endl;
 			cout << "코드스니펫의 망령이 도망갔습니다." << endl;
 			cout << "보상을 획득하지 못했습니다." << endl;
@@ -294,7 +334,7 @@ Monster_Type Dungeon_Manager::Get_Random_Normal_Monster() const
 }
 
 //=============================================================================
-// 5. 정예 몬스터 파트 (복구 완료)
+// 5. 정예 몬스터 파트
 //=============================================================================
 
 bool Dungeon_Manager::Check_Elite_Monster_Appearance() const
@@ -351,14 +391,13 @@ bool Dungeon_Manager::Run_Elite_Question(const Elite_Question& elite_Question)
 
 bool Dungeon_Manager::Run_Elite_Quiz(Player* player, Monster& elite_Monster)
 {
-	if (player == nullptr) return false; // NULL 포인터 안전 처리
+	if (player == nullptr) return false;
 
-	// 외부 Battle_Elite_Skill 시스템을 통한 퀴즈 호출
 	return Ask_Random_Elite_Question(player, elite_Monster);
 }
 
 //=============================================================================
-// 6. 튜터 문제 및 대사 파트 (복구 완료)
+// 6. 튜터 문제 및 대사 파트
 //=============================================================================
 
 void Dungeon_Manager::Get_Tutor_Questions(Chapter_Type chapter_Type, Tutor_Question tutor_Questions[]) const
@@ -408,6 +447,8 @@ void Dungeon_Manager::Run_Tutor_Challenge(Player* player, Inventory<Item>& inven
 
 	if (!is_Cleared)
 	{
+		Apply_Tutor_Gimmick_Failure_Penalty();
+
 		cout << endl << "튜터님에게 다시 도전할 수 있습니다." << endl;
 		return;
 	}
@@ -430,7 +471,62 @@ void Dungeon_Manager::Run_Tutor_Challenge(Player* player, Inventory<Item>& inven
 }
 
 //=============================================================================
-// 7. 처치 기록 및 보상 파트
+// 7. 기믹 실패 패널티 처리 파트
+//=============================================================================
+
+// 7-1 정예 몬스터 기믹 실패 시 HP 감소
+void Dungeon_Manager::Apply_Elite_Gimmick_Failure_Penalty(Player* player)
+{
+	if (player == nullptr)
+	{
+		return;
+	}
+
+	int previous_HP = player->Get_Hp();
+	int changed_HP = previous_HP - ELITE_GIMMICK_HP_PENALTY;
+
+	if (changed_HP < MINIMUM_BATTLE_HP)
+	{
+		changed_HP = MINIMUM_BATTLE_HP;
+	}
+
+	player->Set_Hp(changed_HP);
+
+	int decreased_HP = previous_HP - player->Get_Hp();
+
+	cout << endl;
+	cout << "========================================" << endl;
+	cout << "[ 정예 몬스터 기믹 실패 패널티 ]" << endl;
+	cout << "========================================" << endl;
+	cout << "플레이어의 HP가 " << decreased_HP << " 감소했습니다." << endl;
+	cout << "현재 HP: " << previous_HP << " -> " << player->Get_Hp() << endl;
+	cout << "========================================" << endl;
+}
+// 7-2 튜터 기믹 실패 시 챕터 점수 감소
+void Dungeon_Manager::Apply_Tutor_Gimmick_Failure_Penalty()
+{
+	int previous_Score = _current_Chapter_Score;
+
+	_current_Chapter_Score -= TUTOR_GIMMICK_SCORE_PENALTY;
+
+	if (_current_Chapter_Score < 0)
+	{
+		_current_Chapter_Score = 0;
+	}
+
+	int decreased_Score = previous_Score - _current_Chapter_Score;
+
+	cout << endl;
+	cout << "========================================" << endl;
+	cout << "[ 중간보스 기믹 실패 패널티 ]" << endl;
+	cout << "========================================" << endl;
+	cout << "현재 챕터 점수가 " << decreased_Score << " 감소했습니다." << endl;
+	cout << "현재 챕터 점수: " << previous_Score << " -> " << _current_Chapter_Score << endl;
+	cout << "========================================" << endl;
+}
+
+//=============================================================================
+// 8. 처치 기록 및 보상 파트
 //=============================================================================
 
 void Dungeon_Manager::Record_Monster_Kill(const Monster& monster)
@@ -507,7 +603,7 @@ void Dungeon_Manager::Give_Drop_Items_To_Inventory(const Monster& monster, Inven
 }
 
 //=============================================================================
-// 8. 챕터 점수 및 이동 파트
+// 9. 챕터 점수 및 이동 파트
 //=============================================================================
 
 void Dungeon_Manager::Add_Chapter_Score(int score_Reward)
@@ -615,7 +711,7 @@ void Dungeon_Manager::Move_Next_Chapter()
 }
 
 //=============================================================================
-// 9. 튜터 고유 아이템 파트
+// 10. 튜터 고유 아이템 파트
 //=============================================================================
 
 Item Dungeon_Manager::Create_Tutor_Clear_Item(Chapter_Type chapter_Type) const
@@ -746,5 +842,66 @@ void Dungeon_Manager::Print_Tutor_Item_Status(Inventory<Item>& inventory) const
 	{
 		cout << "최종보스방은 아직 잠겨 있습니다." << endl;
 	}
+	cout << "========================================" << endl;
+}
+
+//=============================================================================
+// 10. 최종보스방 파트
+//=============================================================================
+
+void Dungeon_Manager::Run_Final_Boss_Room(Player* player, Inventory<Item>& inventory)
+{
+	if (player == nullptr)
+	{
+		cout << "플레이어 정보가 없습니다." << endl;
+
+		return;
+	}
+
+	if (_is_All_Chapter_Cleared == false)
+	{
+		cout << "아직 모든 챕터를 클리어하지 못했습니다." << endl;
+
+		return;
+	}
+
+	if(Check_Final_Boss_Room_Available(inventory)== false)
+	{
+		cout << "튜터님 고유 아이템 5종이 부족합니다." << endl;
+
+		return;
+	}
+
+	Monster kim_Dong_Hyun_Manager;
+
+	kim_Dong_Hyun_Manager.Initialize_Final_Boss(Monster_Type::KIM_DONG_HYUN_MANAGER);
+
+	Monster moon_Seung_Ho_Manager;
+
+	moon_Seung_Ho_Manager.Initialize_Final_Boss(Monster_Type::MOON_SEUNG_HO_MANAGER);
+
+	cout << endl;
+	cout << "========================================" << endl;
+	cout << "[ 최종보스방 개방 ]" << endl;
+	cout << "========================================" << endl;
+
+	cout << "튜터님들의 고유 아이템이 반응합니다." << endl;
+
+	cout << "최종보스방의 문이 열렸습니다." << endl;
+
+	cout << endl;
+	cout << "[ 1차 최종보스 ]" << endl;
+
+	kim_Dong_Hyun_Manager.Print_Monster_Info();
+	kim_Dong_Hyun_Manager.Print_Attack_Message();
+
+	cout << endl;
+	cout << "[ 2차 최종보스 ]" << endl;
+
+	moon_Seung_Ho_Manager.Print_Monster_Info();
+	moon_Seung_Ho_Manager.Print_Attack_Message();
+
+	cout << endl;
+	cout << "김동현 매니저님을 물리치면 " << "문승호 매니저님의 시험이 시작됩니다." << endl;
 	cout << "========================================" << endl;
 }

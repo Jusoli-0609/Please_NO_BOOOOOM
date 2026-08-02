@@ -353,6 +353,15 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 
 		return;
 	}
+
+	case Monster_Type::KIM_DONG_HYUN_MANAGER:
+	case Monster_Type::MOON_SEUNG_HO_MANAGER:
+	{
+		Initialize_Final_Boss(_monster_Type);
+
+		return;
+	}
+
 	default:
 	{
 		_monster_Type = Monster_Type::INT_SLIME;
@@ -483,6 +492,91 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 	_drop_Item_Price = 0;
 	_drop_Item_Count = 0;
 	_gold_Reward = 0;
+}
+
+// 2-4. 최종보스 정보 초기화
+void Monster::Initialize_Final_Boss(Monster_Type final_Boss_Type)
+{
+	_monster_Type = final_Boss_Type;
+	_chapter_Type = Chapter_Type::ALL_CHAPTER_CLEARED;
+	_monster_Grade = Monster_Grade::FINAL_BOSS;
+	_monster_Level = 1;
+	_monster_Name = "";
+	_attack_Message = "";
+
+	_stat[MONSTER_HP] = 0;
+	_stat[MONSTER_MP] = 0;
+	_stat[MONSTER_POWER] = 0;
+	_stat[MONSTER_DEFENCE] = 0;
+	_stat[MONSTER_SPEED] = 0;
+
+	_evasion = 0;
+	_accuracy = 0;
+	_exp_Reward = 0;
+	_score_Reward = 0;
+	_drop_Item_Name = "";
+	_drop_Item_Price = 0;
+	_drop_Item_Count = 0;
+	_gold_Reward = 0;
+	_drop_Items.clear();
+
+	switch (_monster_Type)
+	{
+	case Monster_Type::KIM_DONG_HYUN_MANAGER:
+	{
+		_monster_Name = "김동현 매니저님";
+		_monster_Level = 16;
+
+		_stat[MONSTER_HP] = 250;
+		_stat[MONSTER_MP] = 0;
+		_stat[MONSTER_POWER] = 30;
+		_stat[MONSTER_DEFENCE] = 15;
+		_stat[MONSTER_SPEED] = 12;
+
+		_evasion = 85;
+		_accuracy = 90;
+		_attack_Message = "대사추천.";
+
+		break;
+	}
+
+	case Monster_Type::MOON_SEUNG_HO_MANAGER:
+	{
+		_monster_Name ="문승호 매니저님";
+		_monster_Level =18;
+
+		_stat[MONSTER_HP] = 320;
+		_stat[MONSTER_MP] = 0;
+		_stat[MONSTER_POWER] = 38;
+		_stat[MONSTER_DEFENCE] = 20;
+		_stat[MONSTER_SPEED] = 15;
+
+		_evasion = 90;
+		_accuracy = 95;
+		_attack_Message = "대사추천";
+
+		break;
+	}
+
+	default:
+	{
+		_monster_Type = Monster_Type::KIM_DONG_HYUN_MANAGER;
+		_monster_Name = "김동현 매니저님";
+		_monster_Level = 16;
+
+		_stat[MONSTER_HP] = 250;
+		_stat[MONSTER_MP] = 0;
+		_stat[MONSTER_POWER] = 30;
+		_stat[MONSTER_DEFENCE] = 15;
+		_stat[MONSTER_SPEED] = 12;
+
+		_evasion = 85;
+		_accuracy = 90;
+		_attack_Message = "대사추천";
+
+		break;
+	}
+	}
 }
 
 //=============================================================================

@@ -83,26 +83,31 @@ private:
 	bool Run_Tutor_Code_Challenge(Player* player, Monster& tutor_Monster); // [수정] Player* 수신
 	void Run_Tutor_Challenge(Player* player, Inventory<Item>& inventory);
 
-	// 11. 처치 기록 및 일반 보상 파트
+	// 11. 기믹 실패 패널티
+	void Apply_Elite_Gimmick_Failure_Penalty(Player* player);
+	void Apply_Tutor_Gimmick_Failure_Penalty();
+
+	// 12. 처치 기록 및 일반 보상 파트
 	void Record_Monster_Kill(const Monster& monster);
 	void Give_Drop_Items_To_Inventory(const Monster& monster, Inventory<Item>& inventory);
 
-	// 12. 챕터 점수 및 이동 파트
+	// 13. 챕터 점수 및 이동 파트
 	void Add_Chapter_Score(int score_Reward);
 	int Get_Required_Tutor_Score() const;
 	bool Check_Tutor_Challenge_Available() const;
 	void Clear_Current_Chapter();
 	void Move_Next_Chapter();
 
-	// 13. 튜터 고유 아이템 내부 유틸리티
+	// 14. 튜터 고유 아이템 및 최종보스방
 	bool Has_Item_In_Inventory(Inventory<Item>& inventory, const std::string& item_Name) const;
 	bool Give_Tutor_Clear_Item(Chapter_Type chapter_Type, Inventory<Item>& inventory);
+	void Run_Final_Boss_Room(Player* player,Inventory<Item>& inventory);
 
-	// 14. 던전 진행 상태 데이터 파트
+	// 15. 던전 진행 상태 데이터 파트
 	Chapter_Type _current_Chapter;
 	bool _is_All_Chapter_Cleared;
 	int _current_Chapter_Score;
 
-	// 15. 챕터별 몬스터 처치 기록 데이터 파트
+	// 16. 챕터별 몬스터 처치 기록 데이터 파트
 	std::map<Chapter_Type, std::map<Monster_Type, Monster_Kill_Record>> _monster_Kill_Log;
 };
