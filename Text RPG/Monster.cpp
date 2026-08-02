@@ -717,7 +717,12 @@ void Monster::Generate_Drop_Reward()
 		cup_Ramen._Item_Weight = CUP_RAMEN_WEIGHT;
 		cup_Ramen._Item_Type_Usable = true;
 		cup_Ramen._Item_Type_Wearable = false;
+		cup_Ramen._Item_Description = "HP를 50 회복시킨다.";
+		cup_Ramen._Item_Ascii_Art =
+			R"(
 
+아스키 아트 해주세요.
+)";
 		_drop_Items.push_back(cup_Ramen);
 	}
 
@@ -734,6 +739,15 @@ void Monster::Generate_Drop_Reward()
 		energy_Drink._Item_Weight = ENERGY_DRINK_WEIGHT;
 		energy_Drink._Item_Type_Usable = true;
 		energy_Drink._Item_Type_Wearable = false;
+		energy_Drink._Item_Description = "MP를 50 회복한다.";
+		energy_Drink._Item_Ascii_Art = 
+R"(
+
+
+적당한 아스키 아트 이런 형시으로 넣으시면 됩니다
+
+
+)";
 
 		_drop_Items.push_back(energy_Drink);
 	}
