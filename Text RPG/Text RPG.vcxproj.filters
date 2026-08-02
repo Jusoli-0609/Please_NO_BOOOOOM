@@ -137,5 +137,8 @@
     <ClInclude Include="Basic_Sword.h">
       <Filter>헤더 파일\Item</Filter>
     </ClInclude>
+    <ClInclude Include="Stat_Modifier.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
