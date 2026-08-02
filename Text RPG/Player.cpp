@@ -23,6 +23,17 @@ void Player::Gain_Exp(int amount)
     levelUp.GainExp(this, amount);
 }
 
+int Player::Get_Exp() const
+{
+    return levelUp.GetCurrentExp();
+}
+
+int Player::Get_Max_Exp() const
+{
+    return levelUp.GetMaxExp();
+}
+
+
 // 캐릭터 생성 단계에서 최초 능력치를 설정하는 함수.
 // Stat_Modifier가 적용되기 전에 한 번만 호출해야 한다.
 void Player::Set_Start_Stat(

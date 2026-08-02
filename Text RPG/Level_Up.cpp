@@ -17,37 +17,78 @@ Level_Up::~Level_Up()
 {
 }
 
+
+
+
+
+
+
 // ==========================================
 // 경험치 획득 및 정산 함수
 // ==========================================
-void Level_Up::GainExp(Player* player, const Monster& monster)
-{
-    // [안전장치 1] 플레이어 포인터가 비어있으면(nullptr) 에러 방지를 위해 즉시 종료
-    if (player == nullptr) return;
 
-    // [요구사항 1] 최대 레벨 10 제한 체크
-    if (_current_level >= 10)
+//임시 주석 처리
+//void Level_Up::GainExp(Player* player, const Monster& monster)
+//{
+//    // [안전장치 1] 플레이어 포인터가 비어있으면(nullptr) 에러 방지를 위해 즉시 종료
+//    if (player == nullptr) return;
+//
+//    // [요구사항 1] 최대 레벨 10 제한 체크
+//    if (_current_level >= 10)
+//    {
+//        // 비정적 멤버 함수 호출을 위해 Console_Manager 객체 생성
+//        Console_Manager console;
+//        console.Slow_Print("\n[!] 이미 최고 레벨(Lv.10)에 도달하여 더 이상 경험치를 얻을 수 없습니다.\n", 50);
+//        return;
+//    }
+//    // [핵심 로직] 몬스터의 자체 경험치 보상 함수(getExpReward)를 직접 호출하여 누적
+//    _current_exp += monster.getExpReward();
+//
+//    // 수치 및 단순 정보 로그는 답답하지 않게 일반 cout으로 빠른 출력
+//    cout << "  -> 경험치 +" << monster.getExpReward() << " 획득! (현재 경험치: "
+//        << _current_exp << " / " << _max_exp << ")\n";
+//
+//    // [핵심 로직] 경험치가 차오르면 레벨업 실행
+//    // while문을 사용하여 한 번에 많은 경험치가 들어와도 연속 레벨업이 정상적으로 처리됨
+//    while (_current_exp >= _max_exp && _current_level < 10)
+//    {
+//        ProcessLevelUp(player);
+//    }
+//}
+
+//버그 수정용 코드, 인수가 Monster가 아닌 int amount로 변경됨
+void Level_Up::GainExp(Player* player, int amount)
+{
+    if (player == nullptr || amount <= 0)
     {
-        // 비정적 멤버 함수 호출을 위해 Console_Manager 객체 생성
-        Console_Manager console;
-        console.Slow_Print("\n[!] 이미 최고 레벨(Lv.10)에 도달하여 더 이상 경험치를 얻을 수 없습니다.\n", 50);
         return;
     }
 
-    // [핵심 로직] 몬스터의 자체 경험치 보상 함수(getExpReward)를 직접 호출하여 누적
-    _current_exp += monster.getExpReward();
+    if (_current_level >= 10)
+    {
+        return;
+    }
 
-    // 수치 및 단순 정보 로그는 답답하지 않게 일반 cout으로 빠른 출력
-    cout << "  -> 경험치 +" << monster.getExpReward() << " 획득! (현재 경험치: "
-        << _current_exp << " / " << _max_exp << ")\n";
+    _current_exp += amount;
 
-    // [핵심 로직] 경험치가 차오르면 레벨업 실행
-    // while문을 사용하여 한 번에 많은 경험치가 들어와도 연속 레벨업이 정상적으로 처리됨
-    while (_current_exp >= _max_exp && _current_level < 10)
+    std::cout
+        << "  -> 경험치 +"
+        << amount
+        << " 획득! (현재 경험치: "
+        << _current_exp
+        << " / "
+        << _max_exp
+        << ")\n";
+
+    while (_current_exp >= _max_exp &&
+        _current_level < 10)
     {
         ProcessLevelUp(player);
     }
 }
+
+
+
 
 // ==========================================
 // 실제 레벨업 보상 적용 함수
@@ -63,6 +104,7 @@ void Level_Up::ProcessLevelUp(Player* player)
     // 1. 소모한 목표 경험치만큼 차감 및 레벨/스탯포인트 상승
     _current_exp -= _max_exp;
     _current_level++;
+    player->Set_Level(_current_level);
     _stat_points += 5;
 
     // 레벨업 축하 타이틀 연출 (팀원 요청: 스토리/연출 텍스트이므로 console.Slow_Print 사용)
@@ -75,9 +117,14 @@ void Level_Up::ProcessLevelUp(Player* player)
     int addedHp = _current_level * 20;     // 체력: Lv x 20 상승
     int addedPower = _current_level * 5;   // 공격력: Lv x 5 상승
 
+
+    //임시 주석 처리
     // Player 클래스의 캡슐화된 멤버 함수(SetMaxHP, SetPower)를 사용하여 안전하게 스탯 반영
-    player->SetMaxHP(player->GetMaxHP() + addedHp);
-    player->SetPower(player->GetPower() + addedPower);
+    //player->SetMaxHP(player->GetMaxHP() + addedHp);
+    //player->SetPower(player->GetPower() + addedPower);
+
+    player->Add_Base_MaxHP(addedHp);
+    player->Add_Base_ATK(addedPower);
 
     // 수치 상승 정보 로그는 일반 cout 사용
     cout << "  -> 레벨업 보너스: 최대 체력 +" << addedHp << " (최대 HP: " << player->GetMaxHP() << ")\n";
