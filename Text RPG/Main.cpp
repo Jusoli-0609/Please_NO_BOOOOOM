@@ -16,8 +16,7 @@ int main()
 
 	JYJ player("테스트 플레이어");
 
-	Inventory<Item> inventory
-	(30, 100);
+	Inventory<Item> inventory(30, 100);
 
 	Dungeon_Manager dungeon_Manager;
 
@@ -31,6 +30,7 @@ int main()
 		cout << "2. 플레이어 상태 확인" << endl;
 		cout << "3. 인벤토리 확인" << endl;
 		cout << "4. 테스트용 HP/MP 회복" << endl;
+		cout << "5. 최종보스 데이터 테스트" << endl;
 		cout << "0. 테스트 종료" << endl;
 		cout << "선택: ";
 

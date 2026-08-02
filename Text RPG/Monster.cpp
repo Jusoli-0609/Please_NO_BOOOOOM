@@ -489,7 +489,7 @@ void Monster::Initialize_Final_Boss(Monster_Type final_Boss_Type)
 {
 	_monster_Type = final_Boss_Type;
 	_chapter_Type = Chapter_Type::ALL_CHAPTER_CLEARED;
-	_monster_Grade = onster_Grade::FINAL_BOSS;
+	_monster_Grade = Monster_Grade::FINAL_BOSS;
 
 	_stat[MONSTER_HP] = 0;
 	_stat[MONSTER_MP] = 0;
@@ -570,6 +570,7 @@ void Monster::Initialize_Final_Boss(Monster_Type final_Boss_Type)
 		_attack_Message = "대사 추천 받음";
 
 		break;
+	}
 	}
 }
 
