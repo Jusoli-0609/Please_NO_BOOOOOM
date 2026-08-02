@@ -20,7 +20,7 @@ public:
     void Print_Info() const;//1.아이템 정보 내보내기
     bool Item_Effect(Player& player, Monster& monster);//2.아이템 효과 적용
     bool Item_Effect_Reverse(Player& player, Monster& monster);//3.아이템 효과 해제
-    void Print_Ascii_Art() const;
+    void Print_Ascii_Art() const;//4.아스키 아트 뭔말알?
  
    
 };

@@ -33,6 +33,9 @@ public:
     int Get_Defence_Stat() const;//7. 장비 방어력 스텟 조회
     void Set_Defence_Stat(int defence_stat);//8. 방어력 스텟 설정
     void Print_Equipment_Info() const;//9.장비 정보 출력
+    string Get_Equipment_Name() const;//10.장비 이름 조회
+    Equipment_Grade Get_Grade() const;//11. 장비 등급 조회
+    string Equipment_Grade_To_String(Equipment_Grade grade) const;//12.장비 등급 문자열 출력으로
 };
 
 class Equipment_Inventory
@@ -47,4 +50,6 @@ class Equipment_Inventory
         bool Equip_Equipment(const Equipment& equipment);//3.장비 끼기
         Equipment* Get_Equipment_By_Index(int index);//4.인덱스로 장비 조회
         void Print_Equipment_Inventory() const;//5.장비창 출력
+        string Get_Equipment_Name() const;
+Equipment_Grade Get_Grade() const;
 };
