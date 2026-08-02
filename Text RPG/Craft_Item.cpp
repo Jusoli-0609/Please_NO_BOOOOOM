@@ -4,9 +4,9 @@
 
 using namespace std;
 
-AlchemyWorkshop::AlchemyWorkshop()
+Craft_Work_Shop::Craft_Work_Shop()
 {
-    PotionRecipe hpPotion;
+    All_Recipes hpPotion;
 
     hpPotion.potionName = "HP포션";
     hpPotion.ingredient1Name = "허브";
@@ -16,7 +16,7 @@ AlchemyWorkshop::AlchemyWorkshop()
 
     recipes.push_back(hpPotion);
 
-    PotionRecipe staminaPotion;
+    All_Recipes staminaPotion;
 
     staminaPotion.potionName = "스태미나포션";
     staminaPotion.ingredient1Name = "허브";
@@ -31,19 +31,19 @@ AlchemyWorkshop::AlchemyWorkshop()
     ingredients["베리"] = 1;
 }
 
-void AlchemyWorkshop::PrintAllRecipes() const
+void Craft_Work_Shop::Print_All_Recipes() const
 {
-    for (const PotionRecipe& recipe : recipes)
+    for (const All_Recipes& recipe : recipes)
     {
         recipe.PrintInfo();
     }
 }
 
-void AlchemyWorkshop::FindRecipeByPotionName(const string& potionName) const
+void Craft_Work_Shop::Find_Recipe_By_Potion_Name(const string& potionName) const
 {
     bool found = false;
 
-    for (const PotionRecipe& recipe : recipes)
+    for (const All_Recipes& recipe : recipes)
     {
         if (recipe.potionName == potionName)
         {
@@ -58,11 +58,11 @@ void AlchemyWorkshop::FindRecipeByPotionName(const string& potionName) const
     }
 }
 
-void AlchemyWorkshop::FindRecipesByIngredientName(const string& ingredientName) const
+void Craft_Work_Shop::Find_Recipes_By_Ingredient_Name(const string& ingredientName) const
 {
     bool found = false;
 
-    for (const PotionRecipe& recipe : recipes)
+    for (const All_Recipes& recipe : recipes)
     {
         if (recipe.ingredient1Name == ingredientName || recipe.ingredient2Name == ingredientName)
         {
@@ -77,9 +77,9 @@ void AlchemyWorkshop::FindRecipesByIngredientName(const string& ingredientName) 
     }
 }
  
-bool AlchemyWorkshop::CraftPotion(const std::string& potionName)
+bool Craft_Work_Shop::Craft_Potion(const std::string& potionName)
 {
-    for (const PotionRecipe& recipe : recipes)
+    for (const All_Recipes& recipe : recipes)
     {
         if (recipe.potionName == potionName)
         {
