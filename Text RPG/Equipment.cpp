@@ -61,7 +61,7 @@ string Equipment:: Equipment_Grade_To_String(Equipment_Grade grade) const
 //강화도 조회
 int Equipment::Get_Enhance_Level() const
 {
-    return _Enhance_Level;;
+    return _Enhance_Level;
 }
 
 //강화도 설정
@@ -104,29 +104,89 @@ void Equipment::Print_Equipment_Info() const
     cout << "강화 레벨: +" << _Enhance_Level << endl;
 }
 
-//장비창
+//장비이름 조회
+string Equipment::Get_Equipment_Name()const
+{
+    return _Equipment_Name;
+}
+
+//장비 등급 조회
+Equipment_Grade Equipment::Get_Grade()const
+{
+    return _Grade;
+}
+
+//장비 무게 조회
+int Equipment::Get_Equipment_Weight()const
+{
+    return _Equipment_Weight;
+}
+
+//장비 무게 설정
+void Equipment::Set_Equipment_Weight(int weight)
+{
+    _Equipment_Weight = weight;
+}
+
+//장비 이름 설정
+void Equipment::Set_Equipment_Name(string name)
+{
+    _Equipment_Name = name;
+}
+
+//장비 설명 조회
+string Equipment::Get_Equipment_Description()const
+{
+    return _Equipment_Name;
+}
+
+//장비 설명 설정
+void Equipment::Set_Equipment_Description(string description)
+{
+    _Equipment_Description = description;
+}
+
+//-----------------장비창------------------------------------
 
 
+//장비창 기본 생성자
 Equipment_Inventory::Equipment_Inventory(int max_count)
 {
-    return;
+    _Max_Count = max_count;
+    _Current_Count = 0;
+    _Equipments = new Equipment[max_count];
 }
 
+//장비창 소멸자
 Equipment_Inventory::~Equipment_Inventory()
 {
-    return;
+    delete[] _Equipments;
 }
 
+//장비 착용
 bool Equipment_Inventory::Equip_Equipment(const Equipment& equipment)
 {
-    return false;
+    if (_Current_Count >= _Max_Count)
+    {
+        cout << "더 착용할 공간이 없다! 펩 스토어로 출발~!" << endl;
+        return false;
+    }
+    _Equipments[_Current_Count] = equipment;
+    _Current_Count++;
+    return true;
 }
 
+//장비 이름 인덱스로 조회하기
 Equipment* Equipment_Inventory::Get_Equipment_By_Index(int index)
 {
-    return 0;
+    if (index < 0 || index >= _Current_Count)
+    {
+        return nullptr;
+    }
+    return &_Equipments[index];
 }
 
+//장비창 출력
 void Equipment_Inventory::Print_Equipment_Inventory() const
 {
     return;
