@@ -50,4 +50,6 @@
 		//9. 인벤토리 내 골드
 		int Get_Money()const;
 		void Set_Money(int money);
+		//10.아이템 제작용 숫자 다운
+		bool Remove_Item_Count(const std::string& item_name, int count);
 	};

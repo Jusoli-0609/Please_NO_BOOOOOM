@@ -810,4 +810,45 @@ void Inventory<T>::Print_Inventory_Menu(
     {
         this->_Money = money;
     }
+
+    template<typename T>//10.아이템 제작용 줄이기
+    bool Inventory<T>::Remove_Item_Count(
+        const std::string& item_name,
+        int count)
+    {
+        for (int i = 0; i < _Current_Quantity_Of_Items; i++)
+        {
+            if (_Inventory_Items[i]._Item_Name == item_name)
+            {
+
+                if (_Inventory_Items[i]._Item_Count < count)
+                {
+                    return false;
+                }
+
+
+                _Inventory_Items[i]._Item_Count -= count;
+
+
+                if (_Inventory_Items[i]._Item_Count == 0)
+                {
+                    for (int j = i; j < _Current_Quantity_Of_Items - 1; j++)
+                    {
+                        _Inventory_Items[j]
+                            =
+                            _Inventory_Items[j + 1];
+                    }
+
+                    _Current_Quantity_Of_Items--;
+                }
+
+
+                return true;
+            }
+        }
+
+
+        return false;
+    }
+
     template class Inventory<Item>; // 명시적 인스턴스화

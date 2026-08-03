@@ -200,6 +200,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Quiz_Bank.cpp" />
+    <ClCompile Include="Recipe_Repository.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camp_Manager.h" />
@@ -276,6 +277,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Quiz_Bank.h" />
+    <ClInclude Include="Recipe_Repository.h" />
     <ClInclude Include="Stat_Modifier.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

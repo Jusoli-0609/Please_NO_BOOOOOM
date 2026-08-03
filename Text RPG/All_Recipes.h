@@ -1,14 +1,32 @@
 #pragma once
 #include <string>
+#include <map>
 
 class All_Recipes
 {
-public:
-    std::string _Recipe_Name;
-    std::string _First_Ingredient_Name;
-    int _First_Ingredient_Count;
-    std::string _Second_Ingredient_Name;
-    int _Second_Ingredient_Count;
+private:
 
-    void PrintInfo() const;
+    std::string _Recipe_Name;
+
+    // 재료 이름 : 필요 개수
+    std::map<std::string, int> _Ingredients;
+
+
+public:
+
+    All_Recipes();
+
+    All_Recipes(
+        std::string recipe_name,
+        std::map<std::string, int> ingredients
+    );
+
+
+    std::string Get_Recipe_Name() const;
+
+    std::map<std::string, int> Get_Ingredients() const;
+
+
+    void Print_Info() const;
+
 };

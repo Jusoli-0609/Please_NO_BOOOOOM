@@ -1,108 +1,168 @@
 #include "Craft_Item.h"
-#include "All_Recipes.h"
 #include <iostream>
 
 using namespace std;
 
+
+
 Craft_Work_Shop::Craft_Work_Shop()
 {
-    All_Recipes hpPotion;
 
-    hpPotion._Recipe_Name = "컵라면";
-    hpPotion._First_Ingredient_Name = "허브";
-    hpPotion._First_Ingredient_Count = 1;
-    hpPotion._Second_Ingredient_Name = "맑은물";
-    hpPotion._Second_Ingredient_Count = 1;
-
-    recipes.push_back(hpPotion);
-
-    All_Recipes staminaPotion;
-
-    staminaPotion._Recipe_Name = "스태미나포션";
-    staminaPotion._First_Ingredient_Name = "허브";
-    staminaPotion._First_Ingredient_Count = 1;
-    staminaPotion._Second_Ingredient_Name = "베리";
-    staminaPotion._Second_Ingredient_Count = 1;
-
-    recipes.push_back(staminaPotion);
-
-    ingredients["허브"] = 3;
-    ingredients["맑은물"] = 2;
-    ingredients["베리"] = 1;
 }
 
+
+
+// 모든 레시피 출력
 void Craft_Work_Shop::Print_All_Recipes() const
 {
-    for (const All_Recipes& recipe : recipes)
+
+    vector<All_Recipes> recipes =
+        recipe_repository.Get_All_Recipes();
+
+
+    cout << "\n===== 제작 가능한 레시피 =====\n";
+
+
+    for (int i = 0; i < recipes.size(); i++)
     {
-        recipe.PrintInfo();
+        cout << "\n[" << i + 1 << "번]\n";
+
+        recipes[i].Print_Info();
     }
+
 }
 
-void Craft_Work_Shop::Find_Recipe_By_Potion_Name(const string& _Recipe_Name) const
+
+
+// 아이템 제작
+bool Craft_Work_Shop::Craft_Item(
+    Inventory<Item>& inventory
+)
 {
-    bool found = false;
 
-    for (const All_Recipes& recipe : recipes)
+    vector<All_Recipes> recipes =
+        recipe_repository.Get_All_Recipes();
+
+
+    if (recipes.empty())
     {
-        if (recipe._Recipe_Name == _Recipe_Name)
+        cout << "등록된 레시피가 없다!" << endl;
+        return false;
+    }
+
+
+
+    Print_All_Recipes();
+
+
+    int choice;
+
+    cout << "제작할 아이템 번호 : ";
+    cin >> choice;
+
+
+
+    if (choice < 1 || choice > recipes.size())
+    {
+        cout << "잘못된 선택이다!" << endl;
+        return false;
+    }
+
+
+
+    All_Recipes selected_recipe =
+        recipes[choice - 1];
+
+
+
+    // 재료 보유 확인
+
+    for (auto ingredient :
+        selected_recipe.Get_Ingredients())
+    {
+
+        bool found = false;
+
+
+        for (int i = 0; i < inventory.Get_Size(); i++)
         {
-            recipe.PrintInfo();
-            found = true;
-        }
-    }
 
-    if (found == false)
-    {
-        cout << "해당 포션 레시피를 찾을 수 없습니다." << endl;
-    }
-}
+            Item* item =
+                inventory.Get_Item_By_Index(i);
 
-void Craft_Work_Shop::Find_Recipes_By_Ingredient_Name(const string& ingredientName) const
-{
-    bool found = false;
 
-    for (const All_Recipes& recipe : recipes)
-    {
-        if (recipe._First_Ingredient_Name == ingredientName || recipe._Second_Ingredient_Name == ingredientName)
-        {
-            recipe.PrintInfo();
-            found = true;
-        }
-    }
-
-    if (found == false)
-    {
-        cout << "해당 재료가 들어간 포션 레시피를 찾을 수 없습니다." << endl;
-    }
-}
- 
-bool Craft_Work_Shop::Craft_Item(const std::string& _Recipe_Name)
-{
-    for (const All_Recipes& recipe : recipes)
-    {
-        if (recipe._Recipe_Name == _Recipe_Name)
-        {
-            if (ingredients[recipe._First_Ingredient_Name] < recipe._First_Ingredient_Count ||
-                ingredients[recipe._Second_Ingredient_Name] < recipe._Second_Ingredient_Count)
+            if (item->_Item_Name ==
+                ingredient.first)
             {
-                cout << "재료가 부족합니다." << endl;
-                return false;
+
+                if (item->_Item_Count >= ingredient.second)
+                {
+                    found = true;
+                }
+
             }
 
-            ingredients[recipe._First_Ingredient_Name] -= recipe._First_Ingredient_Count;
-            ingredients[recipe._Second_Ingredient_Name] -= recipe._Second_Ingredient_Count;
-
-            cout << _Recipe_Name << " 제작 성공!" << endl;
-            return true;
         }
+
+
+
+        if (found == false)
+        {
+            cout
+                << ingredient.first
+                << "이(가) 부족하다!"
+                << endl;
+
+            return false;
+        }
+
     }
 
-    cout << "해당 포션 레시피를 찾을 수 없습니다." << endl;
-    return false;
-}
 
-void Craft_Work_Shop::Add_Recipes(const All_Recipes& recipe)
-{
-    recipe.push_back(recipe);
+
+    // 재료 제거
+
+    for (auto ingredient :
+        selected_recipe.Get_Ingredients())
+    {
+
+        inventory.Remove_Item_Count(
+            ingredient.first,
+            ingredient.second
+        );
+
+    }
+
+
+
+    // 결과 아이템 생성
+
+    Item result;
+
+
+    result._Item_Name =
+        selected_recipe.Get_Recipe_Name();
+
+
+    result._Item_Count = 1;
+
+
+    result._Item_Description =
+        "제작된 아이템";
+
+
+
+    inventory.Add_Or_Increase_Item(result);
+
+
+
+    cout
+        << result._Item_Name
+        << " 제작 성공!"
+        << endl;
+
+
+
+    return true;
+
 }
