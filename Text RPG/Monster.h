@@ -99,7 +99,7 @@ public:
     int getDefence() const; // 6-4. 몬스터 방어력 조회
     int getSpeed() const; // 6-5. 몬스터 스피드 조회
     int getEvasion() const; // 6-6. 몬스터 회피율 조회
-    int getAccuracy() const; // 6-7. 몬스터 명중률 조
+    int getAccuracy() const; // 6-7. 몬스터 명중률 조회
     int getMonsterLevel() const; // 6-8. 몬스터 레벨 조회
     Monster_Type getMonsterType() const; // 6-9. 몬스터 타입 조회
     Chapter_Type getChapterType() const; // 6-10. 몬스터 소속 챕터 조회
@@ -123,9 +123,8 @@ public:
     // 9. 몬스터 출력 및 보상 생성 파트
     void Print_Attack_Message() const; // 9-1. 몬스터 공격 대사 출력
     void Print_Monster_Info() const; // 9-2. 몬스터 전체 정보 출력
-    void Generate_Drop_Reward(); // 9-3. 드롭 아이템과 무게 출력
-    void Print_Drop_Reward() const; // 9-4. 아이템별 독립 랜덤 드롭 생성
-
+    void Generate_Drop_Reward(); // 9-3. 아이템별 독립 랜덤 드롭 생성
+    void Print_Drop_Reward() const; // 9-4. 드롭 아이템과 무게 출력
 private:
     // 10. 내부 몬스터 초기화 파트
     void Initialize_Monster(Monster_Type monster_Type); // 10-1. 일반 몬스터 정보 초기화
@@ -135,14 +134,14 @@ private:
     int Generate_Random_Level() const; // 11-2. 챕터별 랜덤 레벨 생성
     void Apply_Level_Bonus(); // 11-3. 랜덤 레벨 보너스 적용
 
-    // 10. 몬스터 보상 계산 파트
+    // 12. 몬스터 보상 계산 파트
     std::string Get_Code_Fragment_Name() const; // 12-1. 챕터별 코드 조각 이름 결정
     int Calculate_Exp_Reward() const; // 12-2. 챕터별 기본 경험치 계산
     int Calculate_Level_Exp_Bonus() const; // 12-3. 랜덤 레벨 경험치 보너스 계산
     int Calculate_Score_Reward() const; // 12-4. 챕터별 점수 계산
     int Calculate_Gold_Reward() const; // 12-5. 훈련장려금 랜덤 계산
 
-    // 11. 몬스터 기본 데이터 파트
+    // 13. 몬스터 기본 데이터 파트
     Monster_Type _monster_Type;
     Chapter_Type _chapter_Type;
     Monster_Grade _monster_Grade;
@@ -151,7 +150,7 @@ private:
     std::string _monster_Name;
     int _stat[MONSTER_STAT_COUNT];
 
-    // 12. 몬스터 전투 및 기본 보상 데이터 파트
+    // 14. 몬스터 전투 및 기본 보상 데이터 파트
     int _evasion;
     int _accuracy;
     int _exp_Reward;
@@ -159,7 +158,7 @@ private:
 
     std::string _attack_Message;
 
-    // 13. 몬스터 드롭 보상 데이터 파트
+    // 15. 몬스터 드롭 보상 데이터 파트
     std::string _drop_Item_Name;
     int _drop_Item_Price;
     int _drop_Item_Count;

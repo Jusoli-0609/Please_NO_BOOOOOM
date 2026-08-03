@@ -803,6 +803,11 @@ void Monster::Generate_Drop_Reward()
 		code_Fragment._Item_Weight = CODE_FRAGMENT_WEIGHT;
 		code_Fragment._Item_Type_Usable = false;
 		code_Fragment._Item_Type_Wearable = false;
+		code_Fragment._Item_Description =
+			"깨진 코드 몬스터에게서 떨어져 나온 코드 조각. "
+			"아이템 제작과 코드 연구에 사용할 수 있다.";
+		code_Fragment._Item_Ascii_Art =
+			"";
 
 		_drop_Items.push_back(code_Fragment);
 	}
@@ -820,12 +825,11 @@ void Monster::Generate_Drop_Reward()
 		cup_Ramen._Item_Weight = CUP_RAMEN_WEIGHT;
 		cup_Ramen._Item_Type_Usable = true;
 		cup_Ramen._Item_Type_Wearable = false;
-		cup_Ramen._Item_Description = "HP를 50 회복시킨다.";
+		cup_Ramen._Item_Description =
+			"지친 체력을 채워 주는 컵라면. "
+			"사용하면 HP를 50 회복한다.";
 		cup_Ramen._Item_Ascii_Art =
-			R"(
-
-아스키 아트 해주세요.
-)";
+			"";
 		_drop_Items.push_back(cup_Ramen);
 	}
 
@@ -842,15 +846,11 @@ void Monster::Generate_Drop_Reward()
 		energy_Drink._Item_Weight = ENERGY_DRINK_WEIGHT;
 		energy_Drink._Item_Type_Usable = true;
 		energy_Drink._Item_Type_Wearable = false;
-		energy_Drink._Item_Description = "MP를 50 회복한다.";
-		energy_Drink._Item_Ascii_Art = 
-R"(
-
-
-적당한 아스키 아트 이런 형시으로 넣으시면 됩니다
-
-
-)";
+		energy_Drink._Item_Description =
+			"집중력을 다시 끌어올리는 에너지드링크. "
+			"사용하면 MP를 50 회복한다.";
+		energy_Drink._Item_Ascii_Art =
+			"";
 
 		_drop_Items.push_back(energy_Drink);
 	}
@@ -865,6 +865,11 @@ R"(
 		minimum_Reward._Item_Weight = CODE_FRAGMENT_WEIGHT;
 		minimum_Reward._Item_Type_Usable = false;
 		minimum_Reward._Item_Type_Wearable = false;
+		minimum_Reward._Item_Description =
+			"깨진 코드 몬스터에게서 떨어져 나온 코드 조각. "
+			"아이템 제작과 코드 연구에 사용할 수 있다.";
+		minimum_Reward._Item_Ascii_Art =
+			"";
 
 		_drop_Items.push_back(minimum_Reward);
 	}
@@ -1036,6 +1041,8 @@ void Monster::Print_Attack_Message() const
 void Monster::Print_Monster_Info() const
 {
 	cout << "========================================" << endl;
+	cout << "[ 몬스터 데이터 ]" << endl;
+	cout << "========================================" << endl;
 	cout << "몬스터 이름: " << _monster_Name << endl;
 	cout << "레벨: " << _monster_Level << endl;
 	cout << "HP: " << _stat[MONSTER_HP] << endl;
@@ -1061,36 +1068,33 @@ void Monster::Print_Monster_Info() const
 // 9-3. 드롭 아이템과 무게 출력
 void Monster::Print_Drop_Reward() const
 {
-	cout << "획득 아이템:" << endl;
+	cout << endl;
+	cout << "----------------------------------------" << endl;
+	cout << "[ 코드 전리품 ]" << endl;
+	cout << "----------------------------------------" << endl;
 
 	if (_drop_Items.empty())
 	{
-		cout << "- 획득한 아이템이 없습니다." << endl;
+		cout << "획득한 아이템이 없다." << endl;
 
 		return;
 	}
 
-	int total_Drop_Weight = 0;
-
-	for
-		(const Item& drop_Item :_drop_Items)
+	for (const Item& drop_Item : _drop_Items)
 	{
-		int item_Total_Weight = drop_Item._Item_Weight * drop_Item._Item_Count;
-
-		cout << "- "
+		cout
 			<< drop_Item._Item_Name
 			<< " "
 			<< drop_Item._Item_Count
-			<< "개"
-			<< " / 개당 무게 "
-			<< drop_Item._Item_Weight
-			<< " / 총 무게 "
-			<< item_Total_Weight
+			<< "개 획득!"
 			<< endl;
 
-		total_Drop_Weight += item_Total_Weight;
+		cout
+			<< "무게: "
+			<< drop_Item._Item_Weight
+			<< endl;
 	}
 
-	cout << "드롭 아이템 총 무게: " << total_Drop_Weight << endl;
+	cout << "----------------------------------------" << endl;
 }
 
