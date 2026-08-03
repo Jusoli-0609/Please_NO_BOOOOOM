@@ -411,6 +411,8 @@ void Dungeon_Manager::Get_Current_Chapter_Monsters(Monster_Type monster_Types[])
 		monster_Types[1] = Monster_Type::BOOL_MUSHROOM;
 		monster_Types[2] = Monster_Type::IF_GOBLIN;
 		break;
+	}
+	 
 	case Chapter_Type::ARRAY_LOOP_OCEAN:
 		monster_Types[0] = Monster_Type::ARRAY_JELLYFISH;
 		monster_Types[1] = Monster_Type::FOR_SHARK;
@@ -454,9 +456,56 @@ Monster_Type Dungeon_Manager::Get_Random_Normal_Monster() const
 
 bool Dungeon_Manager::Check_Elite_Monster_Appearance()
 {
-	if (_has_Elite_Appeared_In_Current_Chapter)
+	int appearance_Roll = rand() % 100 + 1;
+
+	return
+		appearance_Roll <= ELITE_APPEARANCE_RATE;
+}
+// 5-2. 챕터별 정예 문제 랜덤 선택
+Elite_Question Dungeon_Manager::Get_Elite_Question(Chapter_Type chapter_Type) const
+{
+	Elite_Question elite_Questions[3];
+
+	switch (chapter_Type)
 	{
-		return false;
+	case Chapter_Type::VARIABLE_CONDITION_FOREST:
+	{
+		elite_Questions[0].question = "다음 중 정수값을 저장하는 자료형은 무엇인가?";
+
+		elite_Questions[0].choices[0] = "int";
+		elite_Questions[0].choices[1] = "bool";
+		elite_Questions[0].choices[2] = "if";
+		elite_Questions[0].choices[3] = "while";
+
+		elite_Questions[0].correct_Answer = 1;
+
+
+		elite_Questions[1].question =
+			"다음 코드에서 출력되는 결과는 무엇인가?\n"
+			"int number = 10;\n"
+			"if (number > 5)\n"
+			"{\n"
+			"\tcout << \"통과\";\n"
+			"}";
+
+		elite_Questions[1].choices[0] = "아무것도 출력되지 않음";
+		elite_Questions[1].choices[1] = "통과";
+		elite_Questions[1].choices[2] = "10";
+		elite_Questions[1].choices[3] = "오류 발생";
+
+		elite_Questions[1].correct_Answer = 2;
+
+
+		elite_Questions[2].question = "참 또는 거짓만 저장할 수 있는 자료형은 무엇인가?";
+
+		elite_Questions[2].choices[0] = "int";
+		elite_Questions[2].choices[1] = "string";
+		elite_Questions[2].choices[2] = "bool";
+		elite_Questions[2].choices[3] = "float";
+
+		elite_Questions[2].correct_Answer = 3;
+
+		break;
 	}
 
 	int appearance_Roll = rand() % 100 + 1;
@@ -606,7 +655,10 @@ void Dungeon_Manager::Apply_Tutor_Gimmick_Failure_Penalty()
 void Dungeon_Manager::Record_Monster_Kill(const Monster& monster)
 {
 	Monster_Type monster_Type = monster.getMonsterType();
-	Monster_Kill_Record& kill_Record = _monster_Kill_Log[_current_Chapter][monster_Type];
+
+	Monster_Kill_Record& kill_Record = _monster_Kill_Log
+		[_current_Chapter]
+		[monster_Type];
 
 	if (kill_Record.monster_Name.empty())
 	{

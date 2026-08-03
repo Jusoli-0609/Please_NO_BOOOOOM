@@ -3,7 +3,7 @@
 #include <algorithm>
 using namespace std;
 
-//�⺻������
+//기본생성자
 Equipment::Equipment()
     : _Equipment_Name("None"),
     _Attack_Stat(0),
@@ -17,7 +17,7 @@ Equipment::Equipment()
 {
 }
 
-//������ �� ���� ������ ������?
+//아이템 다 대입 생성자 뭔말알?
 Equipment::Equipment(
     string equipment_name,
     int attack,
@@ -40,7 +40,7 @@ Equipment::Equipment(
 {
 }
 
-//��� ����� ���ڿ� �������~~!
+//장비 등급을 문자열 출력으로~~!
 string Equipment:: Equipment_Grade_To_String(Equipment_Grade grade) const
 {
     switch (grade)
@@ -77,7 +77,7 @@ string Equipment:: Equipment_Grade_To_String(Equipment_Grade grade) const
 }
 
 
-//��� Ÿ���� ���ڿ� �������~!
+//장비 타입을 문자열 출력으로~!
 string Equipment::Equipment_Type_To_String(Equipment_Type type) const
 {
     switch (type)
@@ -102,121 +102,121 @@ string Equipment::Equipment_Type_To_String(Equipment_Type type) const
     }
 }
 
-//��ȭ�� ��ȸ
+//강화도 조회
 int Equipment::Get_Enhance_Level() const
 {
     return _Enhance_Level;
 }
 
-//��ȭ�� ����
+//강화도 설정
 void Equipment::Set_Enhance_Level(int enhance_level)
 {
     _Enhance_Level = enhance_level;
 }
 
-//���ݷ� ���� ��ȸ
+//공격력 스텟 조회
 int Equipment::Get_Attack_Stat() const
 {
     return _Attack_Stat;
 }
 
-//���ݷ� ���� ����
+//공격력 스텟 설정
 void Equipment::Set_Attack_Stat(int attack_stat)
 {
     _Attack_Stat = attack_stat;
 }
 
-//����� ���� ��ȸ
+//수비력 스텟 조회
 int Equipment::Get_Defence_Stat() const
 {
     return _Defence_Stat;
 }
 
-//����� ���� ����
+//수비력 스텟 설정
 void Equipment::Set_Defence_Stat(int defence_stat)
 {
     _Defence_Stat = defence_stat;
 }
 
-//��� ��� �Լ�
+//장비 출력 함수
 void Equipment::Print_Equipment_Info() const
 {
-    cout << "��� �̸�: " << _Equipment_Name << endl;
-    cout << "��� ����: " << _Equipment_Description << endl;
-    cout << "��� Ÿ��: " << Equipment_Type_To_String(_Equipment_Type) << endl;
-    cout <<  "��� ����: " << _Equipment_Weight << endl;
-    cout << "���ݷ�: " << _Attack_Stat << endl;
-    cout << "����: " << _Defence_Stat << endl;
-    cout << "���: " << Equipment_Grade_To_String(_Grade) << endl;
-    cout << "��ȭ ����: +" << _Enhance_Level << endl;
+    cout << "장비 이름: " << _Equipment_Name << endl;
+    cout << "장비 설명: " << _Equipment_Description << endl;
+    cout << "장비 타입: " << Equipment_Type_To_String(_Equipment_Type) << endl;
+    cout <<  "장비 무게: " << _Equipment_Weight << endl;
+    cout << "공격력: " << _Attack_Stat << endl;
+    cout << "방어력: " << _Defence_Stat << endl;
+    cout << "등급: " << Equipment_Grade_To_String(_Grade) << endl;
+    cout << "강화 레벨: +" << _Enhance_Level << endl;
     cout << _Equipment__Ascii_Art << endl;
 }
 
-//����̸� ��ȸ
+//장비이름 조회
 string Equipment::Get_Equipment_Name()const
 {
     return _Equipment_Name;
 }
 
-//��� ��� ��ȸ
+//장비 등급 조회
 Equipment_Grade Equipment::Get_Grade()const
 {
     return _Grade;
 }
 
-//��� ���� ��ȸ
+//장비 무게 조회
 int Equipment::Get_Equipment_Weight()const
 {
     return _Equipment_Weight;
 }
 
-//��� ���� ����
+//장비 무게 설정
 void Equipment::Set_Equipment_Weight(int weight)
 {
     _Equipment_Weight = weight;
 }
 
-//��� �̸� ����
+//장비 이름 설정
 void Equipment::Set_Equipment_Name(string name)
 {
     _Equipment_Name = name;
 }
 
-//��� ���� ��ȸ
+//장비 설명 조회
 string Equipment::Get_Equipment_Description()const
 {
     return _Equipment_Description;
 }
 
-//��� ���� ����
+//장비 설명 설정
 void Equipment::Set_Equipment_Description(string description)
 {
     _Equipment_Description = description;
 }
 
-//��� Ÿ�� ��ȸ
+//장비 타입 조회
 Equipment_Type Equipment::Get_Equipment_Type()const
 {
     return _Equipment_Type;
 }
 
-//��� Ÿ�� ����
+//장비 타입 설정
 void Equipment::Set_Equipment_Type(Equipment_Type type)
 {
     _Equipment_Type = type;
 }
 
-//-----------------���� ���� ���� ������ ���â------------------------------------
+//-----------------현재 장착 중인 아이템 장비창------------------------------------
 
 
-//���â �⺻ ������
+//장비창 기본 생성자
 Currently_Equipped_Equipments::Currently_Equipped_Equipments()
 {
     
 }
 
 
-//��� ����
+//장비 착용
 bool Currently_Equipped_Equipments::Equip_Equipment(const Equipment& equipment)
 {
     Equipment_Type type = equipment.Get_Equipment_Type();
@@ -224,7 +224,7 @@ bool Currently_Equipped_Equipments::Equip_Equipment(const Equipment& equipment)
 
     if (Is_Equipment_Equipped(type))
     {
-        cout << "�̹� ���� ������ ��� �����ϰ� �ִ�! �����ϰ� �����ض�!" << endl;
+        cout << "이미 같은 종류의 장비를 착용하고 있다! 해제하고 착용해라!" << endl;
         return false;
     }
 
@@ -257,18 +257,18 @@ bool Currently_Equipped_Equipments::Equip_Equipment(const Equipment& equipment)
 
 
     default:
-        cout << "������ �� ���� �������̴�!" << endl;
+        cout << "착용할 수 없는 아이템이다!" << endl;
         return false;
     }
 
 
     cout << equipment.Get_Equipment_Name()
-        << " ���� �Ϸ�!" << endl;
+        << " 장착 완료!" << endl;
 
 
     return true;
 }
-
+//착용중인가
 bool Currently_Equipped_Equipments::Is_Equipment_Equipped(Equipment_Type type) const
 {
     switch (type)
@@ -292,10 +292,10 @@ bool Currently_Equipped_Equipments::Is_Equipment_Equipped(Equipment_Type type) c
         return false;
     }
 }
-//���â ���
+//장비창 출력
 void Currently_Equipped_Equipments::Print_Currently_Equipped_Equipments() const
 {
-    cout << "===== ���� ���� ���� ��� =====" << endl;
+    cout << "===== 현재 장착 중인 장비 =====" << endl;
 
     cout << "[Engine]" << endl;
     _Unreal_Engine_Version.Print_Equipment_Info(); 
@@ -316,20 +316,20 @@ void Currently_Equipped_Equipments::Print_Currently_Equipped_Equipments() const
     return;
 }
 
-//����
+//해제
 bool Currently_Equipped_Equipments::Unequip_Equipment_To_Inventory(Inventory_For_Equipments_Only& equipment_inventory
 )
 {
 
     cout << R"(
-� ��� �����Ͻðڽ��ϱ�?
+어떤 장비를 해제하시겠습니까?
 
 1. Engine
 2. Keyboard
 3. Mouse
 4. BlueLight Glasses
 5. Headset
-0. ���
+0. 취소
 )" << endl;
 
     int Choose;
@@ -384,24 +384,24 @@ bool Currently_Equipped_Equipments::Unequip_Equipment_To_Inventory(Inventory_For
 
     case 0:
     {
-        cout << "����ߴ�." << endl;
+        cout << "취소했다." << endl;
         return false;
     }
 
     default:
     {
-        cout << "�߸��� �Է��̴�!" << endl;
+        cout << "잘못된 입력이다!" << endl;
         return false;
     }
     }
 }
 
-//�ϳ� ����
+//하나 해제
 bool Currently_Equipped_Equipments::Unequip_One_Equipment(Equipment& equipped_item, Inventory_For_Equipments_Only& equipment_inventory, const string& slot_name)
 {
     if (equipped_item.Get_Equipment_Type() == Equipment_Type::Empty)
     {
-        cout << "������ " << slot_name << "��(��) ����!" << endl;
+        cout << "장착된 " << slot_name << "이(가) 없다!" << endl;
         return false;
     }
 
@@ -409,18 +409,18 @@ bool Currently_Equipped_Equipments::Unequip_One_Equipment(Equipment& equipped_it
 
     if (Is_Added == false)
     {
-        cout << "�κ��丮�� ���� ���� ������ ����ߴ�!" << endl;
+        cout << "인벤토리에 넣지 못해 해제를 취소했다!" << endl;
         return false;
     }
 
     equipped_item = Equipment();
 
-    cout << slot_name << " ��� �����ߴ�!" << endl;
+    cout << slot_name << " 장비를 해제했다!" << endl;
     return true;
 }
 
 
-//��� �� ���� ���
+//장비 총 스텟 얻기
 Equipment_Stats Currently_Equipped_Equipments::Get_All_Equipments_Stats() const
 {
     Equipment_Stats total_stats;
@@ -469,7 +469,7 @@ Equipment_Stats Currently_Equipped_Equipments::Get_All_Equipments_Stats() const
     return total_stats;
 }
 
-//��� �� ��� ����ȭ
+//장비 총 등급 숫자화
 int Currently_Equipped_Equipments::Get_All_Equipments_Grade_Score() const
 {
     int Total_Grade_Score = 0;
@@ -488,10 +488,10 @@ int Currently_Equipped_Equipments::Get_All_Equipments_Grade_Score() const
 
 
 
-//-----------------��� ���� �κ��丮------------------------------------
+//-----------------장비 전용 인벤토리------------------------------------
 
 
-//��� ���� �κ��丮 �⺻ ������
+//장비 전용 인벤토리 기본 생성자
 Inventory_For_Equipments_Only::Inventory_For_Equipments_Only()
     : _Equipment_Current_Count(0),
     _Equipment_Max_Count(10),
@@ -500,7 +500,7 @@ Inventory_For_Equipments_Only::Inventory_For_Equipments_Only()
 }
 
 
-//��� ���� �κ��丮 �ִ� ���� ���� ������
+//장비 전용 인벤토리 최대 개수 설정 생성자
 Inventory_For_Equipments_Only::Inventory_For_Equipments_Only(int max_count,int max_weight)
     : _Equipment_Current_Count(0),
     _Equipment_Max_Count(max_count),
@@ -509,15 +509,15 @@ Inventory_For_Equipments_Only::Inventory_For_Equipments_Only(int max_count,int m
 }
 
 
-//��� �߰�
+//장비 추가
 bool Inventory_For_Equipments_Only::Add_Equipment(const Equipment& equipment)
 {
-    // 1. ���� �˻�
+    // 1. 무게 검사
     while (Get_Total_Equipment_Weight() + equipment.Get_Equipment_Weight() > _Equipment_Max_Weight)
     {
-        cout << "��� �κ��丮�� ���԰� �� �뷮�� �ʰ��ߴ�! ��� ���� ���ΰ�?" << endl;
-        cout << "1. ������" << endl;
-        cout << "2. ���" << endl;
+        cout << "장비 인벤토리의 무게가 총 용량을 초과했다! 장비를 버릴 것인가?" << endl;
+        cout << "1. 버리기" << endl;
+        cout << "2. 취소" << endl;
 
         int Choose_To_Get_Rid_Of_Equipment;
         cin >> Choose_To_Get_Rid_Of_Equipment;
@@ -532,15 +532,15 @@ bool Inventory_For_Equipments_Only::Add_Equipment(const Equipment& equipment)
         }
         else
         {
-            cout << "�߸��� �Է��̴�!" << endl;
+            cout << "잘못된 입력이다!" << endl;
         }
     }
 
-    // 2. ���� �˻�
+    // 2. 슬롯 검사
     while (_Equipment_Current_Count >= _Equipment_Max_Count)
     {
-        cout << "������ ���� á��!" << endl;
-        cout << "��� �������� 1�� �ƴϸ� 2���� ������!" << endl;
+        cout << "슬롯이 가득 찼다!" << endl;
+        cout << "장비를 버릴려면 1번 아니면 2번을 눌러라!" << endl;
 
         int Choose_To_Get_Rid_Of_Equipment;
         cin >> Choose_To_Get_Rid_Of_Equipment;
@@ -551,7 +551,7 @@ bool Inventory_For_Equipments_Only::Add_Equipment(const Equipment& equipment)
 
             if (_Equipment_Current_Count >= _Equipment_Max_Count)
             {
-                cout << "���� ������ �����ϴ�!" << endl;
+                cout << "아직 슬롯이 부족하다!" << endl;
             }
         }
         else if (Choose_To_Get_Rid_Of_Equipment == 2)
@@ -560,38 +560,38 @@ bool Inventory_For_Equipments_Only::Add_Equipment(const Equipment& equipment)
         }
         else
         {
-            cout << "�߸��� �Է��̴�! �ٽ� �Է��϶�." << endl;
+            cout << "잘못된 입력이다! 다시 입력하라." << endl;
         }
     }
 
-    // 3. ��� �߰�
+    // 3. 장비 추가
     _Equipments.push_back(equipment);
     _Equipment_Current_Count++;
 
-    cout << equipment.Get_Equipment_Name() << "��(��) ȹ���ߴ�!" << endl;
+    cout << equipment.Get_Equipment_Name() << "을(를) 획득했다!" << endl;
 
     return true;
 }
 
 
-//��� �κ��丮 ���
+//장비 인벤토리 출력
 void Inventory_For_Equipments_Only::Print_Equipment_Inventory() const
 {
     if (_Equipment_Current_Count == 0)
     {
-        cout << "�� �����!" << endl;
+        cout << "텅 비었다!" << endl;
         return;
     }
     cout << endl;
     cout << "========================================" << endl;
-    cout << "          ��� ���� �κ��丮" << endl;
+    cout << "          장비 전용 인벤토리" << endl;
     cout << "========================================" << endl;
-    cout << "���� ��� �� : " << _Equipment_Current_Count << " / " << _Equipment_Max_Count << endl;
+    cout << "보유 장비 수 : " << _Equipment_Current_Count << " / " << _Equipment_Max_Count << endl;
     cout << "----------------------------------------" << endl;
 
     for (int i = 0; i < _Equipment_Current_Count; i++)
     {
-        cout << "[" << i + 1 << "�� ���]" << endl;
+        cout << "[" << i + 1 << "번 장비]" << endl;
         cout << "----------------------------------------" << endl;
         _Equipments[i].Print_Equipment_Info();
         cout << endl;
@@ -599,80 +599,80 @@ void Inventory_For_Equipments_Only::Print_Equipment_Inventory() const
 }
 
 
-//���� ��� ���� ��ȸ
+//현재 장비 개수 조회
 int Inventory_For_Equipments_Only::Get_Equipment_Current_Count() const
 {
     return _Equipment_Current_Count;
 }
 
 
-//�ִ� ��� ���� ��ȸ
+//최대 장비 개수 조회
 int Inventory_For_Equipments_Only::Get_Equipment_Max_Count() const
 {
     return _Equipment_Max_Count;
 }
 
 
-//�ε����� ��� ��ȸ
+//인덱스로 장비 조회
 Equipment Inventory_For_Equipments_Only::Get_Equipment_By_Index(int index) const
 {
     if (index<0 || index>= _Equipment_Current_Count)
     {
-        cout << "�߸��� �����̴�!" << endl;
+        cout << "잘못된 선택이다!" << endl;
         return Equipment();
     }
     return _Equipments[index];
 }
 
 
-//��� ������
+//장비 버리기
 void Inventory_For_Equipments_Only::Throw_Away_Equipment()
 {
     if (_Equipment_Current_Count==0)
     {
-        cout << "�� �� ���� �� ����!" << endl;
+        cout << "텅 비어서 버릴 게 없다!" << endl;
         return;
     }
     Print_Equipment_Inventory();
-    cout << "���� ��� ����!" << endl;
+    cout << "버릴 장비를 골라라!" << endl;
     int Choose_What_Equipment_To_Get_Rid_Of;
     cin >> Choose_What_Equipment_To_Get_Rid_Of;
     while  (Choose_What_Equipment_To_Get_Rid_Of < 1 || _Equipment_Current_Count < Choose_What_Equipment_To_Get_Rid_Of)
     {
-        cout << "�߸��� �Է��̴�! �ٽ� �Է��϶�." << endl;
+        cout << "잘못된 입력이다! 다시 입력하라." << endl;
         cin >> Choose_What_Equipment_To_Get_Rid_Of;
     }
     int Vector_Index = Choose_What_Equipment_To_Get_Rid_Of-1;
     string Bye_Equipment = _Equipments[Vector_Index].Get_Equipment_Name();
     _Equipments.erase(_Equipments.begin() + Vector_Index);
     _Equipment_Current_Count--;
-    cout << Bye_Equipment << "�� �ۺ��ߴ�!" << endl;
+    cout << Bye_Equipment << "과 작별했다!" << endl;
 }
 
 
-//��� �κ��丮 �ִ� ���� ĭ ����
+//장비 인벤토리 최대 보관 칸 증가
 void Inventory_For_Equipments_Only::Increase_Equipment_Max_Count(int increase_count)
 {
     if (increase_count <= 0)
     {
-        cout << "�������� �ùٸ��� �ʴ�!" << endl;
+        cout << "증가량이 올바르지 않다!" << endl;
         return;
     }
 
     _Equipment_Max_Count += increase_count;
-    cout << "��� ���� �κ��丮�� " << increase_count << "��ŭ �����ߴ�!" << endl;
+    cout << "장비 전용 인벤토리가 " << increase_count << "만큼 증가했다!" << endl;
 }
 
-//��� ����
+//장비 정렬
 void Inventory_For_Equipments_Only::Sort_Equipment_Inventory()
 {
     cout << R"(
-� �������� �����ұ��?
-1. �̸���
-2. ���ݷ¼�
-3. ���¼�
-4. ���Լ�
-0. ���
+어떤 기준으로 정렬할까요?
+1. 이름순
+2. 공격력순
+3. 방어력순
+4. 무게순
+0. 취소
 )" << endl;
 
     int Sort_Choice;
@@ -718,29 +718,29 @@ void Inventory_For_Equipments_Only::Sort_Equipment_Inventory()
     }
     case 0:
     {
-        cout << "������ ����Ѵ�." << endl;
+        cout << "정렬을 취소한다." << endl;
         break;
     }
     default:
     {
-        cout << "�߸��� �Է��̴�." << endl;
+        cout << "잘못된 입력이다." << endl;
         break;
     }
     }
 }
 
-//��� ���� �ٲٱ�
+//장비 순서 바꾸기
 void Inventory_For_Equipments_Only::Change_Equipment_Inventory_Order()
 {
     if (_Equipments.empty())
     {
-        cout << "��� �κ��丮�� ��� �ִ�." << endl;
+        cout << "장비 인벤토리가 비어 있다." << endl;
         return;
     }
 
     if (_Equipments.size() < 2)
     {
-        cout << "������ �ٲ� ��� �����ϴ�." << endl;
+        cout << "순서를 바꿀 장비가 부족하다." << endl;
         return;
     }
 
@@ -749,27 +749,27 @@ void Inventory_For_Equipments_Only::Change_Equipment_Inventory_Order()
     int First_Selected_Index;
     int Second_Selected_Index;
 
-    cout << "ù ��°�� �ٲ� ��� ��ȣ�� �Է��϶�! : ";
+    cout << "첫 번째로 바꿀 장비 번호를 입력하라! : ";
     cin >> First_Selected_Index;
 
     while (First_Selected_Index < 1 || First_Selected_Index > _Equipment_Current_Count)
     {
-        cout << "�߸��� �Է��̴�. �ٽ� �Է��϶�! : ";
+        cout << "잘못된 입력이다. 다시 입력하라! : ";
         cin >> First_Selected_Index;
     }
 
-    cout << "�� ��°�� �ٲ� ��� ��ȣ�� �Է��϶�! : ";
+    cout << "두 번째로 바꿀 장비 번호를 입력하라! : ";
     cin >> Second_Selected_Index;
 
     while (Second_Selected_Index < 1 || Second_Selected_Index > _Equipment_Current_Count)
     {
-        cout << "�߸��� �Է��̴�. �ٽ� �Է��϶�! : ";
+        cout << "잘못된 입력이다. 다시 입력하라! : ";
         cin >> Second_Selected_Index;
     }
 
     if (First_Selected_Index == Second_Selected_Index)
     {
-        cout << "���� ��� �����ߴ�. ������ �������� �ʴ´�." << endl;
+        cout << "같은 장비를 선택했다. 순서를 변경하지 않는다." << endl;
         return;
     }
 
@@ -778,15 +778,15 @@ void Inventory_For_Equipments_Only::Change_Equipment_Inventory_Order()
 
     swap(_Equipments[First_Vector_Index], _Equipments[Second_Vector_Index]);
 
-    cout << "��� ������ �����ߴ�." << endl;
+    cout << "장비 순서를 변경했다." << endl;
 }
 
-//��� ����
+//장비 착용
 void Inventory_For_Equipments_Only::Equip_Equipment_From_Inventory(Currently_Equipped_Equipments& equipped)
 {
     if (_Equipments.empty())
     {
-        cout << "������ ��� ����." << endl;
+        cout << "장착할 장비가 없다." << endl;
         return;
     }
 
@@ -794,12 +794,12 @@ void Inventory_For_Equipments_Only::Equip_Equipment_From_Inventory(Currently_Equ
 
     int Selected_Index;
 
-    cout << "������ ��� ��ȣ�� �Է��ϼ���: ";
+    cout << "장착할 장비 번호를 입력하세요: ";
     cin >> Selected_Index;
 
     while (Selected_Index < 1 || Selected_Index > _Equipment_Current_Count)
     {
-        cout << "�߸��� �Է��̴�. �ٽ� �Է��ϼ���: ";
+        cout << "잘못된 입력이다. 다시 입력하세요: ";
         cin >> Selected_Index;
     }
 
@@ -812,11 +812,11 @@ void Inventory_For_Equipments_Only::Equip_Equipment_From_Inventory(Currently_Equ
         _Equipments.erase(_Equipments.begin() + Vector_Index);
         _Equipment_Current_Count--;
 
-        cout << Selected_Equipment.Get_Equipment_Name() << "��(��) �����ߴ�!" << endl;
+        cout << Selected_Equipment.Get_Equipment_Name() << "을(를) 장착했다!" << endl;
     }
 }
 
-//���â ���� �� ����
+//장비창 무게 총 조히
 int Inventory_For_Equipments_Only::Get_Total_Equipment_Weight() const
 {
     int Total_Weight = 0;

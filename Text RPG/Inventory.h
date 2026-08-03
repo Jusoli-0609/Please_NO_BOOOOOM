@@ -3,7 +3,7 @@
 	#include <map>
 	#include <string>
 	#include <vector>
-#include "Equipment.h"
+	#include "Equipment.h"
 
 	#include "Item.h"
 	#include "Player.h"
@@ -40,11 +40,11 @@
 		void Remove_Last_Item();// 5-5 마지막 아이템 제거
 		void Use_Random_Item_In_Battle(Player& player, Monster& monster);//5-6 캐릭터가 자동으로 아이템 랜덤 사용
 		// 6. 인벤토리 정렬 / 순서 변경
-	    void Sort_Inventory();// 6-1 아이템 정렬
-	    void Change_Inventory_Order();//6-2 아이템 순서 골라서 바꾸기
-	    // 7. 인벤토리 용량 확장
+		void Sort_Inventory();// 6-1 아이템 정렬
+		void Change_Inventory_Order();//6-2 아이템 순서 골라서 바꾸기
+		// 7. 인벤토리 용량 확장
 		void Increase_Max_Capacity(int new_max_capacity);//7-1 아이템 용량 늘어나기
-	    // 8. 인벤토리 소멸자	
+		// 8. 인벤토리 소멸자	
 		~Inventory();//8.소멸자
 		//9. 인벤토리 내 골드
 		int Get_Money()const;

@@ -12,7 +12,7 @@
 
 using namespace std;
 
-template<typename T>//1-1 기본 생성자
+template<typename T>//1-1 �⺻ ������
 Inventory<T>::Inventory(int max_inventory_size, int max_capacity)
 {
     _Max_Inventory_Size = max_inventory_size;
@@ -94,13 +94,13 @@ int Inventory<T>::Get_Size()const
     return _Current_Quantity_Of_Items;
 }
 
-template<typename T>// 3-4 인벤토리 무게 가져오기
+template<typename T>// 3-3 인벤토리 사이즈 가져오기
 int Inventory<T>::Get_Capacity() const
 {
     return _Max_Capacity;
 }
 
-template <typename T>//4-1 인벤토리 및 내용물 출력
+template <typename T>//4-1 �κ��丮 �� ���빰 ���
 void Inventory<T>::Print_Inventory() const
 {
     cout << "=========소비/재료 전용 인벤토리========" << endl;
@@ -133,7 +133,7 @@ void Inventory<T>::Print_Inventory() const
     cout << "최대 허용 무게: " << _Max_Capacity << endl;
     cout << "남은 허용 무게: " << _Max_Capacity - Get_Total_Weight() << endl;
     cout << "========================================" << endl;
-    }
+}
 
 template <typename T>//4-2 인벤토리 메뉴 출력
 void Inventory<T>::Print_Inventory_Menu(
@@ -474,7 +474,7 @@ void Inventory<T>::Print_Inventory_Menu(
     }
 
     template <typename T>//5-3 전투 중 아이템 사용
-    void Inventory<T>::Use_Item(Player & player, Monster & monster)
+    void Inventory<T>::Use_Item(Player& player, Monster& monster)
     {
         if (_Current_Quantity_Of_Items == 0)
         {
@@ -591,7 +591,7 @@ void Inventory<T>::Print_Inventory_Menu(
     }
 
     template <typename T>//5-6 전투 아이템 사용
-    void Inventory<T>::Use_Random_Item_In_Battle(Player & player, Monster & monster)
+    void Inventory<T>::Use_Random_Item_In_Battle(Player& player, Monster& monster)
     {
         if (_Current_Quantity_Of_Items == 0)
         {
