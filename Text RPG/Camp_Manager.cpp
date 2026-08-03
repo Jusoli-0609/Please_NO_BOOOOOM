@@ -15,7 +15,7 @@ Camp_Manager::Camp_Manager(
 {
 }
 
-void Camp_Manager::Open_Camp_Menu(Player& player, Inventory<Item>& inventory, Inventory_For_Equipments_Only& inventory_for_equipments, Currently_Equipped_Equipments& currently_equipped_equipments)
+void Camp_Manager::Open_Camp_Menu()
 {
     while (true)
     {

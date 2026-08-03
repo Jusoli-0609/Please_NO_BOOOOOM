@@ -13,7 +13,7 @@ public:
         Currently_Equipped_Equipments& currently_equipped_equipments);
    
     
-    void Open_Camp_Menu(Player& player, Inventory<Item>& inventory, Inventory_For_Equipments_Only& inventory_for_equipments, Currently_Equipped_Equipments& currently_equipped_equipments);
+    void Open_Camp_Menu();
 
 private:
     bool Received_Basic_Items = false;
