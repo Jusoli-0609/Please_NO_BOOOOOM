@@ -1,30 +1,30 @@
-#include "Recipe_Repository.h"
+ï»¿#include "Recipe_Repository.h"
 
 
 Recipe_Repository::Recipe_Repository()
 {
 
-    // ¿¹½Ã ·¹½ÃÇÇ
+    // ì˜ˆì‹œ ë ˆì‹œí”¼
     recipes.push_back(
         All_Recipes(
-            "°­È­¼®",
+            "ê°•í™”ì„",
             {
-                {"Ã¶ Á¶°¢", 3},
-                {"¸¶·Â °¡·ç", 2}
+                {"ì²  ì¡°ê°", 3},
+                {"ë§ˆë ¥ ê°€ë£¨", 2}
             }
         )
     );
 
 
-    // ³ªÁß¿¡ ¿©±â¿¡ °è¼Ó Ãß°¡
+    // ë‚˜ì¤‘ì— ì—¬ê¸°ì— ê³„ì† ì¶”ê°€
     /*
 
     recipes.push_back(
         All_Recipes(
-            "¾ÆÀÌÅÛ ÀÌ¸§",
+            "ì•„ì´í…œ ì´ë¦„",
             {
-                {"Àç·á1", °³¼ö},
-                {"Àç·á2", °³¼ö}
+                {"ì¬ë£Œ1", ê°œìˆ˜},
+                {"ì¬ë£Œ2", ê°œìˆ˜}
             }
         )
     );
@@ -34,7 +34,7 @@ Recipe_Repository::Recipe_Repository()
 }
 
 
-// ÀüÃ¼ ·¹½ÃÇÇ ¹İÈ¯
+// ì „ì²´ ë ˆì‹œí”¼ ë°˜í™˜
 const std::vector<All_Recipes>& Recipe_Repository::Get_All_Recipes() const
 {
     return recipes;
