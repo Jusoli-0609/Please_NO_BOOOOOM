@@ -102,9 +102,6 @@
     <ClCompile Include="Quiz_Bank.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Items_Equipments_Repository.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Equipment.cpp">
       <Filter>소스 파일\Item</Filter>
     </ClCompile>
@@ -193,6 +190,9 @@
       <Filter>소스 파일\Item</Filter>
     </ClCompile>
     <ClCompile Include="Recipe_Repository.cpp">
+      <Filter>소스 파일\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Items_Equipments_Repository.cpp">
       <Filter>소스 파일\Item</Filter>
     </ClCompile>
   </ItemGroup>
