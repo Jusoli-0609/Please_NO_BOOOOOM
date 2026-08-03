@@ -1,4 +1,4 @@
-#include "Monster.h"
+﻿#include "Monster.h"
 #include "Player.h"
 #include <cstdlib>
 #include <iostream>
@@ -130,7 +130,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 3;
 		_stat[MONSTER_SPEED] = 3;
 
-		_attack_Message = "int �������� ���� ����� �������ϴ�.";
+		_attack_Message = "int 슬라임이 정수 덩어리를 던졌습니다.";
 
 		break;
 	}
@@ -182,7 +182,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 2;
 		_stat[MONSTER_SPEED] = 4;
 
-		_attack_Message = "if ������ ������ Ȯ���ϰ� �����߽��ϴ�.";
+		_attack_Message = "if 고블린이 조건을 확인하고 공격했습니다.";
 
 		break;
 	}
@@ -208,7 +208,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 3;
 		_stat[MONSTER_SPEED] = 3;
 
-		_attack_Message = "array ���ĸ��� �˼� �迭�� �����߽��ϴ�.";
+		_attack_Message = "array 해파리가 촉수 배열로 공격했습니다.";
 
 		break;
 	}
@@ -231,7 +231,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 2;
 		_stat[MONSTER_SPEED] = 5;
 
-		_attack_Message = "for �� �ݺ��ؼ� �����߽��ϴ�.";
+		_attack_Message = "for 상어가 반복해서 돌진했습니다.";
 
 		break;
 	}
@@ -255,7 +255,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 4;
 		_stat[MONSTER_SPEED] = 1;
 
-		_attack_Message = "while ����� ������ ���� ���� �����߽��ϴ�.";
+		_attack_Message = "while 고래가 조건이 참인 동안 공격했습니다.";
 
 		break;
 	}
@@ -305,7 +305,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 5;
 		_stat[MONSTER_SPEED] = 1;
 
-		_attack_Message = "return �������� ���� ����� ��ȯ�߽��ϴ�.";
+		_attack_Message = "return 가고일이 공격 결과를 반환했습니다.";
 
 		break;
 	}
@@ -331,7 +331,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 2;
 		_stat[MONSTER_SPEED] = 3;
 
-		_attack_Message = "function �����簡 ���� �Լ��� ȣ���߽��ϴ�.";
+		_attack_Message = "function 마법사가 공격 함수를 호출했습니다.";
 
 		break;
 	}
@@ -356,7 +356,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 2;
 		_stat[MONSTER_SPEED] = 5;
 
-		_attack_Message = "pointer ������ ������ �ּҸ� �����׽��ϴ�.";
+		_attack_Message = "pointer 유령이 위험한 주소를 가리켰습니다.";
 
 		break;
 	}
@@ -382,7 +382,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 2;
 		_stat[MONSTER_SPEED] = 5;
 
-		_attack_Message = "null ��ð� ��� �ִ� �޸��� ����� �������ϴ�.";
+		_attack_Message = "null 밴시가 비어 있는 메모리의 비명을 질렀습니다.";
 
 		break;
 	}
@@ -408,7 +408,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 4;
 		_stat[MONSTER_SPEED] = 3;
 
-		_attack_Message = "memory ����� �޸� ������ �������ϴ�.";
+		_attack_Message = "memory 사신이 메모리 공간을 베었습니다.";
 
 		break;
 	}
@@ -432,7 +432,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 4;
 		_stat[MONSTER_SPEED] = 3;
 
-		_attack_Message = "class ��������� ��ü�� ������ �����߽��ϴ�.";
+		_attack_Message = "class 기계인형이 객체를 생성해 공격했습니다.";
 
 		break;
 	}
@@ -456,7 +456,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 3;
 		_stat[MONSTER_SPEED] = 2;
 
-		_attack_Message = "inheritance Ű�޶� ��ӹ��� ����� ����߽��ϴ�.";
+		_attack_Message = "inheritance 키메라가 상속받은 기술을 사용했습니다.";
 
 		break;
 	}
@@ -481,7 +481,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 2;
 		_stat[MONSTER_SPEED] = 5;
 
-		_attack_Message = "vector ����� ���� �迭�� �߻��߽��ϴ�.";
+		_attack_Message = "vector 드론이 동적 배열을 발사했습니다.";
 
 		break;
 	}
@@ -522,7 +522,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 3;
 		_stat[MONSTER_SPEED] = 3;
 
-		_attack_Message = "int �������� ���� ����� �������ϴ�.";
+		_attack_Message = "int 슬라임이 정수 덩어리를 던졌습니다.";
 
 		break;
 	}
@@ -532,7 +532,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	_exp_Reward = Calculate_Exp_Reward() + Calculate_Level_Exp_Bonus();
 	_score_Reward = Calculate_Score_Reward();
 }
-// 2-2. ���� ���� ���� �ʱ�ȭ
+// 2-2. 정예 몬스터 정보 초기화
 void Monster::Initialize_Elite_Monster(Chapter_Type chapter_Type)
 {
 	_monster_Type = Monster_Type::CODE_SNIPPET_WRAITH;
@@ -571,7 +571,7 @@ void Monster::Initialize_Elite_Monster(Chapter_Type chapter_Type)
 	_drop_Item_Count = 0;
 	_gold_Reward = 0;
 }
-// 2-3. Ʃ�� ���� ���� �ʱ�ȭ
+// 2-3. 튜터 몬스터 정보 초기화
 void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 {
 	_chapter_Type = chapter_Type;
@@ -738,7 +738,7 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 	_gold_Reward = 0;
 }
 
-// 2-4. �������� ���� �ʱ�ȭ
+// 2-4. 최종보스 정보 초기화
 void Monster::Initialize_Final_Boss(Monster_Type final_Boss_Type)
 {
 	_monster_Type = final_Boss_Type;
@@ -799,7 +799,7 @@ void Monster::Initialize_Final_Boss(Monster_Type final_Boss_Type)
 
 		_evasion = 85;
 		_accuracy = 90;
-		_attack_Message = "�����õ.";
+		_attack_Message = "대사추천.";
 
 		break;
 	}
@@ -835,7 +835,7 @@ void Monster::Initialize_Final_Boss(Monster_Type final_Boss_Type)
 
 		_evasion = 90;
 		_accuracy = 95;
-		_attack_Message = "�����õ";
+		_attack_Message = "대사추천";
 
 		break;
 	}

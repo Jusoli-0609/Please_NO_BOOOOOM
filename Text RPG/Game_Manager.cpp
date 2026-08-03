@@ -70,8 +70,10 @@ void Game_Manager::Show_Main_Menu()
             break;
 
         case 2:
-            _Inventory.Print_Inventory_Menu();
+        {
+            _Inventory.Print_Inventory_Menu(_Currently_Equipped_Equipments, _Equipment_Inventory);
             break;
+        }
 
         case 0:
             cout << "게임을 종료합니다." << endl;

@@ -1,11 +1,11 @@
-#pragma once
+﻿#pragma once
 #include "Item.h"
 #include <string>
 #include <vector>
 
 class Player;
 
-// 1. é�� �з� ��Ʈ
+// 1. 챕터 분류 파트
 enum class Chapter_Type
 {
     VARIABLE_CONDITION_FOREST,
@@ -16,7 +16,7 @@ enum class Chapter_Type
     ALL_CHAPTER_CLEARED
 }; 
 
-// 2.���� �з� ��Ʈ
+// 2.몬스터 분류 파트
 enum class Monster_Type
 {
     INT_SLIME,
@@ -51,7 +51,7 @@ enum class Monster_Type
     MOON_SEUNG_HO_MANAGER
 };
 
-// 3.���� ��� �з� ��Ʈ
+// 3.몬스터 등급 분류 파트
 enum class Monster_Grade
 {
     NORMAL,
@@ -60,7 +60,7 @@ enum class Monster_Grade
     FINAL_BOSS
 };
 
-// 4. ���� �ɷ�ġ �ε��� ��Ʈ
+// 4. 몬스터 능력치 인덱스 파트
 enum Monster_Stat_Index
 {
     MONSTER_HP,
@@ -74,10 +74,10 @@ enum Monster_Stat_Index
 class Monster
 {
 public:
-    // 5. ���� ���� �� �ʱ�ȭ ��Ʈ
-    Monster(); // 5-1. �⺻ ���� ������
-    Monster(Monster_Type monster_Type); // 5-2. ���� Ÿ�� ���� ������
-    Monster  // 5-3. �ܺ� ������ �Է� ������
+    // 5. 몬스터 생성 및 초기화 파트
+    Monster(); // 5-1. 기본 몬스터 생성자
+    Monster(Monster_Type monster_Type); // 5-2. 몬스터 타입 지정 생성자
+    Monster  // 5-3. 외부 데이터 입력 생성자
     (
         std::string monster_Name,
         int monster_HP,

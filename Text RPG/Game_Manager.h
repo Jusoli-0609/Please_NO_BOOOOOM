@@ -3,6 +3,7 @@
 #include "Ascii_Art_Manager.h"
 #include "Intro.h"
 #include "DungeonManager.h"
+#include "Equipment.h"
 #include "Inventory.h"
 #include "Item.h"
 
@@ -24,5 +25,7 @@ private:
     Intro              _Intro;
     Dungeon_Manager    _Dungeon;
     Inventory<Item>    _Inventory;
+    Currently_Equipped_Equipments _Currently_Equipped_Equipments;
+    Inventory_For_Equipments_Only _Equipment_Inventory;
     Player* _Player;
 };
