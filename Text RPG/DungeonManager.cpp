@@ -520,7 +520,7 @@ Elite_Question Dungeon_Manager::Get_Elite_Question(Chapter_Type chapter_Type) co
 }
 
 bool Dungeon_Manager::Run_Elite_Quiz(Player* player,Monster& elite_Monster)
-{
+{ 
 	if (player == nullptr)
 	{
 		return false;

@@ -9,7 +9,6 @@ int main()
     game.Run();
 
     Currently_Equipped_Equipments Current_Equipment;
-
     Inventory_For_Equipments_Only Equipment_Inventory;
 
 
