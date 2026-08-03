@@ -39,9 +39,6 @@
     <ClCompile Include="All_Recipes.cpp">
       <Filter>소스 파일\Item</Filter>
     </ClCompile>
-    <ClCompile Include="Inventory.cpp">
-      <Filter>소스 파일\Item</Filter>
-    </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>소스 파일\Item</Filter>
     </ClCompile>
@@ -72,11 +69,20 @@
     <ClCompile Include="Battle_Elite_Skill.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Quiz_Bank.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Items_Equipments_Repository.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic_Mouse.cpp">
+      <Filter>소스 파일\Item</Filter>
+    </ClCompile>
     <ClCompile Include="Equipment.cpp">
       <Filter>소스 파일\Item</Filter>
     </ClCompile>
-    <ClCompile Include="Quiz_Bank.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>소스 파일\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -96,12 +102,6 @@
       <Filter>헤더 파일\Item</Filter>
     </ClInclude>
     <ClInclude Include="Craft_Item.h">
-      <Filter>헤더 파일\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>헤더 파일\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Inventory.h">
       <Filter>헤더 파일\Item</Filter>
     </ClInclude>
     <ClInclude Include="DungeonManager.h">
@@ -131,14 +131,26 @@
     <ClInclude Include="Battle_Elite_Skill.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Equipment.h">
-      <Filter>헤더 파일\Item</Filter>
-    </ClInclude>
     <ClInclude Include="Stat_Modifier.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Quiz_Bank.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Items_Equipments_Repository.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic_Mouse.h">
+      <Filter>헤더 파일\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Equipment.h">
+      <Filter>헤더 파일\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>헤더 파일\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>헤더 파일\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
