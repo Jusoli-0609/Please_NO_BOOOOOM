@@ -763,7 +763,7 @@ Item Dungeon_Manager::Create_Tutor_Clear_Item(Chapter_Type chapter_Type) const
 		tutor_Item._Item_Name = "강신호 튜터님의 게이밍 헤드셋";
 		break;
 	case Chapter_Type::POINTER_MEMORY_GRAVEYARD:
-		tutor_Item._Item_Name = "문승현 튜터님의 고양이 버츄얼";
+		tutor_Item._Item_Name = "문승현 튜터님의 최고버전 언리얼엔진";
 		break;
 	case Chapter_Type::OBJECT_STL_FACTORY:
 		tutor_Item._Item_Name = "김하늘 튜터님의 도수높은 안경";
@@ -832,7 +832,7 @@ bool Dungeon_Manager::Check_Final_Boss_Room_Available(Inventory<Item>& inventory
 	return Has_Item_In_Inventory(inventory, "손승현 튜터님의 로지텍 마우스")
 		&& Has_Item_In_Inventory(inventory, "박은일 튜터님의 갈축 키보드")
 		&& Has_Item_In_Inventory(inventory, "강신호 튜터님의 게이밍 헤드셋")
-		&& Has_Item_In_Inventory(inventory, "문승현 튜터님의 고양이 버츄얼")
+		&& Has_Item_In_Inventory(inventory, "문승현 튜터님의 최고버전 언리얼엔진")
 		&& Has_Item_In_Inventory(inventory, "김하늘 튜터님의 도수높은 안경");
 }
 
@@ -847,7 +847,7 @@ void Dungeon_Manager::Print_Tutor_Item_Status(Inventory<Item>& inventory) const
 		"손승현 튜터님의 로지텍 마우스",
 		"박은일 튜터님의 갈축 키보드",
 		"강신호 튜터님의 게이밍 헤드셋",
-		"문승현 튜터님의 고양이 버츄얼",
+		"문승현 튜터님의 최고버전 언리얼엔진",
 		"김하늘 튜터님의 도수높은 안경"
 	};
 
