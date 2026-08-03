@@ -87,16 +87,11 @@ class Currently_Equipped_Equipments
     public:
         Currently_Equipped_Equipments();//1.현재 끼고 있는 장비  생성자
         bool Equip_Equipment(const Equipment& equipment, Player* player);//2.장비 끼기
-        bool Equip_Equipment(const Equipment& equipment);//2b. 장비 끼기(오버로드)
         void Print_Currently_Equipped_Equipments() const;//3.현재 장비 중인 장비창 조회
         bool Unequip_Equipment_To_Inventory(Inventory_For_Equipments_Only& equipment_inventory, Player* player);//장비 해제 
-        bool Unequip_Equipment_To_Inventory(Inventory_For_Equipments_Only& equipment_inventory );//장비 해제(오버로드)
+       
 
-        Equipment Get_Keyboard() const;
-        Equipment Get_Headset() const;
-        Equipment Get_Mouse() const;
-        Equipment Get_BlueLight_Glasses() const;
-        Equipment Get_Engine() const;
+       
         bool Is_Equipment_Equipped(Equipment_Type type) const;
         Equipment_Stats Get_All_Equipments_Stats() const;
 
@@ -112,8 +107,7 @@ class Inventory_For_Equipments_Only
         int _Equipment_Max_Weight;//장비창 무게
     public:
         Inventory_For_Equipments_Only(); //1. 장비 전용 인벤토리 기본 생성자
-        Inventory_For_Equipments_Only(int max_count); //2. 최대 장비 보관 개수를 직접 정하는 생성자
-        Inventory_For_Equipments_Only(int max_count, int max_weight); //2b. 최대 장비 보관 개수와 무게 제한 생성자
+        Inventory_For_Equipments_Only(int max_count, int max_weight); //2. 최대 장비 보관 개수와 무게 제한 생성자
         bool Add_Equipment(const Equipment& equipment); //3. 장비를 인벤토리에 추가하는 함수
         void Print_Equipment_Inventory() const; //4. 현재 장비 인벤토리에 들어있는 장비 목록 출력
         int Get_Equipment_Current_Count() const; //5. 현재 보관 중인 장비 개수 조회
@@ -124,6 +118,5 @@ class Inventory_For_Equipments_Only
         void Sort_Equipment_Inventory();//10.정렬 
         void Change_Equipment_Inventory_Order();//11.순서 변경
         void Equip_Equipment_From_Inventory(Currently_Equipped_Equipments& equipped, Player* player);//12.장비 착용시키기
-        void Equip_Equipment_From_Inventory(Currently_Equipped_Equipments& equipped);//12b. 장비 착용시키기(오버로드)
         int Get_Total_Equipment_Weight() const;//총 무게
 };

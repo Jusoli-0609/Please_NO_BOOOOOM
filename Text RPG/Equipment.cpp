@@ -287,48 +287,6 @@ Currently_Equipped_Equipments::Currently_Equipped_Equipments()
     
 }
 
-//임시 주석 처리
-//장비 착용
-//bool Currently_Equipped_Equipments::Equip_Equipment(const Equipment& equipment, Player* player)
-//{
-//    Equipment_Type type = equipment.Get_Equipment_Type();
-//    switch (type)
-//        {
-//            case Equipment_Type::Engine:
-//            {
-//                _Unreal_Engine_Version = equipment;
-//                break;
-//            }
-//
-//            case Equipment_Type::Keyboard:
-//            {
-//                _Keyboard = equipment;
-//                break;
-//            }
-//
-//            case Equipment_Type::Mouse:
-//            {
-//                _Mouse = equipment;
-//                break;
-//            }
-//            case Equipment_Type::BlueLight_Glasses:
-//            {
-//                _BlueLight_Glasses = equipment;
-//                break;
-//            }
-//            case Equipment_Type::Headset:
-//            {
-//                _Headset = equipment;
-//                break;
-//            }
-//            default:
-//            {
-//                cout << "착용할 수 없는 아이템이다!" << endl;
-//                return false;
-//            }
-//        }
-//    return true;
-//    }
 
 bool Currently_Equipped_Equipments::Equip_Equipment(
     const Equipment& equipment,
@@ -344,7 +302,7 @@ bool Currently_Equipped_Equipments::Equip_Equipment(
 
     if (Is_Equipment_Equipped(type))
     {
-        cout << "이미 같은 부위의 장비를 끼고 있다! 벗기고 다시하자!" << endl;
+        cout << "이미 같은 부위의 장비를 끼고 있다! 해제하고  다시하자!" << endl;
         return false;
     }
 
@@ -531,29 +489,32 @@ bool Currently_Equipped_Equipments::Unequip_Equipment_To_Inventory(Inventory_For
     }
     }
 }
-//임시 주석 처리
-//
-//bool Currently_Equipped_Equipments::Unequip_One_Equipment(Equipment& equipped_item, Inventory_For_Equipments_Only& equipment_inventory, const string& slot_name)
-//{
-//    if (equipped_item.Get_Equipment_Type() == Equipment_Type::Empty)
-//    {
-//        cout << "장착된 " << slot_name << "이(가) 없다!" << endl;
-//        return false;
-//    }
-//
-//    bool Is_Added = equipment_inventory.Add_Equipment(equipped_item);
-//
-//    if (Is_Added == false)
-//    {
-//        cout << "인벤토리에 넣지 못해 해제를 취소했다!" << endl;
-//        return false;
-//    }
-//
-//    equipped_item = Equipment();
-//
-//    cout << slot_name << " 장비를 해제했다!" << endl;
-//    return true;
-//}
+
+bool Unequip_One_Equipment(
+    Equipment& equipped_item,
+    Inventory_For_Equipments_Only& equipment_inventory,
+    const string& slot_name,
+    Player* player)
+{
+    if (equipped_item.Get_Equipment_Type() == Equipment_Type::Empty)
+    {
+        cout << "장착된 " << slot_name << "이(가) 없다!" << endl;
+        return false;
+    }
+
+    bool Is_Added = equipment_inventory.Add_Equipment(equipped_item);
+
+    if (Is_Added == false)
+    {
+        cout << "인벤토리에 넣지 못해 해제를 취소했다!" << endl;
+        return false;
+    }
+
+    equipped_item = Equipment();
+
+    cout << slot_name << " 장비를 해제했다!" << endl;
+    return true;
+}
 
 bool Currently_Equipped_Equipments::Unequip_One_Equipment(
     Equipment& equipped_item,
@@ -616,40 +577,8 @@ bool Currently_Equipped_Equipments::Unequip_One_Equipment(
 }
 
 
-//-----------------현재 장착 중인 아이템 반환-----------------
 
-// 현재 장착된 엔진 조회
-Equipment Currently_Equipped_Equipments::Get_Engine() const
-{
-    return _Unreal_Engine_Version;
-}
-
-// 현재 장착된 키보드 조회
-Equipment Currently_Equipped_Equipments::Get_Keyboard() const
-{
-    return _Keyboard;
-}
-
-// 현재 장착된 마우스 조회
-Equipment Currently_Equipped_Equipments::Get_Mouse() const
-{
-    return _Mouse;
-}
-
-// 현재 장착된 블루라이트 안경 조회
-Equipment Currently_Equipped_Equipments::Get_BlueLight_Glasses() const
-{
-    return _BlueLight_Glasses;
-}
-
-// 현재 장착된 헤드셋 조회
-Equipment Currently_Equipped_Equipments::Get_Headset() const
-{
-    return _Headset;
-}
-
-
-//��� �� ���� ���
+//총 스텟 가져오기
 Equipment_Stats Currently_Equipped_Equipments::Get_All_Equipments_Stats() const
 {
     Equipment_Stats total_stats;

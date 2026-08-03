@@ -31,9 +31,8 @@ class Player;
 		int Get_Size() const;//3-3 인벤토리 사이즈 조회
 		int Get_Capacity() const;//3-4 무게 조회
 		//4.인벤토리 출력 관련 함수 파트
-		void Print_Inventory() const;//4-1 인벤토리 및 내용물 출력
-
-		//인수에 Player 추가
+        template <typename T>
+        void Inventory<T>::Print_Inventory() const; //4-1 소비 전용 인벤토리
 		void Print_Inventory_Menu(Currently_Equipped_Equipments& currently_equipped_equipments,
             Inventory_For_Equipments_Only& inventory_for_equipments_only, Player* player);//4-2 인벤토리 메뉴(선택지) 출력
         //5.인벤토리 기능 함수 파트
