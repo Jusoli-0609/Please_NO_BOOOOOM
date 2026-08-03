@@ -1,9 +1,82 @@
-#include "Equipment.h"
+ï»¿#include "Equipment.h"
 #include <iostream>
 #include <algorithm>
+#include "Player.h"
 using namespace std;
 
-//±âº»»ı¼ºÀÚ
+
+//í”Œë ˆì´ì–´ íŒŒíŠ¸ì—ì„œ ìƒˆë¡œ ì¶”ê°€í•œ ë‚´ìš©
+//ì¥ë¹„ ì¥ì°© ë¶€ìœ„ë³„ id ìƒì„±ìš©
+namespace
+{
+    string Get_Equipment_Modifier_ID(
+        Equipment_Type equipment_type)
+    {
+        switch (equipment_type)
+        {
+        case Equipment_Type::Engine:
+        {
+            return "Equipment_Engine";
+        }
+
+        case Equipment_Type::Keyboard:
+        {
+            return "Equipment_Keyboard";
+        }
+
+        case Equipment_Type::Mouse:
+        {
+            return "Equipment_Mouse";
+        }
+
+        case Equipment_Type::BlueLight_Glasses:
+        {
+            return "Equipment_BlueLight_Glasses";
+        }
+
+        case Equipment_Type::Headset:
+        {
+            return "Equipment_Headset";
+        }
+
+        default:
+        {
+            return "";
+        }
+        }
+    }
+
+    Stat_Modifier Create_Equipment_Modifier(
+        const Equipment& equipment)
+    {
+        Stat_Modifier Equipment_Modifier;
+
+        Equipment_Modifier.id =
+            Get_Equipment_Modifier_ID(
+                equipment.Get_Equipment_Type()
+            );
+
+        Equipment_Modifier.name =
+            equipment.Get_Equipment_Name();
+
+        Equipment_Modifier.type =
+            Stat_Modifier_Type::Equipment;
+
+        Equipment_Modifier.flat.atk =
+            equipment.Get_Attack_Stat();
+
+        Equipment_Modifier.flat.def =
+            equipment.Get_Defence_Stat();
+
+        Equipment_Modifier.remainingTurns = -1;
+
+        return Equipment_Modifier;
+    }
+}
+//í”Œë ˆì´ì–´ íŒŒíŠ¸ì—ì„œ ìƒˆë¡œ ì¶”ê°€í•œ ë‚´ìš©
+
+
+//ê¸°ë³¸ìƒì„±ì
 Equipment::Equipment()
     : _Equipment_Name("None"),
     _Attack_Stat(0),
@@ -17,7 +90,7 @@ Equipment::Equipment()
 {
 }
 
-//¾ÆÀÌÅÛ ´Ù ´ëÀÔ »ı¼ºÀÚ ¹º¸»¾Ë?
+//ì•„ì´í…œ ë‹¤ ëŒ€ì… ìƒì„±ì ë­”ë§ì•Œ?
 Equipment::Equipment(
     string equipment_name,
     int attack,
@@ -40,7 +113,7 @@ Equipment::Equipment(
 {
 }
 
-//Àåºñ µî±ŞÀ» ¹®ÀÚ¿­ Ãâ·ÂÀ¸·Î~~!
+//ì¥ë¹„ ë“±ê¸‰ì„ ë¬¸ìì—´ ì¶œë ¥ìœ¼ë¡œ~~!
 string Equipment:: Equipment_Grade_To_String(Equipment_Grade grade) const
 {
     switch (grade)
@@ -76,8 +149,7 @@ string Equipment:: Equipment_Grade_To_String(Equipment_Grade grade) const
     }
 }
 
-
-//Àåºñ Å¸ÀÔÀ» ¹®ÀÚ¿­ Ãâ·ÂÀ¸·Î~!
+//ì¥ë¹„ íƒ€ì…ì„ ë¬¸ìì—´ ì¶œë ¥ìœ¼ë¡œ~!
 string Equipment::Equipment_Type_To_String(Equipment_Type type) const
 {
     switch (type)
@@ -102,129 +174,177 @@ string Equipment::Equipment_Type_To_String(Equipment_Type type) const
     }
 }
 
-//°­È­µµ Á¶È¸
+//ê°•í™”ë„ ì¡°íšŒ
 int Equipment::Get_Enhance_Level() const
 {
     return _Enhance_Level;
 }
 
-//°­È­µµ ¼³Á¤
+//ê°•í™”ë„ ì„¤ì •
 void Equipment::Set_Enhance_Level(int enhance_level)
 {
     _Enhance_Level = enhance_level;
 }
 
-//°ø°İ·Â ½ºÅİ Á¶È¸
+//ê³µê²©ë ¥ ìŠ¤í…Ÿ ì¡°íšŒ
 int Equipment::Get_Attack_Stat() const
 {
     return _Attack_Stat;
 }
 
-//°ø°İ·Â ½ºÅİ ¼³Á¤
+//ê³µê²©ë ¥ ìŠ¤í…Ÿ ì„¤ì •
 void Equipment::Set_Attack_Stat(int attack_stat)
 {
     _Attack_Stat = attack_stat;
 }
 
-//¼öºñ·Â ½ºÅİ Á¶È¸
+//ìˆ˜ë¹„ë ¥ ìŠ¤í…Ÿ ì¡°íšŒ
 int Equipment::Get_Defence_Stat() const
 {
     return _Defence_Stat;
 }
 
-//¼öºñ·Â ½ºÅİ ¼³Á¤
+//ìˆ˜ë¹„ë ¥ ìŠ¤í…Ÿ ì„¤ì •
 void Equipment::Set_Defence_Stat(int defence_stat)
 {
     _Defence_Stat = defence_stat;
 }
 
-//Àåºñ Ãâ·Â ÇÔ¼ö
+//ì¥ë¹„ ì¶œë ¥ í•¨ìˆ˜
 void Equipment::Print_Equipment_Info() const
 {
-    cout << "Àåºñ ÀÌ¸§: " << _Equipment_Name << endl;
-    cout << "Àåºñ ¼³¸í: " << _Equipment_Description << endl;
-    cout << "Àåºñ Å¸ÀÔ: " << Equipment_Type_To_String(_Equipment_Type) << endl;
-    cout <<  "Àåºñ ¹«°Ô: " << _Equipment_Weight << endl;
-    cout << "°ø°İ·Â: " << _Attack_Stat << endl;
-    cout << "¹æ¾î·Â: " << _Defence_Stat << endl;
-    cout << "µî±Ş: " << Equipment_Grade_To_String(_Grade) << endl;
-    cout << "°­È­ ·¹º§: +" << _Enhance_Level << endl;
+    cout << "ì¥ë¹„ ì´ë¦„: " << _Equipment_Name << endl;
+    cout << "ì¥ë¹„ ì„¤ëª…: " << _Equipment_Description << endl;
+    cout << "ì¥ë¹„ íƒ€ì…: " << Equipment_Type_To_String(_Equipment_Type) << endl;
+    cout <<  "ì¥ë¹„ ë¬´ê²Œ: " << _Equipment_Weight << endl;
+    cout << "ê³µê²©ë ¥: " << _Attack_Stat << endl;
+    cout << "ë°©ì–´ë ¥: " << _Defence_Stat << endl;
+    cout << "ë“±ê¸‰: " << Equipment_Grade_To_String(_Grade) << endl;
+    cout << "ê°•í™” ë ˆë²¨: +" << _Enhance_Level << endl;
     cout << _Equipment__Ascii_Art << endl;
 }
 
-//ÀåºñÀÌ¸§ Á¶È¸
+//ì¥ë¹„ì´ë¦„ ì¡°íšŒ
 string Equipment::Get_Equipment_Name()const
 {
     return _Equipment_Name;
 }
 
-//Àåºñ µî±Ş Á¶È¸
+//ì¥ë¹„ ë“±ê¸‰ ì¡°íšŒ
 Equipment_Grade Equipment::Get_Grade()const
 {
     return _Grade;
 }
 
-//Àåºñ ¹«°Ô Á¶È¸
+//ì¥ë¹„ ë¬´ê²Œ ì¡°íšŒ
 int Equipment::Get_Equipment_Weight()const
 {
     return _Equipment_Weight;
 }
 
-//Àåºñ ¹«°Ô ¼³Á¤
+//ì¥ë¹„ ë¬´ê²Œ ì„¤ì •
 void Equipment::Set_Equipment_Weight(int weight)
 {
     _Equipment_Weight = weight;
 }
 
-//Àåºñ ÀÌ¸§ ¼³Á¤
+//ì¥ë¹„ ì´ë¦„ ì„¤ì •
 void Equipment::Set_Equipment_Name(string name)
 {
     _Equipment_Name = name;
 }
 
-//Àåºñ ¼³¸í Á¶È¸
+//ì¥ë¹„ ì„¤ëª… ì¡°íšŒ
 string Equipment::Get_Equipment_Description()const
 {
     return _Equipment_Description;
 }
 
-//Àåºñ ¼³¸í ¼³Á¤
+//ì¥ë¹„ ì„¤ëª… ì„¤ì •
 void Equipment::Set_Equipment_Description(string description)
 {
     _Equipment_Description = description;
 }
 
-//Àåºñ Å¸ÀÔ Á¶È¸
+//ì¥ë¹„ íƒ€ì… ì¡°íšŒ
 Equipment_Type Equipment::Get_Equipment_Type()const
 {
     return _Equipment_Type;
 }
 
-//Àåºñ Å¸ÀÔ ¼³Á¤
+//ì¥ë¹„ íƒ€ì… ì„¤ì •
 void Equipment::Set_Equipment_Type(Equipment_Type type)
 {
     _Equipment_Type = type;
 }
 
-//-----------------ÇöÀç ÀåÂø ÁßÀÎ ¾ÆÀÌÅÛ ÀåºñÃ¢------------------------------------
+//-----------------í˜„ì¬ ì¥ì°© ì¤‘ì¸ ì•„ì´í…œ ì¥ë¹„ì°½------------------------------------
 
 
-//ÀåºñÃ¢ ±âº» »ı¼ºÀÚ
+//ì¥ë¹„ì°½ ê¸°ë³¸ ìƒì„±ì
 Currently_Equipped_Equipments::Currently_Equipped_Equipments()
 {
     
 }
 
+//ì„ì‹œ ì£¼ì„ ì²˜ë¦¬
+//ì¥ë¹„ ì°©ìš©
+//bool Currently_Equipped_Equipments::Equip_Equipment(const Equipment& equipment, Player* player)
+//{
+//    Equipment_Type type = equipment.Get_Equipment_Type();
+//    switch (type)
+//        {
+//            case Equipment_Type::Engine:
+//            {
+//                _Unreal_Engine_Version = equipment;
+//                break;
+//            }
+//
+//            case Equipment_Type::Keyboard:
+//            {
+//                _Keyboard = equipment;
+//                break;
+//            }
+//
+//            case Equipment_Type::Mouse:
+//            {
+//                _Mouse = equipment;
+//                break;
+//            }
+//            case Equipment_Type::BlueLight_Glasses:
+//            {
+//                _BlueLight_Glasses = equipment;
+//                break;
+//            }
+//            case Equipment_Type::Headset:
+//            {
+//                _Headset = equipment;
+//                break;
+//            }
+//            default:
+//            {
+//                cout << "ì°©ìš©í•  ìˆ˜ ì—†ëŠ” ì•„ì´í…œì´ë‹¤!" << endl;
+//                return false;
+//            }
+//        }
+//    return true;
+//    }
 
-//Àåºñ Âø¿ë
-bool Currently_Equipped_Equipments::Equip_Equipment(const Equipment& equipment)
+bool Currently_Equipped_Equipments::Equip_Equipment(
+    const Equipment& equipment,
+    Player* player)
 {
-    Equipment_Type type = equipment.Get_Equipment_Type();
+    if (player == nullptr)
+    {
+        cout << "í”Œë ˆì´ì–´ ì •ë³´ê°€ ì—†ìŠµë‹ˆë‹¤!" << endl;
+        return false;
+    }
 
+    Equipment_Type type = equipment.Get_Equipment_Type();
 
     if (Is_Equipment_Equipped(type))
     {
-        cout << "ÀÌ¹Ì °°Àº Á¾·ùÀÇ Àåºñ¸¦ Âø¿ëÇÏ°í ÀÖ´Ù! ÇØÁ¦ÇÏ°í Âø¿ëÇØ¶ó!" << endl;
+        cout << "ì´ë¯¸ ê°™ì€ ë¶€ìœ„ì˜ ì¥ë¹„ë¥¼ ë¼ê³  ìˆë‹¤! ë²—ê¸°ê³  ë‹¤ì‹œí•˜ì!" << endl;
         return false;
     }
 
@@ -232,38 +352,48 @@ bool Currently_Equipped_Equipments::Equip_Equipment(const Equipment& equipment)
     switch (type)
     {
     case Equipment_Type::Engine:
+    {
         _Unreal_Engine_Version = equipment;
         break;
-
-
-    case Equipment_Type::Keyboard:
-        _Keyboard = equipment;
-        break;
-
-
-    case Equipment_Type::Mouse:
-        _Mouse = equipment;
-        break;
-
-
-    case Equipment_Type::BlueLight_Glasses:
-        _BlueLight_Glasses = equipment;
-        break;
-
-
-    case Equipment_Type::Headset:
-        _Headset = equipment;
-        break;
-
-
-    default:
-        cout << "Âø¿ëÇÒ ¼ö ¾ø´Â ¾ÆÀÌÅÛÀÌ´Ù!" << endl;
-        return false;
     }
 
+    case Equipment_Type::Keyboard:
+    {
+        _Keyboard = equipment;
+        break;
+    }
 
-    cout << equipment.Get_Equipment_Name()
-        << " ÀåÂø ¿Ï·á!" << endl;
+    case Equipment_Type::Mouse:
+    {
+        _Mouse = equipment;
+        break;
+    }
+
+    case Equipment_Type::BlueLight_Glasses:
+    {
+        _BlueLight_Glasses = equipment;
+        break;
+    }
+
+    case Equipment_Type::Headset:
+    {
+        _Headset = equipment;
+        break;
+    }
+
+    default:
+    {
+        cout << "ì°©ìš©í•  ìˆ˜ ì—†ëŠ” ì•„ì´í…œì´ë‹¤!" << endl;
+        return false;
+    }
+    }
+
+    Stat_Modifier Equipment_Modifier =
+        Create_Equipment_Modifier(equipment);
+
+    player->Add_Stat_Modifier(
+        Equipment_Modifier
+    );
 
 
     return true;
@@ -292,10 +422,11 @@ bool Currently_Equipped_Equipments::Is_Equipment_Equipped(Equipment_Type type) c
         return false;
     }
 }
-//ÀåºñÃ¢ Ãâ·Â
+//ì¥ë¹„ì°½ ì¶œë ¥
+
 void Currently_Equipped_Equipments::Print_Currently_Equipped_Equipments() const
 {
-    cout << "===== ÇöÀç ÀåÂø ÁßÀÎ Àåºñ =====" << endl;
+    cout << "===== í˜„ì¬ ì¥ì°© ì¤‘ì¸ ì¥ë¹„ =====" << endl;
 
     cout << "[Engine]" << endl;
     _Unreal_Engine_Version.Print_Equipment_Info(); 
@@ -316,20 +447,20 @@ void Currently_Equipped_Equipments::Print_Currently_Equipped_Equipments() const
     return;
 }
 
-//ÇØÁ¦
-bool Currently_Equipped_Equipments::Unequip_Equipment_To_Inventory(Inventory_For_Equipments_Only& equipment_inventory
-)
+//ê° í˜¸ì¶œë§ˆë‹¤ Player ì¶”ê°€
+//í•´ì œ
+bool Currently_Equipped_Equipments::Unequip_Equipment_To_Inventory(Inventory_For_Equipments_Only& equipment_inventory, Player* player)
 {
 
     cout << R"(
-¾î¶² Àåºñ¸¦ ÇØÁ¦ÇÏ½Ã°Ú½À´Ï±î?
+ì–´ë–¤ ì¥ë¹„ë¥¼ í•´ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?
 
 1. Engine
 2. Keyboard
 3. Mouse
 4. BlueLight Glasses
 5. Headset
-0. Ãë¼Ò
+0. ì·¨ì†Œ
 )" << endl;
 
     int Choose;
@@ -342,7 +473,8 @@ bool Currently_Equipped_Equipments::Unequip_Equipment_To_Inventory(Inventory_For
         return Unequip_One_Equipment(
             _Unreal_Engine_Version,
             equipment_inventory,
-            "Engine"
+            "Engine",
+            player
         );
     }
 
@@ -351,7 +483,8 @@ bool Currently_Equipped_Equipments::Unequip_Equipment_To_Inventory(Inventory_For
         return Unequip_One_Equipment(
             _Keyboard,
             equipment_inventory,
-            "Keyboard"
+            "Keyboard",
+            player
         );
     }
 
@@ -360,7 +493,8 @@ bool Currently_Equipped_Equipments::Unequip_Equipment_To_Inventory(Inventory_For
         return Unequip_One_Equipment(
             _Mouse,
             equipment_inventory,
-            "Mouse"
+            "Mouse",
+            player
         );
     }
 
@@ -369,7 +503,8 @@ bool Currently_Equipped_Equipments::Unequip_Equipment_To_Inventory(Inventory_For
         return Unequip_One_Equipment(
             _BlueLight_Glasses,
             equipment_inventory,
-            "BlueLight Glasses"
+            "BlueLight Glasses",
+            player
         );
     }
 
@@ -378,48 +513,143 @@ bool Currently_Equipped_Equipments::Unequip_Equipment_To_Inventory(Inventory_For
         return Unequip_One_Equipment(
             _Headset,
             equipment_inventory,
-            "Headset"
+            "Headset",
+			player
         );
     }
 
     case 0:
     {
-        cout << "Ãë¼ÒÇß´Ù." << endl;
+        cout << "ì·¨ì†Œí–ˆë‹¤." << endl;
         return false;
     }
 
     default:
     {
-        cout << "Àß¸øµÈ ÀÔ·ÂÀÌ´Ù!" << endl;
+        cout << "ì˜ëª»ëœ ì…ë ¥ì´ë‹¤!" << endl;
         return false;
     }
     }
 }
+//ì„ì‹œ ì£¼ì„ ì²˜ë¦¬
+//
+//bool Currently_Equipped_Equipments::Unequip_One_Equipment(Equipment& equipped_item, Inventory_For_Equipments_Only& equipment_inventory, const string& slot_name)
+//{
+//    if (equipped_item.Get_Equipment_Type() == Equipment_Type::Empty)
+//    {
+//        cout << "ì¥ì°©ëœ " << slot_name << "ì´(ê°€) ì—†ë‹¤!" << endl;
+//        return false;
+//    }
+//
+//    bool Is_Added = equipment_inventory.Add_Equipment(equipped_item);
+//
+//    if (Is_Added == false)
+//    {
+//        cout << "ì¸ë²¤í† ë¦¬ì— ë„£ì§€ ëª»í•´ í•´ì œë¥¼ ì·¨ì†Œí–ˆë‹¤!" << endl;
+//        return false;
+//    }
+//
+//    equipped_item = Equipment();
+//
+//    cout << slot_name << " ì¥ë¹„ë¥¼ í•´ì œí–ˆë‹¤!" << endl;
+//    return true;
+//}
 
-bool Currently_Equipped_Equipments::Unequip_One_Equipment(Equipment& equipped_item, Inventory_For_Equipments_Only& equipment_inventory, const string& slot_name)
+bool Currently_Equipped_Equipments::Unequip_One_Equipment(
+    Equipment& equipped_item,
+    Inventory_For_Equipments_Only& equipment_inventory,
+    const string& slot_name,
+    Player* player)
 {
-    if (equipped_item.Get_Equipment_Type() == Equipment_Type::Empty)
+    if (player == nullptr)
     {
-        cout << "ÀåÂøµÈ " << slot_name << "ÀÌ(°¡) ¾ø´Ù!" << endl;
+        cout << "í”Œë ˆì´ì–´ ì •ë³´ê°€ ì—†ë‹¤!" << endl;
         return false;
     }
 
-    bool Is_Added = equipment_inventory.Add_Equipment(equipped_item);
+    if (equipped_item.Get_Equipment_Type() ==
+        Equipment_Type::Empty)
+    {
+        cout
+            << "ì¥ì°© ëœ "
+            << slot_name
+            << " ì´(ê°€) ì—†ë‹¤!"
+            << endl;
+
+        return false;
+    }
+
+    bool Is_Added =
+        equipment_inventory.Add_Equipment(
+            equipped_item
+        );
 
     if (Is_Added == false)
     {
-        cout << "ÀÎº¥Åä¸®¿¡ ³ÖÁö ¸øÇØ ÇØÁ¦¸¦ Ãë¼ÒÇß´Ù!" << endl;
+        cout
+            << "ì¸ë²¤í† ë¦¬ì— ë„£ì§€ ëª»í•´ í•´ì œë¥¼ ì·¨ì†Œí–ˆë‹¤!"
+            << endl;
+
         return false;
+    }
+
+    string Modifier_ID =
+        Get_Equipment_Modifier_ID(
+            equipped_item.Get_Equipment_Type()
+        );
+
+    if (Modifier_ID.empty() == false)
+    {
+        player->Remove_Stat_Modifier(
+            Modifier_ID
+        );
     }
 
     equipped_item = Equipment();
 
-    cout << slot_name << " Àåºñ¸¦ ÇØÁ¦Çß´Ù!" << endl;
+    cout
+        << slot_name
+        << " ì¥ë¹„ë¥¼ í•´ì œí–ˆë‹¤!"
+        << endl;
+
     return true;
 }
 
 
-//Àåºñ ÃÑ ½ºÅİ ¾ò±â
+//-----------------í˜„ì¬ ì¥ì°© ì¤‘ì¸ ì•„ì´í…œ ë°˜í™˜-----------------
+
+// í˜„ì¬ ì¥ì°©ëœ ì—”ì§„ ì¡°íšŒ
+Equipment Currently_Equipped_Equipments::Get_Engine() const
+{
+    return _Unreal_Engine_Version;
+}
+
+// í˜„ì¬ ì¥ì°©ëœ í‚¤ë³´ë“œ ì¡°íšŒ
+Equipment Currently_Equipped_Equipments::Get_Keyboard() const
+{
+    return _Keyboard;
+}
+
+// í˜„ì¬ ì¥ì°©ëœ ë§ˆìš°ìŠ¤ ì¡°íšŒ
+Equipment Currently_Equipped_Equipments::Get_Mouse() const
+{
+    return _Mouse;
+}
+
+// í˜„ì¬ ì¥ì°©ëœ ë¸”ë£¨ë¼ì´íŠ¸ ì•ˆê²½ ì¡°íšŒ
+Equipment Currently_Equipped_Equipments::Get_BlueLight_Glasses() const
+{
+    return _BlueLight_Glasses;
+}
+
+// í˜„ì¬ ì¥ì°©ëœ í—¤ë“œì…‹ ì¡°íšŒ
+Equipment Currently_Equipped_Equipments::Get_Headset() const
+{
+    return _Headset;
+}
+
+
+//ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 Equipment_Stats Currently_Equipped_Equipments::Get_All_Equipments_Stats() const
 {
     Equipment_Stats total_stats;
@@ -468,29 +698,19 @@ Equipment_Stats Currently_Equipped_Equipments::Get_All_Equipments_Stats() const
     return total_stats;
 }
 
-//Àåºñ ÃÑ µî±Ş ¼ıÀÚÈ­
-int Currently_Equipped_Equipments::Get_All_Equipments_Grade_Score() const
-{
-    int Total_Grade_Score = 0;
-
-
-    Total_Grade_Score += static_cast<int>(_Unreal_Engine_Version.Get_Grade());
-    Total_Grade_Score += static_cast<int>(_Keyboard.Get_Grade());
-    Total_Grade_Score += static_cast<int>(_Mouse.Get_Grade());
-    Total_Grade_Score += static_cast<int>(_BlueLight_Glasses.Get_Grade());
-    Total_Grade_Score += static_cast<int>(_Headset.Get_Grade());
-
-
-    return Total_Grade_Score;
-}
+//-----------------í˜„ì¬ ì¥ì°©ëœ ì•„ì´í…œ ì¸ë²¤í† ë¦¬------------------------------------
 
 
 
 
-//-----------------Àåºñ Àü¿ë ÀÎº¥Åä¸®------------------------------------
 
 
-//Àåºñ Àü¿ë ÀÎº¥Åä¸® ±âº» »ı¼ºÀÚ
+
+
+//-----------------ì¥ë¹„ ì „ìš© ì¸ë²¤í† ë¦¬------------------------------------
+
+
+//ì¥ë¹„ ì „ìš© ì¸ë²¤í† ë¦¬ ê¸°ë³¸ ìƒì„±ì
 Inventory_For_Equipments_Only::Inventory_For_Equipments_Only()
     : _Equipment_Current_Count(0),
     _Equipment_Max_Count(10),
@@ -499,7 +719,7 @@ Inventory_For_Equipments_Only::Inventory_For_Equipments_Only()
 }
 
 
-//Àåºñ Àü¿ë ÀÎº¥Åä¸® ÃÖ´ë °³¼ö ¼³Á¤ »ı¼ºÀÚ
+//ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸® ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 Inventory_For_Equipments_Only::Inventory_For_Equipments_Only(int max_count,int max_weight)
     : _Equipment_Current_Count(0),
     _Equipment_Max_Count(max_count),
@@ -508,16 +728,14 @@ Inventory_For_Equipments_Only::Inventory_For_Equipments_Only(int max_count,int m
 }
 
 
-//Àåºñ Ãß°¡
+//ì¥ë¹„ ì¶”ê°€
 bool Inventory_For_Equipments_Only::Add_Equipment(const Equipment& equipment)
 {
-    // 1. ¹«°Ô °Ë»ç
+    // 1. ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½
     while (Get_Total_Equipment_Weight() + equipment.Get_Equipment_Weight() > _Equipment_Max_Weight)
     {
-        cout << "Àåºñ ÀÎº¥Åä¸®ÀÇ ¹«°Ô°¡ ÃÑ ¿ë·®À» ÃÊ°úÇß´Ù! Àåºñ¸¦ ¹ö¸± °ÍÀÎ°¡?" << endl;
-        cout << "1. ¹ö¸®±â" << endl;
-        cout << "2. Ãë¼Ò" << endl;
-
+        cout << "ìŠ¬ë¡¯ì´ ê°€ë“ ì°¼ë‹¤!" << endl;
+        cout << "ì¥ë¹„ë¥¼ ë²„ë¦´ë ¤ë©´ 1ë²ˆ ì•„ë‹ˆë©´ 2ë²ˆì„ ëˆŒëŸ¬ë¼!" << endl;
         int Choose_To_Get_Rid_Of_Equipment;
         cin >> Choose_To_Get_Rid_Of_Equipment;
 
@@ -531,15 +749,15 @@ bool Inventory_For_Equipments_Only::Add_Equipment(const Equipment& equipment)
         }
         else
         {
-            cout << "Àß¸øµÈ ÀÔ·ÂÀÌ´Ù!" << endl;
+            cout << "ï¿½ß¸ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ì´ï¿½!" << endl;
         }
     }
 
-    // 2. ½½·Ô °Ë»ç
+    // 2. ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½
     while (_Equipment_Current_Count >= _Equipment_Max_Count)
     {
-        cout << "½½·ÔÀÌ °¡µæ Ã¡´Ù!" << endl;
-        cout << "Àåºñ¸¦ ¹ö¸±·Á¸é 1¹ø ¾Æ´Ï¸é 2¹øÀ» ´­·¯¶ó!" << endl;
+        cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¡ï¿½ï¿½!" << endl;
+        cout << "ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½ ï¿½Æ´Ï¸ï¿½ 2ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!" << endl;
 
         int Choose_To_Get_Rid_Of_Equipment;
         cin >> Choose_To_Get_Rid_Of_Equipment;
@@ -550,7 +768,7 @@ bool Inventory_For_Equipments_Only::Add_Equipment(const Equipment& equipment)
 
             if (_Equipment_Current_Count >= _Equipment_Max_Count)
             {
-                cout << "¾ÆÁ÷ ½½·ÔÀÌ ºÎÁ·ÇÏ´Ù!" << endl;
+                cout << "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½!" << endl;
             }
         }
         else if (Choose_To_Get_Rid_Of_Equipment == 2)
@@ -559,38 +777,36 @@ bool Inventory_For_Equipments_Only::Add_Equipment(const Equipment& equipment)
         }
         else
         {
-            cout << "Àß¸øµÈ ÀÔ·ÂÀÌ´Ù! ´Ù½Ã ÀÔ·ÂÇÏ¶ó." << endl;
+            cout << "ï¿½ß¸ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ì´ï¿½! ï¿½Ù½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¶ï¿½." << endl;
         }
     }
 
-    // 3. Àåºñ Ãß°¡
+    // 3. ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
     _Equipments.push_back(equipment);
     _Equipment_Current_Count++;
-
-    cout << equipment.Get_Equipment_Name() << "À»(¸¦) È¹µæÇß´Ù!" << endl;
-
+    cout << equipment.Get_Equipment_Name() << "ì„(ë¥¼) íšë“í–ˆë‹¤!" << endl;
     return true;
 }
 
 
-//Àåºñ ÀÎº¥Åä¸® Ãâ·Â
+//ì¥ë¹„ ì¸ë²¤í† ë¦¬ ì¶œë ¥
 void Inventory_For_Equipments_Only::Print_Equipment_Inventory() const
 {
     if (_Equipment_Current_Count == 0)
     {
-        cout << "ÅÖ ºñ¾ú´Ù!" << endl;
+        cout << "í…… ë¹„ì—ˆë‹¤!" << endl;
         return;
     }
     cout << endl;
     cout << "========================================" << endl;
-    cout << "          Àåºñ Àü¿ë ÀÎº¥Åä¸®" << endl;
+    cout << "          ì¥ë¹„ ì „ìš© ì¸ë²¤í† ë¦¬" << endl;
     cout << "========================================" << endl;
-    cout << "º¸À¯ Àåºñ ¼ö : " << _Equipment_Current_Count << " / " << _Equipment_Max_Count << endl;
+    cout << "ë³´ìœ  ì¥ë¹„ ìˆ˜ : " << _Equipment_Current_Count << " / " << _Equipment_Max_Count << endl;
     cout << "----------------------------------------" << endl;
 
     for (int i = 0; i < _Equipment_Current_Count; i++)
     {
-        cout << "[" << i + 1 << "¹ø Àåºñ]" << endl;
+        cout << "[" << i + 1 << "ë²ˆ ì¥ë¹„]" << endl;
         cout << "----------------------------------------" << endl;
         _Equipments[i].Print_Equipment_Info();
         cout << endl;
@@ -598,80 +814,80 @@ void Inventory_For_Equipments_Only::Print_Equipment_Inventory() const
 }
 
 
-//ÇöÀç Àåºñ °³¼ö Á¶È¸
+//í˜„ì¬ ì¥ë¹„ ê°œìˆ˜ ì¡°íšŒ
 int Inventory_For_Equipments_Only::Get_Equipment_Current_Count() const
 {
     return _Equipment_Current_Count;
 }
 
 
-//ÃÖ´ë Àåºñ °³¼ö Á¶È¸
+//ìµœëŒ€ ì¥ë¹„ ê°œìˆ˜ ì¡°íšŒ
 int Inventory_For_Equipments_Only::Get_Equipment_Max_Count() const
 {
     return _Equipment_Max_Count;
 }
 
 
-//ÀÎµ¦½º·Î Àåºñ Á¶È¸
+//ì¸ë±ìŠ¤ë¡œ ì¥ë¹„ ì¡°íšŒ
 Equipment Inventory_For_Equipments_Only::Get_Equipment_By_Index(int index) const
 {
     if (index<0 || index>= _Equipment_Current_Count)
     {
-        cout << "Àß¸øµÈ ¼±ÅÃÀÌ´Ù!" << endl;
+        cout << "ì˜ëª»ëœ ì„ íƒì´ë‹¤!" << endl;
         return Equipment();
     }
     return _Equipments[index];
 }
 
 
-//Àåºñ ¹ö¸®±â
+//ì¥ë¹„ ë²„ë¦¬ê¸°
 void Inventory_For_Equipments_Only::Throw_Away_Equipment()
 {
     if (_Equipment_Current_Count==0)
     {
-        cout << "ÅÖ ºñ¾î¼­ ¹ö¸± °Ô ¾ø´Ù!" << endl;
+        cout << "í…… ë¹„ì–´ì„œ ë²„ë¦´ ê²Œ ì—†ë‹¤!" << endl;
         return;
     }
     Print_Equipment_Inventory();
-    cout << "¹ö¸± Àåºñ¸¦ °ñ¶ó¶ó!" << endl;
+    cout << "ë²„ë¦´ ì¥ë¹„ë¥¼ ê³¨ë¼ë¼!" << endl;
     int Choose_What_Equipment_To_Get_Rid_Of;
     cin >> Choose_What_Equipment_To_Get_Rid_Of;
     while  (Choose_What_Equipment_To_Get_Rid_Of < 1 || _Equipment_Current_Count < Choose_What_Equipment_To_Get_Rid_Of)
     {
-        cout << "Àß¸øµÈ ÀÔ·ÂÀÌ´Ù! ´Ù½Ã ÀÔ·ÂÇÏ¶ó." << endl;
+        cout << "ì˜ëª»ëœ ì…ë ¥ì´ë‹¤! ë‹¤ì‹œ ì…ë ¥í•˜ë¼." << endl;
         cin >> Choose_What_Equipment_To_Get_Rid_Of;
     }
     int Vector_Index = Choose_What_Equipment_To_Get_Rid_Of-1;
     string Bye_Equipment = _Equipments[Vector_Index].Get_Equipment_Name();
     _Equipments.erase(_Equipments.begin() + Vector_Index);
     _Equipment_Current_Count--;
-    cout << Bye_Equipment << "°ú ÀÛº°Çß´Ù!" << endl;
+    cout << Bye_Equipment << "ê³¼ ì‘ë³„í–ˆë‹¤!" << endl;
 }
 
 
-//Àåºñ ÀÎº¥Åä¸® ÃÖ´ë º¸°ü Ä­ Áõ°¡
+//ì¥ë¹„ ì¸ë²¤í† ë¦¬ ìµœëŒ€ ë³´ê´€ ì¹¸ ì¦ê°€
 void Inventory_For_Equipments_Only::Increase_Equipment_Max_Count(int increase_count)
 {
     if (increase_count <= 0)
     {
-        cout << "Áõ°¡·®ÀÌ ¿Ã¹Ù¸£Áö ¾Ê´Ù!" << endl;
+        cout << "ì¦ê°€ëŸ‰ì´ ì˜¬ë°”ë¥´ì§€ ì•Šë‹¤!" << endl;
         return;
     }
 
     _Equipment_Max_Count += increase_count;
-    cout << "Àåºñ Àü¿ë ÀÎº¥Åä¸®°¡ " << increase_count << "¸¸Å­ Áõ°¡Çß´Ù!" << endl;
+    cout << "ì¥ë¹„ ì „ìš© ì¸ë²¤í† ë¦¬ê°€ " << increase_count << "ë§Œí¼ ì¦ê°€í–ˆë‹¤!" << endl;
 }
 
-//Àåºñ Á¤·Ä
+//ì¥ë¹„ ì •ë ¬
 void Inventory_For_Equipments_Only::Sort_Equipment_Inventory()
 {
     cout << R"(
-¾î¶² ±âÁØÀ¸·Î Á¤·ÄÇÒ±î¿ä?
-1. ÀÌ¸§¼ø
-2. °ø°İ·Â¼ø
-3. ¹æ¾î·Â¼ø
-4. ¹«°Ô¼ø
-0. Ãë¼Ò
+ì–´ë–¤ ê¸°ì¤€ìœ¼ë¡œ ì •ë ¬í• ê¹Œìš”?
+1. ì´ë¦„ìˆœ
+2. ê³µê²©ë ¥ìˆœ
+3. ë°©ì–´ë ¥ìˆœ
+4. ë¬´ê²Œìˆœ
+0. ì·¨ì†Œ
 )" << endl;
 
     int Sort_Choice;
@@ -717,29 +933,29 @@ void Inventory_For_Equipments_Only::Sort_Equipment_Inventory()
     }
     case 0:
     {
-        cout << "Á¤·ÄÀ» Ãë¼ÒÇÑ´Ù." << endl;
+        cout << "ì •ë ¬ì„ ì·¨ì†Œí•œë‹¤." << endl;
         break;
     }
     default:
     {
-        cout << "Àß¸øµÈ ÀÔ·ÂÀÌ´Ù." << endl;
+        cout << "ì˜ëª»ëœ ì…ë ¥ì´ë‹¤." << endl;
         break;
     }
     }
 }
 
-//Àåºñ ¼ø¼­ ¹Ù²Ù±â
+//ì¥ë¹„ ìˆœì„œ ë°”ê¾¸ê¸°
 void Inventory_For_Equipments_Only::Change_Equipment_Inventory_Order()
 {
     if (_Equipments.empty())
     {
-        cout << "Àåºñ ÀÎº¥Åä¸®°¡ ºñ¾î ÀÖ´Ù." << endl;
+        cout << "ì¥ë¹„ ì¸ë²¤í† ë¦¬ê°€ ë¹„ì–´ ìˆë‹¤." << endl;
         return;
     }
 
     if (_Equipments.size() < 2)
     {
-        cout << "¼ø¼­¸¦ ¹Ù²Ü Àåºñ°¡ ºÎÁ·ÇÏ´Ù." << endl;
+        cout << "ìˆœì„œë¥¼ ë°”ê¿€ ì¥ë¹„ê°€ ë¶€ì¡±í•˜ë‹¤." << endl;
         return;
     }
 
@@ -748,27 +964,27 @@ void Inventory_For_Equipments_Only::Change_Equipment_Inventory_Order()
     int First_Selected_Index;
     int Second_Selected_Index;
 
-    cout << "Ã¹ ¹øÂ°·Î ¹Ù²Ü Àåºñ ¹øÈ£¸¦ ÀÔ·ÂÇÏ¶ó! : ";
+    cout << "ì²« ë²ˆì§¸ë¡œ ë°”ê¿€ ì¥ë¹„ ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ë¼! : ";
     cin >> First_Selected_Index;
 
     while (First_Selected_Index < 1 || First_Selected_Index > _Equipment_Current_Count)
     {
-        cout << "Àß¸øµÈ ÀÔ·ÂÀÌ´Ù. ´Ù½Ã ÀÔ·ÂÇÏ¶ó! : ";
+        cout << "ì˜ëª»ëœ ì…ë ¥ì´ë‹¤. ë‹¤ì‹œ ì…ë ¥í•˜ë¼! : ";
         cin >> First_Selected_Index;
     }
 
-    cout << "µÎ ¹øÂ°·Î ¹Ù²Ü Àåºñ ¹øÈ£¸¦ ÀÔ·ÂÇÏ¶ó! : ";
+    cout << "ë‘ ë²ˆì§¸ë¡œ ë°”ê¿€ ì¥ë¹„ ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ë¼! : ";
     cin >> Second_Selected_Index;
 
     while (Second_Selected_Index < 1 || Second_Selected_Index > _Equipment_Current_Count)
     {
-        cout << "Àß¸øµÈ ÀÔ·ÂÀÌ´Ù. ´Ù½Ã ÀÔ·ÂÇÏ¶ó! : ";
+        cout << "ì˜ëª»ëœ ì…ë ¥ì´ë‹¤. ë‹¤ì‹œ ì…ë ¥í•˜ë¼! : ";
         cin >> Second_Selected_Index;
     }
 
     if (First_Selected_Index == Second_Selected_Index)
     {
-        cout << "°°Àº Àåºñ¸¦ ¼±ÅÃÇß´Ù. ¼ø¼­¸¦ º¯°æÇÏÁö ¾Ê´Â´Ù." << endl;
+        cout << "ê°™ì€ ì¥ë¹„ë¥¼ ì„ íƒí–ˆë‹¤. ìˆœì„œë¥¼ ë³€ê²½í•˜ì§€ ì•ŠëŠ”ë‹¤." << endl;
         return;
     }
 
@@ -777,15 +993,15 @@ void Inventory_For_Equipments_Only::Change_Equipment_Inventory_Order()
 
     swap(_Equipments[First_Vector_Index], _Equipments[Second_Vector_Index]);
 
-    cout << "Àåºñ ¼ø¼­¸¦ º¯°æÇß´Ù." << endl;
+    cout << "ì¥ë¹„ ìˆœì„œë¥¼ ë³€ê²½í–ˆë‹¤." << endl;
 }
-
-//Àåºñ Âø¿ë
-void Inventory_For_Equipments_Only::Equip_Equipment_From_Inventory(Currently_Equipped_Equipments& equipped)
+//ì¸ìˆ˜ì— Player ì¶”ê°€
+//ì¥ë¹„ ì°©ìš©
+void Inventory_For_Equipments_Only::Equip_Equipment_From_Inventory(Currently_Equipped_Equipments& equipped, Player* player)
 {
     if (_Equipments.empty())
     {
-        cout << "ÀåÂøÇÒ Àåºñ°¡ ¾ø´Ù." << endl;
+        cout << "ì¥ì°©í•  ì¥ë¹„ê°€ ì—†ë‹¤." << endl;
         return;
     }
 
@@ -793,29 +1009,29 @@ void Inventory_For_Equipments_Only::Equip_Equipment_From_Inventory(Currently_Equ
 
     int Selected_Index;
 
-    cout << "ÀåÂøÇÒ Àåºñ ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ";
+    cout << "ì¥ì°©í•  ì¥ë¹„ ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”: ";
     cin >> Selected_Index;
 
     while (Selected_Index < 1 || Selected_Index > _Equipment_Current_Count)
     {
-        cout << "Àß¸øµÈ ÀÔ·ÂÀÌ´Ù. ´Ù½Ã ÀÔ·ÂÇÏ¼¼¿ä: ";
+        cout << "ì˜ëª»ëœ ì…ë ¥ì´ë‹¤. ë‹¤ì‹œ ì…ë ¥í•˜ì„¸ìš”: ";
         cin >> Selected_Index;
     }
 
     int Vector_Index = Selected_Index - 1;
 
     Equipment Selected_Equipment = _Equipments[Vector_Index];
-
-    if (equipped.Equip_Equipment(Selected_Equipment))
+	//ì¸ìˆ˜ì— Player ì¶”ê°€
+    if (equipped.Equip_Equipment(Selected_Equipment, player))
     {
         _Equipments.erase(_Equipments.begin() + Vector_Index);
         _Equipment_Current_Count--;
 
-        cout << Selected_Equipment.Get_Equipment_Name() << "À»(¸¦) ÀåÂøÇß´Ù!" << endl;
+        cout << Selected_Equipment.Get_Equipment_Name() << "ì„(ë¥¼) ì¥ì°©í–ˆë‹¤!" << endl;
     }
 }
 
-//ÀåºñÃ¢ ¹«°Ô ÃÑ Á¶È÷
+//ï¿½ï¿½ï¿½Ã¢ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 int Inventory_For_Equipments_Only::Get_Total_Equipment_Weight() const
 {
     int Total_Weight = 0;

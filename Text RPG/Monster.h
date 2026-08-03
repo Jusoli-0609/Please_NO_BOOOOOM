@@ -45,7 +45,10 @@ enum class Monster_Type
     ARRAY_LOOP_TUTOR,
     FUNCTION_TUTOR,
     POINTER_MEMORY_TUTOR,
-    OBJECT_STL_TUTOR
+    OBJECT_STL_TUTOR,
+
+    KIM_DONG_HYUN_MANAGER,
+    MOON_SEUNG_HO_MANAGER
 };
 
 // 3.몬스터 등급 분류 파트
@@ -86,7 +89,8 @@ public:
 
     void Initialize_Elite_Monster(Chapter_Type chapter_Type); // 5-4. 정예 몬스터 초기화
     void Initialize_Tutor_Monster(Chapter_Type chapter_Type); // 5-5. 튜터 몬스터 초기화
-    void Apply_Player_Level_Scaling(int player_Level); // 5-6. 플레이어 레벨 비례 능력치 증가
+	void Initialize_Final_Boss(Monster_Type final_Boss_Type); // 5-6. 최종 보스 초기화
+    void Apply_Player_Level_Scaling(int player_Level); // 5-7. 플레이어 레벨 비례 능력치 증가
 
     // 6. 몬스터 기본 정보 조회 파트
     std::string getName() const; // 6-1. 몬스터 이름 조회

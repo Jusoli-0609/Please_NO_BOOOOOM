@@ -998,3 +998,23 @@ void Player::Add_Base_AGI(int value)
 
     Recalculate_Stats();
 }
+// 스킬 이름 Getter
+std::string Player::Get_Skill1_Name() const
+{
+    return skill1Name;
+}
+
+std::string Player::Get_Skill2_Name() const
+{
+    return skill2Name;
+}
+
+std::string Player::Get_Skill3_Name() const
+{
+    return skill3Name;
+}
+
+std::string Player::Get_Groggy_Attack_Name() const
+{
+    return groggyAttackName;
+}

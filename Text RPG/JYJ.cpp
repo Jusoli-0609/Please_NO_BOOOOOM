@@ -15,6 +15,12 @@ JYJ::JYJ(const std::string& name)
 {
     job = "풍둔 주둥아리술 마스터";
 
+    skill1Name = "블루투스식 말하기";
+    skill2Name = "전방에 힘찬 기지개 발사";
+    skill3Name = "숨쉬듯 무례하기";
+    groggyAttackName = "그로기 공격 이름";
+
+
     Set_Start_Stat(
         200, // HP
         100, // MP
@@ -79,8 +85,8 @@ void JYJ::Skill1(Monster* monster)
 
     Apply_Damage(monster, damage);
 
-    std::cout << name << "의 스킬 1!\n";
-    std::cout << "스킬 1 대사 입력\n";
+    std::cout << name << "의" << skill1Name << "!\n";
+    std::cout << name << " : " << "뭔말알?\n";
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }
 
@@ -110,8 +116,8 @@ void JYJ::Skill2(Monster* monster)
 
     Apply_Damage(monster, damage);
 
-    std::cout << name << "의 스킬 2!\n";
-    std::cout << "스킬 2 대사 입력\n";
+    std::cout << name << "의 " << skill2Name << "!\n";
+    std::cout << "메챠쿠챠 카멜레온!\n";
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }
 
@@ -141,8 +147,8 @@ void JYJ::Skill3(Monster* monster)
 
     Apply_Damage(monster, damage);
 
-    std::cout << name << "의 스킬 3!\n";
-    std::cout << "스킬 3 대사 입력\n";
+    std::cout << name << "의 " << skill3Name << "!\n";
+    std::cout << "커피 타오십시오.\n";
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }
 
@@ -162,7 +168,7 @@ void JYJ::Groggy_Attack(Monster* monster)
 
     Apply_Damage(monster, damage);
 
-    std::cout << name << "의 그로기 공격!\n";
+    std::cout << name << "의 " << groggyAttackName << "!\n";
     std::cout << "그로기 공격 대사 입력\n";
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }

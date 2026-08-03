@@ -11,7 +11,10 @@ class Player
 protected:
     std::string name;
     std::string job;
-
+    std::string skill1Name;
+    std::string skill2Name;
+    std::string skill3Name;
+    std::string groggyAttackName;
     Level_Up levelUp;
 
     int hp;
@@ -68,6 +71,11 @@ public:
     virtual void Skill2(Monster* monster) = 0;
     virtual void Skill3(Monster* monster) = 0;
     virtual void Groggy_Attack(Monster* monster) = 0;
+
+    std::string Get_Skill1_Name() const;
+    std::string Get_Skill2_Name() const;
+    std::string Get_Skill3_Name() const;
+    std::string Get_Groggy_Attack_Name() const;
 
     void Gain_Exp(int amount);
 

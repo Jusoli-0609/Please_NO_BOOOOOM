@@ -1,67 +1,115 @@
-#include <iostream>
+#include "Console_Manager.h"
+#include "DungeonManager.h"
+#include "Inventory.h"
+#include "Item.h"
+#include "Character_Creator.h"
+#include "Player.h"
 #include "Equipment.h"
+
+#include <iostream>
+#include <ctime>
+
 
 using namespace std;
 
+void PrintLine()
+{
+    cout << string(50, '=') << endl;
+}
+
+void Intro();
+
 int main()
 {
-    Currently_Equipped_Equipments Current_Equipment;
+    srand(static_cast<unsigned int>(time(nullptr)));
 
-    Inventory_For_Equipments_Only Equipment_Inventory;
+    Console_Manager console(120, 40);
 
+    console.Set_Console_Size();
+    console.Clear();
+    console.Set_Cursor_Position(15, 10);
 
-    // °­½ÅÈ£ÀÇ ¸¶¿ì½º »ı¼º
+    // 1. ê°•ì‹ í˜¸ì˜ ë§ˆìš°ìŠ¤ íšë“
     Equipment KangShinho_Mouse(
-        "°­½ÅÈ£ÀÇ ¸¶¿ì½º",
-        50,
-        10,
+        "ê°•ì‹ í˜¸ì˜ ë§ˆìš°ìŠ¤",
+        50,                         // ê³µê²©ë ¥
+        10,                         // ë°©ì–´ë ¥
+
         Equipment_Grade::Best,
         Equipment_Type::Mouse,
         R"(
         ______________
-       |   °­½ÅÈ£     |
+       |   ï¿½ï¿½ï¿½ï¿½È£     |
        |    Mouse     |
        |______________|
         )",
-        "°­½ÅÈ£ Æ©ÅÍ°¡ »ç¿ëÇÏ´ø ¸¶¿ì½º",
+        "ê°•ì‹ í˜¸ í˜•ë‹˜ì´ ì„ ë¬¼í•˜ì‹  ê³ ê¸‰í˜• ë§ˆìš°ìŠ¤",
         3
     );
 
+    // 2. ì¥ë¹„ ì „ìš© ì¸ë²¤í† ë¦¬ ìƒì„±
+    Inventory_For_Equipments_Only Equipment_Inventory;
 
-    // °­È­µµ +1 ¼³Á¤
-    KangShinho_Mouse.Set_Enhance_Level(1);
 
+    // í”Œë ˆì´ì–´ ìƒì„±
+    Player* player = Character_Creator();
 
-    cout << "===== °­½ÅÈ£ÀÇ ¸¶¿ì½º È¹µæ =====" << endl;
+    if (player == nullptr)
+    {
+        cout << "ìºë¦­í„° ìƒì„± ì‹¤íŒ¨!" << endl;
+        return 0;
+    }
 
-    // ÀÎº¥Åä¸®¿¡ Ãß°¡
+    // 3. ë§ˆìš°ìŠ¤ íšë“
+
     Equipment_Inventory.Add_Equipment(KangShinho_Mouse);
 
+    Dungeon_Manager dungeonManager;
 
-   
+    bool gameRunning = true;
 
-    // ÀåÂø
-    Equipment_Inventory.Equip_Equipment_From_Inventory(Current_Equipment);
+    while (gameRunning)
+    {
+        int menu;
+
+        cout << endl;
+        cout << "==============================" << endl;
+        cout << "         ë©”ì¸ ë©”ë‰´" << endl;
+        cout << "==============================" << endl;
+        cout << "1. ë˜ì „" << endl;
+        cout << "2. ì¸ë²¤í† ë¦¬" << endl;
+        cout << "3. ìƒíƒœì°½" << endl;
+        cout << "0. ì¢…ë£Œ" << endl;
+        cout << "==============================" << endl;
+        cout << "ì„ íƒ : ";
+
+        cin >> menu;
+
+        switch (menu)
+        {
+        case 1:
+            dungeonManager.Open_Dungeon(player, Equipment_Inventory);
+            break;
+
+        case 2:
+            Equipment_Inventory.Print_Inventory();
+            break;
 
 
-    cout << endl;
-  
+        case 3:
+            player->Print_Status();
+            break;
 
-    Current_Equipment.Print_Currently_Equipped_Equipments();
+        case 0:
+            gameRunning = false;
+            break;
 
+        default:
+            cout << "ì˜ëª»ëœ ì…ë ¥ì…ë‹ˆë‹¤." << endl;
+            break;
+        }
+    }
 
-    cout << endl;
-    cout << "===== Player Á¶È¸ Å×½ºÆ® =====" << endl;
-
-
-    Equipment_Stats Stats = Current_Equipment.Get_All_Equipments_Stats();
-
-
-    cout << "ÃÑ °ø°İ·Â : " << Stats.Attack << endl;
-    cout << "ÃÑ ¹æ¾î·Â : " << Stats.Defence << endl;
-    cout << "ÃÑ °­È­µµ : +" << Stats.Enhance_Level << endl;
-    cout << "ÃÑ Àåºñ µî±Ş Á¡¼ö : " << Stats.Grade_Score << endl;
-
-
-    return 0;
+    delete player;
 }
+
