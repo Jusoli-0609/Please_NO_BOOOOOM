@@ -1,160 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="소스 파일">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="헤더 파일">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="소스 파일\Item">
-      <UniqueIdentifier>{8988196a-4e5c-4e99-b320-05500c7e7f27}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="헤더 파일\Item">
-      <UniqueIdentifier>{2ff36e5c-cac5-435e-b9d1-884c08bd12bb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Specific_Items">
-      <UniqueIdentifier>{0fe4aab7-1619-4e55-9f20-e77c5a867223}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="헤더 파일\Specific_Items">
-      <UniqueIdentifier>{38054b4f-0d7e-433d-a8f7-35b1b2021b75}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="Basic_Sword.cpp" />
+    <ClCompile Include="Battle_Elite_Skill.cpp" />
+    <ClCompile Include="Character_Creator.cpp" />
+    <ClCompile Include="Console_Manager.cpp" />
+    <ClCompile Include="Craft_Item.cpp" />
+    <ClCompile Include="Battle_System.cpp" />
+    <ClCompile Include="Equipment.cpp" />
+    <ClCompile Include="Game_Manager.cpp" />
+    <ClCompile Include="Intro.cpp" />
+    <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Items_Equipments_Repository.cpp" />
+    <ClCompile Include="Job_Selection.cpp" />
+    <ClCompile Include="JYJ.cpp" />
+    <ClCompile Include="Level_Up.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="All_Recipes.cpp" />
+    <ClCompile Include="DungeonManager.cpp" />
+    <ClCompile Include="Quiz_Bank.cpp" />
+    <ClCompile Include="Tutor.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Monster.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Battle_System.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Craft_Item.cpp">
-      <Filter>소스 파일\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="All_Recipes.cpp">
-      <Filter>소스 파일\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="Inventory.cpp">
-      <Filter>소스 파일\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>소스 파일\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="DungeonManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Character_Creator.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Console_Manager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Game_Manager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Intro.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Job_Selection.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Level_Up.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="JYJ.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Battle_Elite_Skill.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Equipment.cpp">
-      <Filter>소스 파일\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="Items_Equipments_Repository.cpp">
-      <Filter>소스 파일\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="Basic_Sword.cpp">
-      <Filter>소스 파일\Specific_Items</Filter>
-    </ClCompile>
-    <ClCompile Include="Quiz_Bank.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Main.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Monster.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Battle_System.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="All_Recipes.h">
-      <Filter>헤더 파일\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Craft_Item.h">
-      <Filter>헤더 파일\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>헤더 파일\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Inventory.h">
-      <Filter>헤더 파일\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="DungeonManager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Character_Creator.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Console_Manager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Game_Manager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Job_Selection.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="JYJ.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Level_Up.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Player_Stat_Index.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Battle_Elite_Skill.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Equipment.h">
-      <Filter>헤더 파일\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Items_Equipments_Repository.h">
-      <Filter>헤더 파일\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Basic_Sword.h">
-      <Filter>헤더 파일\Specific_Items</Filter>
-    </ClInclude>
-    <ClInclude Include="Quiz_Bank.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
+    <ClInclude Include="Basic_Sword.h" />
+    <ClInclude Include="Battle_Elite_Skill.h" />
+    <ClInclude Include="Character_Creator.h" />
+    <ClInclude Include="Console_Manager.h" />
+    <ClInclude Include="Craft_Item.h" />
+    <ClInclude Include="Battle_System.h" />
+    <ClInclude Include="DungeonManager.h" />
+    <ClInclude Include="Equipment.h" />
+    <ClInclude Include="Game_Manager.h" />
+    <ClInclude Include="Inventory.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="Items_Equipments_Repository.h" />
+    <ClInclude Include="Job_Selection.h" />
+    <ClInclude Include="JYJ.h" />
+    <ClInclude Include="Level_Up.h" />
+    <ClInclude Include="Main.h" />
+    <ClInclude Include="Monster.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="All_Recipes.h" />
+    <ClInclude Include="Player_Stat_Index.h" />
+    <ClInclude Include="Quiz_Bank.h" />
+    <ClInclude Include="Stat_Modifier.h" />
+    <ClInclude Include="Tutor.h" />
   </ItemGroup>
 </Project>
