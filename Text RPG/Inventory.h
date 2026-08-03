@@ -43,7 +43,8 @@
 	    void Sort_Inventory();// 6-1 아이템 정렬
 	    void Change_Inventory_Order();//6-2 아이템 순서 골라서 바꾸기
 	    // 7. 인벤토리 용량 확장
-		void Increase_Max_Capacity(int new_max_capacity);//7-1 아이템 용량 늘어나기
+		void Increase_Slot_Capacity(int increase_slot);//7-1 아이템 용량 늘어나기
+		void Increase_Max_Capacity(int increase_capacity);  //7-2 최대 무게 확장
 	    // 8. 인벤토리 소멸자	
 		~Inventory();//8.소멸자
 		//9. 인벤토리 내 골드
