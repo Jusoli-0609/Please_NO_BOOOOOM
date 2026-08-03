@@ -4,7 +4,7 @@
 Level_4_Headset::Level_4_Headset()
 	: Equipment
 	(
-		"4 헤드셋",
+		"4헤드셋",
 		0,
 		11,
 		Equipment_Grade::High,
