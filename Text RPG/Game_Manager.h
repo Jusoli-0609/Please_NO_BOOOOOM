@@ -1,21 +1,32 @@
 #pragma once
+
+#include <memory>
 #include "Console_Manager.h"
+
+class Character_Creator;
+class Job_Selector;
+class Main_Menu;
+class Dungeon_Manager;
+class Ending_Manager;
+//전방선언 도전
 
 class GameManager
 {
 private:
     Console_Manager Console;
 
+    std::unique_ptr<Job_Selector> JobSelector;
+    std::unique_ptr<Main_Menu> MainMenu;
+    std::unique_ptr<Dungeon_Manager> DungeonManager;
+    std::unique_ptr<Ending_Manager> EndingManager;
+
 public:
-    // TODO: GameManager 생성자 선언
     GameManager();
+    ~GameManager();
 
-    // TODO: 게임 초기화 함수 선언
     void Init();
-
-    // TODO: 게임 실행 함수 선언
     void Run();
 
-    // TODO: 화면 출력 함수 선언
+private:
     void Render();
 };

@@ -73,3 +73,22 @@ void Console_Manager::Print_At(int x, int y, const std::string& Text)
     Set_Cursor_Position(x, y);
     std::cout << Text;
 }
+
+void Console_Manager::Set_Console_Font()    //폰트 강제
+{
+    CONSOLE_FONT_INFOEX fontInfo;
+    fontInfo.cbSize = sizeof(fontInfo);
+    fontInfo.nFont = 0;
+    fontInfo.dwFontSize.X = 0;
+    fontInfo.dwFontSize.Y = 16;
+    fontInfo.FontFamily = FF_DONTCARE;
+    fontInfo.FontWeight = FW_NORMAL;
+    wcscpy_s(fontInfo.FaceName, L"D2Coding");
+
+    SetCurrentConsoleFontEx
+    (
+        GetStdHandle(STD_OUTPUT_HANDLE),
+        FALSE,
+        &fontInfo
+    );
+}

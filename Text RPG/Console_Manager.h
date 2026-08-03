@@ -43,4 +43,6 @@ public:
     // private 멤버 읽는용 함수입니다.
 
     void Print_At(int x, int y, const std::string& Text);
+    
+    void Set_Console_Font();
 };
