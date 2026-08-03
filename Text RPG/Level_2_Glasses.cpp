@@ -13,7 +13,7 @@ Level_2_Glasses::Level_2_Glasses()
 (  )(  )
  '==''==')",
 		"Ό³Έν",
-		2
+		2.
 	)
 {
 }

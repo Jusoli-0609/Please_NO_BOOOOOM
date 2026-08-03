@@ -92,7 +92,7 @@ void Camp_Manager::Give_Basic_Training_Item()
 {
     cout << "\n===== 내배캠 119 =====\n";
     cout << "기본 보급품을 지급받았습니다!\n";
-    Basic_Mouse mouse;
+    s glass;
     Basic_Engine engine;
     Basic_BlueLight_Glass glass;
     Basic_Keyboard keyboard;

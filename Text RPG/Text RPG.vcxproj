@@ -123,6 +123,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Basic_Engine.cpp" />
+    <ClCompile Include="Camp_Manager.cpp" />
     <ClCompile Include="Level_1_Engine.cpp" />
     <ClCompile Include="Level_1_Glasses.cpp" />
     <ClCompile Include="Level_1_Headset.cpp" />
@@ -200,6 +202,7 @@
     <ClCompile Include="Quiz_Bank.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camp_Manager.h" />
     <ClInclude Include="Level_1_Engine.h" />
     <ClInclude Include="Level_1_Glasses.h" />
     <ClInclude Include="Level_1_Headset.h" />

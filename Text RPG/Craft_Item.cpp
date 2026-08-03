@@ -77,7 +77,7 @@ void Craft_Work_Shop::Find_Recipes_By_Ingredient_Name(const string& ingredientNa
     }
 }
  
-bool Craft_Work_Shop::Craft_Potion(const std::string& _Recipe_Name)
+bool Craft_Work_Shop::Craft_Item(const std::string& _Recipe_Name)
 {
     for (const All_Recipes& recipe : recipes)
     {
@@ -100,4 +100,9 @@ bool Craft_Work_Shop::Craft_Potion(const std::string& _Recipe_Name)
 
     cout << "해당 포션 레시피를 찾을 수 없습니다." << endl;
     return false;
+}
+
+void Craft_Work_Shop::Add_Recipes(const All_Recipes& recipe)
+{
+    recipe.push_back(recipe);
 }
