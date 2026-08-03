@@ -215,7 +215,7 @@ void Monster_Attack(Player* player, Monster& monster)
 
     cout << endl;
     cout << "[전투 로그]" << endl;
-    cout << monster.getName() << "이(가) 공격했습니다!" << endl;
+    monster.Print_Attack_Message();
     cout << "HP : " << Before_Player_HP << " → " << player->Get_Hp() << endl;
 }
 
@@ -255,12 +255,6 @@ bool Check_Battle_End(Player* player, Monster& monster, Inventory<Item>& invento
 
     if (player->Get_Hp() <= 0)
     {
-        cout << endl;
-        cout << "==================================" << endl;
-        cout << "          전투 패배!" << endl;
-        cout << "==================================" << endl;
-        cout << "플레이어가 쓰러졌습니다." << endl;
-
         player->Remove_Temporary_Modifiers();
         return true;
     }
