@@ -334,6 +334,7 @@ bool Currently_Equipped_Equipments::Equip_Equipment(
     const Equipment& equipment,
     Player* player)
 {
+<<<<<<< HEAD
     if (player == nullptr)
     {
         cout << "í”Œë ˆì´ì–´ ì •ë³´ê°€ ì—†ìŠµë‹ˆë‹¤!" << endl;
@@ -342,10 +343,22 @@ bool Currently_Equipped_Equipments::Equip_Equipment(
 
     Equipment_Type type =
         equipment.Get_Equipment_Type();
+=======
+    Equipment_Type type = equipment.Get_Equipment_Type();
+
+
+    if (Is_Equipment_Equipped(type))
+    {
+        cout << "ÀÌ¹Ì °°Àº Á¾·ùÀÇ Àåºñ¸¦ Âø¿ëÇÏ°í ÀÖ´Ù! ÇØÁ¦ÇÏ°í Âø¿ëÇØ¶ó!" << endl;
+        return false;
+    }
+
+>>>>>>> 20260823-InventoryItemsETC
 
     switch (type)
     {
     case Equipment_Type::Engine:
+<<<<<<< HEAD
     {
         _Unreal_Engine_Version = equipment;
         break;
@@ -388,11 +401,73 @@ bool Currently_Equipped_Equipments::Equip_Equipment(
     player->Add_Stat_Modifier(
         Equipment_Modifier
     );
+=======
+        _Unreal_Engine_Version = equipment;
+        break;
+
+
+    case Equipment_Type::Keyboard:
+        _Keyboard = equipment;
+        break;
+
+
+    case Equipment_Type::Mouse:
+        _Mouse = equipment;
+        break;
+
+
+    case Equipment_Type::BlueLight_Glasses:
+        _BlueLight_Glasses = equipment;
+        break;
+
+
+    case Equipment_Type::Headset:
+        _Headset = equipment;
+        break;
+
+
+    default:
+        cout << "Âø¿ëÇÒ ¼ö ¾ø´Â ¾ÆÀÌÅÛÀÌ´Ù!" << endl;
+        return false;
+    }
+
+
+    cout << equipment.Get_Equipment_Name()
+        << " ÀåÂø ¿Ï·á!" << endl;
+
+>>>>>>> 20260823-InventoryItemsETC
 
     return true;
 }
 
+<<<<<<< HEAD
 //ìž¥ë¹„ì°½ ì¶œë ¥
+=======
+bool Currently_Equipped_Equipments::Is_Equipment_Equipped(Equipment_Type type) const
+{
+    switch (type)
+    {
+    case Equipment_Type::Engine:
+        return _Unreal_Engine_Version.Get_Equipment_Type() != Equipment_Type::Empty;
+
+    case Equipment_Type::Keyboard:
+        return _Keyboard.Get_Equipment_Type() != Equipment_Type::Empty;
+
+    case Equipment_Type::Mouse:
+        return _Mouse.Get_Equipment_Type() != Equipment_Type::Empty;
+
+    case Equipment_Type::BlueLight_Glasses:
+        return _BlueLight_Glasses.Get_Equipment_Type() != Equipment_Type::Empty;
+
+    case Equipment_Type::Headset:
+        return _Headset.Get_Equipment_Type() != Equipment_Type::Empty;
+
+    default:
+        return false;
+    }
+}
+//ÀåºñÃ¢ Ãâ·Â
+>>>>>>> 20260823-InventoryItemsETC
 void Currently_Equipped_Equipments::Print_Currently_Equipped_Equipments() const
 {
     cout << "===== í˜„ìž¬ ìž¥ì°© ì¤‘ì¸ ìž¥ë¹„ =====" << endl;
@@ -584,6 +659,7 @@ bool Currently_Equipped_Equipments::Unequip_One_Equipment(
     return true;
 }
 
+<<<<<<< HEAD
 //-----------------ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½È¸-----------------
 
 // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
@@ -615,7 +691,10 @@ Equipment Currently_Equipped_Equipments::Get_Headset() const
 {
     return _Headset;
 }
+=======
+>>>>>>> 20260823-InventoryItemsETC
 
+//Àåºñ ÃÑ ½ºÅÝ ¾ò±â
 Equipment_Stats Currently_Equipped_Equipments::Get_All_Equipments_Stats() const
 {
     Equipment_Stats total_stats;
@@ -623,42 +702,71 @@ Equipment_Stats Currently_Equipped_Equipments::Get_All_Equipments_Stats() const
     total_stats.Attack = 0;
     total_stats.Defence = 0;
     total_stats.Enhance_Level = 0;
+    total_stats.Grade_Score = 0;
 
 
     // Engine
     total_stats.Attack += _Unreal_Engine_Version.Get_Attack_Stat();
     total_stats.Defence += _Unreal_Engine_Version.Get_Defence_Stat();
     total_stats.Enhance_Level += _Unreal_Engine_Version.Get_Enhance_Level();
+    total_stats.Grade_Score += static_cast<int>(_Unreal_Engine_Version.Get_Grade());
 
 
     // Keyboard
     total_stats.Attack += _Keyboard.Get_Attack_Stat();
     total_stats.Defence += _Keyboard.Get_Defence_Stat();
     total_stats.Enhance_Level += _Keyboard.Get_Enhance_Level();
+    total_stats.Grade_Score += static_cast<int>(_Keyboard.Get_Grade());
 
 
     // Mouse
     total_stats.Attack += _Mouse.Get_Attack_Stat();
     total_stats.Defence += _Mouse.Get_Defence_Stat();
     total_stats.Enhance_Level += _Mouse.Get_Enhance_Level();
+    total_stats.Grade_Score += static_cast<int>(_Mouse.Get_Grade());
 
 
     // BlueLight Glasses
     total_stats.Attack += _BlueLight_Glasses.Get_Attack_Stat();
     total_stats.Defence += _BlueLight_Glasses.Get_Defence_Stat();
     total_stats.Enhance_Level += _BlueLight_Glasses.Get_Enhance_Level();
+    total_stats.Grade_Score += static_cast<int>(_BlueLight_Glasses.Get_Grade());
 
 
     // Headset
     total_stats.Attack += _Headset.Get_Attack_Stat();
     total_stats.Defence += _Headset.Get_Defence_Stat();
     total_stats.Enhance_Level += _Headset.Get_Enhance_Level();
+    total_stats.Grade_Score += static_cast<int>(_Headset.Get_Grade());
 
 
     return total_stats;
 }
 
+<<<<<<< HEAD
 //-----------------ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸®------------------------------------
+=======
+//Àåºñ ÃÑ µî±Þ ¼ýÀÚÈ­
+int Currently_Equipped_Equipments::Get_All_Equipments_Grade_Score() const
+{
+    int Total_Grade_Score = 0;
+
+
+    Total_Grade_Score += static_cast<int>(_Unreal_Engine_Version.Get_Grade());
+    Total_Grade_Score += static_cast<int>(_Keyboard.Get_Grade());
+    Total_Grade_Score += static_cast<int>(_Mouse.Get_Grade());
+    Total_Grade_Score += static_cast<int>(_BlueLight_Glasses.Get_Grade());
+    Total_Grade_Score += static_cast<int>(_Headset.Get_Grade());
+
+
+    return Total_Grade_Score;
+}
+
+
+
+
+//-----------------Àåºñ Àü¿ë ÀÎº¥Åä¸®------------------------------------
+>>>>>>> 20260823-InventoryItemsETC
 
 
 
@@ -859,7 +967,7 @@ void Inventory_For_Equipments_Only::Sort_Equipment_Inventory()
         sort(_Equipments.begin(), _Equipments.end(),
             [](const Equipment& a, const Equipment& b)
             {
-                return a.Get_Equipment_Name() > b.Get_Equipment_Name();
+                return a.Get_Equipment_Name() < b.Get_Equipment_Name();
             });
         break;
     }

@@ -30,6 +30,7 @@ struct Equipment_Stats
     int Attack;
     int Defence;
     int Enhance_Level;
+    int Grade_Score;
 };
 
 //ì¥ë¹„ ìì„¸í•œ ì„¤ëª…
@@ -84,6 +85,7 @@ class Currently_Equipped_Equipments
         bool Unequip_One_Equipment(Equipment& equipped_item, Inventory_For_Equipments_Only& equipment_inventory, const string& slot_name, Player* player);
 
     public:
+<<<<<<< HEAD
         Currently_Equipped_Equipments();//1.í˜„ì¬ ë¼ê³  ìˆëŠ” ì¥ë¹„  ìƒì„±ì
         bool Equip_Equipment(const Equipment& equipment, Player* player);//2.ì¥ë¹„ ë¼ê¸°
         bool Equip_Equipment(const Equipment& equipment);//2b. ì¥ë¹„ ë¼ê¸°(ì˜¤ë²„ë¡œë“œ)
@@ -97,6 +99,15 @@ class Currently_Equipped_Equipments
         Equipment Get_BlueLight_Glasses() const;
         Equipment Get_Engine() const;
         Equipment_Stats Get_All_Equipments_Stats() const;
+=======
+        Currently_Equipped_Equipments();//1.ÇöÀç ³¢°í ÀÖ´Â Àåºñ  »ı¼ºÀÚ
+        bool Equip_Equipment(const Equipment& equipment);//2.Àåºñ ³¢±â
+        void Print_Currently_Equipped_Equipments() const;//3.ÇöÀç Àåºñ ÁßÀÎ ÀåºñÃ¢ Á¶È¸
+        bool Unequip_Equipment_To_Inventory(Inventory_For_Equipments_Only& equipment_inventory );//4.Àåºñ ÇØÁ¦ 
+        int Get_All_Equipments_Grade_Score() const;//5.ÀüÃ¼ µî±Ş Á¡¼ö
+        Equipment_Stats Get_All_Equipments_Stats() const;//6.ÀüÃ¼ Àåºñ ½ºÅİ °¡Á®¿À±â
+        bool Is_Equipment_Equipped(Equipment_Type type) const;// 7.ÀåÂø ¿©ºÎ È®ÀÎ
+>>>>>>> 20260823-InventoryItemsETC
 
 };
 
