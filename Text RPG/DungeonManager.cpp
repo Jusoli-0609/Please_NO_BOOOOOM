@@ -192,7 +192,7 @@ string Dungeon_Manager::Get_Chapter_Name(Chapter_Type chapter_Type) const
 
 void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inventory)
 {
-	if (player == nullptr) return; // NULL 포인터 방지
+	if (player == nullptr) return;
 
 	cout << endl;
 	cout << Get_Chapter_Name(_current_Chapter) << "에 입장했습니다." << endl;
@@ -203,12 +203,6 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inven
 	{
 		Monster elite_Monster;
 		elite_Monster.Initialize_Elite_Monster(_current_Chapter);
-
-		cout << endl;
-		cout << "========================================" << endl;
-		cout << "[ 정예 몬스터 등장! ]" << endl;
-		cout << elite_Monster.getName() << "이(가) 나타났습니다!" << endl;
-		cout << "========================================" << endl;
 
 		bool is_Correct = Run_Elite_Quiz(player, elite_Monster);
 
@@ -248,15 +242,6 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inven
 
 	monster.Apply_Player_Level_Scaling(player->getLevel());
 
-	cout << endl;
-	cout << "========================================" << endl;
-	cout << "[ 일반 몬스터 등장 ]" << endl;
-	cout << monster.getName() << "이(가) 나타났습니다!" << endl;
-	cout << "========================================" << endl;
-
-	monster.Print_Monster_Info();
-	monster.Generate_Drop_Reward();
-
 	Battle(player, monster, inventory);
 	if (player->getHp() <= 0)
 	{
@@ -271,19 +256,6 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inven
 		cout << "몬스터를 처치하지 못했습니다." << endl;
 		return;
 	}
-
-	cout << endl;
-	cout << "========================================" << endl;
-	cout << "[ 일반 몬스터 처치 보상 ]" << endl;
-	cout << "========================================" << endl;
-
-	monster.Print_Drop_Reward();
-	Give_Drop_Items_To_Inventory(monster, inventory);
-
-	cout << "획득 훈련장려금: " << monster.getGoldReward() << "원" << endl;
-	cout << "========================================" << endl;
-	cout << endl;
-	cout << monster.getName() << " 처치 완료!" << endl;
 
 	Record_Monster_Kill(monster);
 
@@ -372,85 +344,19 @@ bool Dungeon_Manager::Check_Elite_Monster_Appearance()
 	return is_Elite_Appeared;
 }
 
-Elite_Question Dungeon_Manager::Get_Elite_Question(Chapter_Type chapter_Type) const
+bool Dungeon_Manager::Run_Elite_Quiz(Player* player,Monster& elite_Monster)
 {
-	Elite_Question elite_Questions[3];
-
-	switch (chapter_Type)
+	if (player == nullptr)
 	{
-	case Chapter_Type::VARIABLE_CONDITION_FOREST:
-		elite_Questions[0].question = "다음 중 정수값을 저장하는 자료형은 무엇인가?";
-		elite_Questions[0].choices[0] = "int";
-		elite_Questions[0].choices[1] = "bool";
-		elite_Questions[0].choices[2] = "if";
-		elite_Questions[0].choices[3] = "while";
-		elite_Questions[0].correct_Answer = 1;
-		break;
-
-	default:
-		elite_Questions[0].question = "정수를 저장하는 자료형은 무엇인가?";
-		elite_Questions[0].choices[0] = "int";
-		elite_Questions[0].choices[1] = "bool";
-		elite_Questions[0].choices[2] = "if";
-		elite_Questions[0].choices[3] = "while";
-		elite_Questions[0].correct_Answer = 1;
-		break;
+		return false;
 	}
 
-	int random_Question_Index = rand() % 3;
-	return elite_Questions[random_Question_Index];
-}
-
-bool Dungeon_Manager::Run_Elite_Question(const Elite_Question& elite_Question)
-{
-	cout << endl << "========================================" << endl;
-	cout << "[ 정예 문제 ]" << endl << elite_Question.question << endl;
-
-	for (int i = 0; i < 4; i++)
-	{
-		cout << i + 1 << ". " << elite_Question.choices[i] << endl;
-	}
-
-	int answer = 0;
-	cout << "정답 입력 (1~4): ";
-	cin >> answer;
-
-	return answer == elite_Question.correct_Answer;
-}
-
-bool Dungeon_Manager::Run_Elite_Quiz(Player* player, Monster& elite_Monster)
-{
-	if (player == nullptr) return false;
-
-	return Ask_Random_Elite_Question(player, elite_Monster);
+	return Ask_Random_Elite_Question(player,elite_Monster);
 }
 
 //=============================================================================
 // 6. 튜터 문제 및 대사 파트
 //=============================================================================
-
-void Dungeon_Manager::Get_Tutor_Questions(Chapter_Type chapter_Type, Tutor_Question tutor_Questions[]) const
-{
-	tutor_Questions[0].description = "정수를 저장할 자료형을 입력하세요.";
-	tutor_Questions[0].code = "____ score = 100;";
-	tutor_Questions[0].correct_Answer = "int";
-}
-
-Tutor_Dialogue Dungeon_Manager::Get_Tutor_Dialogue(Chapter_Type chapter_Type) const
-{
-	Tutor_Dialogue dialogue;
-	dialogue.appearance_Message = "등장했습니다.";
-	dialogue.correct_Message = "정답입니다.";
-	dialogue.wrong_Message = "오답입니다.";
-	dialogue.exit_Message = "퇴장합니다.";
-	return dialogue;
-}
-
-bool Dungeon_Manager::Run_Tutor_Code_Challenge(Player* player, Monster& tutor_Monster)
-{
-	if (player == nullptr) return false;
-	return Tutor_Test(player, tutor_Monster);
-}
 
 void Dungeon_Manager::Run_Tutor_Challenge(Player* player, Inventory<Item>& inventory)
 {
@@ -497,6 +403,17 @@ void Dungeon_Manager::Run_Tutor_Challenge(Player* player, Inventory<Item>& inven
 
 	Record_Monster_Kill(tutor_Monster);
 	Clear_Current_Chapter();
+}
+
+bool Dungeon_Manager::Run_Tutor_Code_Challenge(Player* player,Monster& tutor_Monster)
+{
+	if (player == nullptr)
+	{
+		return false;
+	}
+
+	return Tutor_Test
+	(player,tutor_Monster);
 }
 
 //=============================================================================

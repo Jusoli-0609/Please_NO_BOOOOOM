@@ -1047,8 +1047,6 @@ void Monster::Print_Monster_Info() const
 	cout << "경험치: " << _exp_Reward << endl;
 	cout << "점수: " << _score_Reward << endl;
 	cout << "========================================" << endl;
-	cout << "드롭 아이템: " << _drop_Item_Name << " " << _drop_Item_Count << "개" << endl;
-	cout << "훈련장려금: " << _gold_Reward << " 원" << endl;
 
 	if
 		(
