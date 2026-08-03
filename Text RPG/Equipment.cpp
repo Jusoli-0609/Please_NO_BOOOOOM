@@ -396,6 +396,7 @@ bool Currently_Equipped_Equipments::Unequip_Equipment_To_Inventory(Inventory_For
     }
 }
 
+//하나 해제
 bool Currently_Equipped_Equipments::Unequip_One_Equipment(Equipment& equipped_item, Inventory_For_Equipments_Only& equipment_inventory, const string& slot_name)
 {
     if (equipped_item.Get_Equipment_Type() == Equipment_Type::Empty)

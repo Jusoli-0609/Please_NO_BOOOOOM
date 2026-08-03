@@ -64,8 +64,8 @@ public:
     void Set_Equipment_Description(string description);//15.장비 설명 설정
     void Set_Equipment_Name(string name);//16.장비 이름 설정
     Equipment_Type Get_Equipment_Type() const;// 17. 장비 타입 조회
-    void Set_Equipment_Type(Equipment_Type type);//
-    string Equipment_Type_To_String(Equipment_Type type) const;
+    void Set_Equipment_Type(Equipment_Type type);//18. 장비 타입 설정
+    string Equipment_Type_To_String(Equipment_Type type) const;//19.장비 타입 문자열로
 };
 
 //현재 장비창
