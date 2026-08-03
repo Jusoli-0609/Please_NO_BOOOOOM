@@ -1,5 +1,6 @@
 #include "Equipment.h"
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
 //기본생성자
@@ -280,6 +281,107 @@ void Currently_Equipped_Equipments::Print_Currently_Equipped_Equipments() const
     return;
 }
 
+//해제
+bool Currently_Equipped_Equipments::Unequip_Equipment_To_Inventory(Inventory_For_Equipments_Only& equipment_inventory
+)
+{
+
+    cout << R"(
+어떤 장비를 해제하시겠습니까?
+
+1. Engine
+2. Keyboard
+3. Mouse
+4. BlueLight Glasses
+5. Headset
+0. 취소
+)" << endl;
+
+    int Choose;
+    cin >> Choose;
+
+    switch (Choose)
+    {
+    case 1:
+    {
+        return Unequip_One_Equipment(
+            _Unreal_Engine_Version,
+            equipment_inventory,
+            "Engine"
+        );
+    }
+
+    case 2:
+    {
+        return Unequip_One_Equipment(
+            _Keyboard,
+            equipment_inventory,
+            "Keyboard"
+        );
+    }
+
+    case 3:
+    {
+        return Unequip_One_Equipment(
+            _Mouse,
+            equipment_inventory,
+            "Mouse"
+        );
+    }
+
+    case 4:
+    {
+        return Unequip_One_Equipment(
+            _BlueLight_Glasses,
+            equipment_inventory,
+            "BlueLight Glasses"
+        );
+    }
+
+    case 5:
+    {
+        return Unequip_One_Equipment(
+            _Headset,
+            equipment_inventory,
+            "Headset"
+        );
+    }
+
+    case 0:
+    {
+        cout << "취소했다." << endl;
+        return false;
+    }
+
+    default:
+    {
+        cout << "잘못된 입력이다!" << endl;
+        return false;
+    }
+    }
+}
+
+bool Currently_Equipped_Equipments::Unequip_One_Equipment(Equipment& equipped_item, Inventory_For_Equipments_Only& equipment_inventory, const string& slot_name)
+{
+    if (equipped_item.Get_Equipment_Type() == Equipment_Type::Empty)
+    {
+        cout << "장착된 " << slot_name << "이(가) 없다!" << endl;
+        return false;
+    }
+
+    bool Is_Added = equipment_inventory.Add_Equipment(equipped_item);
+
+    if (Is_Added == false)
+    {
+        cout << "인벤토리에 넣지 못해 해제를 취소했다!" << endl;
+        return false;
+    }
+
+    equipped_item = Equipment();
+
+    cout << slot_name << " 장비를 해제했다!" << endl;
+    return true;
+}
 //-----------------장비 전용 인벤토리------------------------------------
 
 
@@ -295,6 +397,7 @@ Inventory_For_Equipments_Only::Inventory_For_Equipments_Only()
 Inventory_For_Equipments_Only::Inventory_For_Equipments_Only(int max_count)
     : _Equipment_Current_Count(0),
     _Equipment_Max_Count(max_count)
+
 {
 }
 
@@ -415,4 +518,157 @@ void Inventory_For_Equipments_Only::Increase_Equipment_Max_Count(int increase_co
 
     _Equipment_Max_Count += increase_count;
     cout << "장비 전용 인벤토리가 " << increase_count << "만큼 증가했다!" << endl;
+}
+
+//장비 정렬
+void Inventory_For_Equipments_Only::Sort_Equipment_Inventory()
+{
+    cout << R"(
+어떤 기준으로 정렬할까요?
+1. 이름순
+2. 공격력순
+3. 방어력순
+4. 무게순
+0. 취소
+)" << endl;
+
+    int Sort_Choice;
+    cin >> Sort_Choice;
+
+    switch (Sort_Choice)
+    {
+    case 1:
+    {
+        sort(_Equipments.begin(), _Equipments.end(),
+            [](const Equipment& a, const Equipment& b)
+            {
+                return a.Get_Equipment_Name() < b.Get_Equipment_Name();
+            });
+        break;
+    }
+    case 2:
+    {
+        sort(_Equipments.begin(), _Equipments.end(),
+            [](const Equipment& a, const Equipment& b)
+            {
+                return a.Get_Attack_Stat() < b.Get_Attack_Stat();
+            });
+        break;
+    }
+    case 3:
+    {
+        sort(_Equipments.begin(), _Equipments.end(),
+            [](const Equipment& a, const Equipment& b)
+            {
+                return a.Get_Defence_Stat() < b.Get_Defence_Stat();
+            });
+        break;
+    }
+    case 4:
+    {
+        sort(_Equipments.begin(), _Equipments.end(),
+            [](const Equipment& a, const Equipment& b)
+            {
+                return a.Get_Equipment_Weight() < b.Get_Equipment_Weight();
+            });
+        break;
+    }
+    case 0:
+    {
+        cout << "정렬을 취소한다." << endl;
+        break;
+    }
+    default:
+    {
+        cout << "잘못된 입력이다." << endl;
+        break;
+    }
+    }
+}
+
+//장비 순서 바꾸기
+void Inventory_For_Equipments_Only::Change_Equipment_Inventory_Order()
+{
+    if (_Equipments.empty())
+    {
+        cout << "장비 인벤토리가 비어 있다." << endl;
+        return;
+    }
+
+    if (_Equipments.size() < 2)
+    {
+        cout << "순서를 바꿀 장비가 부족하다." << endl;
+        return;
+    }
+
+    Print_Equipment_Inventory();
+
+    int First_Selected_Index;
+    int Second_Selected_Index;
+
+    cout << "첫 번째로 바꿀 장비 번호를 입력하라! : ";
+    cin >> First_Selected_Index;
+
+    while (First_Selected_Index < 1 || First_Selected_Index > _Equipment_Current_Count)
+    {
+        cout << "잘못된 입력이다. 다시 입력하라! : ";
+        cin >> First_Selected_Index;
+    }
+
+    cout << "두 번째로 바꿀 장비 번호를 입력하라! : ";
+    cin >> Second_Selected_Index;
+
+    while (Second_Selected_Index < 1 || Second_Selected_Index > _Equipment_Current_Count)
+    {
+        cout << "잘못된 입력이다. 다시 입력하라! : ";
+        cin >> Second_Selected_Index;
+    }
+
+    if (First_Selected_Index == Second_Selected_Index)
+    {
+        cout << "같은 장비를 선택했다. 순서를 변경하지 않는다." << endl;
+        return;
+    }
+
+    int First_Vector_Index = First_Selected_Index - 1;
+    int Second_Vector_Index = Second_Selected_Index - 1;
+
+    swap(_Equipments[First_Vector_Index], _Equipments[Second_Vector_Index]);
+
+    cout << "장비 순서를 변경했다." << endl;
+}
+
+//장비 착용
+void Inventory_For_Equipments_Only::Equip_Equipment_From_Inventory(Currently_Equipped_Equipments& equipped)
+{
+    if (_Equipments.empty())
+    {
+        cout << "장착할 장비가 없다." << endl;
+        return;
+    }
+
+    Print_Equipment_Inventory();
+
+    int Selected_Index;
+
+    cout << "장착할 장비 번호를 입력하세요: ";
+    cin >> Selected_Index;
+
+    while (Selected_Index < 1 || Selected_Index > _Equipment_Current_Count)
+    {
+        cout << "잘못된 입력이다. 다시 입력하세요: ";
+        cin >> Selected_Index;
+    }
+
+    int Vector_Index = Selected_Index - 1;
+
+    Equipment Selected_Equipment = _Equipments[Vector_Index];
+
+    if (equipped.Equip_Equipment(Selected_Equipment))
+    {
+        _Equipments.erase(_Equipments.begin() + Vector_Index);
+        _Equipment_Current_Count--;
+
+        cout << Selected_Equipment.Get_Equipment_Name() << "을(를) 장착했다!" << endl;
+    }
 }

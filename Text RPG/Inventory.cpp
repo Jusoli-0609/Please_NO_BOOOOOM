@@ -136,11 +136,11 @@ void Inventory<T>::Print_Inventory() const
     }
 
     template <typename T>//4-2 인벤토리 메뉴 출력
-    void Inventory<T>::Print_Inventory_Menu()
+    void Inventory<T>::Print_Inventory_Menu(Currently_Equipped_Equipments& currently_equipped_equipments,
+        Inventory_For_Equipments_Only& inventory_for_equipments_only)
     {
         int Choose_Inventory_Menu;
-        Currently_Equipped_Equipments currently_equipped_equipments;
-        Inventory_For_Equipments_Only inventory_for_equipments_only;
+  
         while (true)
         {
             cout << endl;
@@ -169,21 +169,121 @@ void Inventory<T>::Print_Inventory() const
             case 2:
             {
                 currently_equipped_equipments.Print_Currently_Equipped_Equipments();
+
+                cout << R"(
+무엇을 하시겠습니까?
+1. 장비 착용
+2. 장비 해제
+0. 되돌아가기
+)" << endl;
+
+                int Choose_Currently_Equipped_Equipments_Menu;
+                cin >> Choose_Currently_Equipped_Equipments_Menu;
+
+                switch (Choose_Currently_Equipped_Equipments_Menu)
+                {
+                case 1:
+                {
+                    inventory_for_equipments_only.Equip_Equipment_From_Inventory(
+                        currently_equipped_equipments
+                    );
+                    break;
+                }
+
+                case 2:
+                {
+                    currently_equipped_equipments.Unequip_Equipment_To_Inventory(
+                        inventory_for_equipments_only
+                    );
+                    break;
+                }
+
+                case 0:
+                {
+                    break;
+                }
+
+                default:
+                {
+                    cout << "잘못된 입력이다!" << endl;
+                    break;
+                }
+                }
+
                 break;
             }
             case 3:
             {
                 inventory_for_equipments_only.Print_Equipment_Inventory();
+
+                cout << R"(
+무엇을 하시겠습니까?
+1. 장비 장착
+2. 장비 버리기
+3. 장비 정보 보기
+4. 장비 정렬
+5. 장비 순서 바꾸기
+0. 되돌아가기
+)" << endl;
+
+                int Choose_Equipment_Inventory_Menu;
+                cin >> Choose_Equipment_Inventory_Menu;
+
+                switch (Choose_Equipment_Inventory_Menu)
+                {
+                case 1:
+                {
+                    inventory_for_equipments_only.Equip_Equipment_From_Inventory(
+                        currently_equipped_equipments
+                    );
+                    break;
+                }
+
+                case 2:
+                {
+                    inventory_for_equipments_only.Throw_Away_Equipment();
+                    break;
+                }
+
+                case 3:
+                {
+                    inventory_for_equipments_only.Print_Equipment_Inventory();
+                    break;
+                }
+                case 4:
+                {
+                    inventory_for_equipments_only.Sort_Equipment_Inventory();
+                    break;
+                }
+
+                case 5:
+                {
+                    inventory_for_equipments_only.Change_Equipment_Inventory_Order();
+                    break;
+                }
+                case 0:
+                {
+                    break;
+                }
+
+                default:
+                {
+                    cout << "잘못된 입력이다!" << endl;
+                    break;
+                }
+                }
+
                 break;
             }
             case 4:
             {
                 Print_Inventory();
-                cout << R"( 무엇을 하시겠습니까 ?
-                    1.아이템 정렬
-                    2.아이템 순서 바꾸기
-                    3.아이템 버리기
-                    0.되돌아가기)" << endl;
+                cout << R"( 
+무엇을 하시겠습니까 ?
+1.아이템 정렬
+2.아이템 순서 바꾸기
+3.아이템 버리기
+0.되돌아가기)" << endl;
                     int ChooseInventoryMenu;
                 cin >> ChooseInventoryMenu;
                 switch (ChooseInventoryMenu)

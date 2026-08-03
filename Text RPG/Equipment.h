@@ -62,6 +62,7 @@ public:
 };
 
 //현재 장비창
+class Inventory_For_Equipments_Only;
 class Currently_Equipped_Equipments
 {
     private:
@@ -71,10 +72,15 @@ class Currently_Equipped_Equipments
         Equipment _BlueLight_Glasses;
         Equipment _Headset;
         //장비들
+
+        bool Unequip_One_Equipment(Equipment& equipped_item, Inventory_For_Equipments_Only& equipment_inventory, const string& slot_name);
+
     public:
         Currently_Equipped_Equipments();//1.현재 끼고 있는 장비  생성자
         bool Equip_Equipment(const Equipment& equipment);//2.장비 끼기
         void Print_Currently_Equipped_Equipments() const;//3.현재 장비 중인 장비창 조회
+        bool Unequip_Equipment_To_Inventory(Inventory_For_Equipments_Only& equipment_inventory );//장비 해제 
+
 };
 
 class Inventory_For_Equipments_Only
@@ -93,4 +99,7 @@ class Inventory_For_Equipments_Only
         Equipment Get_Equipment_By_Index(int index) const; //7. 인덱스 번호로 특정 장비 조회
         void Throw_Away_Equipment(); //8. 장비 인벤토리에서 선택한 장비 버리기
         void Increase_Equipment_Max_Count(int increase_count); //9. 장비 인벤토리 최대 보관 칸 증가
+        void Sort_Equipment_Inventory();//10.정렬 
+        void Change_Equipment_Inventory_Order();//11.순서 변경
+        void Equip_Equipment_From_Inventory(Currently_Equipped_Equipments& equipped);//12.장비 착용시키기
 };
