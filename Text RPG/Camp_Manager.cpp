@@ -4,14 +4,18 @@
 
 using namespace std;
 
-Camp_Manager::Camp_Manager(
+Camp_Manager::Camp_Manager
+(
     Player& player,
     Inventory<Item>& inventory,
-    Inventory_For_Equipments_Only& inventory_for_equipments,
-    Currently_Equipped_Equipments& currently_equipped_equipments)
+    Inventory_For_Equipments_Only&
+    inventory_for_equipments,
+    Currently_Equipped_Equipments&
+    currently_equipped_equipments
+)
     : player(player),
-    inventory(inventory),
-    inventory_for_equipments(inventory_for_equipments),
+    inventory(inventory), 
+    inventory_for_equipments(inventory_for_equipments), 
     currently_equipped_equipments(currently_equipped_equipments)
 {
 }
@@ -73,12 +77,13 @@ void Camp_Manager::Open_Camp_Menu()
 
         case 0:
         {
+            cout << "재정비소에서 나갑니다."  << endl;
             return;
         }
 
         default:
         {
-            cout << "잘못된 입력입니다.\n";
+            cout << "잘못된 선택입니다." << endl;
             break;
         }
         }
@@ -159,33 +164,37 @@ void Camp_Manager::Open_Cookie_Blacksmith_Menu()
 {
     while (true)
     {
-        cout << "\n===== 쿠기의 대장간 =====\n";
-        cout << "1. 강화\n";
-        cout << "2. 제작\n";
-        cout << "3. 분해\n";
-        cout << "0. 뒤로가기\n";
-        cout << "선택 : ";
+        cout << endl;
+        cout << "========================================" << endl;
+        cout << "[ 쿠키의 코드 대장간 ]" << endl;
+        cout << "========================================" << endl;
+        cout << "1. 장비 강화" << endl;
+        cout << "2. 코드 조각으로 장비 제작" << endl;
+        cout << "3. 장비 분해" << endl;
+        cout << "0. 뒤로가기" << endl;
+        cout << "선택: ";
 
-        int choice;
+        int choice = -1;
+
         cin >> choice;
 
         switch (choice)
         {
         case 1:
         {
-            // TODO: 강화z
+            cout << "윤재님 얼른 장비강화기능 만들어 주세요" << endl;
             break;
         }
 
         case 2:
         {
-            // TODO: 제작
+            craft_work_shop.Craft_Item(inventory, inventory_for_equipments);
             break;
         }
 
         case 3:
         {
-            // TODO: 분해
+            craft_work_shop.Decomposition_Item(inventory_for_equipments, inventory);
             break;
         }
 
@@ -196,7 +205,7 @@ void Camp_Manager::Open_Cookie_Blacksmith_Menu()
 
         default:
         {
-            cout << "잘못된 입력입니다.\n";
+            cout << "잘못된 입력이다." << endl;
             break;
         }
         }

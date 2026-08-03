@@ -1,287 +1,333 @@
 ﻿#include "Craft_Item.h"
 #include <iostream>
-#include <vector>
 #include <map>
-#include <limits>
-#include "Items_Equipments_Repository.h"
-#include "Monster.h"
+#include <string>
+#include <vector>
+
 using namespace std;
 
 Craft_Work_Shop::Craft_Work_Shop()
-    : recipe_repository()
 {
 }
 
-void Craft_Work_Shop::Print_All_Recipes() const
+//=============================================================================
+// 1. 선택한 단계의 장비 제작법 출력
+//=============================================================================
+
+void Craft_Work_Shop::Print_Recipes_By_Level
+(
+	int equipment_Level
+) const
 {
-    const vector<All_Recipes>& recipes = recipe_repository.Get_All_Recipes();
+	const vector<All_Recipes>& recipes = recipe_repository.Get_All_Recipes();
 
-    cout << "\n===== 전체 레시피 목록 =====\n";
+	if
+		(equipment_Level < 1 || equipment_Level > 5)
+	{
+		cout << "잘못된 장비 단계다." << endl;
+		return;
+	}
 
-    for (size_t i = 0; i < recipes.size(); i++)
-    {
-        cout << "\n[" << i + 1 << "번]";
-        recipes[i].Print_Info();
-    }
+	const int EQUIPMENT_COUNT_PER_LEVEL = 5;
 
-    cout << "=================================\n";
+	int start_Index = (equipment_Level - 1) * EQUIPMENT_COUNT_PER_LEVEL;
+
+	cout << endl;
+	cout << "========================================" << endl;
+	cout << "[ " << equipment_Level << "단계 장비 제작 목록 ]" << endl;
+	cout << "========================================" << endl;
+
+	for
+		(
+			int i = 0;
+			i < EQUIPMENT_COUNT_PER_LEVEL;
+			i++
+			)
+	{
+		int recipe_Index = start_Index + i;
+
+		if
+			(recipe_Index >= static_cast<int>(recipes.size()))
+		{
+			break;
+		}
+
+		const All_Recipes& recipe = recipes[recipe_Index];
+
+		cout << i + 1 << ". " << recipe.Get_Recipe_Name() << endl;
+
+		map<string, int> ingredients = recipe.Get_Ingredients();
+
+		for
+			(const auto& ingredient: ingredients)
+		{
+			cout << "   - " << ingredient.first << " " << ingredient.second << "개" << endl;
+		}
+
+		cout << endl;
+	}
+
+	cout << "0. 이전으로" << endl;
+	cout << "========================================" << endl;
 }
 
+//=============================================================================
+// 2. 인벤토리 안의 특정 아이템 개수 조회
+//=============================================================================
+
+int Craft_Work_Shop::Get_Item_Count
+(Inventory<Item>& inventory, const string& item_Name
+) const
+{
+	for
+		(
+			int i = 0;
+			i < inventory.Get_Size();
+			i++
+			)
+	{
+		Item* item =inventory.Get_Item_By_Index(i);
+
+		if (item == nullptr)
+		{
+			continue;
+		}
+
+		if (item->_Item_Name == item_Name)
+		{
+			return item->_Item_Count;
+		}
+	}
+
+	return 0;
+}
+
+//=============================================================================
+// 3. 장비 제작
+//=============================================================================
+
+bool Craft_Work_Shop::Craft_Item
+(
+	Inventory<Item>& item_inventory,
+	Inventory_For_Equipments_Only&
+	equipment_inventory
+)
+{
+	const vector<All_Recipes>& recipes =
+		recipe_repository.Get_All_Recipes();
+
+	if (recipes.empty())
+	{
+		cout
+			<< "등록된 장비 제작법이 없다."
+			<< endl;
+
+		return false;
+	}
+
+	cout << endl;
+	cout << "========================================" << endl;
+	cout << "[ 쿠키의 장비 제작 목록 ]" << endl;
+	cout << "========================================" << endl;
+	cout << "1. 1단계 장비" << endl;
+	cout << "2. 2단계 장비" << endl;
+	cout << "3. 3단계 장비" << endl;
+	cout << "4. 4단계 장비" << endl;
+	cout << "5. 5단계 장비" << endl;
+	cout << "0. 뒤로가기" << endl;
+	cout << "========================================" << endl;
+	cout << "선택: ";
+
+	int equipment_Level = -1;
+
+	cin >> equipment_Level;
+
+	switch (equipment_Level)
+	{
+	case 1:
+	{
+		break;
+	}
+
+	case 2:
+	{
+		break;
+	}
+
+	case 3:
+	{
+		break;
+	}
+
+	case 4:
+	{
+		break;
+	}
+
+	case 5:
+	{
+		break;
+	}
+
+	case 0:
+	{
+		cout << "장비 제작 메뉴에서 나간다." << endl;
+		return false;
+	}
 
-    bool Craft_Work_Shop::Craft_Item(Inventory<Item>&inventory, Inventory_For_Equipments_Only& equipment_inventory)
-    {
-        cout << "========== 제작소 ==========" << endl;
+	default:
+	{
+		cout << "잘못된 장비 단계를 선택했다." << endl;
+		return false;
+	}
+	}
 
-        Print_All_Recipes();
+	Print_Recipes_By_Level
+	(
+		equipment_Level
+	);
 
-        int selected_index = 0;
+	cout << "제작할 장비 번호: ";
 
-        cout << "제작할 레시피 번호를 입력하라냥! : ";
-        cin >> selected_index;
-        const vector<All_Recipes>& recipes = recipe_repository.Get_All_Recipes();
-        if (cin.fail())
-        {
-            cin.clear();
-            cin.ignore(1000, '\n');
-            cout << "잘못된 입력이다냥!" << endl;
-            return false;
-        }
-        if (selected_index < 1 || selected_index > recipes.size())
-        {
-            cout << "존재하지 않는 레시피 번호다냥!" << endl;
-            return false;
-        }
+	int equipment_Choice = -1;
 
-  
-        const All_Recipes& selected_recipe = recipes[selected_index - 1];
-       
+	cin >> equipment_Choice;
 
-        map<string, int> ingredients = selected_recipe.Get_Ingredients();
+	if (equipment_Choice == 0)
+	{
+		cout << "대장간 메뉴로 돌아간다." << endl;
+		return false;
+	}
 
-        string result_item_name = selected_recipe.Get_Recipe_Name();
+	if
+		(equipment_Choice < 1 || equipment_Choice > 5)
+	{
+		cout << "잘못된 장비 번호다." << endl;
+		return false;
+	}
 
+	const int EQUIPMENT_COUNT_PER_LEVEL = 5;
 
-        // ==============================
-        // 1. 재료 보유 수량 확인
-        // ==============================
+	int selected_Recipe_Index = (equipment_Level - 1) * EQUIPMENT_COUNT_PER_LEVEL + (equipment_Choice - 1);
 
-        for (const pair<string, int>& ingredient : ingredients)
-        {
-            string ingredient_name = ingredient.first;
-            int required_count = ingredient.second;
+	if
+		(selected_Recipe_Index < 0 || selected_Recipe_Index>= static_cast<int>(recipes.size()))
+	{
+		cout << "선택한 장비 제작법을 찾지 못했다." << endl;
+		return false;
+	}
 
-            // TODO: inventory.Get_Item_Count_By_Name 호출 결과 변수 선언
-            int current_count = inventory.Get_Item_Count_By_Name(ingredient_name);
+	const All_Recipes& selected_Recipe = recipes[selected_Recipe_Index];
+	const string equipment_Name = selected_Recipe.Get_Recipe_Name();
+	const Equipment* result_Equipment = equipment_repository.Find_Equipment_By_Name(equipment_Name);
 
-            // TODO: 보유 수량 부족 조건문
-            if (current_count < required_count)
-            {
-                cout << "재료가 부족하다냥! "
-                    << ingredient_name
-                    << " 필요: " << required_count
-                    << ", 보유: " << current_count
-                    << endl;
+	if (result_Equipment == nullptr)
+	{
+		cout << equipment_Name << " 장비 데이터를 찾지 못했다." << endl;
+		return false;
+	}
 
-                return false;
-            }
-        }
+	map<string, int> ingredients = selected_Recipe.Get_Ingredients();
 
+	bool has_All_Ingredients = true;
 
-        // ==============================
-        // 2. 재료 차감
-        // ==============================
+	cout << endl;
+	cout << "========================================" << endl;
+	cout << "[ 재료 확인 ]" << endl;
+	cout << "========================================" << endl;
 
-        for (const pair<string, int>& ingredient : ingredients)
-        {
-            string ingredient_name = ingredient.first;
-            int required_count = ingredient.second;
+	for
+		(const auto& ingredient : ingredients)
+	{
+		int owned_Count = Get_Item_Count(item_inventory,ingredient.first);
 
-            // TODO: inventory.Remove_Item_Count 호출 결과 변수 선언
-            // 함수 형태에 맞게 아래 오른쪽 부분을 채워주세요.
-            bool remove_result =  inventory.Remove_Item_Count(ingredient.first,ingredient.second);
+		cout << ingredient.first << ": " << owned_Count << " / " << ingredient.second << endl;
 
-            if (remove_result == false)
-            {
-                cout << "재료 차감에 실패했다냥! "
-                    << ingredient_name
-                    << endl;
+		if (owned_Count < ingredient.second)
+		{
+			has_All_Ingredients = false;
+		}
+	}
 
-                return false;
-            }
-        }
+	cout << "========================================" << endl;
 
+	if (!has_All_Ingredients)
+	{
+		cout << "코드 조각이 부족해 장비를 제작할 수 없다." << endl;
 
-        // ==============================
-        // 3. 제작 결과 아이템 생성
-        // ==============================
+		return false;
+	}
 
-        Item crafted_item;
+	cout << endl;
+	cout << equipment_Name << "을(를) 제작하시겠습니까?" << endl;
+	cout << "1. 제작" << endl;
+	cout << "0. 취소" << endl;
+	cout << "선택: ";
 
-        // TODO: crafted_item 이름 필드 대입
-        // crafted_item._Item_Name = result_item_name;
+	int craft_Choice = -1;
 
-        // TODO: crafted_item 개수 필드 대입
-        // crafted_item._Item_Count = 1;
+	cin >> craft_Choice;
 
-        // TODO: crafted_item 무게 필드 대입
-        // crafted_item._Item_Weight = 1;
+	if (craft_Choice != 1)
+	{
+		cout << "장비 제작을 취소했다." << endl;
 
-        // TODO: crafted_item 가격 필드 대입
-        // crafted_item._Item_Price = 0;
+		return false;
+	}
 
-        // TODO: crafted_item 설명 필드 대입
-        // crafted_item._Item_Description = "제작으로 획득한 아이템";
+	bool is_Added = equipment_inventory.Add_Equipment(*result_Equipment);
 
-        // TODO: crafted_item 사용 가능 여부 필드 대입
-        // crafted_item._Item_Type_Usable = false;
+	if (!is_Added)
+	{
+		cout << "장비 인벤토리에 공간이 없어 " << "제작을 취소했다." << endl;
 
-        // TODO: crafted_item 장착 가능 여부 필드 대입
-        // crafted_item._Item_Type_Wearable = false;
+		return false;
+	}
 
+	for
+		(const auto& ingredient : ingredients)
+	{
+		item_inventory.Remove_Item_Count(ingredient.first, ingredient.second);
+	}
 
-        // ==============================
-        // 4. 인벤토리에 결과 아이템 추가
-        // ==============================
+	cout << endl;
+	cout << "========================================" << endl;
+	cout << "[ 장비 제작 완료 ]" << endl;
+	cout << "========================================" << endl;
+	cout << "흩어진 코드 조각이 " << "하나의 장비로 결합됐다." << endl;
+	cout << equipment_Name << " 제작 성공!" << endl;
 
-        // TODO: inventory.Add_Or_Increase_Item 호출 결과 변수 선언
+	result_Equipment->Print_Equipment_Info();
 
-        // TODO: 인벤토리 추가 실패 조건문
+	cout << "========================================" << endl;
 
-        // TODO: 제작 완료 메시지 출력문
+	return true;
+}
 
-        return true;
-    }
+//=============================================================================
+// 4. 장비 분해
+//=============================================================================
 
+bool Craft_Work_Shop::Decomposition_Item(Inventory_For_Equipments_Only& equipment_inventory, Inventory<Item>& item_inventory)
+{
+	(void)equipment_inventory;
+	(void)item_inventory;
 
-    // ==============================
-    // 장비 분해
-    // ==============================
-    bool Craft_Work_Shop::Decomposition_Item(
-        Inventory_For_Equipments_Only & equipment_inventory,
-        Inventory<Item>&item_inventory
-    )
-    {
-        cout << "========== 장비 분해 ==========" << endl;
+	cout << "장비 분해 기능은 아직 준비 중이다." << endl;
+	return false;
+}
 
-        // TODO: 장비 인벤토리 출력 함수 호출
-        // equipment_inventory.Print_Equipment_Inventory();
+//=============================================================================
+// 5. 장비 강화
+//=============================================================================
 
-        int selected_index = 0;
+bool Craft_Work_Shop::Enhance_Item
+(
+	Equipment& equipment
+)
+{
+	(void)equipment;
 
-        cout << "분해할 장비 번호를 선택하세요: ";
-        cin >> selected_index;
-
-        // TODO: 입력 실패 처리 코드
-        // TODO: selected_index 범위 검사 조건문
-
-        // TODO: 선택한 장비 포인터 또는 참조 변수 선언
-        // 예:
-        // Equipment* selected_equipment = equipment_inventory.Get_Equipment_By_Index(selected_index - 1);
-
-        // TODO: selected_equipment가 nullptr인지 검사하는 조건문
-
-
-        // ==============================
-        // 1. 분해 결과 재료 아이템 생성
-        // ==============================
-
-        Item material_item;
-
-        // TODO: material_item 이름 필드 대입
-        // 예: material_item._Item_Name = "분해 조각";
-
-        // TODO: material_item 개수 필드 대입
-
-        // TODO: material_item 무게 필드 대입
-
-        // TODO: material_item 가격 필드 대입
-
-        // TODO: material_item 설명 필드 대입
-
-        // TODO: material_item 사용 가능 여부 필드 대입
-
-        // TODO: material_item 장착 가능 여부 필드 대입
-
-
-        // ==============================
-        // 2. 재료 아이템 인벤토리에 추가
-        // ==============================
-
-        // TODO: item_inventory.Add_Or_Increase_Item 호출 결과 변수 선언
-
-        // TODO: 재료 추가 실패 조건문
-
-
-        // ==============================
-        // 3. 기존 장비 제거
-        // ==============================
-
-        // TODO: equipment_inventory에서 선택 장비 제거 함수 호출
-        // 예:
-        // equipment_inventory.Remove_Equipment_By_Index(selected_index - 1);
-
-        // TODO: 장비 제거 실패 조건문
-
-        // TODO: 분해 완료 메시지 출력문
-
-        return true;
-    }
-
-
-    // ==============================
-    // 장비 강화
-    // ==============================
-    bool Craft_Work_Shop::Enhance_Item(Equipment & equipment)
-    {
-        cout << "========== 장비 강화 ==========" << endl;
-
-        // TODO: 강화 대상 장비 정보 출력 함수 호출
-        // equipment.Print_Info();
-
-
-        // ==============================
-        // 1. 강화 가능 여부 확인
-        // ==============================
-
-        // TODO: 장비의 현재 강화 수치 변수 선언
-
-        // TODO: 최대 강화 수치 변수 선언
-
-        // TODO: 현재 강화 수치가 최대치 이상인지 검사하는 조건문
-
-
-        // ==============================
-        // 2. 강화 성공 확률 계산 준비
-        // ==============================
-
-        // TODO: 강화 성공 확률 변수 선언
-
-        // TODO: 랜덤 값 변수 선언
-
-        // TODO: 성공 여부 bool 변수 선언
-
-
-        // ==============================
-        // 3. 강화 결과 처리
-        // ==============================
-
-        // TODO: 강화 성공 조건문
-
-        {
-            // TODO: 장비 강화 수치 증가 코드
-
-            // TODO: 장비 능력치 증가 코드
-
-            // TODO: 강화 성공 메시지 출력문
-        }
-
-        // TODO: 강화 실패 조건문
-
-        {
-            // TODO: 강화 실패 시 메시지 출력문
-
-            // TODO: 실패 패널티가 있다면 관련 필드 변경 코드
-        }
-
-        return true;
-    }
+	cout << "장비 강화 기능은 아직 준비 중이다." << endl;
+	return false;
+}
