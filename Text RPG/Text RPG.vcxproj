@@ -185,6 +185,7 @@
     </ClCompile>
     <ClCompile Include="Quiz_Bank.cpp" />
     <ClCompile Include="Recipe_Repository.cpp" />
+    <ClCompile Include="Tutor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Basic_Engine.h" />
@@ -247,6 +248,7 @@
     <ClInclude Include="Quiz_Bank.h" />
     <ClInclude Include="Recipe_Repository.h" />
     <ClInclude Include="Stat_Modifier.h" />
+    <ClInclude Include="Tutor.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Title.txt" />
