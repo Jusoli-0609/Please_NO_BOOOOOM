@@ -1378,8 +1378,6 @@ void Monster::Print_Monster_Info() const
 	cout << "경험치: " << _exp_Reward << endl;
 	cout << "점수: " << _score_Reward << endl;
 	cout << "========================================" << endl;
-	cout << "드롭 아이템: " << _drop_Item_Name << " " << _drop_Item_Count << "개" << endl;
-	cout << "훈련장려금: " << _gold_Reward << " 원" << endl;
 
 	if
 		(
@@ -1387,18 +1385,21 @@ void Monster::Print_Monster_Info() const
 			&& _drop_Item_Name.empty() == false
 			)
 	{
-		cout << "��� ������: " << _drop_Item_Name << " " << _drop_Item_Count << "��" << endl;
-        cout << "�Ʒ������: " << _gold_Reward << "��" << endl;
+		cout << "드롭 아이템: " << _drop_Item_Name << " " << _drop_Item_Count << "개" << endl;
+        cout << "훈련장려금: " << _gold_Reward << "원" << endl;
 	}
 }
-// 9-3. 드롭 아이템과 무게 출력
+// 9-4. 드롭 아이템과 무게 출력
 void Monster::Print_Drop_Reward() const
 {
-	cout << "획득 아이템:" << endl;
+	cout << endl;
+	cout << "----------------------------------------" << endl;
+	cout << "[ 코드 전리품 ]" << endl;
+	cout << "----------------------------------------" << endl;
 
 	if (_drop_Items.empty())
 	{
-		cout << "- 획득한 아이템이 없습니다." << endl;
+		cout << "획득한 아이템이 없다." << endl;
 
 		return;
 	}
@@ -1409,11 +1410,12 @@ void Monster::Print_Drop_Reward() const
 			<< drop_Item._Item_Name
 			<< " "
 			<< drop_Item._Item_Count
-			<< "개"
-			<< " / 개당 무게 "
+			<< "개 획득!"
+			<< endl;
+
+		cout
+			<< "무게: "
 			<< drop_Item._Item_Weight
-			<< " / 총 무게 "
-			<< item_Total_Weight
 			<< endl;
 	}
 
@@ -1430,6 +1432,7 @@ void Monster::Print_Drop_Item_Ascii_Art() const
 			continue;
 		}
 
-	cout << "드롭 아이템 총 무게: " << total_Drop_Weight << endl;
+		drop_Item.Print_Ascii_Art();
+	}
 }
 

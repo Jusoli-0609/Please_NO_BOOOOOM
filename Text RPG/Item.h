@@ -17,10 +17,10 @@ public:
     bool _Item_Type_Wearable=false;
     bool _Need_Item_Reverse_Effect=false;
     bool _Need_Reverse_Effect_Of_Attack_Potion_Buff = false;
-    void Print_Info() const;//1.������ ���� ��������
-    bool Item_Effect(Player& player, Monster& monster);//2.������ ȿ�� ����
-    bool Item_Effect_Reverse(Player& player, Monster& monster);//3.������ ȿ�� ����
-    void Print_Ascii_Art() const;
+    void Print_Info() const;//1.아이템 정보 내보내기
+    bool Item_Effect(Player& player, Monster& monster);//2.아이템 효과 적용
+    bool Item_Effect_Reverse(Player& player, Monster& monster);//3.아이템 효과 해제
+    void Print_Ascii_Art() const;//4.아스키 아트 뭔말알?
  
    
 };
