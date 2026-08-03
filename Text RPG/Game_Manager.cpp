@@ -41,7 +41,7 @@ void Game_Manager::Create_Player()
         break;
 
     default:
-        cout << "잘못된 직업 선택입니다. 기본 직업으로 시작합니다." << endl;
+        cout << "잘못된 선택! 기본 직업으로 시작!" << endl;
         _Player = new JYJ("JYJ");
         break;
     }
