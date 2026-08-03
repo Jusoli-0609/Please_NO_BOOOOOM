@@ -661,6 +661,16 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 		_chapter_Type = Chapter_Type::VARIABLE_CONDITION_FOREST;
 		_monster_Type = Monster_Type::VARIABLE_CONDITION_TUTOR;
 		_monster_Name = "손승현 튜터님";
+		_monster_Ascii_Art =
+			R"(   .-------------.
+   |  TUTOR_01   |
+   |   VAR / IF  |
+   '-------------'
+       /|_|\
+      / o o \
+     |   ^   |
+     | [OK?] |
+      \_____/)";
 		_attack_Message = "변수와 조건문 코드 시험을 시작합니다.";
 
 		break;

@@ -220,8 +220,6 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inven
 			cout << "획득 경험치: " << elite_Monster.getExpReward() << endl;
 			cout << "획득 점수: " << elite_Monster.getScoreReward() << endl;
 
-			elite_Monster.Print_Drop_Reward();
-			elite_Monster.Print_Drop_Item_Ascii_Art();
 			Give_Drop_Items_To_Inventory(elite_Monster, inventory);
 
 			cout << "획득 훈련장려금: " << elite_Monster.getGoldReward() << "원" << endl;
@@ -254,8 +252,6 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inven
 		cout << "코드를 해결하지 못했습니다." << endl;
 		return;
 	}
-
-	monster.Print_Drop_Item_Ascii_Art();
 
 	Record_Monster_Kill(monster);
 
@@ -627,7 +623,11 @@ void Dungeon_Manager::Give_Drop_Items_To_Inventory(const Monster& monster, Inven
 		if (!is_Added)
 		{
 			cout << drop_Item._Item_Name << " 획득을 취소했습니다." << endl;
+			continue;
 		}
+		drop_Item.Print_Info();
+
+		cout << endl;
 	}
 }
 
@@ -663,7 +663,7 @@ void Dungeon_Manager::Add_Chapter_Score(int score_Reward)
 
 	if (_current_Chapter_Score >= max_Chapter_Score)
 	{
-		cout << "튜터님 시험 조건을 달성다!" << endl;
+		cout << "튜터님 시험 조건을 달성했다!" << endl;
 	}
 }
 
@@ -924,7 +924,7 @@ void Dungeon_Manager::Run_Final_Boss_Room(Player* player, Inventory<Item>& inven
 
 	if (_is_All_Chapter_Cleared == false)
 	{
-		cout << "모든 내일배움캠프 과정을 수료한 상태다" << endl;
+		cout << "모든 내일배움캠프 과정을 수료하지 못했다." << endl;
 
 		return;
 	}
