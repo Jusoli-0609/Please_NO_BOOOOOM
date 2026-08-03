@@ -29,4 +29,17 @@ public:
     //화면 초기화 함수
 
     void Slow_Print(const std::string& Text, int DelayMs);
+
+    int Get_Width() const
+    {
+        return _Width;
+    }
+
+    int Get_Height() const
+    {
+        return _Height;
+    }
+    // private 멤버 읽는용 함수입니다.
+
+    void Print_At(int x, int y, const std::string& Text);
 };

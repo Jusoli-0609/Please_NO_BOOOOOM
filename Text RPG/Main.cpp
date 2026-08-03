@@ -2,6 +2,7 @@
 #include "DungeonManager.h"
 #include "Inventory.h"
 #include "Item.h"
+#include "Ascii_Art_Manager.h"
 
 #include <iostream>
 #include <string>
@@ -16,7 +17,10 @@ void Intro();
 
 int main()
 {
+    SetConsoleOutputCP(CP_UTF8);
+    SetConsoleCP(CP_UTF8);
     Console_Manager Console(120, 40);
+    Ascii_Art_Manager Art_Manager;
 
     Console.Set_Console_Size();
     Console.Clear();
