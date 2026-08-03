@@ -1,10 +1,5 @@
-#include "Console_Manager.h"
-#include "DungeonManager.h"
-#include "Inventory.h"
-#include "Item.h"
-
-#include <iostream>
-#include <string>
+ï»¿#include "Game_Manager.h"
+#include <filesystem>
 
 using namespace std;
 
@@ -12,91 +7,14 @@ void PrintLine()
 {
     cout << string(50, '=') << endl;
 }
-void Intro();
 
 int main()
 {
-    Console_Manager Console(120, 40);
-
-    Console.Set_Console_Size();
-    Console.Clear();
-    Console.Set_Cursor_Position(15, 10);
-    Console.Slow_Print("´« ¶°º¸´Ï ÄÚµå ¸¶½ºÅÍ", 50);
-
-    PrintLine();
-    Intro();
-
-    // ===========================
-    // Å×½ºÆ®¿ë ÀÎº¥Åä¸® »ý¼º
-    // ===========================
-
-    Inventory<Item> inventory(10, 9999);
-
-    // ½½·Ô 10Ä­ Ã¤¿ì±â
-    for (int i = 0; i < 10; i++)
-    {
-        Item item;
-        item._Item_Name = "¾²·¹±â" + to_string(i + 1);
-        item._Item_Count = 20;
-        item._Item_Weight = 1;
-        item._Item_Price = 1;
-        item._Item_Type_Usable = false;
-        item._Item_Description = "¾²·¹±â´Ù!";
-        item._Item_Ascii_Art = R"(
-
-        .-""""-.
-      .'  ____  '.
-     /   / __ \   \
-    |   | (__) |   |
-    |   |      |   |
-    |   |______|   |
-     \    ____    /
-      '._/____\_.'
-         /||||\
-        /_||||_\
-
-)";
-
-        inventory.Add_Or_Increase_Item(item);
-    }
-
-    cout << "\n===== ÇöÀç ÀÎº¥Åä¸® =====\n";
-    inventory.Print_Inventory();
-
-    // »õ ¾ÆÀÌÅÛ È¹µæ
-
-    Item newItem;
-    newItem._Item_Name = "Àü¼³ÀÇ °Ë";
-    newItem._Item_Count = 1;
-    newItem._Item_Weight = 1;
-    newItem._Item_Price = 9999;
-    newItem._Item_Type_Usable = false;
-    newItem._Item_Description = "Àü¼³ÀÇ °ËÀÌ´Ù!";
-    newItem._Item_Ascii_Art = 
-    R"(
-
-       /\
-      /  \
-     /====\
-    /======\
-       ||
-       ||
-       ||
-       ||
-       ||
-=================
-   \\______//
-      ||||
-      ||||
-     /____\
-
-)";
-
-    cout << "\n»õ ¾ÆÀÌÅÛÀ» È¹µæÇÕ´Ï´Ù.\n";
-    inventory.Add_Or_Increase_Item(newItem);
-
-    cout << "\n===== °á°ú =====\n";
-    inventory.Print_Inventory();
-
+    char buffer[MAX_PATH];
+    GetCurrentDirectoryA(MAX_PATH, buffer);
+    std::cout << "í˜„ìž¬ ìž‘ì—… í´ë”: " << buffer << std::endl;
+    system("pause");
+    Game_Manager game;
+    game.Run();
     return 0;
 }

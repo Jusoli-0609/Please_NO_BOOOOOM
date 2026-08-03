@@ -1,32 +1,48 @@
-#pragma once
+ï»¿#pragma once
 #include <windows.h>
 #include <cstdlib>
-#include < string >
+#include <string>
+
 
 class Console_Manager
-    //ÄÜ¼Ö È­¸é ±â´ÉÀ» ¸ğ¾ÆµĞ Å¬·¡½º 
+    //ì½˜ì†” í™”ë©´ ê¸°ëŠ¥ì„ ëª¨ì•„ë‘” í´ë˜ìŠ¤ 
 {
 private:
     int _Width;
     int _Height;
-    //ÄÜ¼ÖÀÇ °¡·Î, ¼¼·Î Å©±â ÀúÀå
+    //ì½˜ì†”ì˜ ê°€ë¡œ, ì„¸ë¡œ í¬ê¸° ì €ì¥
 
 
 public:
     Console_Manager();
-    //»ı¼ºÀÚ
+    //ìƒì„±ì
 
     Console_Manager(int width, int height);
-    //°´Ã¼ ¼±¾ğ
+    //ê°ì²´ ì„ ì–¸
 
     void Set_Console_Size();
-    //ÄÜ¼Ö Ã¢ Å©±â ¼³Á¤
+    //ì½˜ì†” ì°½ í¬ê¸° ì„¤ì •
 
     void Set_Cursor_Position(int x, int y);
-    //Ä¿¼­ À§Ä¡ ÀÌµ¿ ÇÔ¼ö
+    //ì»¤ì„œ ìœ„ì¹˜ ì´ë™ í•¨ìˆ˜
 
     void Clear();
-    //È­¸é ÃÊ±âÈ­ ÇÔ¼ö
+    //í™”ë©´ ì´ˆê¸°í™” í•¨ìˆ˜
 
     void Slow_Print(const std::string& Text, int DelayMs);
+
+    int Get_Width() const
+    {
+        return _Width;
+    }
+
+    int Get_Height() const
+    {
+        return _Height;
+    }
+    // private ë©¤ë²„ ì½ëŠ”ìš© í•¨ìˆ˜ì…ë‹ˆë‹¤.
+
+    void Print_At(int x, int y, const std::string& Text);
+    
+    void Set_Console_Font();
 };

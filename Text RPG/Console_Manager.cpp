@@ -1,4 +1,4 @@
-#include "Console_Manager.h"
+ï»¿#include "Console_Manager.h"
 #include <string>
 #include <thread>
 #include <chrono>
@@ -11,8 +11,7 @@ Console_Manager::Console_Manager()
     _Width = 120;
     _Height = 40;
 }
-//ÀÓ½Ã°ªÀÔ´Ï´Ù. ÃßÈÄ ¼öÁ¤.
-
+//ì„ì‹œê°’ì…ë‹ˆë‹¤. ì¶”í›„ ìˆ˜ì •.
 
 Console_Manager::Console_Manager(int Width, int Height)
 {
@@ -24,7 +23,7 @@ void Console_Manager::Set_Console_Size()
 {
     std::string Width_Text = std::to_string(_Width);
     std::string Height_Text = std::to_string(_Height);
-    //system¿¡¼­ int¸¦ ¸ø ¹Ş¾Æ¼­ ¹®ÀÚ¿­·Î º¯°æ
+    //systemì—ì„œ intë¥¼ ëª» ë°›ì•„ì„œ ë¬¸ìì—´ë¡œ ë³€ê²½
 
     std::string command =
         "mode con cols=" + Width_Text + " lines=" + Height_Text;
@@ -35,9 +34,9 @@ void Console_Manager::Set_Console_Size()
 void Console_Manager::Set_Cursor_Position(int x, int y)
 {
     COORD pos;
-    //windows¿¡¼­ Á¦°øÇÏ´Â ÁÂÇ¥ ±¸Á¶Ã¼ÀÎµ¥
-    //ÀÌ ±¸Á¶Ã¼¿¡¼­ int°¡ ¾Æ´Ï¶ó SHORT Å¸ÀÔÀÌ¾î¼­ ¾Æ·¡¿¡¼­ º¯È¯
-    //SHORT ¾²´Â ÀÌÀ¯´Â Å« ¼ıÀÚ°¡ µé¾î°¥ ÇÊ¿ä°¡ ¾ø±â ¶§¹®
+    //windowsì—ì„œ ì œê³µí•˜ëŠ” ì¢Œí‘œ êµ¬ì¡°ì²´ì¸ë°
+    //ì´ êµ¬ì¡°ì²´ì—ì„œ intê°€ ì•„ë‹ˆë¼ SHORT íƒ€ì…ì´ì–´ì„œ ì•„ë˜ì—ì„œ ë³€í™˜
+    //SHORT ì“°ëŠ” ì´ìœ ëŠ” í° ìˆ«ìê°€ ë“¤ì–´ê°ˆ í•„ìš”ê°€ ì—†ê¸° ë•Œë¬¸
 
     pos.X = static_cast<SHORT>(x);
     pos.Y = static_cast<SHORT>(y);
@@ -48,8 +47,7 @@ void Console_Manager::Set_Cursor_Position(int x, int y)
         pos
     );
 }
-//windows¿¡¼­ ²¨³»¿Â ÇÔ¼ö¶ó ³×ÀÌ¹Ö ¼öÁ¤ ºÒ°¡
-
+//windowsì—ì„œ êº¼ë‚´ì˜¨ í•¨ìˆ˜ë¼ ë„¤ì´ë° ìˆ˜ì • ë¶ˆê°€!
 
 void Console_Manager::Clear()
 {
@@ -66,6 +64,31 @@ void Console_Manager::Slow_Print(const std::string& Text, int DelayMs)
 
     cout << endl;
 }
-//ÀÌ°Å ¾î¶²½ÄÀ¸·Î È£ÃâÇÏ³Ä¸é
-//Console.Slow_Print("´ç½ÅÀº 8½Ã 55ºĞ¿¡ ´«À» ¶¹´Ù!", 50);
-//ÀÌ·±½ÄÀ¸·Î ½áÁÖ½Ã¸é µË´Ï´Ù.
+//ì´ê±° ì–´ë–¤ì‹ìœ¼ë¡œ í˜¸ì¶œí•˜ëƒë©´
+//Console.Slow_Print("ë‹¹ì‹ ì€ 8ì‹œ 55ë¶„ì— ëˆˆì„ ë–´ë‹¤!", 50);
+//ì´ëŸ°ì‹ìœ¼ë¡œ ì¨ì£¼ì‹œë©´ ë©ë‹ˆë‹¤.
+
+void Console_Manager::Print_At(int x, int y, const std::string& Text)
+{
+    Set_Cursor_Position(x, y);
+    std::cout << Text;
+}
+
+void Console_Manager::Set_Console_Font()
+{
+    CONSOLE_FONT_INFOEX fontInfo;
+    fontInfo.cbSize = sizeof(fontInfo);
+    fontInfo.nFont = 0;
+    fontInfo.dwFontSize.X = 0;      // 0ìœ¼ë¡œ ë‘ë©´ ì„¸ë¡œ ë¹„ìœ¨ì— ë§ì¶° ê°€ë¡œ ìë™ ê³„ì‚°
+    fontInfo.dwFontSize.Y = 16;     // í°íŠ¸ í¬ê¸°
+    fontInfo.FontFamily = FF_DONTCARE;
+    fontInfo.FontWeight = FW_NORMAL;
+    wcscpy_s(fontInfo.FaceName, L"D2Coding");
+
+    SetCurrentConsoleFontEx
+    (
+        GetStdHandle(STD_OUTPUT_HANDLE),
+        FALSE,
+        &fontInfo
+    );
+}

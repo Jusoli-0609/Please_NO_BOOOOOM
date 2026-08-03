@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <string>
 #include "Console_Manager.h"
 

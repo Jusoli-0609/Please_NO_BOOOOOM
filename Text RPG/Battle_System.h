@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Player.h"
 #include "Monster.h"
@@ -6,7 +6,7 @@
 #include "Item.h"
 #include "Battle_Elite_Skill.h"
 // =======================
-// ÀüÅõ ¸Ş´º
+// ì „íˆ¬ ë©”ë‰´
 // =======================
 
 enum Battle_Menu
@@ -17,13 +17,13 @@ enum Battle_Menu
 };
 
 // =======================
-// ÀüÅõ ½ÃÀÛ
+// ì „íˆ¬ ì‹œì‘
 // =======================
 
 void Battle(Player* player, Monster& monster, Inventory<Item>& inventory);
 
 // =======================
-// UI (UI ´ã´ç)
+// UI (UI ë‹´ë‹¹)
 // =======================
 
 void Show_Battle_Start(Player* player, Monster& monster);
@@ -37,7 +37,7 @@ void Show_Battle_End(Player* player, Monster& monster);
 void Give_Battle_Item_Reward(Player* player, Monster& monster, Inventory<Item>& Inventory);
 
 // =======================
-// ÇÃ·¹ÀÌ¾î ÅÏ
+// í”Œë ˆì´ì–´ í„´
 // =======================
 
 void Player_Turn(Player* player, Monster& monster, Inventory<Item>& inventory);
@@ -49,7 +49,7 @@ void Skill(Player* player, Monster& monster);
 void Use_Item(Player* player, Monster& monster, Inventory<Item>& inventory);
 
 // =======================
-// ¸ó½ºÅÍ ÅÏ
+// ëª¬ìŠ¤í„° í„´
 // =======================
 
 void Monster_Turn(Player* player, Monster& monster, int turnCount);

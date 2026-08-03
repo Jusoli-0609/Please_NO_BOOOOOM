@@ -1,21 +1,19 @@
-#pragma once
+癤�#pragma once
+#include "Player.h"
+#include "DungeonManager.h"
 #include "Console_Manager.h"
+#include "Battle_System.h"
+#include "Intro.h"
+#include "Ascii_Art_Manager.h"
 
-class GameManager
+class Game_Manager
 {
 private:
-    Console_Manager Console;
+    Console_Manager   _Console;
+    Ascii_Art_Manager _Art;
+    Intro             _Intro;      
 
 public:
-    // TODO: GameManager 생성자 선언
-    GameManager();
-
-    // TODO: 게임 초기화 함수 선언
-    void Init();
-
-    // TODO: 게임 실행 함수 선언
+    Game_Manager();
     void Run();
-
-    // TODO: 화면 출력 함수 선언
-    void Render();
 };

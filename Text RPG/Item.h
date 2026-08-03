@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <string>
 #include <iostream>
 
@@ -17,10 +17,10 @@ public:
     bool _Item_Type_Wearable=false;
     bool _Need_Item_Reverse_Effect=false;
     bool _Need_Reverse_Effect_Of_Attack_Potion_Buff = false;
-    void Print_Info() const;//1.¾ÆÀÌÅÛ Á¤º¸ ³»º¸³»±â
-    bool Item_Effect(Player& player, Monster& monster);//2.¾ÆÀÌÅÛ È¿°ú Àû¿ë
-    bool Item_Effect_Reverse(Player& player, Monster& monster);//3.¾ÆÀÌÅÛ È¿°ú ÇØÁ¦
-    void Print_Ascii_Art() const;//4.¾Æ½ºÅ° ¾ÆÆ® ¹º¸»¾Ë?
+    void Print_Info() const;//1.ì•„ì´í…œ ì •ë³´ ë‚´ë³´ë‚´ê¸°
+    bool Item_Effect(Player& player, Monster& monster);//2.ì•„ì´í…œ íš¨ê³¼ ì ìš©
+    bool Item_Effect_Reverse(Player& player, Monster& monster);//3.ì•„ì´í…œ íš¨ê³¼ í•´ì œ
+    void Print_Ascii_Art() const;//4.ì•„ìŠ¤í‚¤ ì•„íŠ¸ ë­”ë§ì•Œ?
  
    
 };

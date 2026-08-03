@@ -1,4 +1,4 @@
-#include "Monster.h"
+ï»¿#include "Monster.h"
 #include "Player.h"
 #include <cstdlib>
 #include <iostream>
@@ -7,37 +7,37 @@ using namespace std;
 
 namespace
 {
-	// ±âº» °æÇèÄ¡ ¹× ¸í¼ºÄ¡°ª
+	// ê¸°ë³¸ ê²½í—˜ì¹˜ ë° ëª…ì„±ì¹˜ê°’
 	constexpr int BASE_EXP_REWARD = 100;
 	constexpr int BASE_SCORE_REWARD = 100;
-	// Ã©ÅÍº° º¸»ó Áõ°¡ ¹èÀ²
+	// ì±•í„°ë³„ ë³´ìƒ ì¦ê°€ ë°°ìœ¨
 	constexpr double CHAPTER_REWARD_MULTIPLIER = 1.3;
-	// ¾ÆÀÌÅÛº° µ¶¸³ µå·Ó È®·ü
+	// ì•„ì´í…œë³„ ë…ë¦½ ë“œë¡­ í™•ë¥ 
 	constexpr int CODE_FRAGMENT_DROP_CHANCE = 60;
 	constexpr int CUP_RAMEN_DROP_CHANCE = 60;
 	constexpr int ENERGY_DRINK_DROP_CHANCE = 60;
-	// ¾ÆÀÌÅÛº° ¹«°Ô°ª
+	// ì•„ì´í…œë³„ ë¬´ê²Œê°’
 	constexpr int CODE_FRAGMENT_WEIGHT = 1;
 	constexpr int CUP_RAMEN_WEIGHT = 1;
 	constexpr int ENERGY_DRINK_WEIGHT = 1;
 }
 
 //=============================================================================
-// 1. ¸ó½ºÅÍ »ı¼º ÆÄÆ®
+// 1. ëª¬ìŠ¤í„° ìƒì„± íŒŒíŠ¸
 //=============================================================================
 
-// 1-1. ±âº» ¸ó½ºÅÍ »ı¼ºÀÚ
+// 1-1. ê¸°ë³¸ ëª¬ìŠ¤í„° ìƒì„±ì
 Monster::Monster()
 	: _monster_Type(Monster_Type::INT_SLIME),
 	_chapter_Type(Chapter_Type::VARIABLE_CONDITION_FOREST),
 	_monster_Grade(Monster_Grade::NORMAL),
 	_monster_Level(1),
-	_monster_Name("int ½½¶óÀÓ"),
+	_monster_Name("int ìŠ¬ë¼ì„"),
 	_evasion(80),
 	_accuracy(80),
 	_exp_Reward(0),
 	_score_Reward(0),
-	_attack_Message("int ½½¶óÀÓÀÌ °ø°İÇß´Ù."),
+	_attack_Message("int ìŠ¬ë¼ì„ì´ ê³µê²©í–ˆë‹¤."),
 	_drop_Item_Name(""),
 	_drop_Item_Price(0),
 	_drop_Item_Count(0),
@@ -52,13 +52,13 @@ Monster::Monster()
 	_exp_Reward = Calculate_Exp_Reward();
 	_score_Reward = Calculate_Score_Reward();
 }
-// 1-2. ¸ó½ºÅÍ Å¸ÀÔ ÁöÁ¤ »ı¼ºÀÚ
+// 1-2. ëª¬ìŠ¤í„° íƒ€ì… ì§€ì • ìƒì„±ì
 Monster::Monster(Monster_Type monster_Type)
 	: Monster()
 {
 	Initialize_Monster(monster_Type);
 }
-// 1-3. ¿ÜºÎ µ¥ÀÌÅÍ ÀÔ·Â »ı¼ºÀÚ
+// 1-3. ì™¸ë¶€ ë°ì´í„° ì…ë ¥ ìƒì„±ì
 Monster::Monster(string monster_Name, int monster_HP, int monster_Power, int monster_Defence, string drop_Item_Name, int drop_Item_Price)
 	: _monster_Type(Monster_Type::INT_SLIME),
 	_chapter_Type(Chapter_Type::VARIABLE_CONDITION_FOREST),
@@ -69,7 +69,7 @@ Monster::Monster(string monster_Name, int monster_HP, int monster_Power, int mon
 	_accuracy(80),
 	_exp_Reward(0),
 	_score_Reward(0),
-	_attack_Message(monster_Name + "ÀÌ(°¡) °ø°İÇß´Ù."),
+	_attack_Message(monster_Name + "ì´(ê°€) ê³µê²©í–ˆë‹¤."),
 	_drop_Item_Name(drop_Item_Name),
 	_drop_Item_Price(drop_Item_Price),
 	_drop_Item_Count(0),
@@ -86,10 +86,10 @@ Monster::Monster(string monster_Name, int monster_HP, int monster_Power, int mon
 }
 
 //=============================================================================
-// 2. ¸ó½ºÅÍ ÃÊ±âÈ­ ÆÄÆ®
+// 2. ëª¬ìŠ¤í„° ì´ˆê¸°í™” íŒŒíŠ¸
 //=============================================================================
 
-// 2-1. ÀÏ¹İ ¸ó½ºÅÍ Á¤º¸ ÃÊ±âÈ­
+// 2-1. ì¼ë°˜ ëª¬ìŠ¤í„° ì •ë³´ ì´ˆê¸°í™”
 void Monster::Initialize_Monster(Monster_Type monster_Type)
 {
 	_monster_Type = monster_Type;
@@ -110,7 +110,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::INT_SLIME:
 	{
 		_chapter_Type = Chapter_Type::VARIABLE_CONDITION_FOREST;
-		_monster_Name = "int ½½¶óÀÓ";
+		_monster_Name = "int ìŠ¬ë¼ì„";
 
 		_stat[MONSTER_HP] = 3;
 		_stat[MONSTER_MP] = 0;
@@ -118,7 +118,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 3;
 		_stat[MONSTER_SPEED] = 3;
 
-		_attack_Message = "int ½½¶óÀÓÀÌ Á¤¼ö µ¢¾î¸®¸¦ ´øÁ³½À´Ï´Ù.";
+		_attack_Message = "int ìŠ¬ë¼ì„ì´ ì •ìˆ˜ ë©ì–´ë¦¬ë¥¼ ë˜ì¡ŒìŠµë‹ˆë‹¤.";
 
 		break;
 	}
@@ -126,7 +126,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::BOOL_MUSHROOM:
 	{
 		_chapter_Type = Chapter_Type::VARIABLE_CONDITION_FOREST;
-		_monster_Name = "bool ¹ö¼¸";
+		_monster_Name = "bool ë²„ì„¯";
 
 		_stat[MONSTER_HP] = 4;
 		_stat[MONSTER_MP] = 0;
@@ -134,7 +134,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 4;
 		_stat[MONSTER_SPEED] = 1;
 
-		_attack_Message = "bool ¹ö¼¸ÀÌ Âü¡¤°ÅÁş Æ÷ÀÚ¸¦ »Ñ·È½À´Ï´Ù.";
+		_attack_Message = "bool ë²„ì„¯ì´ ì°¸Â·ê±°ì§“ í¬ìë¥¼ ë¿Œë ¸ìŠµë‹ˆë‹¤.";
 
 		break;
 	}
@@ -142,7 +142,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::IF_GOBLIN:
 	{
 		_chapter_Type = Chapter_Type::VARIABLE_CONDITION_FOREST;
-		_monster_Name = "if °íºí¸°";
+		_monster_Name = "if ê³ ë¸”ë¦°";
 
 		_stat[MONSTER_HP] = 2;
 		_stat[MONSTER_MP] = 0;
@@ -150,7 +150,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 2;
 		_stat[MONSTER_SPEED] = 4;
 
-		_attack_Message = "if °íºí¸°ÀÌ Á¶°ÇÀ» È®ÀÎÇÏ°í °ø°İÇß½À´Ï´Ù.";
+		_attack_Message = "if ê³ ë¸”ë¦°ì´ ì¡°ê±´ì„ í™•ì¸í•˜ê³  ê³µê²©í–ˆìŠµë‹ˆë‹¤.";
 
 		break;
 	}
@@ -158,7 +158,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::ARRAY_JELLYFISH:
 	{
 		_chapter_Type = Chapter_Type::ARRAY_LOOP_OCEAN;
-		_monster_Name = "array ÇØÆÄ¸®";
+		_monster_Name = "array í•´íŒŒë¦¬";
 
 		_stat[MONSTER_HP] = 3;
 		_stat[MONSTER_MP] = 0;
@@ -166,7 +166,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 3;
 		_stat[MONSTER_SPEED] = 3;
 
-		_attack_Message = "array ÇØÆÄ¸®°¡ ÃË¼ö ¹è¿­·Î °ø°İÇß½À´Ï´Ù.";
+		_attack_Message = "array í•´íŒŒë¦¬ê°€ ì´‰ìˆ˜ ë°°ì—´ë¡œ ê³µê²©í–ˆìŠµë‹ˆë‹¤.";
 
 		break;
 	}
@@ -174,7 +174,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::FOR_SHARK:
 	{
 		_chapter_Type = Chapter_Type::ARRAY_LOOP_OCEAN;
-		_monster_Name = "for »ó¾î";
+		_monster_Name = "for ìƒì–´";
 
 		_stat[MONSTER_HP] = 2;
 		_stat[MONSTER_MP] = 0;
@@ -182,7 +182,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 2;
 		_stat[MONSTER_SPEED] = 5;
 
-		_attack_Message = "for »ó¾î°¡ ¹İº¹ÇØ¼­ µ¹ÁøÇß½À´Ï´Ù.";
+		_attack_Message = "for ìƒì–´ê°€ ë°˜ë³µí•´ì„œ ëŒì§„í–ˆìŠµë‹ˆë‹¤.";
 
 		break;
 	}
@@ -190,7 +190,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::WHILE_WHALE:
 	{
 		_chapter_Type = Chapter_Type::ARRAY_LOOP_OCEAN;
-		_monster_Name = "while °í·¡";
+		_monster_Name = "while ê³ ë˜";
 
 		_stat[MONSTER_HP] = 5;
 		_stat[MONSTER_MP] = 0;
@@ -198,7 +198,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 4;
 		_stat[MONSTER_SPEED] = 1;
 
-		_attack_Message = "while °í·¡°¡ Á¶°ÇÀÌ ÂüÀÎ µ¿¾È °ø°İÇß½À´Ï´Ù.";
+		_attack_Message = "while ê³ ë˜ê°€ ì¡°ê±´ì´ ì°¸ì¸ ë™ì•ˆ ê³µê²©í–ˆìŠµë‹ˆë‹¤.";
 
 		break;
 	}
@@ -206,7 +206,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::PARAMETER_GIANT_FLY:
 	{
 		_chapter_Type = Chapter_Type::FUNCTION_RUINS;
-		_monster_Name = "parameter ¿ÕÆÄ¸®";
+		_monster_Name = "parameter ì™•íŒŒë¦¬";
 
 		_stat[MONSTER_HP] = 2;
 		_stat[MONSTER_MP] = 0;
@@ -214,7 +214,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 2;
 		_stat[MONSTER_SPEED] = 5;
 
-		_attack_Message = "parameter ¿ÕÆÄ¸®°¡ ¸Å°³º¯¼ö¸¦ ³¯·È½À´Ï´Ù.";
+		_attack_Message = "parameter ì™•íŒŒë¦¬ê°€ ë§¤ê°œë³€ìˆ˜ë¥¼ ë‚ ë ¸ìŠµë‹ˆë‹¤.";
 
 		break;
 	}
@@ -222,7 +222,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::RETURN_GARGOYLE:
 	{
 		_chapter_Type = Chapter_Type::FUNCTION_RUINS;
-		_monster_Name = "return °¡°íÀÏ";
+		_monster_Name = "return ê°€ê³ ì¼";
 
 		_stat[MONSTER_HP] = 4;
 		_stat[MONSTER_MP] = 0;
@@ -230,7 +230,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 5;
 		_stat[MONSTER_SPEED] = 1;
 
-		_attack_Message = "return °¡°íÀÏÀÌ °ø°İ °á°ú¸¦ ¹İÈ¯Çß½À´Ï´Ù.";
+		_attack_Message = "return ê°€ê³ ì¼ì´ ê³µê²© ê²°ê³¼ë¥¼ ë°˜í™˜í–ˆìŠµë‹ˆë‹¤.";
 
 		break;
 	}
@@ -238,7 +238,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::FUNCTION_MAGE:
 	{
 		_chapter_Type = Chapter_Type::FUNCTION_RUINS;
-		_monster_Name = "function ¸¶¹ı»ç";
+		_monster_Name = "function ë§ˆë²•ì‚¬";
 
 		_stat[MONSTER_HP] = 3;
 		_stat[MONSTER_MP] = 0;
@@ -246,7 +246,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 2;
 		_stat[MONSTER_SPEED] = 3;
 
-		_attack_Message = "function ¸¶¹ı»ç°¡ °ø°İ ÇÔ¼ö¸¦ È£ÃâÇß½À´Ï´Ù.";
+		_attack_Message = "function ë§ˆë²•ì‚¬ê°€ ê³µê²© í•¨ìˆ˜ë¥¼ í˜¸ì¶œí–ˆìŠµë‹ˆë‹¤.";
 
 		break;
 	}
@@ -254,7 +254,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::POINTER_GHOST:
 	{
 		_chapter_Type = Chapter_Type::POINTER_MEMORY_GRAVEYARD;
-		_monster_Name = "pointer À¯·É";
+		_monster_Name = "pointer ìœ ë ¹";
 
 		_stat[MONSTER_HP] = 2;
 		_stat[MONSTER_MP] = 0;
@@ -262,7 +262,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 2;
 		_stat[MONSTER_SPEED] = 5;
 
-		_attack_Message = "pointer À¯·ÉÀÌ À§ÇèÇÑ ÁÖ¼Ò¸¦ °¡¸®Ä×½À´Ï´Ù.";
+		_attack_Message = "pointer ìœ ë ¹ì´ ìœ„í—˜í•œ ì£¼ì†Œë¥¼ ê°€ë¦¬ì¼°ìŠµë‹ˆë‹¤.";
 
 		break;
 	}
@@ -270,7 +270,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::NULL_BANSHEE:
 	{
 		_chapter_Type = Chapter_Type::POINTER_MEMORY_GRAVEYARD;
-		_monster_Name = "null ¹ê½Ã";
+		_monster_Name = "null ë°´ì‹œ";
 
 		_stat[MONSTER_HP] = 3;
 		_stat[MONSTER_MP] = 0;
@@ -278,7 +278,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 2;
 		_stat[MONSTER_SPEED] = 5;
 
-		_attack_Message = "null ¹ê½Ã°¡ ºñ¾î ÀÖ´Â ¸Ş¸ğ¸®ÀÇ ºñ¸íÀ» Áú·¶½À´Ï´Ù.";
+		_attack_Message = "null ë°´ì‹œê°€ ë¹„ì–´ ìˆëŠ” ë©”ëª¨ë¦¬ì˜ ë¹„ëª…ì„ ì§ˆë €ìŠµë‹ˆë‹¤.";
 
 		break;
 	}
@@ -286,7 +286,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::MEMORY_REAPER:
 	{
 		_chapter_Type = Chapter_Type::POINTER_MEMORY_GRAVEYARD;
-		_monster_Name = "memory »ç½Å";
+		_monster_Name = "memory ì‚¬ì‹ ";
 
 		_stat[MONSTER_HP] = 4;
 		_stat[MONSTER_MP] = 0;
@@ -294,7 +294,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 4;
 		_stat[MONSTER_SPEED] = 3;
 
-		_attack_Message = "memory »ç½ÅÀÌ ¸Ş¸ğ¸® °ø°£À» º£¾ú½À´Ï´Ù.";
+		_attack_Message = "memory ì‚¬ì‹ ì´ ë©”ëª¨ë¦¬ ê³µê°„ì„ ë² ì—ˆìŠµë‹ˆë‹¤.";
 
 		break;
 	}
@@ -302,7 +302,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::CLASS_MACHINE_DOLL:
 	{
 		_chapter_Type = Chapter_Type::OBJECT_STL_FACTORY;
-		_monster_Name = "class ±â°èÀÎÇü";
+		_monster_Name = "class ê¸°ê³„ì¸í˜•";
 
 		_stat[MONSTER_HP] = 4;
 		_stat[MONSTER_MP] = 0;
@@ -310,7 +310,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 4;
 		_stat[MONSTER_SPEED] = 3;
 
-		_attack_Message = "class ±â°èÀÎÇüÀÌ °´Ã¼¸¦ »ı¼ºÇØ °ø°İÇß½À´Ï´Ù.";
+		_attack_Message = "class ê¸°ê³„ì¸í˜•ì´ ê°ì²´ë¥¼ ìƒì„±í•´ ê³µê²©í–ˆìŠµë‹ˆë‹¤.";
 
 		break;
 	}
@@ -318,7 +318,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::INHERITANCE_CHIMERA:
 	{
 		_chapter_Type = Chapter_Type::OBJECT_STL_FACTORY;
-		_monster_Name = "inheritance Å°¸Ş¶ó";
+		_monster_Name = "inheritance í‚¤ë©”ë¼";
 
 		_stat[MONSTER_HP] = 4;
 		_stat[MONSTER_MP] = 0;
@@ -326,7 +326,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 3;
 		_stat[MONSTER_SPEED] = 2;
 
-		_attack_Message = "inheritance Å°¸Ş¶ó°¡ »ó¼Ó¹ŞÀº ±â¼úÀ» »ç¿ëÇß½À´Ï´Ù.";
+		_attack_Message = "inheritance í‚¤ë©”ë¼ê°€ ìƒì†ë°›ì€ ê¸°ìˆ ì„ ì‚¬ìš©í–ˆìŠµë‹ˆë‹¤.";
 
 		break;
 	}
@@ -334,7 +334,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::VECTOR_DRONE:
 	{
 		_chapter_Type = Chapter_Type::OBJECT_STL_FACTORY;
-		_monster_Name = "vector µå·Ğ";
+		_monster_Name = "vector ë“œë¡ ";
 
 		_stat[MONSTER_HP] = 3;
 		_stat[MONSTER_MP] = 0;
@@ -342,7 +342,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 2;
 		_stat[MONSTER_SPEED] = 5;
 
-		_attack_Message = "vector µå·ĞÀÌ µ¿Àû ¹è¿­À» ¹ß»çÇß½À´Ï´Ù.";
+		_attack_Message = "vector ë“œë¡ ì´ ë™ì  ë°°ì—´ì„ ë°œì‚¬í–ˆìŠµë‹ˆë‹¤.";
 
 		break;
 	}
@@ -357,7 +357,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	{
 		_monster_Type = Monster_Type::INT_SLIME;
 		_chapter_Type = Chapter_Type::VARIABLE_CONDITION_FOREST;
-		_monster_Name = "int ½½¶óÀÓ";
+		_monster_Name = "int ìŠ¬ë¼ì„";
 
 		_stat[MONSTER_HP] = 3;
 		_stat[MONSTER_MP] = 0;
@@ -365,7 +365,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 3;
 		_stat[MONSTER_SPEED] = 3;
 
-		_attack_Message = "int ½½¶óÀÓÀÌ Á¤¼ö µ¢¾î¸®¸¦ ´øÁ³½À´Ï´Ù.";
+		_attack_Message = "int ìŠ¬ë¼ì„ì´ ì •ìˆ˜ ë©ì–´ë¦¬ë¥¼ ë˜ì¡ŒìŠµë‹ˆë‹¤.";
 
 		break;
 	}
@@ -375,15 +375,15 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	_exp_Reward = Calculate_Exp_Reward() + Calculate_Level_Exp_Bonus();
 	_score_Reward = Calculate_Score_Reward();
 }
-// 2-2. Á¤¿¹ ¸ó½ºÅÍ Á¤º¸ ÃÊ±âÈ­
+// 2-2. ì •ì˜ˆ ëª¬ìŠ¤í„° ì •ë³´ ì´ˆê¸°í™”
 void Monster::Initialize_Elite_Monster(Chapter_Type chapter_Type)
 {
 	_monster_Type = Monster_Type::CODE_SNIPPET_WRAITH;
 	_chapter_Type = chapter_Type;
 	_monster_Grade = Monster_Grade::ELITE;
 	_monster_Level = Get_Chapter_Number() * 3 + 1;
-	_monster_Name = "ÄÚµå½º´ÏÆêÀÇ ¸Á·É";
-	_attack_Message = "ÄÚµå½º´ÏÆêÀÇ ¸Á·ÉÀÌ ¹®Á¦¸¦ Á¦½ÃÇß´Ù.";
+	_monster_Name = "ì½”ë“œìŠ¤ë‹ˆí«ì˜ ë§ë ¹";
+	_attack_Message = "ì½”ë“œìŠ¤ë‹ˆí«ì˜ ë§ë ¹ì´ ë¬¸ì œë¥¼ ì œì‹œí–ˆë‹¤.";
 
 	_stat[MONSTER_HP] = 0;
 	_stat[MONSTER_MP] = 0;
@@ -402,7 +402,7 @@ void Monster::Initialize_Elite_Monster(Chapter_Type chapter_Type)
 	_drop_Item_Count = 0;
 	_gold_Reward = 0;
 }
-// 2-3. Æ©ÅÍ ¸ó½ºÅÍ Á¤º¸ ÃÊ±âÈ­
+// 2-3. íŠœí„° ëª¬ìŠ¤í„° ì •ë³´ ì´ˆê¸°í™”
 void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 {
 	_chapter_Type = chapter_Type;
@@ -423,8 +423,8 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 	case Chapter_Type::VARIABLE_CONDITION_FOREST:
 	{
 		_monster_Type = Monster_Type::VARIABLE_CONDITION_TUTOR;
-		_monster_Name = "¼Õ½ÂÇö Æ©ÅÍ´Ô";
-		_attack_Message = "º¯¼ö¿Í Á¶°Ç¹® ÄÚµå ½ÃÇèÀ» ½ÃÀÛÇÕ´Ï´Ù.";
+		_monster_Name = "ì†ìŠ¹í˜„ íŠœí„°ë‹˜";
+		_attack_Message = "ë³€ìˆ˜ì™€ ì¡°ê±´ë¬¸ ì½”ë“œ ì‹œí—˜ì„ ì‹œì‘í•©ë‹ˆë‹¤.";
 
 		break;
 	}
@@ -432,8 +432,8 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 	case Chapter_Type::ARRAY_LOOP_OCEAN:
 	{
 		_monster_Type = Monster_Type::ARRAY_LOOP_TUTOR;
-		_monster_Name = "¹ÚÀºÀÏ Æ©ÅÍ´Ô";
-		_attack_Message = "¹è¿­°ú ¹İº¹¹® ÄÚµå ½ÃÇèÀ» ½ÃÀÛÇÕ´Ï´Ù.";
+		_monster_Name = "ë°•ì€ì¼ íŠœí„°ë‹˜";
+		_attack_Message = "ë°°ì—´ê³¼ ë°˜ë³µë¬¸ ì½”ë“œ ì‹œí—˜ì„ ì‹œì‘í•©ë‹ˆë‹¤.";
 
 		break;
 	}
@@ -441,8 +441,8 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 	case Chapter_Type::FUNCTION_RUINS:
 	{
 		_monster_Type = Monster_Type::FUNCTION_TUTOR;
-		_monster_Name = "°­½ÅÈ£ Æ©ÅÍ´Ô";
-		_attack_Message = "ÇÔ¼ö ÄÚµå ½ÃÇèÀ» ½ÃÀÛÇÕ´Ï´Ù.";
+		_monster_Name = "ê°•ì‹ í˜¸ íŠœí„°ë‹˜";
+		_attack_Message = "í•¨ìˆ˜ ì½”ë“œ ì‹œí—˜ì„ ì‹œì‘í•©ë‹ˆë‹¤.";
 
 		break;
 	}
@@ -450,8 +450,8 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 	case Chapter_Type::POINTER_MEMORY_GRAVEYARD:
 	{
 		_monster_Type = Monster_Type::POINTER_MEMORY_TUTOR;
-		_monster_Name = "¹®½ÂÇö Æ©ÅÍ´Ô";
-		_attack_Message = "Æ÷ÀÎÅÍ¿Í ¸Ş¸ğ¸® ÄÚµå ½ÃÇèÀ» ½ÃÀÛÇÕ´Ï´Ù.";
+		_monster_Name = "ë¬¸ìŠ¹í˜„ íŠœí„°ë‹˜";
+		_attack_Message = "í¬ì¸í„°ì™€ ë©”ëª¨ë¦¬ ì½”ë“œ ì‹œí—˜ì„ ì‹œì‘í•©ë‹ˆë‹¤.";
 
 		break;
 	}
@@ -459,8 +459,8 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 	case Chapter_Type::OBJECT_STL_FACTORY:
 	{
 		_monster_Type = Monster_Type::OBJECT_STL_TUTOR;
-		_monster_Name = "±èÇÏ´Ã Æ©ÅÍ´Ô";
-		_attack_Message = "°´Ã¼ÁöÇâ°ú STL ÄÚµå ½ÃÇèÀ» ½ÃÀÛÇÕ´Ï´Ù.";
+		_monster_Name = "ê¹€í•˜ëŠ˜ íŠœí„°ë‹˜";
+		_attack_Message = "ê°ì²´ì§€í–¥ê³¼ STL ì½”ë“œ ì‹œí—˜ì„ ì‹œì‘í•©ë‹ˆë‹¤.";
 
 		break;
 	}
@@ -469,8 +469,8 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 	{
 		_chapter_Type = Chapter_Type::VARIABLE_CONDITION_FOREST;
 		_monster_Type = Monster_Type::VARIABLE_CONDITION_TUTOR;
-		_monster_Name = "¼Õ½ÂÇö Æ©ÅÍ´Ô";
-		_attack_Message = "º¯¼ö¿Í Á¶°Ç¹® ÄÚµå ½ÃÇèÀ» ½ÃÀÛÇÕ´Ï´Ù.";
+		_monster_Name = "ì†ìŠ¹í˜„ íŠœí„°ë‹˜";
+		_attack_Message = "ë³€ìˆ˜ì™€ ì¡°ê±´ë¬¸ ì½”ë“œ ì‹œí—˜ì„ ì‹œì‘í•©ë‹ˆë‹¤.";
 
 		break;
 	}
@@ -486,10 +486,10 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 }
 
 //=============================================================================
-// 3. ¸ó½ºÅÍ ·¹º§ ¹× ´É·ÂÄ¡ º¸Á¤ ÆÄÆ®
+// 3. ëª¬ìŠ¤í„° ë ˆë²¨ ë° ëŠ¥ë ¥ì¹˜ ë³´ì • íŒŒíŠ¸
 //=============================================================================
 
-// 3-1. ÇÃ·¹ÀÌ¾î ·¹º§ ºñ·Ê ´É·ÂÄ¡ Áõ°¡
+// 3-1. í”Œë ˆì´ì–´ ë ˆë²¨ ë¹„ë¡€ ëŠ¥ë ¥ì¹˜ ì¦ê°€
 void Monster::Apply_Player_Level_Scaling(int player_Level)
 {
 	if
@@ -515,7 +515,7 @@ void Monster::Apply_Player_Level_Scaling(int player_Level)
 	_stat[MONSTER_DEFENCE] += player_Level_Up_Count * DEFENCE_BONUS_PER_PLAYER_LEVEL;
 	_stat[MONSTER_SPEED] += player_Level_Up_Count / PLAYER_LEVELS_PER_SPEED_BONUS;
 }
-// 3-2. Ã©ÅÍ ¹øÈ£ º¯È¯
+// 3-2. ì±•í„° ë²ˆí˜¸ ë³€í™˜
 int Monster::Get_Chapter_Number() const
 {
 	switch (_chapter_Type)
@@ -551,7 +551,7 @@ int Monster::Get_Chapter_Number() const
 	}
 	}
 }
-// 3-3. Ã©ÅÍº° ¸ó½ºÅÍ ·£´ı ·¹º§ »ı¼º
+// 3-3. ì±•í„°ë³„ ëª¬ìŠ¤í„° ëœë¤ ë ˆë²¨ ìƒì„±
 int Monster::Generate_Random_Level() const
 {
 	int chapter_Number = Get_Chapter_Number();
@@ -568,7 +568,7 @@ int Monster::Generate_Random_Level() const
 	return
 		rand() % level_Range + minimum_Level;
 }
-// 3-4. ¸ó½ºÅÍ ·£´ı ·¹º§ º¸³Ê½º Àû¿ë
+// 3-4. ëª¬ìŠ¤í„° ëœë¤ ë ˆë²¨ ë³´ë„ˆìŠ¤ ì ìš©
 void Monster::Apply_Level_Bonus()
 {
 	constexpr int LEVELS_PER_CHAPTER = 3;
@@ -591,10 +591,10 @@ void Monster::Apply_Level_Bonus()
 }
 
 //=============================================================================
-// 4. ¸ó½ºÅÍ º¸»ó °è»ê ÆÄÆ®
+// 4. ëª¬ìŠ¤í„° ë³´ìƒ ê³„ì‚° íŒŒíŠ¸
 //=============================================================================
 
-// 4-1. Ã©ÅÍº° ÄÚµå Á¶°¢ ÀÌ¸§ °áÁ¤
+// 4-1. ì±•í„°ë³„ ì½”ë“œ ì¡°ê° ì´ë¦„ ê²°ì •
 std::string Monster::Get_Code_Fragment_Name() const
 {
 	switch (_chapter_Type)
@@ -602,27 +602,27 @@ std::string Monster::Get_Code_Fragment_Name() const
 	case Chapter_Type::VARIABLE_CONDITION_FOREST:
 	case Chapter_Type::ARRAY_LOOP_OCEAN:
 	{
-		return "ÇÏ±Ş ÄÚµå Á¶°¢";
+		return "í•˜ê¸‰ ì½”ë“œ ì¡°ê°";
 	}
 
 	case Chapter_Type::FUNCTION_RUINS:
 	case Chapter_Type::POINTER_MEMORY_GRAVEYARD:
 	{
-		return "Áß±Ş ÄÚµå Á¶°¢";
+		return "ì¤‘ê¸‰ ì½”ë“œ ì¡°ê°";
 	}
 
 	case Chapter_Type::OBJECT_STL_FACTORY:
 	{
-		return "»ó±Ş ÄÚµå Á¶°¢";
+		return "ìƒê¸‰ ì½”ë“œ ì¡°ê°";
 	}
 
 	default:
 	{
-		return "ÇÏ±Ş ÄÚµå Á¶°¢";
+		return "í•˜ê¸‰ ì½”ë“œ ì¡°ê°";
 	}
 	}
 }
-// 4-2. Ã©ÅÍº° ±âº» °æÇèÄ¡ °è»ê
+// 4-2. ì±•í„°ë³„ ê¸°ë³¸ ê²½í—˜ì¹˜ ê³„ì‚°
 int Monster::Calculate_Exp_Reward() const
 {
 	double exp_Reward = static_cast<double>(BASE_EXP_REWARD);
@@ -636,7 +636,7 @@ int Monster::Calculate_Exp_Reward() const
 
 	return static_cast<int>(exp_Reward + 0.5);
 }
-// 4-3. ·£´ı ·¹º§ °æÇèÄ¡ º¸³Ê½º °è»ê
+// 4-3. ëœë¤ ë ˆë²¨ ê²½í—˜ì¹˜ ë³´ë„ˆìŠ¤ ê³„ì‚°
 int Monster::Calculate_Level_Exp_Bonus() const
 {
 	constexpr int LEVELS_PER_CHAPTER = 3;
@@ -654,7 +654,7 @@ int Monster::Calculate_Level_Exp_Bonus() const
 	return
 		level_Offset * EXP_BONUS_PER_LEVEL;
 }
-// 4-4. Ã©ÅÍº° Á¡¼ö °è»ê
+// 4-4. ì±•í„°ë³„ ì ìˆ˜ ê³„ì‚°
 int Monster::Calculate_Score_Reward() const
 {
 	double score_Reward = static_cast<double>(BASE_SCORE_REWARD);
@@ -668,17 +668,17 @@ int Monster::Calculate_Score_Reward() const
 
 	return static_cast<int>(score_Reward + 0.5);
 }
-// 4-5. ÈÆ·ÃÀå·Á±İ ·£´ı °è»ê
+// 4-5. í›ˆë ¨ì¥ë ¤ê¸ˆ ëœë¤ ê³„ì‚°
 int Monster::Calculate_Gold_Reward() const
 {
 	return rand() % 31 + 20;
 }
 
 //=============================================================================
-// 5. ¸ó½ºÅÍ µå·Ó º¸»ó »ı¼º ÆÄÆ®
+// 5. ëª¬ìŠ¤í„° ë“œë¡­ ë³´ìƒ ìƒì„± íŒŒíŠ¸
 //=============================================================================
 
-// 5-1. ¾ÆÀÌÅÛº° µ¶¸³ ·£´ı µå·Ó »ı¼º
+// 5-1. ì•„ì´í…œë³„ ë…ë¦½ ëœë¤ ë“œë¡­ ìƒì„±
 void Monster::Generate_Drop_Reward()
 {
 	_drop_Items.clear();
@@ -711,17 +711,17 @@ void Monster::Generate_Drop_Reward()
 	{
 		Item cup_Ramen;
 
-		cup_Ramen._Item_Name = "ÄÅ¶ó¸é";
+		cup_Ramen._Item_Name = "ì»µë¼ë©´";
 		cup_Ramen._Item_Price = 0;
 		cup_Ramen._Item_Count = 1;
 		cup_Ramen._Item_Weight = CUP_RAMEN_WEIGHT;
 		cup_Ramen._Item_Type_Usable = true;
 		cup_Ramen._Item_Type_Wearable = false;
-		cup_Ramen._Item_Description = "HP¸¦ 50 È¸º¹½ÃÅ²´Ù.";
+		cup_Ramen._Item_Description = "HPë¥¼ 50 íšŒë³µì‹œí‚¨ë‹¤.";
 		cup_Ramen._Item_Ascii_Art =
 			R"(
 
-¾Æ½ºÅ° ¾ÆÆ® ÇØÁÖ¼¼¿ä.
+ì•„ìŠ¤í‚¤ ì•„íŠ¸ í•´ì£¼ì„¸ìš”.
 )";
 		_drop_Items.push_back(cup_Ramen);
 	}
@@ -733,18 +733,18 @@ void Monster::Generate_Drop_Reward()
 	{
 		Item energy_Drink;
 
-		energy_Drink._Item_Name = "¿¡³ÊÁöµå¸µÅ©";
+		energy_Drink._Item_Name = "ì—ë„ˆì§€ë“œë§í¬";
 		energy_Drink._Item_Price = 0;
 		energy_Drink._Item_Count = 1;
 		energy_Drink._Item_Weight = ENERGY_DRINK_WEIGHT;
 		energy_Drink._Item_Type_Usable = true;
 		energy_Drink._Item_Type_Wearable = false;
-		energy_Drink._Item_Description = "MP¸¦ 50 È¸º¹ÇÑ´Ù.";
+		energy_Drink._Item_Description = "MPë¥¼ 50 íšŒë³µí•œë‹¤.";
 		energy_Drink._Item_Ascii_Art = 
 R"(
 
 
-Àû´çÇÑ ¾Æ½ºÅ° ¾ÆÆ® ÀÌ·± Çü½ÃÀ¸·Î ³ÖÀ¸½Ã¸é µË´Ï´Ù
+ì ë‹¹í•œ ì•„ìŠ¤í‚¤ ì•„íŠ¸ ì´ëŸ° í˜•ì‹œìœ¼ë¡œ ë„£ìœ¼ì‹œë©´ ë©ë‹ˆë‹¤
 
 
 )";
@@ -782,127 +782,127 @@ R"(
 		_drop_Item_Name += drop_Item._Item_Name;
 		_drop_Item_Name += " ";
 		_drop_Item_Name += std::to_string(drop_Item._Item_Count);
-		_drop_Item_Name += "°³";
+		_drop_Item_Name += "ê°œ";
 		_drop_Item_Count += drop_Item._Item_Count;
 		_drop_Item_Price += drop_Item._Item_Price * drop_Item._Item_Count;
 	}
 }
 
 //=============================================================================
-// 6. ¸ó½ºÅÍ ±âº» Á¤º¸ Á¶È¸ ÆÄÆ®
+// 6. ëª¬ìŠ¤í„° ê¸°ë³¸ ì •ë³´ ì¡°íšŒ íŒŒíŠ¸
 //=============================================================================
 
-// 6-1. ¸ó½ºÅÍ ÀÌ¸§ Á¶È¸
+// 6-1. ëª¬ìŠ¤í„° ì´ë¦„ ì¡°íšŒ
 string Monster::getName() const
 {
 	return _monster_Name;
 }
-// 6-2. ¸ó½ºÅÍ HP Á¶È¸
+// 6-2. ëª¬ìŠ¤í„° HP ì¡°íšŒ
 int Monster::getHP() const
 {
 	return _stat[MONSTER_HP];
 }
-// 6-3. ¸ó½ºÅÍ °ø°İ·Â Á¶È¸
+// 6-3. ëª¬ìŠ¤í„° ê³µê²©ë ¥ ì¡°íšŒ
 int Monster::getPower() const
 {
 	return _stat[MONSTER_POWER];
 }
-// 6-4. ¸ó½ºÅÍ ¹æ¾î·Â Á¶È¸
+// 6-4. ëª¬ìŠ¤í„° ë°©ì–´ë ¥ ì¡°íšŒ
 int Monster::getDefence() const
 {
 	return _stat[MONSTER_DEFENCE];
 }
-// 6-5. ¸ó½ºÅÍ ½ºÇÇµå Á¶È¸
+// 6-5. ëª¬ìŠ¤í„° ìŠ¤í”¼ë“œ ì¡°íšŒ
 int Monster::getSpeed() const
 {
 	return _stat[MONSTER_SPEED];
 }
-// 6-6. ¸ó½ºÅÍ È¸ÇÇÀ² Á¶È¸
+// 6-6. ëª¬ìŠ¤í„° íšŒí”¼ìœ¨ ì¡°íšŒ
 int Monster::getEvasion() const
 {
 	return _evasion;
 }
-// 6-7. ¸ó½ºÅÍ ¸íÁß·ü Á¶È¸
+// 6-7. ëª¬ìŠ¤í„° ëª…ì¤‘ë¥  ì¡°íšŒ
 int Monster::getAccuracy() const
 {
 	return _accuracy;
 }
-// 6-8. ¸ó½ºÅÍ ·¹º§ Á¶È¸
+// 6-8. ëª¬ìŠ¤í„° ë ˆë²¨ ì¡°íšŒ
 int Monster::getMonsterLevel() const
 {
 	return _monster_Level;
 }
-// 6-9. ¸ó½ºÅÍ Å¸ÀÔ Á¶È¸
+// 6-9. ëª¬ìŠ¤í„° íƒ€ì… ì¡°íšŒ
 Monster_Type Monster::getMonsterType() const
 {
 	return _monster_Type;
 }
-// 6-10. ¸ó½ºÅÍ ¼Ò¼Ó Ã©ÅÍ Á¶È¸
+// 6-10. ëª¬ìŠ¤í„° ì†Œì† ì±•í„° ì¡°íšŒ
 Chapter_Type Monster::getChapterType() const
 {
 	return _chapter_Type;
 }
-// 6-11. ¸ó½ºÅÍ µî±Ş Á¶È¸
+// 6-11. ëª¬ìŠ¤í„° ë“±ê¸‰ ì¡°íšŒ
 Monster_Grade Monster::getMonsterGrade() const
 {
 	return _monster_Grade;
 }
-// 6-12. ¸ó½ºÅÍ °ø°İ ´ë»ç Á¶È¸
+// 6-12. ëª¬ìŠ¤í„° ê³µê²© ëŒ€ì‚¬ ì¡°íšŒ
 string Monster::getAttackMessage() const
 {
 	return _attack_Message;
 }
 
 //=============================================================================
-// 7. ¸ó½ºÅÍ º¸»ó Á¤º¸ Á¶È¸ ÆÄÆ®
+// 7. ëª¬ìŠ¤í„° ë³´ìƒ ì •ë³´ ì¡°íšŒ íŒŒíŠ¸
 //=============================================================================
 
-// 7-1. °æÇèÄ¡ º¸»ó Á¶È¸
+// 7-1. ê²½í—˜ì¹˜ ë³´ìƒ ì¡°íšŒ
 int Monster::getExpReward() const
 {
 	return _exp_Reward;
 }
-// 7-2. Á¡¼ö º¸»ó Á¶È¸
+// 7-2. ì ìˆ˜ ë³´ìƒ ì¡°íšŒ
 int Monster::getScoreReward() const
 {
 	return _score_Reward;
 }
-// 7-3. µå·Ó ¾ÆÀÌÅÛ Á¶È¸
+// 7-3. ë“œë¡­ ì•„ì´í…œ ì¡°íšŒ
 string Monster::getDropItemName() const
 {
 	return _drop_Item_Name;
 }
-// 7-4. µå·Ó ¾ÆÀÌÅÛ °¡°İ ÇÕ°è Á¶È¸
+// 7-4. ë“œë¡­ ì•„ì´í…œ ê°€ê²© í•©ê³„ ì¡°íšŒ
 int Monster::getDropItemPrice() const
 {
 	return _drop_Item_Price;
 }
-// 7-5. µå·Ó ¾ÆÀÌÅÛ ¼ö·® ÇÕ°è Á¶È¸
+// 7-5. ë“œë¡­ ì•„ì´í…œ ìˆ˜ëŸ‰ í•©ê³„ ì¡°íšŒ
 int Monster::getDropItemCount() const
 {
 	return _drop_Item_Count;
 }
-// 7-6. µå·Ó ¾ÆÀÌÅÛ ¸ñ·Ï Á¶È¸
+// 7-6. ë“œë¡­ ì•„ì´í…œ ëª©ë¡ ì¡°íšŒ
 const std::vector<Item>& Monster::getDropItems() const
 {
 	return _drop_Items;
 }
-// 7-7. ÈÆ·ÃÀå·Á±İ Á¶È¸
+// 7-7. í›ˆë ¨ì¥ë ¤ê¸ˆ ì¡°íšŒ
 int Monster::getGoldReward() const
 {
 	return _gold_Reward;
 }
 
 //=============================================================================
-// 8. ¸ó½ºÅÍ »óÅÂ º¯°æ ¹× ÀüÅõ ÆÄÆ®
+// 8. ëª¬ìŠ¤í„° ìƒíƒœ ë³€ê²½ ë° ì „íˆ¬ íŒŒíŠ¸
 //=============================================================================
 // 
-// 8-1. ¸ó½ºÅÍ µî±Ş º¯°æ
+// 8-1. ëª¬ìŠ¤í„° ë“±ê¸‰ ë³€ê²½
 void Monster::setMonsterGrade(Monster_Grade monster_Grade)
 {
 	_monster_Grade = monster_Grade;
 }
-// 8-2. ¸ó½ºÅÍ HP º¯°æ
+// 8-2. ëª¬ìŠ¤í„° HP ë³€ê²½
 void Monster::setHP(int hp)
 {
 	_stat[MONSTER_HP] = hp;
@@ -912,7 +912,7 @@ void Monster::setHP(int hp)
 		_stat[MONSTER_HP] = 0;
 	}
 }
-// 8-3. ¸ó½ºÅÍ °ø°İ Ã³¸®
+// 8-3. ëª¬ìŠ¤í„° ê³µê²© ì²˜ë¦¬
 void Monster::attack(Player* player) const
 {
 	(void)player;
@@ -921,31 +921,31 @@ void Monster::attack(Player* player) const
 }
 
 //=============================================================================
-// 9. ¸ó½ºÅÍ Á¤º¸ Ãâ·Â ÆÄÆ®
+// 9. ëª¬ìŠ¤í„° ì •ë³´ ì¶œë ¥ íŒŒíŠ¸
 //=============================================================================
 
-// 9-1. ¸ó½ºÅÍ °ø°İ ´ë»ç Ãâ·Â
+// 9-1. ëª¬ìŠ¤í„° ê³µê²© ëŒ€ì‚¬ ì¶œë ¥
 void Monster::Print_Attack_Message() const
 {
 	cout << _attack_Message << endl;
 }
-// 9-2. ¸ó½ºÅÍ ÀüÃ¼ Á¤º¸ Ãâ·Â
+// 9-2. ëª¬ìŠ¤í„° ì „ì²´ ì •ë³´ ì¶œë ¥
 void Monster::Print_Monster_Info() const
 {
 	cout << "========================================" << endl;
-	cout << "¸ó½ºÅÍ ÀÌ¸§: " << _monster_Name << endl;
-	cout << "·¹º§: " << _monster_Level << endl;
+	cout << "ëª¬ìŠ¤í„° ì´ë¦„: " << _monster_Name << endl;
+	cout << "ë ˆë²¨: " << _monster_Level << endl;
 	cout << "HP: " << _stat[MONSTER_HP] << endl;
-	cout << "°ø°İ·Â: " << _stat[MONSTER_POWER] << endl;
-	cout << "¹æ¾î·Â: " << _stat[MONSTER_DEFENCE] << endl;
-	cout << "½ºÇÇµå: " << _stat[MONSTER_SPEED] << endl;
-	cout << "È¸ÇÇÀ²: " << _evasion << "%" << endl;
-	cout << "¸íÁß·ü: " << _accuracy << "%" << endl;
-	cout << "°æÇèÄ¡: " << _exp_Reward << endl;
-	cout << "Á¡¼ö: " << _score_Reward << endl;
+	cout << "ê³µê²©ë ¥: " << _stat[MONSTER_POWER] << endl;
+	cout << "ë°©ì–´ë ¥: " << _stat[MONSTER_DEFENCE] << endl;
+	cout << "ìŠ¤í”¼ë“œ: " << _stat[MONSTER_SPEED] << endl;
+	cout << "íšŒí”¼ìœ¨: " << _evasion << "%" << endl;
+	cout << "ëª…ì¤‘ë¥ : " << _accuracy << "%" << endl;
+	cout << "ê²½í—˜ì¹˜: " << _exp_Reward << endl;
+	cout << "ì ìˆ˜: " << _score_Reward << endl;
 	cout << "========================================" << endl;
-	cout << "µå·Ó ¾ÆÀÌÅÛ: " << _drop_Item_Name << " " << _drop_Item_Count << "°³" << endl;
-	cout << "ÈÆ·ÃÀå·Á±İ: " << _gold_Reward << " ¿ø" << endl;
+	cout << "ë“œë¡­ ì•„ì´í…œ: " << _drop_Item_Name << " " << _drop_Item_Count << "ê°œ" << endl;
+	cout << "í›ˆë ¨ì¥ë ¤ê¸ˆ: " << _gold_Reward << " ì›" << endl;
 
 	if
 		(
@@ -953,18 +953,18 @@ void Monster::Print_Monster_Info() const
 			&& _drop_Item_Name.empty() == false
 			)
 	{
-		cout << "µå·Ó ¾ÆÀÌÅÛ: " << _drop_Item_Name << " " << _drop_Item_Count << "°³" << endl;
-        cout << "ÈÆ·ÃÀå·Á±İ: " << _gold_Reward << "¿ø" << endl;
+		cout << "ë“œë¡­ ì•„ì´í…œ: " << _drop_Item_Name << " " << _drop_Item_Count << "ê°œ" << endl;
+        cout << "í›ˆë ¨ì¥ë ¤ê¸ˆ: " << _gold_Reward << "ì›" << endl;
 	}
 }
-// 9-3. µå·Ó ¾ÆÀÌÅÛ°ú ¹«°Ô Ãâ·Â
+// 9-3. ë“œë¡­ ì•„ì´í…œê³¼ ë¬´ê²Œ ì¶œë ¥
 void Monster::Print_Drop_Reward() const
 {
-	cout << "È¹µæ ¾ÆÀÌÅÛ:" << endl;
+	cout << "íšë“ ì•„ì´í…œ:" << endl;
 
 	if (_drop_Items.empty())
 	{
-		cout << "- È¹µæÇÑ ¾ÆÀÌÅÛÀÌ ¾ø½À´Ï´Ù." << endl;
+		cout << "- íšë“í•œ ì•„ì´í…œì´ ì—†ìŠµë‹ˆë‹¤." << endl;
 
 		return;
 	}
@@ -980,16 +980,16 @@ void Monster::Print_Drop_Reward() const
 			<< drop_Item._Item_Name
 			<< " "
 			<< drop_Item._Item_Count
-			<< "°³"
-			<< " / °³´ç ¹«°Ô "
+			<< "ê°œ"
+			<< " / ê°œë‹¹ ë¬´ê²Œ "
 			<< drop_Item._Item_Weight
-			<< " / ÃÑ ¹«°Ô "
+			<< " / ì´ ë¬´ê²Œ "
 			<< item_Total_Weight
 			<< endl;
 
 		total_Drop_Weight += item_Total_Weight;
 	}
 
-	cout << "µå·Ó ¾ÆÀÌÅÛ ÃÑ ¹«°Ô: " << total_Drop_Weight << endl;
+	cout << "ë“œë¡­ ì•„ì´í…œ ì´ ë¬´ê²Œ: " << total_Drop_Weight << endl;
 }
 

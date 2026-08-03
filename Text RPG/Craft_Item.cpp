@@ -1,4 +1,4 @@
-#include "Craft_Item.h"
+ï»¿#include "Craft_Item.h"
 #include "All_Recipes.h"
 #include <iostream>
 
@@ -8,27 +8,27 @@ Craft_Work_Shop::Craft_Work_Shop()
 {
     All_Recipes hpPotion;
 
-    hpPotion._Recipe_Name = "ÄÅ¶ó¸é";
-    hpPotion._First_Ingredient_Name = "Çãºê";
+    hpPotion._Recipe_Name = "ì»µë¼ë©´";
+    hpPotion._First_Ingredient_Name = "í—ˆë¸Œ";
     hpPotion._First_Ingredient_Count = 1;
-    hpPotion._Second_Ingredient_Name = "¸¼Àº¹°";
+    hpPotion._Second_Ingredient_Name = "ë§‘ì€ë¬¼";
     hpPotion._Second_Ingredient_Count = 1;
 
     recipes.push_back(hpPotion);
 
     All_Recipes staminaPotion;
 
-    staminaPotion._Recipe_Name = "½ºÅÂ¹Ì³ªÆ÷¼Ç";
-    staminaPotion._First_Ingredient_Name = "Çãºê";
+    staminaPotion._Recipe_Name = "ìŠ¤íƒœë¯¸ë‚˜í¬ì…˜";
+    staminaPotion._First_Ingredient_Name = "í—ˆë¸Œ";
     staminaPotion._First_Ingredient_Count = 1;
-    staminaPotion._Second_Ingredient_Name = "º£¸®";
+    staminaPotion._Second_Ingredient_Name = "ë² ë¦¬";
     staminaPotion._Second_Ingredient_Count = 1;
 
     recipes.push_back(staminaPotion);
 
-    ingredients["Çãºê"] = 3;
-    ingredients["¸¼Àº¹°"] = 2;
-    ingredients["º£¸®"] = 1;
+    ingredients["í—ˆë¸Œ"] = 3;
+    ingredients["ë§‘ì€ë¬¼"] = 2;
+    ingredients["ë² ë¦¬"] = 1;
 }
 
 void Craft_Work_Shop::Print_All_Recipes() const
@@ -54,7 +54,7 @@ void Craft_Work_Shop::Find_Recipe_By_Potion_Name(const string& _Recipe_Name) con
 
     if (found == false)
     {
-        cout << "ÇØ´ç Æ÷¼Ç ·¹½ÃÇÇ¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù." << endl;
+        cout << "í•´ë‹¹ í¬ì…˜ ë ˆì‹œí”¼ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤." << endl;
     }
 }
 
@@ -73,7 +73,7 @@ void Craft_Work_Shop::Find_Recipes_By_Ingredient_Name(const string& ingredientNa
 
     if (found == false)
     {
-        cout << "ÇØ´ç Àç·á°¡ µé¾î°£ Æ÷¼Ç ·¹½ÃÇÇ¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù." << endl;
+        cout << "í•´ë‹¹ ì¬ë£Œê°€ ë“¤ì–´ê°„ í¬ì…˜ ë ˆì‹œí”¼ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤." << endl;
     }
 }
  
@@ -86,18 +86,18 @@ bool Craft_Work_Shop::Craft_Potion(const std::string& _Recipe_Name)
             if (ingredients[recipe._First_Ingredient_Name] < recipe._First_Ingredient_Count ||
                 ingredients[recipe._Second_Ingredient_Name] < recipe._Second_Ingredient_Count)
             {
-                cout << "Àç·á°¡ ºÎÁ·ÇÕ´Ï´Ù." << endl;
+                cout << "ì¬ë£Œê°€ ë¶€ì¡±í•©ë‹ˆë‹¤." << endl;
                 return false;
             }
 
             ingredients[recipe._First_Ingredient_Name] -= recipe._First_Ingredient_Count;
             ingredients[recipe._Second_Ingredient_Name] -= recipe._Second_Ingredient_Count;
 
-            cout << _Recipe_Name << " Á¦ÀÛ ¼º°ø!" << endl;
+            cout << _Recipe_Name << " ì œì‘ ì„±ê³µ!" << endl;
             return true;
         }
     }
 
-    cout << "ÇØ´ç Æ÷¼Ç ·¹½ÃÇÇ¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù." << endl;
+    cout << "í•´ë‹¹ í¬ì…˜ ë ˆì‹œí”¼ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤." << endl;
     return false;
 }

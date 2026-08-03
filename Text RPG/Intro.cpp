@@ -1,14 +1,17 @@
-#include <iostream>
+ï»¿#include "Intro.h"
 #include "Console_Manager.h"
+#include "Ascii_Art_Manager.h"
 
-using namespace std;
-
-void Intro()
+void Intro::Show(Console_Manager& console, Ascii_Art_Manager& art)   // Intro:: ë¥¼ ë¶™ì„
 {
-	Console_Manager Console(120, 40);
+    console.Clear();
+    console.Set_Cursor_Position(0, 0);
+    art.Print("Title.txt");
 
-	Console.Slow_Print("´ç½ÅÀº 8½Ã 55ºĞ¿¡ ´«À» ¶¹´Ù!", 50);
-	Console.Slow_Print("ÀÍ¼÷ÇÑ ZEPÀÌ º¸ÀÎ´Ù!", 50);
-	//¾Æ½ºÅ°¾ÆÆ®
-	Console.Slow_Print("ÀÏ´Ü ¾Æ¹ÙÅ¸¸¦ »ı¼ºÇÏÀÚ!", 50);
+    console.Set_Cursor_Position(10, 32);
+    console.Slow_Print("ë‹¹ì‹ ì€ ëˆˆì„ ë–´ë‹¤...", 50);
+    console.Slow_Print("ì—¬ê¸°ëŠ” ì–´ë””ì§€?", 50);
+
+    system("pause");
+    console.Clear();
 }
