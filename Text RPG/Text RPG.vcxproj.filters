@@ -19,6 +19,36 @@
     <Filter Include="헤더 파일\Item">
       <UniqueIdentifier>{2ff36e5c-cac5-435e-b9d1-884c08bd12bb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Item\Mouse">
+      <UniqueIdentifier>{b49921ac-362b-4d02-a19c-4233076b7f4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Item\Mouse">
+      <UniqueIdentifier>{283bbeff-b304-49bb-8641-e968d34b5e9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Item\Engine">
+      <UniqueIdentifier>{0ff87327-0523-4180-90de-34726eec1259}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Item\Engine">
+      <UniqueIdentifier>{a589c184-7895-455e-a902-b032f90c9c55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Item\Keyboard">
+      <UniqueIdentifier>{727e98c7-f85a-4c4b-9484-7c3f8628c042}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Item\Glasses">
+      <UniqueIdentifier>{4ab7306f-dceb-484b-a5c6-f6897980e8d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Item\Keyboard">
+      <UniqueIdentifier>{9cba694d-8296-4424-9138-b80e15389fac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Item\Glasses">
+      <UniqueIdentifier>{dadb0884-0991-451b-b6da-487fad784edf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Item\Headset">
+      <UniqueIdentifier>{4ada049f-0919-4562-aeef-1912b117b1eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Item\Headset">
+      <UniqueIdentifier>{7a64c7ab-1331-4b87-9bb0-9f9f978f8e74}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -75,14 +105,86 @@
     <ClCompile Include="Items_Equipments_Repository.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Basic_Mouse.cpp">
-      <Filter>소스 파일\Item</Filter>
-    </ClCompile>
     <ClCompile Include="Equipment.cpp">
       <Filter>소스 파일\Item</Filter>
     </ClCompile>
     <ClCompile Include="Inventory.cpp">
       <Filter>소스 파일\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Level_1_Mouse.cpp">
+      <Filter>소스 파일\Item\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="Level_2_Mouse.cpp">
+      <Filter>소스 파일\Item\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="Level_3_Mouse.cpp">
+      <Filter>소스 파일\Item\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="Level_4_Mouse.cpp">
+      <Filter>소스 파일\Item\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="Level_5_Mouse.cpp">
+      <Filter>소스 파일\Item\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="Level_1_Engine.cpp">
+      <Filter>소스 파일\Item\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Level_1_Glasses.cpp">
+      <Filter>소스 파일\Item\Glasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Level_2_Engine.cpp">
+      <Filter>소스 파일\Item\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Level_2_Glasses.cpp">
+      <Filter>소스 파일\Item\Glasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Level_3_Engine.cpp">
+      <Filter>소스 파일\Item\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Level_3_Glasses.cpp">
+      <Filter>소스 파일\Item\Glasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Level_4_Engine.cpp">
+      <Filter>소스 파일\Item\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Level_4_Glasses.cpp">
+      <Filter>소스 파일\Item\Glasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Level_5_Engine.cpp">
+      <Filter>소스 파일\Item\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Level_5_Glasses.cpp">
+      <Filter>소스 파일\Item\Glasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Level_5_Keyboard.cpp">
+      <Filter>소스 파일\Item\Keyboard</Filter>
+    </ClCompile>
+    <ClCompile Include="Level_1_Keyboard.cpp">
+      <Filter>소스 파일\Item\Keyboard</Filter>
+    </ClCompile>
+    <ClCompile Include="Level_2_Keyboard.cpp">
+      <Filter>소스 파일\Item\Keyboard</Filter>
+    </ClCompile>
+    <ClCompile Include="Level_3_Keyboard.cpp">
+      <Filter>소스 파일\Item\Keyboard</Filter>
+    </ClCompile>
+    <ClCompile Include="Level_4_Keyboard.cpp">
+      <Filter>소스 파일\Item\Keyboard</Filter>
+    </ClCompile>
+    <ClCompile Include="Level_1_Headset.cpp">
+      <Filter>소스 파일\Item\Headset</Filter>
+    </ClCompile>
+    <ClCompile Include="Level_2_Headset.cpp">
+      <Filter>소스 파일\Item\Headset</Filter>
+    </ClCompile>
+    <ClCompile Include="Level_3_Headset.cpp">
+      <Filter>소스 파일\Item\Headset</Filter>
+    </ClCompile>
+    <ClCompile Include="Level_4_Headset.cpp">
+      <Filter>소스 파일\Item\Headset</Filter>
+    </ClCompile>
+    <ClCompile Include="Level_5_Headset.cpp">
+      <Filter>소스 파일\Item\Headset</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -140,9 +242,6 @@
     <ClInclude Include="Items_Equipments_Repository.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Basic_Mouse.h">
-      <Filter>헤더 파일\Item</Filter>
-    </ClInclude>
     <ClInclude Include="Equipment.h">
       <Filter>헤더 파일\Item</Filter>
     </ClInclude>
@@ -151,6 +250,81 @@
     </ClInclude>
     <ClInclude Include="Inventory.h">
       <Filter>헤더 파일\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Level_2_Mouse.h">
+      <Filter>헤더 파일\Item\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="Level_3_Mouse.h">
+      <Filter>헤더 파일\Item\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="Level_4_Mouse.h">
+      <Filter>헤더 파일\Item\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="Level_5_Mouse.h">
+      <Filter>헤더 파일\Item\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="Level_1_Mouse.h">
+      <Filter>헤더 파일\Item\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="Level_1_Engine.h">
+      <Filter>헤더 파일\Item\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Level_1_Glasses.h">
+      <Filter>헤더 파일\Item\Glasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Level_2_Engine.h">
+      <Filter>헤더 파일\Item\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Level_2_Glasses.h">
+      <Filter>헤더 파일\Item\Glasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Level_3_Engine.h">
+      <Filter>헤더 파일\Item\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Level_3_Glasses.h">
+      <Filter>헤더 파일\Item\Glasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Level_4_Engine.h">
+      <Filter>헤더 파일\Item\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Level_4_Glasses.h">
+      <Filter>헤더 파일\Item\Glasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Level_5_Engine.h">
+      <Filter>헤더 파일\Item\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Level_5_Glasses.h">
+      <Filter>헤더 파일\Item\Glasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Level_1_Keyboard.h">
+      <Filter>헤더 파일\Item\Keyboard</Filter>
+    </ClInclude>
+    <ClInclude Include="Level_2_Keyboard.h">
+      <Filter>헤더 파일\Item\Keyboard</Filter>
+    </ClInclude>
+    <ClInclude Include="Level_3_Keyboard.h">
+      <Filter>헤더 파일\Item\Keyboard</Filter>
+    </ClInclude>
+    <ClInclude Include="Level_4_Keyboard.h">
+      <Filter>헤더 파일\Item\Keyboard</Filter>
+    </ClInclude>
+    <ClInclude Include="Level_5_Keyboard.h">
+      <Filter>헤더 파일\Item\Keyboard</Filter>
+    </ClInclude>
+    <ClInclude Include="Level_1_Headset.h">
+      <Filter>헤더 파일\Item\Headset</Filter>
+    </ClInclude>
+    <ClInclude Include="Level_2_Headset.h">
+      <Filter>헤더 파일\Item\Headset</Filter>
+    </ClInclude>
+    <ClInclude Include="Level_3_Headset.h">
+      <Filter>헤더 파일\Item\Headset</Filter>
+    </ClInclude>
+    <ClInclude Include="Level_4_Headset.h">
+      <Filter>헤더 파일\Item\Headset</Filter>
+    </ClInclude>
+    <ClInclude Include="Level_5_Headset.h">
+      <Filter>헤더 파일\Item\Headset</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
