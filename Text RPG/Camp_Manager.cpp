@@ -6,14 +6,16 @@ using namespace std;
 Camp_Manager::Camp_Manager(
     Player& player,
     Inventory<Item>& inventory,
-    Inventory_For_Equipments_Only& inventory_for_equipments)
+    Inventory_For_Equipments_Only& inventory_for_equipments,
+    Currently_Equipped_Equipments& currently_equipped_equipments)
     : player(player),
     invnetory(inventory),
-    inventory_for_equipments(inventory_for_equipments)
+    inventory_for_equipments(inventory_for_equipments),
+    currently_equipped_equipments(currently_equipped_equipments)
 {
 }
 
-void Camp_Manager::Open_Camp_Menu()
+void Camp_Manager::Open_Camp_Menu(Player& player, Inventory<Item>& inventory, Inventory_For_Equipments_Only& inventory_for_equipments, Currently_Equipped_Equipments& currently_equipped_equipments)
 {
     while (true)
     {
@@ -22,7 +24,7 @@ void Camp_Manager::Open_Camp_Menu()
         cout << "2. 펩 스토어\n";
         cout << "3. 문승호 매니저님의 만물 잡화점\n";
         cout << "4. 김동현 매니저님의 전리품 매입소\n";
-        cout << "5. 쿠기의 대장간\n";
+        cout << "5. 쿠키의 대장간\n";
         cout << "0. 나가기\n";
         cout << "선택: ";
 
@@ -32,25 +34,50 @@ void Camp_Manager::Open_Camp_Menu()
         switch (choice)
         {
         case 1:
+        {
+            if (Received_Basic_Items == true)
+            {
+                cout << "이미 보급을 받았다! 쿠키가 화내며 할퀸다!\n";
+                player.SetHP(player.GetHP() - 1);
+            }
             Give_Basic_Training_Item();
             break;
+        }
+
         case 2:
+        {
             Open_Pep_Store_Menu();
             break;
+        }
+
         case 3:
+        {
             Open_General_Store_Menu();
             break;
+        }
+
         case 4:
+        {
             Open_Loot_Shop_Menu();
             break;
+        }
+
         case 5:
+        {
             Open_Cookie_Blacksmith_Menu();
             break;
+        }
+
         case 0:
+        {
             return;
+        }
+
         default:
+        {
             cout << "잘못된 입력입니다.\n";
             break;
+        }
         }
     }
 }
@@ -102,23 +129,33 @@ void Camp_Manager::Open_Cookie_Blacksmith_Menu()
         switch (choice)
         {
         case 1:
+        {
             // TODO: 강화
             break;
+        }
 
         case 2:
+        {
             // TODO: 제작
             break;
+        }
 
         case 3:
+        {
             // TODO: 분해
             break;
+        }
 
         case 0:
+        {
             return;
+        }
 
         default:
+        {
             cout << "잘못된 입력입니다.\n";
             break;
+        }
         }
     }
 }

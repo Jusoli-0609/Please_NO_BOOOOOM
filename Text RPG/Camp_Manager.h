@@ -9,9 +9,11 @@ class Camp_Manager
 public:
     Camp_Manager(Player& player,
         Inventory<Item>& inventory,
-        Inventory_For_Equipments_Only& inventory_for_equipments);
+        Inventory_For_Equipments_Only& inventory_for_equipments,
+        Currently_Equipped_Equipments& currently_equipped_equipments);
+   
     
-    void Open_Camp_Menu();
+    void Open_Camp_Menu(Player& player, Inventory<Item>& inventory, Inventory_For_Equipments_Only& inventory_for_equipments, Currently_Equipped_Equipments& currently_equipped_equipments);
 
 private:
     bool Received_Basic_Items = false;
@@ -24,6 +26,7 @@ private:
     Player& player;
     Inventory<Item>& invnetory;
     Inventory_For_Equipments_Only& inventory_for_equipments;
+    Currently_Equipped_Equipments& currently_equipped_equipments;
 
     // TODO: 골드 데이터에 접근하기 위한 멤버 변수 또는 참조 선언
 };
