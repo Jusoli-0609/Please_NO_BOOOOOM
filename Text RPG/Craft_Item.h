@@ -22,8 +22,7 @@ public:
     void Print_All_Recipes() const;
 
 
-    bool Craft_Item(
-        Inventory<Item>& inventory
+    bool Craft_Item(Inventory<Item>& inventory, Inventory_For_Equipments_Only& equipment_inventory
     );
 
 

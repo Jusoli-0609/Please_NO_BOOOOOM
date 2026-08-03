@@ -52,4 +52,5 @@
 		void Set_Money(int money);
 		//10.아이템 제작용 숫자 다운
 		bool Remove_Item_Count(const std::string& item_name, int count);
+		int Get_Item_Count_By_Name(const std::string& item_name) const;
 	};
