@@ -190,7 +190,7 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Camp_Manager.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -333,7 +333,7 @@
       <Filter>헤더 파일\Item\Headset</Filter>
     </ClInclude>
     <ClInclude Include="Camp_Manager.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
