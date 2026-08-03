@@ -14,7 +14,7 @@ enum Battle_Menu
     ITEM = 3
 };
 
-// 함수 선언부
+
 void Battle(Player* player, Monster& monster, Inventory<Item>& inventory);
 
 void Show_Battle_Start(Player* player, Monster& monster);
@@ -26,7 +26,6 @@ void Player_Turn(Player* player, Monster& monster, Inventory<Item>& inventory);
 void Use_Item(Player* player, Monster& monster, Inventory<Item>& inventory);
 void Attack(Player* player, Monster& monster);
 
-// ★ 이 위치에 추가
 bool Skill_Menu_Process(Player* player, Monster& monster);
 void Skill(Player* player, Monster& monster);
 
@@ -35,5 +34,10 @@ void Monster_Attack(Player* player, Monster& monster);
 
 bool Check_Battle_End(Player* player, Monster& monster, Inventory<Item>& inventory);
 void Give_Battle_Item_Reward(Player* player, Monster& monster, Inventory<Item>& inventory);
+
+void Boss_Battle(Player* player, Monster& monster, Inventory<Item>& inventory);
+
+bool Run_Final_Boss_Quiz_Phase(Monster_Type bossType);
+void Final_Boss_Monster_Turn(Player* player, Monster& monster);
 
 #endif // BATTLE_SYSTEM_H
