@@ -102,7 +102,7 @@ void Dungeon_Manager::Open_Dungeon(Player* player, Inventory<Item>& inventory)
 
 	cout << endl;
 	cout << "1. 현재 챕터 입장" << endl;
-	cout << "2. 몬스터 처치 기록 확인" << endl;
+	cout << "2. 전체 몬스터 처치 기록 확인" << endl;
 	cout << "3. 튜터님 시험보기" << endl;
 	cout << "0. 메인 메뉴로 돌아가기" << endl;
 	cout << "선택: ";
@@ -115,7 +115,7 @@ void Dungeon_Manager::Open_Dungeon(Player* player, Inventory<Item>& inventory)
 		Run_Current_Chapter(player, inventory);
 		break;
 	case 2:
-		Print_Current_Chapter_Kill_Log();
+		Print_Total_Monster_Kill_Log();
 		break;
 	case 3:
 		Run_Tutor_Challenge(player, inventory);
@@ -565,40 +565,122 @@ void Dungeon_Manager::Record_Monster_Kill(const Monster& monster)
 	}
 }
 
-void Dungeon_Manager::Print_Current_Chapter_Kill_Log() const
+void Dungeon_Manager::Print_Total_Monster_Kill_Log() const
 {
-	cout << endl << "========================================" << endl;
-	cout << "[ " << Get_Chapter_Name(_current_Chapter) << " 처치 기록 ]" << endl;
+	map
+		<
+		Monster_Type,
+		Monster_Kill_Record
+		> normal_Elite_Kill_Log;
+
+	map
+		<
+		Monster_Type,
+		Monster_Kill_Record
+		> tutor_Kill_Log;
+
+	for(const auto& chapter_Record : _monster_Kill_Log)
+	{
+		for
+			(const auto& monster_Record : chapter_Record.second)
+		{
+			Monster_Type monster_Type = monster_Record.first;
+			const Monster_Kill_Record& kill_Record = monster_Record.second;
+
+			if
+				(kill_Record.monster_Grade == Monster_Grade::NORMAL || kill_Record.monster_Grade == Monster_Grade::ELITE)
+			{
+				Monster_Kill_Record& total_Record = normal_Elite_Kill_Log[monster_Type];
+
+				total_Record.monster_Name = kill_Record.monster_Name;
+				total_Record.monster_Grade = kill_Record.monster_Grade;
+				total_Record.kill_Count += kill_Record.kill_Count;
+				total_Record.earned_Score += kill_Record.earned_Score;
+			}
+			else if
+				(kill_Record.monster_Grade == Monster_Grade::TUTOR)
+			{
+				Monster_Kill_Record& total_Record = tutor_Kill_Log[monster_Type];
+
+				total_Record.monster_Name = kill_Record.monster_Name;
+				total_Record.monster_Grade = kill_Record.monster_Grade;
+				total_Record.kill_Count += kill_Record.kill_Count;
+				total_Record.earned_Score += kill_Record.earned_Score;
+			}
+		}
+	}
+
+	int normal_Elite_Total_Count = 0;
+	int normal_Elite_Total_Score = 0;
+	int tutor_Total_Count = 0;
+
+	cout << endl;
 	cout << "========================================" << endl;
-
-	auto chapter_Log = _monster_Kill_Log.find(_current_Chapter);
-
-	if (chapter_Log == _monster_Kill_Log.end() || chapter_Log->second.empty())
-	{
-		cout << "아직 처치한 몬스터가 없습니다." << endl;
-		cout << "========================================" << endl;
-		return;
-	}
-
-	int total_Kill_Count = 0;
-	int total_Earned_Score = 0;
-
-	for (const auto& monster_Log : chapter_Log->second)
-	{
-		const Monster_Kill_Record& kill_Record = monster_Log.second;
-
-		cout << kill_Record.monster_Name << ": " << kill_Record.kill_Count;
-		cout << (kill_Record.monster_Grade == Monster_Grade::TUTOR ? "회 클리어" : "마리");
-		cout << " / 획득 점수 " << kill_Record.earned_Score << endl;
-
-		total_Kill_Count += kill_Record.kill_Count;
-		total_Earned_Score += kill_Record.earned_Score;
-	}
-
+	cout << "[ 전체 몬스터 처치 기록 ]" << endl;
+	cout << "========================================" << endl;
+	cout << endl;
+	cout << "1. 일반 몬스터 및 정예 몬스터" << endl;
 	cout << "----------------------------------------" << endl;
-	cout << "현재 챕터 총 처치 수: " << total_Kill_Count << "마리" << endl;
-	cout << "누적 획득 점수: " << total_Earned_Score << endl;
-	cout << "현재 적용 점수: " << _current_Chapter_Score << " / " << Get_Required_Tutor_Score() << endl;
+
+	if (normal_Elite_Kill_Log.empty())
+	{
+		cout << "처치한 일반 및 정예 몬스터가 없습니다." << endl;
+	}
+	else
+	{
+		for
+			(const auto& monster_Record: normal_Elite_Kill_Log)
+		{
+			const Monster_Kill_Record& kill_Record = monster_Record.second;
+
+			string monster_Grade_Name;
+
+			if
+				(kill_Record.monster_Grade == Monster_Grade::ELITE)
+			{
+				monster_Grade_Name = "정예";
+			}
+			else
+			{
+				monster_Grade_Name = "일반";
+			}
+
+			cout << "[" << monster_Grade_Name << "] " << kill_Record.monster_Name << endl;
+			cout << "처치 횟수: " << kill_Record.kill_Count << "회" << endl;
+			cout << "획득 점수: " << kill_Record.earned_Score << endl;
+			cout << "----------------------------------------" << endl;
+
+			normal_Elite_Total_Count += kill_Record.kill_Count;
+			normal_Elite_Total_Score += kill_Record.earned_Score;
+		}
+
+		cout << "일반 및 정예 총 처치 수: " << normal_Elite_Total_Count << "회" << endl;
+		cout << "일반 및 정예 총 획득 점수: " << normal_Elite_Total_Score << endl;
+	}
+
+	cout << endl;
+	cout << "2. 튜터" << endl;
+	cout << "----------------------------------------" << endl;
+
+	if (tutor_Kill_Log.empty())
+	{
+		cout << "클리어한 튜터님이 없습니다." << endl;
+	}
+	else
+	{
+		for(const auto& monster_Record : tutor_Kill_Log)
+		{
+			const Monster_Kill_Record& kill_Record = monster_Record.second;
+
+			cout << kill_Record.monster_Name << endl;
+			cout << "클리어 횟수: " << kill_Record.kill_Count << "회" << endl;
+            cout << "----------------------------------------" << endl;
+
+			tutor_Total_Count += kill_Record.kill_Count;
+		}
+
+		cout << "튜터 총 클리어 수: " << tutor_Total_Count << "회" << endl;
+	}
 	cout << "========================================" << endl;
 }
 

@@ -53,7 +53,7 @@ public:
 	// 6. 던전 상태 조회 및 기록 출력 파트
 	bool Check_All_Chapter_Cleared() const;
 	int Get_Current_Chapter_Score() const;
-	void Print_Current_Chapter_Kill_Log() const;
+	void Print_Total_Monster_Kill_Log() const;
 	int Monster_Kill_Count = 0;
 
 	// 외부 참조 public 유틸리티
