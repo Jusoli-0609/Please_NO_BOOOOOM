@@ -121,10 +121,13 @@ public:
     void attack(Player* player)const; // 8-3. 몬스터 공격 처리 
 
     // 9. 몬스터 출력 및 보상 생성 파트
-    void Print_Attack_Message() const; // 9-1. 몬스터 공격 대사 출력
-    void Print_Monster_Info() const; // 9-2. 몬스터 전체 정보 출력
-    void Generate_Drop_Reward(); // 9-3. 아이템별 독립 랜덤 드롭 생성
-    void Print_Drop_Reward() const; // 9-4. 드롭 아이템과 무게 출력
+    void Print_Attack_Message() const;			// 9-1. 몬스터 공격 대사 출력
+    void Print_Ascii_Art() const;				// 9-2. 몬스터 아스키 아트 출력
+    void Print_Monster_Info() const;			// 9-3. 몬스터 전체 정보 출력
+    void Generate_Drop_Reward();				// 9-4. 아이템별 독립 랜덤 드롭 생성
+    void Print_Drop_Reward() const;				// 9-5. 드롭 아이템과 무게 출력
+    void Print_Drop_Item_Ascii_Art() const;		// 9-6. 드롭 아이템 아트 출력
+
 private:
     // 10. 내부 몬스터 초기화 파트
     void Initialize_Monster(Monster_Type monster_Type); // 10-1. 일반 몬스터 정보 초기화
@@ -148,6 +151,8 @@ private:
     int _monster_Level;
 
     std::string _monster_Name;
+    std::string _monster_Ascii_Art;
+
     int _stat[MONSTER_STAT_COUNT];
 
     // 14. 몬스터 전투 및 기본 보상 데이터 파트
