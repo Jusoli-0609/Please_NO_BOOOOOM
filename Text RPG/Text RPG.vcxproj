@@ -123,6 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Ascii_Art_Manager.cpp" />
     <ClCompile Include="Battle_Elite_Skill.cpp" />
     <ClCompile Include="Character_Creator.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -174,6 +175,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Ascii_Art_Manager.h" />
     <ClInclude Include="Battle_Elite_Skill.h" />
     <ClInclude Include="Character_Creator.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>

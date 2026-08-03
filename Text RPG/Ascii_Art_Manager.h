@@ -1,9 +1,9 @@
 #pragma once
-class Ascii_Art_Manager
+#include <string>
+
+class Ascii_Art_Manager	//txt 파일만 열고 화면 출력하는 매니저 입니다.
 {
 public:
-	void _Show_Title();
-	void _Show_Monster();
-	void _Show_GameOver();
+    void Print(const std::string& File_Name) const;
 };
 
