@@ -126,8 +126,12 @@ void Player_Turn(Player* player, Monster& monster, Inventory<Item>& inventory)
 
 void Use_Item(Player* player, Monster& monster, Inventory<Item>& inventory)
 {
-    if (player == nullptr) return;
-    inventory.Use_Item_In_Battle(*player, monster);
+    if (player == nullptr)
+    {
+        return;
+    }
+
+    inventory.Use_Item(*player, monster);
 }
 
 void Attack(Player* player, Monster& monster)

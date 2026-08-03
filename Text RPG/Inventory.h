@@ -35,22 +35,22 @@ class Player;
 
 		//인수에 Player 추가
 		void Print_Inventory_Menu(Currently_Equipped_Equipments& currently_equipped_equipments,
-			Inventory_For_Equipments_Only& inventory_for_equipments_only, Player* player);//4-2 인벤토리 메뉴(선택지) 출력
-		//5.인벤토리 기능 함수 파트
-		bool Add_Or_Increase_Item(const T& new_item);// 5-1 아이템 추가 및 갯수 증가
-		bool Use_Item_By_Name(const std::string& item_name);// 5-2 5-2 이름으로 아이템 사용 성공 및 갯수 감소
-		void Use_Item_In_Battle(Player& player, Monster& monster);//5-3 전투 중 아이템 사용
-		void Throw_Away_Item();// 5-4 아이템 버리기
-		void Remove_Last_Item();// 5-5 마지막 아이템 제거
-		void Use_Random_Item_In_Battle(Player& player, Monster& monster);//5-6 캐릭터가 자동으로 아이템 랜덤 사용
-		// 6. 인벤토리 정렬 / 순서 변경
-	    void Sort_Inventory();// 6-1 아이템 정렬
-	    void Change_Inventory_Order();//6-2 아이템 순서 골라서 바꾸기
-	    // 7. 인벤토리 용량 확장
-		void Increase_Max_Capacity(int new_max_capacity);//7-1 아이템 용량 늘어나기
-	    // 8. 인벤토리 소멸자	
-		~Inventory();//8.소멸자
-		//9. 인벤토리 내 골드
+            Inventory_For_Equipments_Only& inventory_for_equipments_only, Player* player);//4-2 인벤토리 메뉴(선택지) 출력
+        //5.인벤토리 기능 함수 파트
+        bool Add_Or_Increase_Item(const T& new_item);// 5-1 아이템 추가 및 갯수 증가
+        bool Use_Item_By_Name(const std::string& item_name);// 5-2 5-2 이름으로 아이템 사용 성공 및 갯수 감소
+        void Use_Item(Player& player, Monster& monster);//5-3 전투 중 아이템 사용
+        void Throw_Away_Item();// 5-4 아이템 버리기
+        void Remove_Last_Item();// 5-5 마지막 아이템 제거
+        void Use_Random_Item_In_Battle(Player& player, Monster& monster);//5-6 캐릭터가 자동으로 아이템 랜덤 사용
+        // 6. 인벤토리 정렬 / 순서 변경
+        void Sort_Inventory();// 6-1 아이템 정렬
+        void Change_Inventory_Order();//6-2 아이템 순서 골라서 바꾸기
+        // 7. 인벤토리 용량 확장
+        void Increase_Max_Capacity(int new_max_capacity);//7-1 아이템 용량 늘어나기
+        // 8. 인벤토리 소멸자
+        ~Inventory();//8.소멸자
+        //9. 인벤토리 내 골드
 		int Get_Money()const;
 		void Set_Money(int money);
 	};

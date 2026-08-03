@@ -140,9 +140,21 @@ void Inventory<T>::Print_Inventory() const
     void Inventory<T>::Print_Inventory_Menu(Currently_Equipped_Equipments& currently_equipped_equipments,
         Inventory_For_Equipments_Only& inventory_for_equipments_only, Player* player)
     {
-        int Choose_Inventory_Menu;
-  
-        while (true)
+        cout << endl;
+        cout << "========================================" << endl;
+        cout << "              �κ��丮 �޴�" << endl;
+        cout << "========================================" << endl;
+        cout << "1. ��ü �κ��丮 ����" << endl;
+        cout << "2. ���� ���� ���� ��� ����" << endl;
+        cout << "3. ��� ���� �κ��丮 ����" << endl;
+        cout << "4. �Һ�/��� ������ ���� �κ��丮 ����" << endl;
+        cout << "0. �ǵ��ư���" << endl;
+        cout << "----------------------------------------" << endl;
+        cout << "������ �ұ�?: ";
+
+        cin >> Choose_Inventory_Menu;
+
+        switch (Choose_Inventory_Menu)
         {
             cout << endl;
             cout << "========================================" << endl;
@@ -156,7 +168,9 @@ void Inventory<T>::Print_Inventory() const
             cout << "----------------------------------------" << endl;
             cout << "무엇을 할까?: ";
 
-            cin >> Choose_Inventory_Menu;
+        case 2:
+        {
+            currently_equipped_equipments.Print_Currently_Equipped_Equipments();
 
             switch (Choose_Inventory_Menu)
             {
@@ -186,7 +200,7 @@ void Inventory<T>::Print_Inventory() const
                 case 1:
                 {
                     inventory_for_equipments_only.Equip_Equipment_From_Inventory(
-						currently_equipped_equipments, player
+                        currently_equipped_equipments, player
                     );
                     break;
                 }
@@ -211,11 +225,13 @@ void Inventory<T>::Print_Inventory() const
                 }
                 }
 
+            switch (Choose_Currently_Equipped_Equipments_Menu)
+            {
+            case 1:
+            {
+                currently_equipped_equipments.Print_Currently_Equipped_Equipments();
                 break;
             }
-            case 3:
-            {
-                inventory_for_equipments_only.Print_Equipment_Inventory();
 
                 cout << R"(
 무엇을 하시겠습니까?
@@ -274,8 +290,28 @@ void Inventory<T>::Print_Inventory() const
                 }
                 }
 
+            switch (Choose_Equipment_Inventory_Menu)
+            {
+            case 1:
+            {
+                inventory_for_equipments_only.Print_Equipment_Inventory();
                 break;
             }
+
+            case 2:
+            {
+                inventory_for_equipments_only.Equip_Equipment_From_Inventory(
+                    currently_equipped_equipments
+                );
+                break;
+            }
+
+            case 3:
+            {
+                inventory_for_equipments_only.Throw_Away_Equipment();
+                break;
+            }
+
             case 4:
             {
                 Print_Inventory();
@@ -315,19 +351,113 @@ void Inventory<T>::Print_Inventory() const
                 }
             break;
             }
+
+            case 5:
+            {
+                inventory_for_equipments_only.Sort_Equipment_Inventory();
+                break;
+            }
+
+            case 6:
+            {
+                inventory_for_equipments_only.Change_Equipment_Inventory_Order();
+                break;
+            }
+
             case 0:
             {
                 cout << "인벤토리 메뉴를 닫았다!" << endl;
                 return;
             }
+
             default:
             {
                 cout << "잘못된 입력이다! 다시 선택하라." << endl;
                 break;
             }
             }
+
+            break;
+        }
+
+        case 4:
+        {
+            cout << R"(
+������ �Ͻðڽ��ϱ�?
+1. ������ ����
+2. ������ ����
+3. ������ ���� �ٲٱ�
+4. ������ ������
+5. ������ ����ϱ�
+0. �ǵ��ư���
+)" << endl;
+
+            int ChooseInventoryMenu;
+            cin >> ChooseInventoryMenu;
+
+            switch (ChooseInventoryMenu)
+            {
+            case 1:
+            {
+                Print_Inventory();
+                break;
+            }
+
+            case 2:
+            {
+                Sort_Inventory();
+                break;
+            }
+
+            case 3:
+            {
+                Change_Inventory_Order();
+                break;
+            }
+
+            case 4:
+            {
+                Throw_Away_Item();
+                break;
+            }
+
+            case 5:
+            {
+                // TODO: Player, Monster ��ü ���� ���� ����
+                // Use_Item(player, monster);
+                cout << "���� �� ������ ����� ���� �ý��ۿ��� ȣ���ؾ� �Ѵ�!" << endl;
+                break;
+            }
+
+            case 0:
+            {
+                break;
+            }
+
+            default:
+            {
+                cout << "�߸��� �Է��̴�!" << endl;
+                break;
+            }
+            }
+
+            break;
+        }
+
+        case 0:
+        {
+            cout << "�κ��丮 �޴��� �ݾҴ�!" << endl;
+            return;
+        }
+
+        default:
+        {
+            cout << "�߸��� �Է��̴�! �ٽ� �����϶�." << endl;
+            break;
+        }
         }
     }
+
 
     template<typename T>//5-1 아이템 추가 및 갯수 증가
     bool Inventory<T>::Add_Or_Increase_Item(const T & new_item)
@@ -437,8 +567,8 @@ void Inventory<T>::Print_Inventory() const
         return false;
     }
 
-    template <typename T>//5-3 전투 중 아이템 사용
-    void Inventory<T>::Use_Item_In_Battle(Player & player, Monster & monster)
+    template <typename T>//5-3 ���� �� ������ ���
+    void Inventory<T>::Use_Item(Player & player, Monster & monster)
     {
         if (_Current_Quantity_Of_Items == 0)
         {

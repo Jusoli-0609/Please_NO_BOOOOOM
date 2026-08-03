@@ -1,9 +1,10 @@
-﻿#include "Console_Manager.h"
+#include "Console_Manager.h"
 #include "DungeonManager.h"
 #include "Inventory.h"
 #include "Item.h"
 #include "Character_Creator.h"
 #include "Player.h"
+#include "Equipment.h"
 
 #include <iostream>
 #include <ctime>
@@ -27,8 +28,25 @@ int main()
     console.Clear();
     console.Set_Cursor_Position(15, 10);
 
-    PrintLine();
-    Intro();
+    // 1. ����ȣ�� ���콺 ȹ��
+    Equipment KangShinho_Mouse(
+        "����ȣ�� ���콺",
+        50,                         // ���ݷ�
+        10,                         // ����
+        Equipment_Grade::Best,
+        Equipment_Type::Mouse,
+        R"(
+        __________________
+       |                  |
+       |   KSH MOUSE      |
+       |__________________|
+        )",
+        "����ȣ Ʃ�Ͱ� ����ߴ� ������ ���콺",
+        3
+    );
+
+    // 2. ��� ���� �κ��丮 ����
+    Inventory_For_Equipments_Only Equipment_Inventory;
 
     // 플레이어 생성
     Player* player = Character_Creator();
@@ -39,7 +57,8 @@ int main()
         return 0;
     }
 
-    Inventory<Item> inventory(10, 9999);
+    // 3. ���콺 ȹ��
+    Equipment_Inventory.Add_Equipment(KangShinho_Mouse);
 
     Dungeon_Manager dungeonManager;
 
@@ -88,4 +107,3 @@ int main()
 
     delete player;
 }
-    
