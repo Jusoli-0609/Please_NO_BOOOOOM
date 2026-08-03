@@ -1,10 +1,10 @@
 #pragma once
 #include "Player.h"
-// JSR·Î ÀÌ¸§ ¹Ù²ã³ù½À´Ï´Ù!
-class JSR : public Player
+
+class LYB : public Player
 {
 public:
-	JSR(const std::string& name);
+	LYB(const std::string& name);
 
 	void Attack(Monster* monster) override;
 

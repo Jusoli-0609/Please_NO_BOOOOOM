@@ -1,10 +1,10 @@
 #pragma once
 #include "Player.h"
-// JSR로 이름 바꿔놨습니다!
-class JSR : public Player
+//이것도 이름부분 바꿔놨습니다.
+class JWH : public Player
 {
 public:
-	JSR(const std::string& name);
+	JWH(const std::string& name);
 
 	void Attack(Monster* monster) override;
 
