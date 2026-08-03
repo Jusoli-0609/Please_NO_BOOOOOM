@@ -22,7 +22,7 @@ void Camp_Manager::Open_Camp_Menu()
         cout << "2. 펩 스토어\n";
         cout << "3. 문승호 매니저님의 만물 잡화점\n";
         cout << "4. 김동현 매니저님의 전리품 매입소\n";
-        cout << "5. 쿠키의 대장간\n";
+        cout << "5. 쿠기의 대장간\n";
         cout << "0. 나가기\n";
         cout << "선택: ";
 
@@ -55,16 +55,8 @@ void Camp_Manager::Open_Camp_Menu()
     }
 }
 
-void Camp_Manager::Give_Basic_Training_Item(Player& player,Currently_Equipped_Equipments& currently_equipped_equipments)
+void Camp_Manager::Give_Basic_Training_Item()
 {
-    if (Received_Basic_Items == true)
-    {
-        cout << "기본 보급은 한번 밖에 받을 수 없다!\n";
-        cout << "쿠키가 당신을 할큅니다!\n";
-        player.SetHP(player.getHP() - 1);
-        
-
-    }
     // TODO: 기본 지급 아이템 생성
     // invnetory.Add_Item(...);
 }

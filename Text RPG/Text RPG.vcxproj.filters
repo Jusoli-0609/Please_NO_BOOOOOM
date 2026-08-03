@@ -25,6 +25,12 @@
     <Filter Include="헤더 파일\Specific_Items">
       <UniqueIdentifier>{38054b4f-0d7e-433d-a8f7-35b1b2021b75}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Camp">
+      <UniqueIdentifier>{e42a5ada-9137-416e-bbac-012d59010ff4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Camp">
+      <UniqueIdentifier>{59f16c78-53d6-48bc-85cc-e23c97a5325f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -38,9 +44,6 @@
     </ClCompile>
     <ClCompile Include="Battle_System.cpp">
       <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Craft_Item.cpp">
-      <Filter>소스 파일\Item</Filter>
     </ClCompile>
     <ClCompile Include="All_Recipes.cpp">
       <Filter>소스 파일\Item</Filter>
@@ -90,6 +93,12 @@
     <ClCompile Include="Basic_Engine.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Camp_Manager.cpp">
+      <Filter>소스 파일\Camp</Filter>
+    </ClCompile>
+    <ClCompile Include="Craft_Item.cpp">
+      <Filter>소스 파일\Camp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h">
@@ -107,9 +116,6 @@
     <ClInclude Include="All_Recipes.h">
       <Filter>헤더 파일\Item</Filter>
     </ClInclude>
-    <ClInclude Include="Craft_Item.h">
-      <Filter>헤더 파일\Item</Filter>
-    </ClInclude>
     <ClInclude Include="Item.h">
       <Filter>헤더 파일\Item</Filter>
     </ClInclude>
@@ -123,9 +129,6 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Console_Manager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Game_Manager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Job_Selection.h">
@@ -157,6 +160,15 @@
     </ClInclude>
     <ClInclude Include="Basic_Engine.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_Manager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Craft_Item.h">
+      <Filter>헤더 파일\Camp</Filter>
+    </ClInclude>
+    <ClInclude Include="Camp_Manager.h">
+      <Filter>헤더 파일\Camp</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
