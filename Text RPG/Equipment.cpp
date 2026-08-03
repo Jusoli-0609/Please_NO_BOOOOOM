@@ -384,37 +384,6 @@ bool Currently_Equipped_Equipments::Unequip_One_Equipment(Equipment& equipped_it
     return true;
 }
 
-//-----------------현재 장착 장비 조회-----------------
-
-// 현재 장착된 엔진 조회
-Equipment Currently_Equipped_Equipments::Get_Engine() const
-{
-    return _Unreal_Engine_Version;
-}
-
-// 현재 장착된 키보드 조회
-Equipment Currently_Equipped_Equipments::Get_Keyboard() const
-{
-    return _Keyboard;
-}
-
-// 현재 장착된 마우스 조회
-Equipment Currently_Equipped_Equipments::Get_Mouse() const
-{
-    return _Mouse;
-}
-
-// 현재 장착된 블루라이트 안경 조회
-Equipment Currently_Equipped_Equipments::Get_BlueLight_Glasses() const
-{
-    return _BlueLight_Glasses;
-}
-
-// 현재 장착된 헤드셋 조회
-Equipment Currently_Equipped_Equipments::Get_Headset() const
-{
-    return _Headset;
-}
 
 //장비 총 스텟 얻기
 Equipment_Stats Currently_Equipped_Equipments::Get_All_Equipments_Stats() const
