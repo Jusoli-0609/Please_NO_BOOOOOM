@@ -740,22 +740,56 @@ void Inventory<T>::Print_Inventory_Menu(
         cout << "아이템 순서를 변경했다." << endl;
     }
 
-    template<typename T>//7.인벤토리 용량 확장
-    void Inventory<T>::Increase_Max_Capacity(int new_max_capacity)
+    template<typename T>//7-1 슬롯 증가
+    void Inventory<T>::Increase_Slot_Capacity(int increase_slot)
     {
-        if (new_max_capacity <= _Max_Inventory_Size)
+        
+        if (increase_slot <= 0)
         {
+            cout << "확장할 슬롯 수는 1 이상이어야 합니다." << endl;
             return;
         }
-        T* new_items = new T[new_max_capacity];
+
+     
+        int new_max_inventory_size = _Max_Inventory_Size + increase_slot;
+
+
+        T* new_items = new T[new_max_inventory_size];
+
+        
         for (int i = 0; i < _Current_Quantity_Of_Items; i++)
         {
             new_items[i] = _Inventory_Items[i];
         }
+
+     
         delete[] _Inventory_Items;
+
+       
         _Inventory_Items = new_items;
-        _Max_Inventory_Size = new_max_capacity;
-        cout << "소비/재료 전용 인벤토리 슬롯이 " << new_max_capacity << "칸으로 확장되었다!" << endl;
+
+        
+        _Max_Inventory_Size = new_max_inventory_size;
+
+        cout << "소비/재료 전용 인벤토리 슬롯이 "
+            << _Max_Inventory_Size
+            << "칸으로 확장되었다!" << endl;
+    }
+
+    template<typename T>//7-2 무게 용량 증가
+    void Inventory<T>::Increase_Max_Capacity(int increase_capacity)
+    {
+        if (increase_capacity <= 0)
+        {
+            cout << "증가할 무게는 1 이상이어야 합니다." << endl;
+            return;
+        }
+
+        _Max_Capacity += increase_capacity;
+
+        cout << "소비/재료 전용 인벤토리의 최대 허용 무게가 "
+            << _Max_Capacity
+            << "으로 증가했다!" << endl;
     }
 
     template<typename T>//8.인벤토리 소멸자
