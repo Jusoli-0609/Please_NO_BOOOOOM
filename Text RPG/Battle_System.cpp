@@ -304,3 +304,142 @@ void Give_Battle_Item_Reward(Player* player, Monster& monster, Inventory<Item>& 
         cout << "훈련장려금 " << goldReward << " 획득!" << endl;
     }
 }
+
+bool Run_Final_Boss_Quiz_Phase(Monster_Type bossType)
+{
+    vector<Quiz> targetQuizPool;
+    int quizCount = 0;          // 출제 문제 수
+    int requiredCorrect = 0;    // 통과 필요 정답 수
+
+    if (bossType == Monster_Type::KIM_DONG_HYUN_MANAGER)
+    {
+        targetQuizPool = KimDongHyunManagerQuiz;
+        quizCount = 3;
+        requiredCorrect = 2; // 3문제 중 2문제 이상 정답 시 방어 성공
+    }
+    else if (bossType == Monster_Type::MOON_SEUNG_HO_MANAGER)
+    {
+        targetQuizPool = MoonSeungHoManagerQuiz;
+        quizCount = 5;
+        requiredCorrect = 4; // 5문제 중 4문제 이상 정답 시 방어 성공
+    }
+    else
+    {
+        return true;
+    }
+
+    // 문제 순서 무작위 셔플
+    for (size_t i = 0; i < targetQuizPool.size(); ++i)
+    {
+        int randIdx = rand() % targetQuizPool.size();
+        swap(targetQuizPool[i], targetQuizPool[randIdx]);
+    }
+
+    int correctCount = 0;
+
+    cout << "\n========================================\n";
+    cout << " [매니저님의 실무 심사 퀴즈 패턴 발동!]\n";
+    cout << " 총 " << quizCount << "문제 중 " << requiredCorrect << "문제 이상 맞혀야 공격을 방어합니다!\n";
+    cout << "========================================\n";
+
+    for (int i = 0; i < quizCount && i < static_cast<int>(targetQuizPool.size()); ++i)
+    {
+        const Quiz& currentQuiz = targetQuizPool[i];
+
+        cout << "\n[Q" << (i + 1) << "] " << currentQuiz.question << "\n";
+
+        for (size_t j = 0; j < currentQuiz.choices.size(); ++j)
+        {
+            cout << (j + 1) << ") " << currentQuiz.choices[j] << "  ";
+        }
+        cout << "\n답을 입력하세요 (1~4): ";
+
+        int inputAnswer = 0;
+        cin >> inputAnswer;
+
+        if (inputAnswer == currentQuiz.answer)
+        {
+            cout << ">> 정답입니다!\n";
+            correctCount++;
+        }
+        else
+        {
+            cout << ">> 오답입니다! (정답: " << currentQuiz.answer << "번)\n";
+        }
+    }
+
+    cout << "\n----------------------------------------\n";
+    cout << " [심사 결과] " << correctCount << " / " << quizCount << " 정답 달성!\n";
+    cout << "----------------------------------------\n";
+
+    return correctCount >= requiredCorrect;
+}
+
+// 2. 최종 보스 공격 턴 처리 함수
+void Final_Boss_Monster_Turn(Player* player, Monster& monster)
+{
+    monster.Print_Attack_Message();
+
+    bool isPassed = Run_Final_Boss_Quiz_Phase(monster.getMonsterType());
+
+    if (isPassed)
+    {
+        // 퀴즈 방어 성공: 보스 패턴 무력화 및 카운터 공격
+        int counterDamage = player->getPower() * 2;
+        monster.setHP(monster.getHP() - counterDamage);
+
+        cout << "\n>> [성공] 매니저님의 질문을 완벽히 이해했습니다!\n";
+        cout << ">> 보스의 패턴을 무력화하고 " << counterDamage << "의 강력한 카운터 데미지를 입혔습니다!\n";
+    }
+    else
+    {
+        // 퀴즈 방어 실패: 보스의 스킬 피격
+        int bossDamage = static_cast<int>(monster.getPower() * 1.5);
+        player->setHP(player->getHP() - bossDamage);
+
+        cout << "\n>> [실패] 심사 기준을 달성하지 못했습니다...\n";
+        cout << ">> 매니저님의 특수 패턴 공격을 받아 " << bossDamage << "의 데미지를 입었습니다!\n";
+    }
+}
+
+void Boss_Battle(Player* player, Monster& monster, Inventory<Item>& inventory)
+{
+    Show_Battle_Start(player, monster);
+
+    int turnCount = 1;
+
+    // 플레이어와 보스 중 하나가 사망할 때까지 전투 반복
+    while (player->getHP() > 0 && monster.getHP() > 0)
+    {
+        Show_Battle_Status(player, monster, turnCount);
+
+        // 1. 플레이어 턴 진행 (공격 / 스킬 / 아이템 사용)
+        Player_Turn(player, monster, inventory);
+
+        // 플레이어 공격 후 보스가 사망했는지 확인
+        if (Check_Battle_End(player, monster, inventory))
+        {
+            break;
+        }
+
+        // 2. 보스 턴 진행 (최종 보스일 경우 퀴즈 패턴 실행)
+        if (monster.getMonsterGrade() == Monster_Grade::FINAL_BOSS)
+        {
+            Final_Boss_Monster_Turn(player, monster);
+        }
+        else
+        {
+            Monster_Turn(player, monster, turnCount);
+        }
+
+        // 보스 공격 후 플레이어가 사망했는지 확인
+        if (Check_Battle_End(player, monster, inventory))
+        {
+            break;
+        }
+
+        turnCount++;
+    }
+
+    Show_Battle_End(player, monster);
+}
