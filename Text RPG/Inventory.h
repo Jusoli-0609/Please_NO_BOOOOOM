@@ -1,4 +1,4 @@
-ï»¿	#pragma once
+	#pragma once
 	#include<algorithm>
 	#include <map>
 	#include <string>
@@ -7,8 +7,6 @@
 
 	#include "Item.h"
 	#include "Player.h"
-
-class Player;
 
 	template <typename T>
 	class Inventory
@@ -20,36 +18,35 @@ class Player;
 		int _Current_Quantity_Of_Items;
 		int _Money;
 	public:
-		//1.ì¸ë²¤í† ë¦¬ ìƒì„± íŒŒíŠ¸
-		Inventory(int max_inventory_size, int max_capacity);//1-1 ì¸ë²¤í† ë¦¬ ê¸°ë³¸ ìƒì„±ì
-		Inventory(const Inventory<T>& other); //1-2.ì¸ë²¤í† ë¦¬ ë³µì‚¬ ìƒì„±ì(ìƒˆë¡œ ë§Œë“¤ë©´ì„œ ë³µì‚¬ â†’ ë³µì‚¬ ìƒì„±ì)
-		//2.ì¸ë²¤í† ë¦¬ ëŒ€ì… ì—°ì‚°ì íŒŒíŠ¸
-		Inventory<T>& operator=(const Inventory<T>& other);//2-1 ëŒ€ì… ì—°ì‚°ì
-		//3.ì¸ë²¤í† ë¦¬ ì¡°íšŒ í•¨ìˆ˜ íŒŒíŠ¸
-		int Get_Total_Weight() const;//3-1 ì´ ë¬´ê²Œ ì¡°íšŒ í•¨ìˆ˜
-		T* Get_Item_By_Index(int Index);//3-2 ì¸ë²¤í† ë¦¬ Index ê°€ì ¸ì˜¤ê¸°
-		int Get_Size() const;//3-3 ì¸ë²¤í† ë¦¬ ì‚¬ì´ì¦ˆ ì¡°íšŒ
-		int Get_Capacity() const;//3-4 ë¬´ê²Œ ì¡°íšŒ
-		//4.ì¸ë²¤í† ë¦¬ ì¶œë ¥ ê´€ë ¨ í•¨ìˆ˜ íŒŒíŠ¸
-        template <typename T>
-        void Inventory<T>::Print_Inventory() const; //4-1 ì†Œë¹„ ì „ìš© ì¸ë²¤í† ë¦¬
+		//1.ÀÎº¥Åä¸® »ı¼º ÆÄÆ®
+		Inventory(int max_inventory_size, int max_capacity);//1-1 ÀÎº¥Åä¸® ±âº» »ı¼ºÀÚ
+		Inventory(const Inventory<T>& other); //1-2.ÀÎº¥Åä¸® º¹»ç »ı¼ºÀÚ(»õ·Î ¸¸µé¸é¼­ º¹»ç ¡æ º¹»ç »ı¼ºÀÚ)
+		//2.ÀÎº¥Åä¸® ´ëÀÔ ¿¬»êÀÚ ÆÄÆ®
+		Inventory<T>& operator=(const Inventory<T>& other);//2-1 ´ëÀÔ ¿¬»êÀÚ
+		//3.ÀÎº¥Åä¸® Á¶È¸ ÇÔ¼ö ÆÄÆ®
+		int Get_Total_Weight() const;//3-1 ÃÑ ¹«°Ô Á¶È¸ ÇÔ¼ö
+		T* Get_Item_By_Index(int Index);//3-2 ÀÎº¥Åä¸® Index °¡Á®¿À±â
+		int Get_Size() const;//3-3 ÀÎº¥Åä¸® »çÀÌÁî Á¶È¸
+		int Get_Capacity() const;//3-4 ¹«°Ô Á¶È¸
+		//4.ÀÎº¥Åä¸® Ãâ·Â °ü·Ã ÇÔ¼ö ÆÄÆ®
+		void Print_Inventory() const;//4-1 ÀÎº¥Åä¸® ¹× ³»¿ë¹° Ãâ·Â
 		void Print_Inventory_Menu(Currently_Equipped_Equipments& currently_equipped_equipments,
-            Inventory_For_Equipments_Only& inventory_for_equipments_only, Player* player);//4-2 ì¸ë²¤í† ë¦¬ ë©”ë‰´(ì„ íƒì§€) ì¶œë ¥
-        //5.ì¸ë²¤í† ë¦¬ ê¸°ëŠ¥ í•¨ìˆ˜ íŒŒíŠ¸
-        bool Add_Or_Increase_Item(const T& new_item);// 5-1 ì•„ì´í…œ ì¶”ê°€ ë° ê°¯ìˆ˜ ì¦ê°€
-        bool Use_Item_By_Name(const std::string& item_name);// 5-2 5-2 ì´ë¦„ìœ¼ë¡œ ì•„ì´í…œ ì‚¬ìš© ì„±ê³µ ë° ê°¯ìˆ˜ ê°ì†Œ
-        void Use_Item(Player& player, Monster& monster);//5-3 ì „íˆ¬ ì¤‘ ì•„ì´í…œ ì‚¬ìš©
-        void Throw_Away_Item();// 5-4 ì•„ì´í…œ ë²„ë¦¬ê¸°
-        void Remove_Last_Item();// 5-5 ë§ˆì§€ë§‰ ì•„ì´í…œ ì œê±°
-        void Use_Random_Item_In_Battle(Player& player, Monster& monster);//5-6 ìºë¦­í„°ê°€ ìë™ìœ¼ë¡œ ì•„ì´í…œ ëœë¤ ì‚¬ìš©
-        // 6. ì¸ë²¤í† ë¦¬ ì •ë ¬ / ìˆœì„œ ë³€ê²½
-        void Sort_Inventory();// 6-1 ì•„ì´í…œ ì •ë ¬
-        void Change_Inventory_Order();//6-2 ì•„ì´í…œ ìˆœì„œ ê³¨ë¼ì„œ ë°”ê¾¸ê¸°
-        // 7. ì¸ë²¤í† ë¦¬ ìš©ëŸ‰ í™•ì¥
-        void Increase_Max_Capacity(int new_max_capacity);//7-1 ì•„ì´í…œ ìš©ëŸ‰ ëŠ˜ì–´ë‚˜ê¸°
-        // 8. ì¸ë²¤í† ë¦¬ ì†Œë©¸ì
-        ~Inventory();//8.ì†Œë©¸ì
-        //9. ì¸ë²¤í† ë¦¬ ë‚´ ê³¨ë“œ
+			Inventory_For_Equipments_Only& inventory_for_equipments_only, Player& player, Monster& monster);//4-2 ÀÎº¥Åä¸® ¸Ş´º(¼±ÅÃÁö) Ãâ·Â
+		//5.ÀÎº¥Åä¸® ±â´É ÇÔ¼ö ÆÄÆ®
+		bool Add_Or_Increase_Item(const T& new_item);// 5-1 ¾ÆÀÌÅÛ Ãß°¡ ¹× °¹¼ö Áõ°¡
+		bool Use_Item_By_Name(const std::string& item_name);// 5-2 5-2 ÀÌ¸§À¸·Î ¾ÆÀÌÅÛ »ç¿ë ¼º°ø ¹× °¹¼ö °¨¼Ò
+		void Use_Item(Player& player, Monster& monster);//5-3 ÀüÅõ Áß ¾ÆÀÌÅÛ »ç¿ë
+		void Throw_Away_Item();// 5-4 ¾ÆÀÌÅÛ ¹ö¸®±â
+		void Remove_Last_Item();// 5-5 ¸¶Áö¸· ¾ÆÀÌÅÛ Á¦°Å
+		void Use_Random_Item_In_Battle(Player& player, Monster& monster);//5-6 Ä³¸¯ÅÍ°¡ ÀÚµ¿À¸·Î ¾ÆÀÌÅÛ ·£´ı »ç¿ë
+		// 6. ÀÎº¥Åä¸® Á¤·Ä / ¼ø¼­ º¯°æ
+	    void Sort_Inventory();// 6-1 ¾ÆÀÌÅÛ Á¤·Ä
+	    void Change_Inventory_Order();//6-2 ¾ÆÀÌÅÛ ¼ø¼­ °ñ¶ó¼­ ¹Ù²Ù±â
+	    // 7. ÀÎº¥Åä¸® ¿ë·® È®Àå
+		void Increase_Max_Capacity(int new_max_capacity);//7-1 ¾ÆÀÌÅÛ ¿ë·® ´Ã¾î³ª±â
+	    // 8. ÀÎº¥Åä¸® ¼Ò¸êÀÚ	
+		~Inventory();//8.¼Ò¸êÀÚ
+		//9. ÀÎº¥Åä¸® ³» °ñµå
 		int Get_Money()const;
 		void Set_Money(int money);
 	};
