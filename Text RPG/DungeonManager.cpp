@@ -854,54 +854,78 @@ void Dungeon_Manager::Run_Final_Boss_Room(Player* player, Inventory<Item>& inven
 	if (player == nullptr)
 	{
 		cout << "플레이어 정보가 없습니다." << endl;
-
 		return;
 	}
 
+	// [체크 1] 챕터 클리어 조건 체크 (만약 튜터 아이템만으로 입장시키려면 이 조건문을 주석 처리하거나 제거하세요)
 	if (_is_All_Chapter_Cleared == false)
 	{
 		cout << "아직 모든 챕터를 클리어하지 못했습니다." << endl;
-
 		return;
 	}
 
-	if(Check_Final_Boss_Room_Available(inventory)== false)
+	// [체크 2] 튜터 아이템 5종 보유 체크
+	if (Check_Final_Boss_Room_Available(inventory) == false)
 	{
 		cout << "튜터님 고유 아이템 5종이 부족합니다." << endl;
-
 		return;
 	}
 
+	// 최종 보스 객체 생성 및 초기화
 	Monster kim_Dong_Hyun_Manager;
-
 	kim_Dong_Hyun_Manager.Initialize_Final_Boss(Monster_Type::KIM_DONG_HYUN_MANAGER);
 
 	Monster moon_Seung_Ho_Manager;
-
 	moon_Seung_Ho_Manager.Initialize_Final_Boss(Monster_Type::MOON_SEUNG_HO_MANAGER);
 
 	cout << endl;
 	cout << "========================================" << endl;
 	cout << "[ 최종보스방 개방 ]" << endl;
 	cout << "========================================" << endl;
-
 	cout << "튜터님들의 고유 아이템이 반응합니다." << endl;
-
 	cout << "최종보스방의 문이 열렸습니다." << endl;
 
-	cout << endl;
-	cout << "[ 1차 최종보스 ]" << endl;
-
+	// ----------------------------------------------------
+	// [1차 최종보스전 시작: 김동현 매니저님]
+	// ----------------------------------------------------
+	cout << endl << "[ 1차 최종보스전 진입 ]" << endl;
 	kim_Dong_Hyun_Manager.Print_Monster_Info();
-	kim_Dong_Hyun_Manager.Print_Attack_Message();
 
+	// 전투 실행
+	Boss_Battle(player, kim_Dong_Hyun_Manager, inventory);
+
+	// 1차 보스 전투 후 플레이어 사망 시 퇴장
+	if (player->getHP() <= 0)
+	{
+		cout << "\n김동현 매니저님의 심사를 통과하지 못했습니다..." << endl;
+		return;
+	}
+
+	// ----------------------------------------------------
+	// [2차 최종보스전 시작: 문승호 매니저님]
+	// ----------------------------------------------------
 	cout << endl;
-	cout << "[ 2차 최종보스 ]" << endl;
+	cout << "========================================" << endl;
+	cout << "김동현 매니저님을 물리쳤습니다!" << endl;
+	cout << "문승호 매니저님의 최종 수료 심사가 시작됩니다." << endl;
+	cout << "========================================" << endl;
 
 	moon_Seung_Ho_Manager.Print_Monster_Info();
-	moon_Seung_Ho_Manager.Print_Attack_Message();
 
-	cout << endl;
-	cout << "김동현 매니저님을 물리치면 " << "문승호 매니저님의 시험이 시작됩니다." << endl;
-	cout << "========================================" << endl;
+	// 연속 전투 실행
+	Boss_Battle(player, moon_Seung_Ho_Manager, inventory);
+
+	// 2차 보스 처치 여부 확인 (최종 게임 클리어)
+	if (moon_Seung_Ho_Manager.getHP() <= 0)
+	{
+		cout << endl;
+		cout << "========================================" << endl;
+		cout << "   [ 축 하 합 니 다 ! 게 임 클 리 어 ]" << endl;
+		cout << " 모든 매니저님의 심사를 완벽히 통과하셨습니다!" << endl;
+		cout << "========================================" << endl;
+	}
+	else
+	{
+		cout << "\n문승호 매니저님의 최종 심사에서 탈락하셨습니다..." << endl;
+	}
 }
