@@ -86,9 +86,10 @@ class Currently_Equipped_Equipments
         Currently_Equipped_Equipments();//1.현재 끼고 있는 장비  생성자
         bool Equip_Equipment(const Equipment& equipment);//2.장비 끼기
         void Print_Currently_Equipped_Equipments() const;//3.현재 장비 중인 장비창 조회
-        bool Unequip_Equipment_To_Inventory(Inventory_For_Equipments_Only& equipment_inventory );//장비 해제 
-        int Get_All_Equipments_Grade_Score() const;
-        Equipment_Stats Get_All_Equipments_Stats() const;
+        bool Unequip_Equipment_To_Inventory(Inventory_For_Equipments_Only& equipment_inventory );//4.장비 해제 
+        int Get_All_Equipments_Grade_Score() const;//5.전체 등급 점수
+        Equipment_Stats Get_All_Equipments_Stats() const;//6.전체 장비 스텟 가져오기
+        bool Is_Equipment_Equipped(Equipment_Type type) const;// 7.장착 여부 확인
 
 };
 

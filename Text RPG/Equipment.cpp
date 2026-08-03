@@ -220,44 +220,78 @@ Currently_Equipped_Equipments::Currently_Equipped_Equipments()
 bool Currently_Equipped_Equipments::Equip_Equipment(const Equipment& equipment)
 {
     Equipment_Type type = equipment.Get_Equipment_Type();
-    switch (type)
-        {
-            case Equipment_Type::Engine:
-            {
-                _Unreal_Engine_Version = equipment;
-                break;
-            }
 
-            case Equipment_Type::Keyboard:
-            {
-                _Keyboard = equipment;
-                break;
-            }
 
-            case Equipment_Type::Mouse:
-            {
-                _Mouse = equipment;
-                break;
-            }
-            case Equipment_Type::BlueLight_Glasses:
-            {
-                _BlueLight_Glasses = equipment;
-                break;
-            }
-            case Equipment_Type::Headset:
-            {
-                _Headset = equipment;
-                break;
-            }
-            default:
-            {
-                cout << "착용할 수 없는 아이템이다!" << endl;
-                return false;
-            }
-        }
-    return true;
+    if (Is_Equipment_Equipped(type))
+    {
+        cout << "이미 같은 종류의 장비를 착용하고 있다! 해제하고 착용해라!" << endl;
+        return false;
     }
 
+
+    switch (type)
+    {
+    case Equipment_Type::Engine:
+        _Unreal_Engine_Version = equipment;
+        break;
+
+
+    case Equipment_Type::Keyboard:
+        _Keyboard = equipment;
+        break;
+
+
+    case Equipment_Type::Mouse:
+        _Mouse = equipment;
+        break;
+
+
+    case Equipment_Type::BlueLight_Glasses:
+        _BlueLight_Glasses = equipment;
+        break;
+
+
+    case Equipment_Type::Headset:
+        _Headset = equipment;
+        break;
+
+
+    default:
+        cout << "착용할 수 없는 아이템이다!" << endl;
+        return false;
+    }
+
+
+    cout << equipment.Get_Equipment_Name()
+        << " 장착 완료!" << endl;
+
+
+    return true;
+}
+
+bool Currently_Equipped_Equipments::Is_Equipment_Equipped(Equipment_Type type) const
+{
+    switch (type)
+    {
+    case Equipment_Type::Engine:
+        return _Unreal_Engine_Version.Get_Equipment_Type() != Equipment_Type::Empty;
+
+    case Equipment_Type::Keyboard:
+        return _Keyboard.Get_Equipment_Type() != Equipment_Type::Empty;
+
+    case Equipment_Type::Mouse:
+        return _Mouse.Get_Equipment_Type() != Equipment_Type::Empty;
+
+    case Equipment_Type::BlueLight_Glasses:
+        return _BlueLight_Glasses.Get_Equipment_Type() != Equipment_Type::Empty;
+
+    case Equipment_Type::Headset:
+        return _Headset.Get_Equipment_Type() != Equipment_Type::Empty;
+
+    default:
+        return false;
+    }
+}
 //장비창 출력
 void Currently_Equipped_Equipments::Print_Currently_Equipped_Equipments() const
 {
@@ -449,6 +483,10 @@ int Currently_Equipped_Equipments::Get_All_Equipments_Grade_Score() const
 
     return Total_Grade_Score;
 }
+
+
+
+
 //-----------------장비 전용 인벤토리------------------------------------
 
 
@@ -646,7 +684,7 @@ void Inventory_For_Equipments_Only::Sort_Equipment_Inventory()
         sort(_Equipments.begin(), _Equipments.end(),
             [](const Equipment& a, const Equipment& b)
             {
-                return a.Get_Equipment_Name() > b.Get_Equipment_Name();
+                return a.Get_Equipment_Name() < b.Get_Equipment_Name();
             });
         break;
     }

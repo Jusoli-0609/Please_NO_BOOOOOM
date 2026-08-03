@@ -38,15 +38,14 @@ int main()
     Equipment_Inventory.Add_Equipment(KangShinho_Mouse);
 
 
-    cout << endl;
-    cout << "===== Àåºñ Âø¿ë =====" << endl;
+   
 
     // ÀåÂø
     Equipment_Inventory.Equip_Equipment_From_Inventory(Current_Equipment);
 
 
     cout << endl;
-    cout << "===== ÇöÀç ÀåÂø Àåºñ =====" << endl;
+  
 
     Current_Equipment.Print_Currently_Equipped_Equipments();
 
