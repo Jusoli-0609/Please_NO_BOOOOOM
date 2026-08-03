@@ -55,12 +55,13 @@ void Camp_Manager::Open_Camp_Menu()
     }
 }
 
-void Camp_Manager::Give_Basic_Training_Item(Player& player,)
+void Camp_Manager::Give_Basic_Training_Item(Player& player,Currently_Equipped_Equipments& currently_equipped_equipments)
 {
     if (Received_Basic_Items == true)
     {
         cout << "기본 보급은 한번 밖에 받을 수 없다!\n";
         cout << "쿠키가 당신을 할큅니다!\n";
+        player.SetHP(player.getHP() - 1);
         
 
     }
