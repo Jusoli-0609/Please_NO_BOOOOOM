@@ -7,7 +7,7 @@ using namespace std;
 
 namespace
 {
-	// 기본 경험치 및 명성치값
+	// 기본 경험치 및 점수
 	constexpr int BASE_EXP_REWARD = 100;
 	constexpr int BASE_SCORE_REWARD = 100;
 	// 챕터별 보상 증가 배율
@@ -391,8 +391,8 @@ void Monster::Initialize_Elite_Monster(Chapter_Type chapter_Type)
 	_chapter_Type = chapter_Type;
 	_monster_Grade = Monster_Grade::ELITE;
 	_monster_Level = Get_Chapter_Number() * 3 + 1;
-	_monster_Name = "코드스니펫의 망령";
-	_attack_Message = "코드스니펫의 망령이 문제를 제시했다.";
+	_monster_Name = "코드 스니펫의 망령";
+	_attack_Message = "코드 스니펫의 망령이 문제를 제시했다.";
 
 	_stat[MONSTER_HP] = 0;
 	_stat[MONSTER_MP] = 0;
@@ -779,6 +779,15 @@ void Monster::Generate_Drop_Reward()
 	_drop_Item_Name = "";
 	_drop_Item_Price = 0;
 	_drop_Item_Count = 0;
+
+	if
+		(_monster_Grade == Monster_Grade::FINAL_BOSS)
+	{
+		_gold_Reward = 0;
+
+		return;
+	}
+
 	_gold_Reward = Calculate_Gold_Reward();
 
 	int code_Fragment_Roll = rand() % 100;
@@ -990,7 +999,7 @@ int Monster::getGoldReward() const
 //=============================================================================
 // 8. 몬스터 상태 변경 및 전투 파트
 //=============================================================================
-// 
+
 // 8-1. 몬스터 등급 변경
 void Monster::setMonsterGrade(Monster_Grade monster_Grade)
 {

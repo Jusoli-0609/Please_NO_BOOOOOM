@@ -26,6 +26,7 @@ namespace
 Dungeon_Manager::Dungeon_Manager()
 	: _current_Chapter(Chapter_Type::VARIABLE_CONDITION_FOREST),
 	_is_All_Chapter_Cleared(false),
+	_is_Game_Cleared(false),
 	_current_Chapter_Score(0),
 	_has_Elite_Appeared_In_Current_Chapter(false)
 {
@@ -36,6 +37,15 @@ void Dungeon_Manager::Open_Dungeon(Player* player, Inventory<Item>& inventory)
 	if (player == nullptr)
 	{
 		cout << "플레이어 정보가 없습니다." << endl;
+		return;
+	}
+
+	if (_is_Game_Cleared)
+	{
+		cout << endl;
+		cout << "이미 최종 보스까지 클리어했습니다." << endl;
+		cout << "게임의 모든 과정을 완료한 상태입니다." << endl;
+
 		return;
 	}
 
@@ -138,6 +148,11 @@ bool Dungeon_Manager::Check_All_Chapter_Cleared() const
 	return _is_All_Chapter_Cleared;
 }
 
+bool Dungeon_Manager::Check_Game_Cleared() const
+{
+	return _is_Game_Cleared;
+}
+
 int Dungeon_Manager::Get_Current_Chapter_Score() const
 {
 	return _current_Chapter_Score;
@@ -222,7 +237,7 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inven
 			Apply_Elite_Gimmick_Failure_Penalty(player);
 
 			cout << endl;
-			cout << "코드스니펫의 망령이 도망갔습니다." << endl;
+			cout << "코드 스니펫의 망령이 도망갔습니다." << endl;
 			cout << "보상을 획득하지 못했습니다." << endl;
 		}
 		return;
@@ -955,6 +970,13 @@ void Dungeon_Manager::Run_Final_Boss_Room(Player* player, Inventory<Item>& inven
 		return;
 	}
 
+	if (_is_Game_Cleared)
+	{
+		cout << "이미 최종 보스 전투를 모두 완료했습니다." << endl;
+
+		return;
+	}
+
 	if (_is_All_Chapter_Cleared == false)
 	{
 		cout << "아직 모든 챕터를 클리어하지 못했습니다." << endl;
@@ -962,7 +984,7 @@ void Dungeon_Manager::Run_Final_Boss_Room(Player* player, Inventory<Item>& inven
 		return;
 	}
 
-	if(Check_Final_Boss_Room_Available(inventory)== false)
+	if(Check_Final_Boss_Room_Available(inventory) == false)
 	{
 		cout << "튜터님 고유 아이템 5종이 부족합니다." << endl;
 
@@ -979,26 +1001,88 @@ void Dungeon_Manager::Run_Final_Boss_Room(Player* player, Inventory<Item>& inven
 
 	cout << endl;
 	cout << "========================================" << endl;
-	cout << "[ 최종보스방 개방 ]" << endl;
+	cout << "[ 최종 보스방 개방 ]" << endl;
 	cout << "========================================" << endl;
-
 	cout << "튜터님들의 고유 아이템이 반응합니다." << endl;
-
-	cout << "최종보스방의 문이 열렸습니다." << endl;
-
+	cout << "최종 보스방의 문이 열렸습니다." << endl;
+	cout << "========================================" << endl;
 	cout << endl;
-	cout << "[ 1차 최종보스 ]" << endl;
+	cout << "========================================" << endl;
+	cout << "[ 1차 최종 보스 ]" << endl;
+	cout << "========================================" << endl;
 
 	kim_Dong_Hyun_Manager.Print_Monster_Info();
 	kim_Dong_Hyun_Manager.Print_Attack_Message();
 
+	Battle(player, kim_Dong_Hyun_Manager,inventory);
+
+	if(player->Get_Hp() <= 0 || kim_Dong_Hyun_Manager.getHP() > 0)
+	{
+		cout << endl;
+		cout << "========================================" << endl;
+		cout << "[ 최종 보스 전투 실패 ]" << endl;
+		cout << "========================================" << endl;
+		cout << "김동현 매니저님의 전투를 통과하지 못했습니다." << endl;
+		cout << "플레이어의 상태를 정비한 뒤 다시 도전할 수 있습니다." << endl;
+		cout << "========================================" << endl;
+
+		return;
+	}
+
 	cout << endl;
-	cout << "[ 2차 최종보스 ]" << endl;
+	cout << "========================================" << endl;
+	cout << "[ 1차 최종 보스 클리어 ]" << endl;
+	cout << "========================================" << endl;
+	cout << "김동현 매니저님의 전투를 통과했습니다." << endl;
+	cout << "곧바로 두 번째 최종 보스 전투가 시작됩니다." << endl;
+	cout << "========================================" << endl;
+	cout << endl;
+	cout << "========================================" << endl;
+	cout << "[ 2차 최종 보스 ]" << endl;
+	cout << "========================================" << endl;
 
 	moon_Seung_Ho_Manager.Print_Monster_Info();
 	moon_Seung_Ho_Manager.Print_Attack_Message();
 
+	Battle(player, moon_Seung_Ho_Manager,inventory);
+
+	if
+		(player->Get_Hp() <= 0 || moon_Seung_Ho_Manager.getHP() > 0)
+	{
+		cout << endl;
+		cout << "========================================" << endl;
+		cout << "[ 최종 보스 전투 실패 ]" << endl;
+		cout << "========================================" << endl;
+		cout << "문승호 매니저님의 마지막 전투를 통과하지 못했습니다." << endl;
+		cout << "최종 보스방에 다시 도전하면 " << "첫 번째 전투부터 시작됩니다." << endl;
+		cout << "========================================" << endl;
+
+		return;
+	}
+	_is_Game_Cleared = true;
+
+	Run_Ending(player);
+}
+// 엔딩크레딧..대충 요렇게 하고 그 이후에 저희가 생각했던 텍스트로 마무리하면 될듯?
+void Dungeon_Manager::Run_Ending(const Player* player) const
+{
 	cout << endl;
-	cout << "김동현 매니저님을 물리치면 " << "문승호 매니저님의 시험이 시작됩니다." << endl;
-	cout << "========================================" << endl;
+	cout << "==================================================" << endl;
+	cout << "[ 최종 보스 클리어 ]" << endl;
+	cout << "==================================================" << endl;
+	cout << "김동현 매니저님과 문승호 매니저님의 " << "최종 전투를 모두 통과했습니다." << endl;
+	cout << endl;
+
+	if (player != nullptr)
+	{
+		cout << "최종 코드 검증을 통과했습니다." << endl;
+	}
+
+	cout << endl;
+	cout << "==================================================" << endl;
+	cout << "              눈떠보니 코드마스터" << endl;
+	cout << "                   GAME CLEAR" << endl;
+	cout << "==================================================" << endl;
+	cout << endl;
+	cout << "게임을 플레이해 주셔서 감사합니다." << endl;
 }

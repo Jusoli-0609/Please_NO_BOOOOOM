@@ -65,8 +65,16 @@ int main()
         switch (menu)
         {
         case 1:
-            dungeonManager.Open_Dungeon(player, inventory);
+        {
+            dungeonManager.Open_Dungeon(player,inventory);
+
+            if(dungeonManager.Check_Game_Cleared())
+            {
+                gameRunning =false;
+            }
+
             break;
+        }
 
         case 2:
             inventory.Print_Inventory();

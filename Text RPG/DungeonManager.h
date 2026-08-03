@@ -21,7 +21,6 @@ struct Tutor_Dialogue
 	std::string wrong_Message;
 	std::string exit_Message;
 };
-
 struct Tutor_Question
 {
 	std::string description;
@@ -52,6 +51,7 @@ public:
 
 	// 6. 던전 상태 조회 및 기록 출력 파트
 	bool Check_All_Chapter_Cleared() const;
+	bool Check_Game_Cleared() const;
 	int Get_Current_Chapter_Score() const;
 	void Print_Total_Monster_Kill_Log() const;
 	int Monster_Kill_Count = 0;
@@ -102,12 +102,13 @@ private:
 	bool Has_Item_In_Inventory(Inventory<Item>& inventory, const std::string& item_Name) const;
 	bool Give_Tutor_Clear_Item(Chapter_Type chapter_Type, Inventory<Item>& inventory);
 	void Run_Final_Boss_Room(Player* player,Inventory<Item>& inventory);
-
+	void Run_Ending(const Player* player) const;
 	// 15. 던전 진행 상태 데이터 파트
 	Chapter_Type _current_Chapter;
 	bool _is_All_Chapter_Cleared;
+	bool _is_Game_Cleared;
 	int _current_Chapter_Score;
-	bool _has_Elite_Appeared_In_Current_Chapter; // 현재 챕터에서 정예 몬스터가 등장했는지 저장
+	bool _has_Elite_Appeared_In_Current_Chapter;
 
 	// 16. 챕터별 몬스터 처치 기록 데이터 파트
 	std::map<Chapter_Type, std::map<Monster_Type, Monster_Kill_Record>> _monster_Kill_Log;
