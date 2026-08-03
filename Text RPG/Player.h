@@ -94,7 +94,7 @@ public:
     void Gain_Exp(int amount);
     void Level_Up();
 
-    // Battle_System ¹× ±âÁ¸ Á¶¿ø ÄÚµå È£È¯¿ë ÇÔ¼ö
+    // Battle_System ë° ê¸°ì¡´ ì¡°ì› ì½”ë“œ í˜¸í™˜ìš© í•¨ìˆ˜
     std::string getName() const;
     std::string getJob() const;
 

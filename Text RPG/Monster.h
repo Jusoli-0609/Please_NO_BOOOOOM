@@ -5,7 +5,7 @@
 
 class Player;
 
-// 1. Ã©ÅÍ ºĞ·ù ÆÄÆ®
+// 1. ì±•í„° ë¶„ë¥˜ íŒŒíŠ¸
 enum class Chapter_Type
 {
     VARIABLE_CONDITION_FOREST,
@@ -16,7 +16,7 @@ enum class Chapter_Type
     ALL_CHAPTER_CLEARED
 }; 
 
-// 2.¸ó½ºÅÍ ºĞ·ù ÆÄÆ®
+// 2.ëª¬ìŠ¤í„° ë¶„ë¥˜ íŒŒíŠ¸
 enum class Monster_Type
 {
     INT_SLIME,
@@ -48,7 +48,7 @@ enum class Monster_Type
     OBJECT_STL_TUTOR
 };
 
-// 3.¸ó½ºÅÍ µî±Ş ºĞ·ù ÆÄÆ®
+// 3.ëª¬ìŠ¤í„° ë“±ê¸‰ ë¶„ë¥˜ íŒŒíŠ¸
 enum class Monster_Grade
 {
     NORMAL,
@@ -57,7 +57,7 @@ enum class Monster_Grade
     FINAL_BOSS
 };
 
-// 4. ¸ó½ºÅÍ ´É·ÂÄ¡ ÀÎµ¦½º ÆÄÆ®
+// 4. ëª¬ìŠ¤í„° ëŠ¥ë ¥ì¹˜ ì¸ë±ìŠ¤ íŒŒíŠ¸
 enum Monster_Stat_Index
 {
     MONSTER_HP,
@@ -71,10 +71,10 @@ enum Monster_Stat_Index
 class Monster
 {
 public:
-    // 5. ¸ó½ºÅÍ »ı¼º ¹× ÃÊ±âÈ­ ÆÄÆ®
-    Monster(); // 5-1. ±âº» ¸ó½ºÅÍ »ı¼ºÀÚ
-    Monster(Monster_Type monster_Type); // 5-2. ¸ó½ºÅÍ Å¸ÀÔ ÁöÁ¤ »ı¼ºÀÚ
-    Monster  // 5-3. ¿ÜºÎ µ¥ÀÌÅÍ ÀÔ·Â »ı¼ºÀÚ
+    // 5. ëª¬ìŠ¤í„° ìƒì„± ë° ì´ˆê¸°í™” íŒŒíŠ¸
+    Monster(); // 5-1. ê¸°ë³¸ ëª¬ìŠ¤í„° ìƒì„±ì
+    Monster(Monster_Type monster_Type); // 5-2. ëª¬ìŠ¤í„° íƒ€ì… ì§€ì • ìƒì„±ì
+    Monster  // 5-3. ì™¸ë¶€ ë°ì´í„° ì…ë ¥ ìƒì„±ì
     (
         std::string monster_Name,
         int monster_HP,
@@ -84,61 +84,61 @@ public:
         int drop_Item_Price
     );
 
-    void Initialize_Elite_Monster(Chapter_Type chapter_Type); // 5-4. Á¤¿¹ ¸ó½ºÅÍ ÃÊ±âÈ­
-    void Initialize_Tutor_Monster(Chapter_Type chapter_Type); // 5-5. Æ©ÅÍ ¸ó½ºÅÍ ÃÊ±âÈ­
-    void Apply_Player_Level_Scaling(int player_Level); // 5-6. ÇÃ·¹ÀÌ¾î ·¹º§ ºñ·Ê ´É·ÂÄ¡ Áõ°¡
+    void Initialize_Elite_Monster(Chapter_Type chapter_Type); // 5-4. ì •ì˜ˆ ëª¬ìŠ¤í„° ì´ˆê¸°í™”
+    void Initialize_Tutor_Monster(Chapter_Type chapter_Type); // 5-5. íŠœí„° ëª¬ìŠ¤í„° ì´ˆê¸°í™”
+    void Apply_Player_Level_Scaling(int player_Level); // 5-6. í”Œë ˆì´ì–´ ë ˆë²¨ ë¹„ë¡€ ëŠ¥ë ¥ì¹˜ ì¦ê°€
 
-    // 6. ¸ó½ºÅÍ ±âº» Á¤º¸ Á¶È¸ ÆÄÆ®
-    std::string getName() const; // 6-1. ¸ó½ºÅÍ ÀÌ¸§ Á¶È¸
-    int getHP() const; // 6-2. ¸ó½ºÅÍ HP Á¶È¸
-    int getPower() const; // 6-3. ¸ó½ºÅÍ °ø°İ·Â Á¶È¸
-    int getDefence() const; // 6-4. ¸ó½ºÅÍ ¹æ¾î·Â Á¶È¸
-    int getSpeed() const; // 6-5. ¸ó½ºÅÍ ½ºÇÇµå Á¶È¸
-    int getEvasion() const; // 6-6. ¸ó½ºÅÍ È¸ÇÇÀ² Á¶È¸
-    int getAccuracy() const; // 6-7. ¸ó½ºÅÍ ¸íÁß·ü Á¶
-    int getMonsterLevel() const; // 6-8. ¸ó½ºÅÍ ·¹º§ Á¶È¸
-    Monster_Type getMonsterType() const; // 6-9. ¸ó½ºÅÍ Å¸ÀÔ Á¶È¸
-    Chapter_Type getChapterType() const; // 6-10. ¸ó½ºÅÍ ¼Ò¼Ó Ã©ÅÍ Á¶È¸
-    Monster_Grade getMonsterGrade() const; // 6-11. ¸ó½ºÅÍ µî±Ş Á¶È¸
-    std::string getAttackMessage() const; // 6-12. ¸ó½ºÅÍ °ø°İ ´ë»ç Á¶È¸
+    // 6. ëª¬ìŠ¤í„° ê¸°ë³¸ ì •ë³´ ì¡°íšŒ íŒŒíŠ¸
+    std::string getName() const; // 6-1. ëª¬ìŠ¤í„° ì´ë¦„ ì¡°íšŒ
+    int getHP() const; // 6-2. ëª¬ìŠ¤í„° HP ì¡°íšŒ
+    int getPower() const; // 6-3. ëª¬ìŠ¤í„° ê³µê²©ë ¥ ì¡°íšŒ
+    int getDefence() const; // 6-4. ëª¬ìŠ¤í„° ë°©ì–´ë ¥ ì¡°íšŒ
+    int getSpeed() const; // 6-5. ëª¬ìŠ¤í„° ìŠ¤í”¼ë“œ ì¡°íšŒ
+    int getEvasion() const; // 6-6. ëª¬ìŠ¤í„° íšŒí”¼ìœ¨ ì¡°íšŒ
+    int getAccuracy() const; // 6-7. ëª¬ìŠ¤í„° ëª…ì¤‘ë¥  ì¡°
+    int getMonsterLevel() const; // 6-8. ëª¬ìŠ¤í„° ë ˆë²¨ ì¡°íšŒ
+    Monster_Type getMonsterType() const; // 6-9. ëª¬ìŠ¤í„° íƒ€ì… ì¡°íšŒ
+    Chapter_Type getChapterType() const; // 6-10. ëª¬ìŠ¤í„° ì†Œì† ì±•í„° ì¡°íšŒ
+    Monster_Grade getMonsterGrade() const; // 6-11. ëª¬ìŠ¤í„° ë“±ê¸‰ ì¡°íšŒ
+    std::string getAttackMessage() const; // 6-12. ëª¬ìŠ¤í„° ê³µê²© ëŒ€ì‚¬ ì¡°íšŒ
      
-    // 7. ¸ó½ºÅÍ º¸»ó Á¤º¸ Á¶È¸ ÆÄÆ®
-    int getExpReward() const;  // 7-1. °æÇèÄ¡ º¸»ó Á¶È¸
-    int getScoreReward() const; // 7-2. Á¡¼ö º¸»ó Á¶È¸
-    std::string getDropItemName() const;  // 7-3. µå·Ó ¾ÆÀÌÅÛ ¿ä¾à ÀÌ¸§ Á¶È¸
-    int getDropItemPrice() const; // 7-4. µå·Ó ¾ÆÀÌÅÛ °¡°İ ÇÕ°è Á¶È¸
-    int getDropItemCount() const; // 7-5. µå·Ó ¾ÆÀÌÅÛ ¼ö·® ÇÕ°è Á¶È¸
-    const std::vector<Item>& getDropItems() const; // 7-6. µå·Ó ¾ÆÀÌÅÛ ¸ñ·Ï Á¶È¸
-    int getGoldReward() const; // 7-7. ÈÆ·ÃÀå·Á±İ Á¶È¸
+    // 7. ëª¬ìŠ¤í„° ë³´ìƒ ì •ë³´ ì¡°íšŒ íŒŒíŠ¸
+    int getExpReward() const;  // 7-1. ê²½í—˜ì¹˜ ë³´ìƒ ì¡°íšŒ
+    int getScoreReward() const; // 7-2. ì ìˆ˜ ë³´ìƒ ì¡°íšŒ
+    std::string getDropItemName() const;  // 7-3. ë“œë¡­ ì•„ì´í…œ ìš”ì•½ ì´ë¦„ ì¡°íšŒ
+    int getDropItemPrice() const; // 7-4. ë“œë¡­ ì•„ì´í…œ ê°€ê²© í•©ê³„ ì¡°íšŒ
+    int getDropItemCount() const; // 7-5. ë“œë¡­ ì•„ì´í…œ ìˆ˜ëŸ‰ í•©ê³„ ì¡°íšŒ
+    const std::vector<Item>& getDropItems() const; // 7-6. ë“œë¡­ ì•„ì´í…œ ëª©ë¡ ì¡°íšŒ
+    int getGoldReward() const; // 7-7. í›ˆë ¨ì¥ë ¤ê¸ˆ ì¡°íšŒ
 
-    // 8. ¸ó½ºÅÍ »óÅÂ º¯°æ ¹× ÀüÅõ ÆÄÆ®
-    void setMonsterGrade(Monster_Grade monster_Grade); // 8-1. ¸ó½ºÅÍ µî±Ş º¯°æ
-    void setHP(int hp); // 8-2. ¸ó½ºÅÍ HP º¯°æ
-    void attack(Player* player)const; // 8-3. ¸ó½ºÅÍ °ø°İ Ã³¸® 
+    // 8. ëª¬ìŠ¤í„° ìƒíƒœ ë³€ê²½ ë° ì „íˆ¬ íŒŒíŠ¸
+    void setMonsterGrade(Monster_Grade monster_Grade); // 8-1. ëª¬ìŠ¤í„° ë“±ê¸‰ ë³€ê²½
+    void setHP(int hp); // 8-2. ëª¬ìŠ¤í„° HP ë³€ê²½
+    void attack(Player* player)const; // 8-3. ëª¬ìŠ¤í„° ê³µê²© ì²˜ë¦¬ 
 
-    // 9. ¸ó½ºÅÍ Ãâ·Â ¹× º¸»ó »ı¼º ÆÄÆ®
-    void Print_Attack_Message() const; // 9-1. ¸ó½ºÅÍ °ø°İ ´ë»ç Ãâ·Â
-    void Print_Monster_Info() const; // 9-2. ¸ó½ºÅÍ ÀüÃ¼ Á¤º¸ Ãâ·Â
-    void Generate_Drop_Reward(); // 9-3. µå·Ó ¾ÆÀÌÅÛ°ú ¹«°Ô Ãâ·Â
-    void Print_Drop_Reward() const; // 9-4. ¾ÆÀÌÅÛº° µ¶¸³ ·£´ı µå·Ó »ı¼º
+    // 9. ëª¬ìŠ¤í„° ì¶œë ¥ ë° ë³´ìƒ ìƒì„± íŒŒíŠ¸
+    void Print_Attack_Message() const; // 9-1. ëª¬ìŠ¤í„° ê³µê²© ëŒ€ì‚¬ ì¶œë ¥
+    void Print_Monster_Info() const; // 9-2. ëª¬ìŠ¤í„° ì „ì²´ ì •ë³´ ì¶œë ¥
+    void Generate_Drop_Reward(); // 9-3. ë“œë¡­ ì•„ì´í…œê³¼ ë¬´ê²Œ ì¶œë ¥
+    void Print_Drop_Reward() const; // 9-4. ì•„ì´í…œë³„ ë…ë¦½ ëœë¤ ë“œë¡­ ìƒì„±
 
 private:
-    // 10. ³»ºÎ ¸ó½ºÅÍ ÃÊ±âÈ­ ÆÄÆ®
-    void Initialize_Monster(Monster_Type monster_Type); // 10-1. ÀÏ¹İ ¸ó½ºÅÍ Á¤º¸ ÃÊ±âÈ­
+    // 10. ë‚´ë¶€ ëª¬ìŠ¤í„° ì´ˆê¸°í™” íŒŒíŠ¸
+    void Initialize_Monster(Monster_Type monster_Type); // 10-1. ì¼ë°˜ ëª¬ìŠ¤í„° ì •ë³´ ì´ˆê¸°í™”
 
-    // 11. ¸ó½ºÅÍ ·¹º§ °è»ê ÆÄÆ® 
-    int Get_Chapter_Number() const; // 11-1. Ã©ÅÍ ¹øÈ£ º¯È¯
-    int Generate_Random_Level() const; // 11-2. Ã©ÅÍº° ·£´ı ·¹º§ »ı¼º
-    void Apply_Level_Bonus(); // 11-3. ·£´ı ·¹º§ º¸³Ê½º Àû¿ë
+    // 11. ëª¬ìŠ¤í„° ë ˆë²¨ ê³„ì‚° íŒŒíŠ¸ 
+    int Get_Chapter_Number() const; // 11-1. ì±•í„° ë²ˆí˜¸ ë³€í™˜
+    int Generate_Random_Level() const; // 11-2. ì±•í„°ë³„ ëœë¤ ë ˆë²¨ ìƒì„±
+    void Apply_Level_Bonus(); // 11-3. ëœë¤ ë ˆë²¨ ë³´ë„ˆìŠ¤ ì ìš©
 
-    // 10. ¸ó½ºÅÍ º¸»ó °è»ê ÆÄÆ®
-    std::string Get_Code_Fragment_Name() const; // 12-1. Ã©ÅÍº° ÄÚµå Á¶°¢ ÀÌ¸§ °áÁ¤
-    int Calculate_Exp_Reward() const; // 12-2. Ã©ÅÍº° ±âº» °æÇèÄ¡ °è»ê
-    int Calculate_Level_Exp_Bonus() const; // 12-3. ·£´ı ·¹º§ °æÇèÄ¡ º¸³Ê½º °è»ê
-    int Calculate_Score_Reward() const; // 12-4. Ã©ÅÍº° Á¡¼ö °è»ê
-    int Calculate_Gold_Reward() const; // 12-5. ÈÆ·ÃÀå·Á±İ ·£´ı °è»ê
+    // 10. ëª¬ìŠ¤í„° ë³´ìƒ ê³„ì‚° íŒŒíŠ¸
+    std::string Get_Code_Fragment_Name() const; // 12-1. ì±•í„°ë³„ ì½”ë“œ ì¡°ê° ì´ë¦„ ê²°ì •
+    int Calculate_Exp_Reward() const; // 12-2. ì±•í„°ë³„ ê¸°ë³¸ ê²½í—˜ì¹˜ ê³„ì‚°
+    int Calculate_Level_Exp_Bonus() const; // 12-3. ëœë¤ ë ˆë²¨ ê²½í—˜ì¹˜ ë³´ë„ˆìŠ¤ ê³„ì‚°
+    int Calculate_Score_Reward() const; // 12-4. ì±•í„°ë³„ ì ìˆ˜ ê³„ì‚°
+    int Calculate_Gold_Reward() const; // 12-5. í›ˆë ¨ì¥ë ¤ê¸ˆ ëœë¤ ê³„ì‚°
 
-    // 11. ¸ó½ºÅÍ ±âº» µ¥ÀÌÅÍ ÆÄÆ®
+    // 11. ëª¬ìŠ¤í„° ê¸°ë³¸ ë°ì´í„° íŒŒíŠ¸
     Monster_Type _monster_Type;
     Chapter_Type _chapter_Type;
     Monster_Grade _monster_Grade;
@@ -147,7 +147,7 @@ private:
     std::string _monster_Name;
     int _stat[MONSTER_STAT_COUNT];
 
-    // 12. ¸ó½ºÅÍ ÀüÅõ ¹× ±âº» º¸»ó µ¥ÀÌÅÍ ÆÄÆ®
+    // 12. ëª¬ìŠ¤í„° ì „íˆ¬ ë° ê¸°ë³¸ ë³´ìƒ ë°ì´í„° íŒŒíŠ¸
     int _evasion;
     int _accuracy;
     int _exp_Reward;
@@ -155,7 +155,7 @@ private:
 
     std::string _attack_Message;
 
-    // 13. ¸ó½ºÅÍ µå·Ó º¸»ó µ¥ÀÌÅÍ ÆÄÆ®
+    // 13. ëª¬ìŠ¤í„° ë“œë¡­ ë³´ìƒ ë°ì´í„° íŒŒíŠ¸
     std::string _drop_Item_Name;
     int _drop_Item_Price;
     int _drop_Item_Count;

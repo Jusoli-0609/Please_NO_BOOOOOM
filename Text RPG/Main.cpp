@@ -18,17 +18,16 @@ int main()
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
     Console_Manager Console(120, 40);
-    Ascii_Art_Manager artManager;
+    Ascii_Art_Manager Art_Manager;
     
     Console.Set_Console_Size();
     Console.Clear();
     Console.Set_Cursor_Position(15, 10);
-    artManager.Print("Title.txt");
-    Console.Slow_Print("´« ¶°º¸´Ï ÄÚµå ¸¶½ºÅÍ", 50);
-    PrintLine();
+    Art_Manager.Print("Title.txt");
+
     Intro();
 
-    //Á÷¾÷ ¼±ÅÃ
+    //ì§ì—… ì„ íƒ
  
     return 0;
 }

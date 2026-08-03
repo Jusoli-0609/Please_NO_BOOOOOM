@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-class Ascii_Art_Manager	//txt ÆÄÀÏ¸¸ ¿­°í È­¸é Ãâ·ÂÇÏ´Â ¸Å´ÏÀú ÀÔ´Ï´Ù.
+class Ascii_Art_Manager	//txt íŒŒì¼ë§Œ ì—´ê³  í™”ë©´ ì¶œë ¥í•˜ëŠ” ë§¤ë‹ˆì € ì…ë‹ˆë‹¤.
 {
 public:
     void Print(const std::string& File_Name) const;

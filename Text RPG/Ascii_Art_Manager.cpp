@@ -5,17 +5,17 @@
 void Ascii_Art_Manager::Print(const std::string& File_Name) const
 {
     std::ifstream file;
-    file.open(File_Name);   //ÆÄÀÏ ¿­±â
+    file.open(File_Name);   //íŒŒì¼ ì—´ê¸°
 
-    if (!file)  //ÆÄÀÏ ½ºÆ®¸² »óÅÂ°¡ Á¤»óÀûÀÌÁö ¾Ê´Ù¸é
+    if (!file)  //íŒŒì¼ ìŠ¤íŠ¸ë¦¼ ìƒíƒœê°€ ì •ìƒì ì´ì§€ ì•Šë‹¤ë©´
     {
-        std::cout << "ÆÄÀÏ ¿­±â ½ÇÆĞ: " << File_Name << '\n';
+        std::cout << "íŒŒì¼ ì—´ê¸° ì‹¤íŒ¨: " << File_Name << '\n';
         return;
     }
 
-    std::string line;   //ÇÑ ÁÙ¾¿ ÀúÀå
+    std::string line;   //í•œ ì¤„ì”© ì €ì¥
     while (std::getline(file, line))
     {
         std::cout << line << '\n';
-    }   //ÇÑÁÙ¾¿ ³»·Á°¡¸ç ÀĞ´Â ¹İº¹¹®
+    }   //í•œì¤„ì”© ë‚´ë ¤ê°€ë©° ì½ëŠ” ë°˜ë³µë¬¸
 }

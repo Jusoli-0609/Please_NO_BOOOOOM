@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 
-class Player; // Àü¹æ ¼±¾ð
+class Player; // ì „ë°© ì„ ì–¸
 
 class Level_Up
 {

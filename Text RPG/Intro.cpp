@@ -7,8 +7,8 @@ void Intro()
 {
 	Console_Manager Console(120, 40);
 
-	Console.Slow_Print("´ç½ÅÀº 8½Ã 55ºÐ¿¡ ´«À» ¶¹´Ù!", 50);
-	Console.Slow_Print("ÀÍ¼÷ÇÑ ZEPÀÌ º¸ÀÎ´Ù!", 50);
-	//¾Æ½ºÅ°¾ÆÆ®
-	Console.Slow_Print("ÀÏ´Ü ¾Æ¹ÙÅ¸¸¦ »ý¼ºÇÏÀÚ!", 50);
+	Console.Slow_Print("ë‹¹ì‹ ì€ 8ì‹œ 55ë¶„ì— ëˆˆì„ ë–´ë‹¤!", 50);
+	Console.Slow_Print("ìµìˆ™í•œ ZEPì´ ë³´ì¸ë‹¤!", 50);
+	//ì•„ìŠ¤í‚¤ì•„íŠ¸
+	Console.Slow_Print("ì¼ë‹¨ ì•„ë°”íƒ€ë¥¼ ìƒì„±í•˜ìž!", 50);
 }

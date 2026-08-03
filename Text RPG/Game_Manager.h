@@ -7,15 +7,15 @@ private:
     Console_Manager Console;
 
 public:
-    // TODO: GameManager »ı¼ºÀÚ ¼±¾ğ
+    // TODO: GameManager ìƒì„±ì ì„ ì–¸
     GameManager();
 
-    // TODO: °ÔÀÓ ÃÊ±âÈ­ ÇÔ¼ö ¼±¾ğ
+    // TODO: ê²Œì„ ì´ˆê¸°í™” í•¨ìˆ˜ ì„ ì–¸
     void Init();
 
-    // TODO: °ÔÀÓ ½ÇÇà ÇÔ¼ö ¼±¾ğ
+    // TODO: ê²Œì„ ì‹¤í–‰ í•¨ìˆ˜ ì„ ì–¸
     void Run();
 
-    // TODO: È­¸é Ãâ·Â ÇÔ¼ö ¼±¾ğ
+    // TODO: í™”ë©´ ì¶œë ¥ í•¨ìˆ˜ ì„ ì–¸
     void Render();
 };

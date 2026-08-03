@@ -8,69 +8,69 @@ using namespace std;
 
 namespace
 {
-	constexpr int BASE_TUTOR_REQUIRED_SCORE = 500; // Ã©ÅÍ 1 Æ©ÅÍ µµÀü¿¡ ÇÊ¿äÇÑ ±âº» Á¡¼ö
-	constexpr double CHAPTER_SCORE_MULTIPLIER = 1.3; // ´ÙÀ½ Ã©ÅÍ ¿ä±¸ ¸í¼ºÄ¡ Áõ°¡ ¹èÀ²
-	constexpr int NORMAL_MONSTER_TYPE_COUNT = 3; // Ã©ÅÍº° ÀÏ¹İ ¸ó½ºÅÍ Á¾·ù ¼ö
-	constexpr int ELITE_APPEARANCE_RATE = 20; // Á¤¿¹ ¸ó½ºÅÍ µîÀå È®·ü
+	constexpr int BASE_TUTOR_REQUIRED_SCORE = 500; // ì±•í„° 1 íŠœí„° ë„ì „ì— í•„ìš”í•œ ê¸°ë³¸ ì ìˆ˜
+	constexpr double CHAPTER_SCORE_MULTIPLIER = 1.3; // ë‹¤ìŒ ì±•í„° ìš”êµ¬ ëª…ì„±ì¹˜ ì¦ê°€ ë°°ìœ¨
+	constexpr int NORMAL_MONSTER_TYPE_COUNT = 3; // ì±•í„°ë³„ ì¼ë°˜ ëª¬ìŠ¤í„° ì¢…ë¥˜ ìˆ˜
+	constexpr int ELITE_APPEARANCE_RATE = 20; // ì •ì˜ˆ ëª¬ìŠ¤í„° ë“±ì¥ í™•ë¥ 
 }
 
 //=============================================================================
-// 1. ´øÀü »ı¼º ¹× ¸Ş´º ½ÇÇà ÆÄÆ®
+// 1. ë˜ì „ ìƒì„± ë° ë©”ë‰´ ì‹¤í–‰ íŒŒíŠ¸
 //=============================================================================
 
-// 1-1. ´øÀü ¸Å´ÏÀú »ı¼ºÀÚ
+// 1-1. ë˜ì „ ë§¤ë‹ˆì € ìƒì„±ì
 Dungeon_Manager::Dungeon_Manager()
 	: _current_Chapter(Chapter_Type::VARIABLE_CONDITION_FOREST),
 	_is_All_Chapter_Cleared(false),
 	_current_Chapter_Score(0)
 {
 }
-// 1-2. ´øÀü ¸Ş´º ¿­±â
+// 1-2. ë˜ì „ ë©”ë‰´ ì—´ê¸°
 void Dungeon_Manager::Open_Dungeon(Player* player, Inventory<Item>& inventory)
 {
 	if (player == nullptr)
 	{
-		cout << "ÇÃ·¹ÀÌ¾î Á¤º¸°¡ ¾ø½À´Ï´Ù." << endl;
+		cout << "í”Œë ˆì´ì–´ ì •ë³´ê°€ ì—†ìŠµë‹ˆë‹¤." << endl;
 
 		return;
 	}
 
 	if (_is_All_Chapter_Cleared)
 	{
-		cout << "Æ©ÅÍ´Ô 5¸íÀÇ ½ÃÇèÀ» ¸ğµÎ Åë°úÇß½À´Ï´Ù." << endl;
+		cout << "íŠœí„°ë‹˜ 5ëª…ì˜ ì‹œí—˜ì„ ëª¨ë‘ í†µê³¼í–ˆìŠµë‹ˆë‹¤." << endl;
 
 		Print_Tutor_Item_Status(inventory);
 
 		if
 			(Check_Final_Boss_Room_Available(inventory))
 		{
-			cout << "ÃÖÁ¾º¸½º±îÁö ÇÒ ¼ö ÀÖÀ»±î¿ä..?" << endl;
+			cout << "ìµœì¢…ë³´ìŠ¤ê¹Œì§€ í•  ìˆ˜ ìˆì„ê¹Œìš”..?" << endl;
 		}
 		return;
 	}
 
 	Print_Current_Chapter();
 
-	cout << "Æ©ÅÍ´Ô ½ÃÇè±îÁö " << Get_Required_Tutor_Score() - _current_Chapter_Score << "Á¡ ³²¾Ò½À´Ï´Ù." << endl;
-	cout << "Æ©ÅÍ´Ô ½ÃÇè±îÁö Á¡¼ö " << Get_Required_Tutor_Score() - _current_Chapter_Score << "ÀÌ(°¡) ³²¾Ò½À´Ï´Ù." << endl;
+	cout << "íŠœí„°ë‹˜ ì‹œí—˜ê¹Œì§€ " << Get_Required_Tutor_Score() - _current_Chapter_Score << "ì  ë‚¨ì•˜ìŠµë‹ˆë‹¤." << endl;
+	cout << "íŠœí„°ë‹˜ ì‹œí—˜ê¹Œì§€ ì ìˆ˜ " << Get_Required_Tutor_Score() - _current_Chapter_Score << "ì´(ê°€) ë‚¨ì•˜ìŠµë‹ˆë‹¤." << endl;
 
 	if (Check_Tutor_Challenge_Available())
 	{
-		cout << "Æ©ÅÍ´ÔÀÇ ½ÃÇèÀ» Ä¥ ¼ö ÀÖ½À´Ï´Ù.!" << endl;
+		cout << "íŠœí„°ë‹˜ì˜ ì‹œí—˜ì„ ì¹  ìˆ˜ ìˆìŠµë‹ˆë‹¤.!" << endl;
 	}
 	else
 	{
-		cout << "Æ©ÅÍ´Ô ½ÃÇè±îÁö " << Get_Required_Tutor_Score() - _current_Chapter_Score << "Á¡ ³²¾Ò½À´Ï´Ù." << endl;
+		cout << "íŠœí„°ë‹˜ ì‹œí—˜ê¹Œì§€ " << Get_Required_Tutor_Score() - _current_Chapter_Score << "ì  ë‚¨ì•˜ìŠµë‹ˆë‹¤." << endl;
 	}
 
 	int dungeon_Choice = -1;
 
 	cout << endl;
-	cout << "1. ÇöÀç Ã©ÅÍ ÀÔÀå" << endl;
-	cout << "2. ¸ó½ºÅÍ Ã³Ä¡ ±â·Ï È®ÀÎ" << endl;
-	cout << "3. Æ©ÅÍ´Ô ½ÃÇèº¸±â" << endl;
-	cout << "0. ¸ŞÀÎ ¸Ş´º·Î µ¹¾Æ°¡±â" << endl;
-	cout << "¼±ÅÃ: ";
+	cout << "1. í˜„ì¬ ì±•í„° ì…ì¥" << endl;
+	cout << "2. ëª¬ìŠ¤í„° ì²˜ì¹˜ ê¸°ë¡ í™•ì¸" << endl;
+	cout << "3. íŠœí„°ë‹˜ ì‹œí—˜ë³´ê¸°" << endl;
+	cout << "0. ë©”ì¸ ë©”ë‰´ë¡œ ëŒì•„ê°€ê¸°" << endl;
+	cout << "ì„ íƒ: ";
 
 	cin >> dungeon_Choice;
 
@@ -99,14 +99,14 @@ void Dungeon_Manager::Open_Dungeon(Player* player, Inventory<Item>& inventory)
 
 	case 0:
 	{
-		cout << "¸ŞÀÎ ¸Ş´º·Î µ¹¾Æ°©´Ï´Ù." << endl;
+		cout << "ë©”ì¸ ë©”ë‰´ë¡œ ëŒì•„ê°‘ë‹ˆë‹¤." << endl;
 
 		break;
 	}
 
 	default:
 	{
-		cout << "Àß¸øµÈ ¼±ÅÃÀÔ´Ï´Ù." << endl;
+		cout << "ì˜ëª»ëœ ì„ íƒì…ë‹ˆë‹¤." << endl;
 
 		break;
 	}
@@ -114,29 +114,29 @@ void Dungeon_Manager::Open_Dungeon(Player* player, Inventory<Item>& inventory)
 }
 
 //=============================================================================
-// 2. Ã©ÅÍ »óÅÂ Á¶È¸ ¹× Ãâ·Â ÆÄÆ®
+// 2. ì±•í„° ìƒíƒœ ì¡°íšŒ ë° ì¶œë ¥ íŒŒíŠ¸
 //=============================================================================
 
-// 2-1. ÀüÃ¼ Ã©ÅÍ Å¬¸®¾î ¿©ºÎ Á¶È¸
+// 2-1. ì „ì²´ ì±•í„° í´ë¦¬ì–´ ì—¬ë¶€ ì¡°íšŒ
 bool Dungeon_Manager::Check_All_Chapter_Cleared() const
 {
 	return _is_All_Chapter_Cleared;
 }
-// 2-2. ÇöÀç Ã©ÅÍ Á¡¼ö Á¶È¸
+// 2-2. í˜„ì¬ ì±•í„° ì ìˆ˜ ì¡°íšŒ
 int Dungeon_Manager::Get_Current_Chapter_Score() const
 {
 	return _current_Chapter_Score;
 }
-// 2-3. ÇöÀç ÀÔÀå °¡´ÉÇÑ Ã©ÅÍ Ãâ·Â
+// 2-3. í˜„ì¬ ì…ì¥ ê°€ëŠ¥í•œ ì±•í„° ì¶œë ¥
 void Dungeon_Manager::Print_Current_Chapter() const
 {
 	cout << endl;
 	cout << "========================================" << endl;
-	cout << "ÇöÀç ÀÔÀå °¡´ÉÇÑ ´øÀü" << endl;
+	cout << "í˜„ì¬ ì…ì¥ ê°€ëŠ¥í•œ ë˜ì „" << endl;
 	cout << Get_Chapter_Name(_current_Chapter) << endl;
 	cout << "========================================" << endl;
 }
-// 2-4. Ã©ÅÍ ÀÌ¸§ º¯È¯
+// 2-4. ì±•í„° ì´ë¦„ ë³€í™˜
 string Dungeon_Manager::Get_Chapter_Name(Chapter_Type chapter_Type) const
 
 {
@@ -145,50 +145,50 @@ string Dungeon_Manager::Get_Chapter_Name(Chapter_Type chapter_Type) const
 	case Chapter_Type::VARIABLE_CONDITION_FOREST:
 	{
 		return
-			"Ã©ÅÍ 1 - º¯¼ö¡¤Á¶°Ç¹® ½£";
+			"ì±•í„° 1 - ë³€ìˆ˜Â·ì¡°ê±´ë¬¸ ìˆ²";
 	}
 
 	case Chapter_Type::ARRAY_LOOP_OCEAN:
 	{
 		return
-			"Ã©ÅÍ 2 - ¹è¿­¡¤¹İº¹¹® ¹Ù´Ù";
+			"ì±•í„° 2 - ë°°ì—´Â·ë°˜ë³µë¬¸ ë°”ë‹¤";
 	}
 
 	case Chapter_Type::FUNCTION_RUINS:
 	{
 		return
-			"Ã©ÅÍ 3 - ÇÔ¼ö À¯Àû";
+			"ì±•í„° 3 - í•¨ìˆ˜ ìœ ì ";
 	}
 
 	case Chapter_Type::POINTER_MEMORY_GRAVEYARD:
 	{
 		return
-			"Ã©ÅÍ 4 - Æ÷ÀÎÅÍ¡¤¸Ş¸ğ¸® ¹¦Áö";
+			"ì±•í„° 4 - í¬ì¸í„°Â·ë©”ëª¨ë¦¬ ë¬˜ì§€";
 	}
 
 	case Chapter_Type::OBJECT_STL_FACTORY:
 	{
 		return
-			"Ã©ÅÍ 5 - °´Ã¼ÁöÇâ¡¤STL °øÀå";
+			"ì±•í„° 5 - ê°ì²´ì§€í–¥Â·STL ê³µì¥";
 	}
 
 	default:
 	{
 		return
-			"¸ğµç ÀÏ¹İ Ã©ÅÍ Å¬¸®¾î";
+			"ëª¨ë“  ì¼ë°˜ ì±•í„° í´ë¦¬ì–´";
 	}
 	}
 }
 
 //=============================================================================
-// 3. ÇöÀç Ã©ÅÍ ÁøÇà ÆÄÆ®
+// 3. í˜„ì¬ ì±•í„° ì§„í–‰ íŒŒíŠ¸
 //=============================================================================
 // 
-// 3-1. ÇöÀç Ã©ÅÍ ¸ó½ºÅÍ ¹× Á¤¿¹ ¸ó½ºÅÍ ÀÌº¥Æ® ÁøÇà
+// 3-1. í˜„ì¬ ì±•í„° ëª¬ìŠ¤í„° ë° ì •ì˜ˆ ëª¬ìŠ¤í„° ì´ë²¤íŠ¸ ì§„í–‰
 void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inventory)
 {
 	cout << endl;
-	cout << Get_Chapter_Name(_current_Chapter) << "¿¡ ÀÔÀåÇß½À´Ï´Ù." << endl;
+	cout << Get_Chapter_Name(_current_Chapter) << "ì— ì…ì¥í–ˆìŠµë‹ˆë‹¤." << endl;
 
 	bool is_Elite_Appeared = Check_Elite_Monster_Appearance();
 
@@ -209,17 +209,17 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inven
 
 			cout << endl;
 			cout << "========================================" << endl;
-			cout << "[ Á¤¿¹ ¸ó½ºÅÍ Ã³Ä¡ º¸»ó ]" << endl;
+			cout << "[ ì •ì˜ˆ ëª¬ìŠ¤í„° ì²˜ì¹˜ ë³´ìƒ ]" << endl;
 			cout << "========================================" << endl;
-			cout << "È¹µæ °æÇèÄ¡: " << elite_Monster.getExpReward() << endl;
-			cout << "È¹µæ Á¡¼ö: " << elite_Monster.getScoreReward() << endl;
+			cout << "íšë“ ê²½í—˜ì¹˜: " << elite_Monster.getExpReward() << endl;
+			cout << "íšë“ ì ìˆ˜: " << elite_Monster.getScoreReward() << endl;
 
 			elite_Monster.Print_Drop_Reward();
 
 			Give_Drop_Items_To_Inventory
 			(elite_Monster, inventory);
 
-			cout << "È¹µæ ÈÆ·ÃÀå·Á±İ: " << elite_Monster.getGoldReward() << "¿ø" << endl;
+			cout << "íšë“ í›ˆë ¨ì¥ë ¤ê¸ˆ: " << elite_Monster.getGoldReward() << "ì›" << endl;
 			cout << "========================================" << endl;
 
 			Record_Monster_Kill(elite_Monster);
@@ -227,8 +227,8 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inven
 		else
 		{
 			cout << endl;
-			cout << "ÄÚµå½º´ÏÆêÀÇ ¸Á·ÉÀÌ µµ¸Á°¬½À´Ï´Ù." << endl;
-			cout << "º¸»óÀ» È¹µæÇÏÁö ¸øÇß½À´Ï´Ù." << endl;
+			cout << "ì½”ë“œìŠ¤ë‹ˆí«ì˜ ë§ë ¹ì´ ë„ë§ê°”ìŠµë‹ˆë‹¤." << endl;
+			cout << "ë³´ìƒì„ íšë“í•˜ì§€ ëª»í–ˆìŠµë‹ˆë‹¤." << endl;
 		}
 
 		return;
@@ -244,8 +244,8 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inven
 
 	cout << endl;
 	cout << "========================================" << endl;
-	cout << "[ ÀÏ¹İ ¸ó½ºÅÍ µîÀå ]" << endl;
-	cout << monster.getName() << "ÀÌ(°¡) ³ªÅ¸³µ½À´Ï´Ù!" << endl;
+	cout << "[ ì¼ë°˜ ëª¬ìŠ¤í„° ë“±ì¥ ]" << endl;
+	cout << monster.getName() << "ì´(ê°€) ë‚˜íƒ€ë‚¬ìŠµë‹ˆë‹¤!" << endl;
 	cout << "========================================" << endl;
 
 	monster.Print_Monster_Info();
@@ -255,50 +255,50 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inven
 	if (player->getHp() <= 0)
 	{
 		cout << endl;
-		cout << "´øÀü °ø·«¿¡ ½ÇÆĞÇß½À´Ï´Ù." << endl;
+		cout << "ë˜ì „ ê³µëµì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤." << endl;
 		return;
 	}
 
 	if (monster.getHP() > 0)
 	{
 		cout << endl;
-		cout << "¸ó½ºÅÍ¸¦ Ã³Ä¡ÇÏÁö ¸øÇß½À´Ï´Ù." << endl;
+		cout << "ëª¬ìŠ¤í„°ë¥¼ ì²˜ì¹˜í•˜ì§€ ëª»í–ˆìŠµë‹ˆë‹¤." << endl;
 
 		return;
 	}
 	cout << endl;
 	cout << "========================================" << endl;
-	cout << "[ ÀÏ¹İ ¸ó½ºÅÍ Ã³Ä¡ º¸»ó ]" << endl;
+	cout << "[ ì¼ë°˜ ëª¬ìŠ¤í„° ì²˜ì¹˜ ë³´ìƒ ]" << endl;
 	cout << "========================================" << endl;
 
 	monster.Print_Drop_Reward();
 
 	Give_Drop_Items_To_Inventory(monster, inventory);
 
-	cout << "È¹µæ ÈÆ·ÃÀå·Á±İ: " << monster.getGoldReward() << "¿ø" << endl;
+	cout << "íšë“ í›ˆë ¨ì¥ë ¤ê¸ˆ: " << monster.getGoldReward() << "ì›" << endl;
 	cout << "========================================" << endl;
 	cout << endl;
-	cout << monster.getName() << " Ã³Ä¡ ¿Ï·á!" << endl;
+	cout << monster.getName() << " ì²˜ì¹˜ ì™„ë£Œ!" << endl;
 
 	Record_Monster_Kill(monster);
 
 	if (Check_Tutor_Challenge_Available())
 	{
-		cout << "Æ©ÅÍ´Ô ½ÃÇè Á¶°ÇÀ» ´Ş¼ºÇß½À´Ï´Ù!" << endl;
+		cout << "íŠœí„°ë‹˜ ì‹œí—˜ ì¡°ê±´ì„ ë‹¬ì„±í–ˆìŠµë‹ˆë‹¤!" << endl;
 	}
 	else
 	{
-		cout << "Æ©ÅÍ´Ô ½ÃÇè±îÁö " << Get_Required_Tutor_Score() - _current_Chapter_Score << "Á¡ ³²¾Ò½À´Ï´Ù." << endl;
+		cout << "íŠœí„°ë‹˜ ì‹œí—˜ê¹Œì§€ " << Get_Required_Tutor_Score() - _current_Chapter_Score << "ì  ë‚¨ì•˜ìŠµë‹ˆë‹¤." << endl;
 	}
 
 	cout << "========================================" << endl;
 }
 
 //=============================================================================
-// 4. ÀÏ¹İ ¸ó½ºÅÍ ¼±ÅÃ ÆÄÆ®
+// 4. ì¼ë°˜ ëª¬ìŠ¤í„° ì„ íƒ íŒŒíŠ¸
 //=============================================================================
 
-// 4-1. ÇöÀç Ã©ÅÍ ÀÏ¹İ ¸ó½ºÅÍ ¸ñ·Ï ±¸¼º
+// 4-1. í˜„ì¬ ì±•í„° ì¼ë°˜ ëª¬ìŠ¤í„° ëª©ë¡ êµ¬ì„±
 void Dungeon_Manager::Get_Current_Chapter_Monsters(Monster_Type monster_Types[]) const
 {
 	switch (_current_Chapter)
@@ -358,7 +358,7 @@ void Dungeon_Manager::Get_Current_Chapter_Monsters(Monster_Type monster_Types[])
 	}
 	}
 }
-// 4-2. ÇöÀç Ã©ÅÍ ÀÏ¹İ ¸ó½ºÅÍ ·£´ı ¼±ÅÃ
+// 4-2. í˜„ì¬ ì±•í„° ì¼ë°˜ ëª¬ìŠ¤í„° ëœë¤ ì„ íƒ
 Monster_Type Dungeon_Manager::Get_Random_Normal_Monster() const
 {
 	Monster_Type monster_Types
@@ -372,10 +372,10 @@ Monster_Type Dungeon_Manager::Get_Random_Normal_Monster() const
 }
 
 //=============================================================================
-// 5. Á¤¿¹ ¸ó½ºÅÍ ¹®Á¦ ÆÄÆ®
+// 5. ì •ì˜ˆ ëª¬ìŠ¤í„° ë¬¸ì œ íŒŒíŠ¸
 //=============================================================================
 
-// 5-1. Á¤¿¹ ¸ó½ºÅÍ µîÀå È®·ü ÆÇÁ¤
+// 5-1. ì •ì˜ˆ ëª¬ìŠ¤í„° ë“±ì¥ í™•ë¥  íŒì •
 bool Dungeon_Manager::Check_Elite_Monster_Appearance() const
 {
 	int appearance_Roll = rand() % 100 + 1;
@@ -383,7 +383,7 @@ bool Dungeon_Manager::Check_Elite_Monster_Appearance() const
 	return
 		appearance_Roll <= ELITE_APPEARANCE_RATE;
 }
-// 5-2. Ã©ÅÍº° Á¤¿¹ ¹®Á¦ ·£´ı ¼±ÅÃ
+// 5-2. ì±•í„°ë³„ ì •ì˜ˆ ë¬¸ì œ ëœë¤ ì„ íƒ
 Elite_Question Dungeon_Manager::Get_Elite_Question(Chapter_Type chapter_Type) const
 {
 	Elite_Question elite_Questions[3];
@@ -392,7 +392,7 @@ Elite_Question Dungeon_Manager::Get_Elite_Question(Chapter_Type chapter_Type) co
 	{
 	case Chapter_Type::VARIABLE_CONDITION_FOREST:
 	{
-		elite_Questions[0].question = "´ÙÀ½ Áß Á¤¼ö°ªÀ» ÀúÀåÇÏ´Â ÀÚ·áÇüÀº ¹«¾ùÀÎ°¡?";
+		elite_Questions[0].question = "ë‹¤ìŒ ì¤‘ ì •ìˆ˜ê°’ì„ ì €ì¥í•˜ëŠ” ìë£Œí˜•ì€ ë¬´ì—‡ì¸ê°€?";
 
 		elite_Questions[0].choices[0] = "int";
 		elite_Questions[0].choices[1] = "bool";
@@ -403,22 +403,22 @@ Elite_Question Dungeon_Manager::Get_Elite_Question(Chapter_Type chapter_Type) co
 
 
 		elite_Questions[1].question =
-			"´ÙÀ½ ÄÚµå¿¡¼­ Ãâ·ÂµÇ´Â °á°ú´Â ¹«¾ùÀÎ°¡?\n"
+			"ë‹¤ìŒ ì½”ë“œì—ì„œ ì¶œë ¥ë˜ëŠ” ê²°ê³¼ëŠ” ë¬´ì—‡ì¸ê°€?\n"
 			"int number = 10;\n"
 			"if (number > 5)\n"
 			"{\n"
-			"\tcout << \"Åë°ú\";\n"
+			"\tcout << \"í†µê³¼\";\n"
 			"}";
 
-		elite_Questions[1].choices[0] = "¾Æ¹«°Íµµ Ãâ·ÂµÇÁö ¾ÊÀ½";
-		elite_Questions[1].choices[1] = "Åë°ú";
+		elite_Questions[1].choices[0] = "ì•„ë¬´ê²ƒë„ ì¶œë ¥ë˜ì§€ ì•ŠìŒ";
+		elite_Questions[1].choices[1] = "í†µê³¼";
 		elite_Questions[1].choices[2] = "10";
-		elite_Questions[1].choices[3] = "¿À·ù ¹ß»ı";
+		elite_Questions[1].choices[3] = "ì˜¤ë¥˜ ë°œìƒ";
 
 		elite_Questions[1].correct_Answer = 2;
 
 
-		elite_Questions[2].question = "Âü ¶Ç´Â °ÅÁş¸¸ ÀúÀåÇÒ ¼ö ÀÖ´Â ÀÚ·áÇüÀº ¹«¾ùÀÎ°¡?";
+		elite_Questions[2].question = "ì°¸ ë˜ëŠ” ê±°ì§“ë§Œ ì €ì¥í•  ìˆ˜ ìˆëŠ” ìë£Œí˜•ì€ ë¬´ì—‡ì¸ê°€?";
 
 		elite_Questions[2].choices[0] = "int";
 		elite_Questions[2].choices[1] = "string";
@@ -432,7 +432,7 @@ Elite_Question Dungeon_Manager::Get_Elite_Question(Chapter_Type chapter_Type) co
 
 	case Chapter_Type::ARRAY_LOOP_OCEAN:
 	{
-		elite_Questions[0].question = "´ÙÀ½ ¹è¿­¿¡¼­ µÎ ¹øÂ° °ªÀº ¹«¾ùÀÎ°¡?\n" "int numbers[3] = { 10, 20, 30 };";
+		elite_Questions[0].question = "ë‹¤ìŒ ë°°ì—´ì—ì„œ ë‘ ë²ˆì§¸ ê°’ì€ ë¬´ì—‡ì¸ê°€?\n" "int numbers[3] = { 10, 20, 30 };";
 
 		elite_Questions[0].choices[0] = "10";
 		elite_Questions[0].choices[1] = "20";
@@ -442,7 +442,7 @@ Elite_Question Dungeon_Manager::Get_Elite_Question(Chapter_Type chapter_Type) co
 		elite_Questions[0].correct_Answer = 2;
 
 
-		elite_Questions[1].question = "¹İº¹ È½¼ö°¡ Á¤ÇØÁ® ÀÖÀ» ¶§ ÁÖ·Î »ç¿ëÇÏ´Â ¹İº¹¹®Àº ¹«¾ùÀÎ°¡?";
+		elite_Questions[1].question = "ë°˜ë³µ íšŸìˆ˜ê°€ ì •í•´ì ¸ ìˆì„ ë•Œ ì£¼ë¡œ ì‚¬ìš©í•˜ëŠ” ë°˜ë³µë¬¸ì€ ë¬´ì—‡ì¸ê°€?";
 
 		elite_Questions[1].choices[0] = "if";
 		elite_Questions[1].choices[1] = "switch";
@@ -453,17 +453,17 @@ Elite_Question Dungeon_Manager::Get_Elite_Question(Chapter_Type chapter_Type) co
 
 
 		elite_Questions[2].question =
-			"´ÙÀ½ ¹İº¹¹®Àº ¸î ¹ø ½ÇÇàµÇ³ª¿ä?\n"
+			"ë‹¤ìŒ ë°˜ë³µë¬¸ì€ ëª‡ ë²ˆ ì‹¤í–‰ë˜ë‚˜ìš”?\n"
 			"int count = 0;\n"
 			"while (count < 3)\n"
 			"{\n"
 			"\tcount++;\n"
 			"}";
 
-		elite_Questions[2].choices[0] = "1¹ø";
-		elite_Questions[2].choices[1] = "2¹ø";
-		elite_Questions[2].choices[2] = "3¹ø";
-		elite_Questions[2].choices[3] = "¹«ÇÑ ¹İº¹";
+		elite_Questions[2].choices[0] = "1ë²ˆ";
+		elite_Questions[2].choices[1] = "2ë²ˆ";
+		elite_Questions[2].choices[2] = "3ë²ˆ";
+		elite_Questions[2].choices[3] = "ë¬´í•œ ë°˜ë³µ";
 
 		elite_Questions[2].correct_Answer = 3;
 
@@ -472,17 +472,17 @@ Elite_Question Dungeon_Manager::Get_Elite_Question(Chapter_Type chapter_Type) co
 
 	case Chapter_Type::FUNCTION_RUINS:
 	{
-		elite_Questions[0].question = "ÇÔ¼ö¿¡ °ªÀ» Àü´ŞÇÏ±â À§ÇØ »ç¿ëÇÏ´Â °ÍÀº ¹«¾ùÀÎ°¡?";
+		elite_Questions[0].question = "í•¨ìˆ˜ì— ê°’ì„ ì „ë‹¬í•˜ê¸° ìœ„í•´ ì‚¬ìš©í•˜ëŠ” ê²ƒì€ ë¬´ì—‡ì¸ê°€?";
 
-		elite_Questions[0].choices[0] = "¹İÈ¯°ª";
-		elite_Questions[0].choices[1] = "¸Å°³º¯¼ö";
-		elite_Questions[0].choices[2] = "Á¶°Ç¹®";
-		elite_Questions[0].choices[3] = "¹è¿­";
+		elite_Questions[0].choices[0] = "ë°˜í™˜ê°’";
+		elite_Questions[0].choices[1] = "ë§¤ê°œë³€ìˆ˜";
+		elite_Questions[0].choices[2] = "ì¡°ê±´ë¬¸";
+		elite_Questions[0].choices[3] = "ë°°ì—´";
 
 		elite_Questions[0].correct_Answer = 2;
 
 
-		elite_Questions[1].question = "ÇÔ¼ö¿¡¼­ °è»êÇÑ °á°ú¸¦ µ¹·ÁÁÙ ¶§ »ç¿ëÇÏ´Â Å°¿öµå´Â ¹«¾ùÀÎ°¡?";
+		elite_Questions[1].question = "í•¨ìˆ˜ì—ì„œ ê³„ì‚°í•œ ê²°ê³¼ë¥¼ ëŒë ¤ì¤„ ë•Œ ì‚¬ìš©í•˜ëŠ” í‚¤ì›Œë“œëŠ” ë¬´ì—‡ì¸ê°€?";
 
 		elite_Questions[1].choices[0] = "return";
 		elite_Questions[1].choices[1] = "break";
@@ -493,7 +493,7 @@ Elite_Question Dungeon_Manager::Get_Elite_Question(Chapter_Type chapter_Type) co
 
 
 		elite_Questions[2].question =
-			"´ÙÀ½ ÇÔ¼öÀÇ ¹İÈ¯°ªÀº ¹«¾ùÀÎ°¡¿ä?\n"
+			"ë‹¤ìŒ í•¨ìˆ˜ì˜ ë°˜í™˜ê°’ì€ ë¬´ì—‡ì¸ê°€ìš”?\n"
 			"int Add(int number_A, int number_B)\n"
 			"{\n"
 			"\treturn number_A + number_B;\n"
@@ -512,17 +512,17 @@ Elite_Question Dungeon_Manager::Get_Elite_Question(Chapter_Type chapter_Type) co
 
 	case Chapter_Type::POINTER_MEMORY_GRAVEYARD:
 	{
-		elite_Questions[0].question = "º¯¼öÀÇ ¸Ş¸ğ¸® ÁÖ¼Ò¸¦ ÀúÀåÇÏ´Â º¯¼ö´Â ¹«¾ùÀÎ°¡?";
+		elite_Questions[0].question = "ë³€ìˆ˜ì˜ ë©”ëª¨ë¦¬ ì£¼ì†Œë¥¼ ì €ì¥í•˜ëŠ” ë³€ìˆ˜ëŠ” ë¬´ì—‡ì¸ê°€?";
 
-		elite_Questions[0].choices[0] = "¹è¿­";
-		elite_Questions[0].choices[1] = "Æ÷ÀÎÅÍ";
-		elite_Questions[0].choices[2] = "ÇÔ¼ö";
-		elite_Questions[0].choices[3] = "¹İº¹¹®";
+		elite_Questions[0].choices[0] = "ë°°ì—´";
+		elite_Questions[0].choices[1] = "í¬ì¸í„°";
+		elite_Questions[0].choices[2] = "í•¨ìˆ˜";
+		elite_Questions[0].choices[3] = "ë°˜ë³µë¬¸";
 
 		elite_Questions[0].correct_Answer = 2;
 
 
-		elite_Questions[1].question = "Æ÷ÀÎÅÍ°¡ ¾Æ¹« ÁÖ¼Òµµ °¡¸®Å°Áö ¾ÊÀ½À» ³ªÅ¸³»´Â °ªÀº ¹«¾ùÀÎ°¡?";
+		elite_Questions[1].question = "í¬ì¸í„°ê°€ ì•„ë¬´ ì£¼ì†Œë„ ê°€ë¦¬í‚¤ì§€ ì•ŠìŒì„ ë‚˜íƒ€ë‚´ëŠ” ê°’ì€ ë¬´ì—‡ì¸ê°€?";
 
 		elite_Questions[1].choices[0] = "false";
 		elite_Questions[1].choices[1] = "zero";
@@ -532,11 +532,11 @@ Elite_Question Dungeon_Manager::Get_Elite_Question(Chapter_Type chapter_Type) co
 		elite_Questions[1].correct_Answer = 3;
 
 
-		elite_Questions[2].question = "´ÙÀ½ ÄÚµå¿¡¼­ pointer¿¡ ÀúÀåµÇ´Â °ÍÀº ¹«¾ùÀÎ°¡?\n" "int number = 10;\n" "int* pointer = &number;";
+		elite_Questions[2].question = "ë‹¤ìŒ ì½”ë“œì—ì„œ pointerì— ì €ì¥ë˜ëŠ” ê²ƒì€ ë¬´ì—‡ì¸ê°€?\n" "int number = 10;\n" "int* pointer = &number;";
 
-		elite_Questions[2].choices[0] = "numberÀÇ °ª 10";
-		elite_Questions[2].choices[1] = "numberÀÇ ¸Ş¸ğ¸® ÁÖ¼Ò";
-		elite_Questions[2].choices[2] = "pointerÀÇ ÀÌ¸§";
+		elite_Questions[2].choices[0] = "numberì˜ ê°’ 10";
+		elite_Questions[2].choices[1] = "numberì˜ ë©”ëª¨ë¦¬ ì£¼ì†Œ";
+		elite_Questions[2].choices[2] = "pointerì˜ ì´ë¦„";
 		elite_Questions[2].choices[3] = "nullptr";
 
 		elite_Questions[2].correct_Answer = 2;
@@ -546,7 +546,7 @@ Elite_Question Dungeon_Manager::Get_Elite_Question(Chapter_Type chapter_Type) co
 
 	case Chapter_Type::OBJECT_STL_FACTORY:
 	{
-		elite_Questions[0].question = "µ¥ÀÌÅÍ¿Í ±â´ÉÀ» ÇÏ³ª·Î ¹­¾î Ç¥ÇöÇÏ´Â ¹®¹ıÀº ¹«¾ùÀÎ°¡?";
+		elite_Questions[0].question = "ë°ì´í„°ì™€ ê¸°ëŠ¥ì„ í•˜ë‚˜ë¡œ ë¬¶ì–´ í‘œí˜„í•˜ëŠ” ë¬¸ë²•ì€ ë¬´ì—‡ì¸ê°€?";
 
 		elite_Questions[0].choices[0] = "class";
 		elite_Questions[0].choices[1] = "while";
@@ -556,17 +556,17 @@ Elite_Question Dungeon_Manager::Get_Elite_Question(Chapter_Type chapter_Type) co
 		elite_Questions[0].correct_Answer = 1;
 
 
-		elite_Questions[1].question = "±âÁ¸ Å¬·¡½ºÀÇ ±â´ÉÀ» »õ·Î¿î Å¬·¡½º°¡ ¹°·Á¹Ş´Â °ÍÀº ¹«¾ùÀÎ°¡?";
+		elite_Questions[1].question = "ê¸°ì¡´ í´ë˜ìŠ¤ì˜ ê¸°ëŠ¥ì„ ìƒˆë¡œìš´ í´ë˜ìŠ¤ê°€ ë¬¼ë ¤ë°›ëŠ” ê²ƒì€ ë¬´ì—‡ì¸ê°€?";
 
-		elite_Questions[1].choices[0] = "¹İº¹";
-		elite_Questions[1].choices[1] = "»ó¼Ó";
-		elite_Questions[1].choices[2] = "Á¶°Ç";
-		elite_Questions[1].choices[3] = "Æ÷ÀÎÅÍ";
+		elite_Questions[1].choices[0] = "ë°˜ë³µ";
+		elite_Questions[1].choices[1] = "ìƒì†";
+		elite_Questions[1].choices[2] = "ì¡°ê±´";
+		elite_Questions[1].choices[3] = "í¬ì¸í„°";
 
 		elite_Questions[1].correct_Answer = 2;
 
 
-		elite_Questions[2].question = "Å©±â¸¦ ÀÚÀ¯·Ó°Ô ´Ã¸®°Å³ª ÁÙÀÏ ¼ö ÀÖ´Â STL ÄÁÅ×ÀÌ³Ê´Â ¹«¾ùÀÎ°¡?";
+		elite_Questions[2].question = "í¬ê¸°ë¥¼ ììœ ë¡­ê²Œ ëŠ˜ë¦¬ê±°ë‚˜ ì¤„ì¼ ìˆ˜ ìˆëŠ” STL ì»¨í…Œì´ë„ˆëŠ” ë¬´ì—‡ì¸ê°€?";
 
 		elite_Questions[2].choices[0] = "if";
 		elite_Questions[2].choices[1] = "int";
@@ -580,7 +580,7 @@ Elite_Question Dungeon_Manager::Get_Elite_Question(Chapter_Type chapter_Type) co
 
 	default:
 	{
-		elite_Questions[0].question = "Á¤¼ö¸¦ ÀúÀåÇÏ´Â ÀÚ·áÇüÀº ¹«¾ùÀÎ°¡?";
+		elite_Questions[0].question = "ì •ìˆ˜ë¥¼ ì €ì¥í•˜ëŠ” ìë£Œí˜•ì€ ë¬´ì—‡ì¸ê°€?";
 
 		elite_Questions[0].choices[0] = "int";
 		elite_Questions[0].choices[1] = "bool";
@@ -603,9 +603,9 @@ Elite_Question Dungeon_Manager::Get_Elite_Question(Chapter_Type chapter_Type) co
 	return
 		elite_Questions[random_Question_Index];
 }
-// 5-3. Á¤¿¹ ¹®Á¦ Ãâ·Â ¹× Á¤´ä ÆÇÁ¤
+// 5-3. ì •ì˜ˆ ë¬¸ì œ ì¶œë ¥ ë° ì •ë‹µ íŒì •
 bool Run_Elite_Question(const Elite_Question& elite_Question);
-// 5-4. Á¤¿¹ ¸ó½ºÅÍ ÄûÁî ÀüÃ¼ ÁøÇà
+// 5-4. ì •ì˜ˆ ëª¬ìŠ¤í„° í€´ì¦ˆ ì „ì²´ ì§„í–‰
 bool Dungeon_Manager::Run_Elite_Quiz(Monster& elite_Monster)
 {
 	Elite_Question elite_Question = Get_Elite_Question(elite_Monster.getChapterType());
@@ -614,9 +614,9 @@ bool Dungeon_Manager::Run_Elite_Quiz(Monster& elite_Monster)
 
 	cout << endl;
 	cout << "========================================" << endl;
-	cout << "[ Á¤¿¹ ¸ó½ºÅÍ µîÀå ]" << endl;
-	cout << elite_Monster.getName() << "ÀÌ(°¡) ³ªÅ¸³µ½À´Ï´Ù!" << endl;
-	cout << "\"ÄÚµå½º´ÏÆêÀ» º¹»çÇß½À´Ï´Ù.\"" << endl;
+	cout << "[ ì •ì˜ˆ ëª¬ìŠ¤í„° ë“±ì¥ ]" << endl;
+	cout << elite_Monster.getName() << "ì´(ê°€) ë‚˜íƒ€ë‚¬ìŠµë‹ˆë‹¤!" << endl;
+	cout << "\"ì½”ë“œìŠ¤ë‹ˆí«ì„ ë³µì‚¬í–ˆìŠµë‹ˆë‹¤.\"" << endl;
 	cout << "========================================" << endl;
 	cout << endl;
 	cout << elite_Question.question << endl;
@@ -635,7 +635,7 @@ bool Dungeon_Manager::Run_Elite_Quiz(Monster& elite_Monster)
 	while (true)
 	{
 		cout << endl;
-		cout << "Á¤´ä ÀÔ·Â (1~4): ";
+		cout << "ì •ë‹µ ì…ë ¥ (1~4): ";
 
 		cin >> player_Answer;
 
@@ -644,7 +644,7 @@ bool Dungeon_Manager::Run_Elite_Quiz(Monster& elite_Monster)
 			cin.clear();
 			cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-			cout << "¼ıÀÚ¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä." << endl;
+			cout << "ìˆ«ìë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”." << endl;
 
 			continue;
 		}
@@ -655,47 +655,47 @@ bool Dungeon_Manager::Run_Elite_Quiz(Monster& elite_Monster)
 			break;
 		}
 
-		cout << "1¹øºÎÅÍ 4¹ø »çÀÌÀÇ ¹øÈ£¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä." << endl;
+		cout << "1ë²ˆë¶€í„° 4ë²ˆ ì‚¬ì´ì˜ ë²ˆí˜¸ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”." << endl;
 	}
 
 	if
 		(player_Answer == elite_Question.correct_Answer)
 	{
 		cout << endl;
-		cout << "Á¤´äÀÔ´Ï´Ù!" << endl;
-		cout << "ÄÚµå½º´ÏÆêÀÇ ¸Á·ÉÀ» Ã³Ä¡Çß½À´Ï´Ù." << endl;
+		cout << "ì •ë‹µì…ë‹ˆë‹¤!" << endl;
+		cout << "ì½”ë“œìŠ¤ë‹ˆí«ì˜ ë§ë ¹ì„ ì²˜ì¹˜í–ˆìŠµë‹ˆë‹¤." << endl;
 
 		return true;
 	}
 
 	cout << endl;
-	cout << "¿À´äÀÔ´Ï´Ù!" << endl;
-	cout << "ÄÚµå½º´ÏÆêÀÇ ¸Á·ÉÀÌ ºñ¿ôÀ¸¸ç µµ¸Á°¬½À´Ï´Ù.¤»" << endl;
+	cout << "ì˜¤ë‹µì…ë‹ˆë‹¤!" << endl;
+	cout << "ì½”ë“œìŠ¤ë‹ˆí«ì˜ ë§ë ¹ì´ ë¹„ì›ƒìœ¼ë©° ë„ë§ê°”ìŠµë‹ˆë‹¤.ã…‹" << endl;
 
 	return false;
 }
 
 //=============================================================================
-// 6. Æ©ÅÍ ¹®Á¦ ¹× ´ë»ç ÆÄÆ®
+// 6. íŠœí„° ë¬¸ì œ ë° ëŒ€ì‚¬ íŒŒíŠ¸
 //=============================================================================
 
-// 6-1. Ã©ÅÍº° Æ©ÅÍ ¹®Á¦ ±¸¼º
+// 6-1. ì±•í„°ë³„ íŠœí„° ë¬¸ì œ êµ¬ì„±
 void Dungeon_Manager::Get_Tutor_Questions(Chapter_Type chapter_Type, Tutor_Question tutor_Questions[]) const
 {
 	switch (chapter_Type)
 	{
 	case Chapter_Type::VARIABLE_CONDITION_FOREST:
 	{
-		tutor_Questions[0].description = "Á¤¼ö¸¦ ÀúÀåÇÒ ÀÚ·áÇüÀ» ÀÔ·ÂÇÏ¼¼¿ä.";
+		tutor_Questions[0].description = "ì •ìˆ˜ë¥¼ ì €ì¥í•  ìë£Œí˜•ì„ ì…ë ¥í•˜ì„¸ìš”.";
 		tutor_Questions[0].code = "____ score = 100;";
 		tutor_Questions[0].correct_Answer = "int";
 
-		tutor_Questions[1].description = "Âü ¶Ç´Â °ÅÁşÀ» ÀúÀåÇÒ ÀÚ·áÇüÀ» ÀÔ·ÂÇÏ¼¼¿ä.";
+		tutor_Questions[1].description = "ì°¸ ë˜ëŠ” ê±°ì§“ì„ ì €ì¥í•  ìë£Œí˜•ì„ ì…ë ¥í•˜ì„¸ìš”.";
 		tutor_Questions[1].code = "____ is_Clear = true;";
 		tutor_Questions[1].correct_Answer = "bool";
 
-		tutor_Questions[2].description = "Á¶°ÇÀ» °Ë»çÇÏ´Â ÄÚµå¸¦ ÀÔ·ÂÇÏ¼¼¿ä.";
-		tutor_Questions[2].code = "____ (score >= 100)\n" "{\n" "\tcout << \"ÀÔÀå °¡´É\";\n" "}";
+		tutor_Questions[2].description = "ì¡°ê±´ì„ ê²€ì‚¬í•˜ëŠ” ì½”ë“œë¥¼ ì…ë ¥í•˜ì„¸ìš”.";
+		tutor_Questions[2].code = "____ (score >= 100)\n" "{\n" "\tcout << \"ì…ì¥ ê°€ëŠ¥\";\n" "}";
 		tutor_Questions[2].correct_Answer = "if";
 
 		break;
@@ -703,15 +703,15 @@ void Dungeon_Manager::Get_Tutor_Questions(Chapter_Type chapter_Type, Tutor_Quest
 
 	case Chapter_Type::ARRAY_LOOP_OCEAN:
 	{
-		tutor_Questions[0].description = "¿©·¯ °ªÀ» ¼ø¼­´ë·Î ÀúÀåÇÏ´Â ÀÚ·á±¸Á¶ÀÇ ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä.";
-		tutor_Questions[0].code = "int numbers[3] = { 1, 2, 3 };\n" "// À§ ÀÚ·á±¸Á¶ÀÇ ÀÌ¸§: ____";
+		tutor_Questions[0].description = "ì—¬ëŸ¬ ê°’ì„ ìˆœì„œëŒ€ë¡œ ì €ì¥í•˜ëŠ” ìë£Œêµ¬ì¡°ì˜ ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”.";
+		tutor_Questions[0].code = "int numbers[3] = { 1, 2, 3 };\n" "// ìœ„ ìë£Œêµ¬ì¡°ì˜ ì´ë¦„: ____";
 		tutor_Questions[0].correct_Answer = "array";
 
-		tutor_Questions[1].description = "Á¤ÇØÁø È½¼ö¸¸Å­ ¹İº¹ÇÏ´Â ÄÚµå¸¦ ÀÔ·ÂÇÏ¼¼¿ä.";
+		tutor_Questions[1].description = "ì •í•´ì§„ íšŸìˆ˜ë§Œí¼ ë°˜ë³µí•˜ëŠ” ì½”ë“œë¥¼ ì…ë ¥í•˜ì„¸ìš”.";
 		tutor_Questions[1].code = "____ (int i = 0; i < 3; i++)\n" "{\n" "\tcout << i << endl;\n" "}";
 		tutor_Questions[1].correct_Answer = "for";
 
-		tutor_Questions[2].description = "Á¶°ÇÀÌ ÂüÀÎ µ¿¾È ¹İº¹ÇÏ´Â ÄÚµå¸¦ ÀÔ·ÂÇÏ¼¼¿ä.";
+		tutor_Questions[2].description = "ì¡°ê±´ì´ ì°¸ì¸ ë™ì•ˆ ë°˜ë³µí•˜ëŠ” ì½”ë“œë¥¼ ì…ë ¥í•˜ì„¸ìš”.";
 		tutor_Questions[2].code = "____ (count < 3)\n" "{\n" "\tcount++;\n" "}";
 		tutor_Questions[2].correct_Answer = "while";
 
@@ -720,16 +720,16 @@ void Dungeon_Manager::Get_Tutor_Questions(Chapter_Type chapter_Type, Tutor_Quest
 
 	case Chapter_Type::FUNCTION_RUINS:
 	{
-		tutor_Questions[0].description = "ÇÔ¼ö·Î Àü´Ş¹Ş´Â numberÀÇ ¿ªÇÒÀ» ¿µ¾î·Î ÀÔ·ÂÇÏ¼¼¿ä.";
-		tutor_Questions[0].code = "void Print_Number(int number)\n" "{\n" "\tcout << number;\n" "}\n" "// numberÀÇ ¿ªÇÒ: ____";
+		tutor_Questions[0].description = "í•¨ìˆ˜ë¡œ ì „ë‹¬ë°›ëŠ” numberì˜ ì—­í• ì„ ì˜ì–´ë¡œ ì…ë ¥í•˜ì„¸ìš”.";
+		tutor_Questions[0].code = "void Print_Number(int number)\n" "{\n" "\tcout << number;\n" "}\n" "// numberì˜ ì—­í• : ____";
 		tutor_Questions[0].correct_Answer = "parameter";
 
-		tutor_Questions[1].description = "ÇÔ¼öÀÇ °è»ê °á°ú¸¦ ¹İÈ¯ÇÏ´Â ÄÚµå¸¦ ÀÔ·ÂÇÏ¼¼¿ä.";
+		tutor_Questions[1].description = "í•¨ìˆ˜ì˜ ê³„ì‚° ê²°ê³¼ë¥¼ ë°˜í™˜í•˜ëŠ” ì½”ë“œë¥¼ ì…ë ¥í•˜ì„¸ìš”.";
 		tutor_Questions[1].code = "int Add(int number_A, int number_B)\n" "{\n" "\t____ number_A + number_B;\n" "}";
 		tutor_Questions[1].correct_Answer = "return";
 
-		tutor_Questions[2].description = "Add¿Í °°ÀÌ Æ¯Á¤ ±â´ÉÀ» ¹­Àº ÄÚµå ´ÜÀ§¸¦ ¿µ¾î·Î ÀÔ·ÂÇÏ¼¼¿ä.";
-		tutor_Questions[2].code = "int Add(int number_A, int number_B)\n" "{\n" "\treturn number_A + number_B;\n" "}\n" "// À§ ÄÚµå ´ÜÀ§: ____";
+		tutor_Questions[2].description = "Addì™€ ê°™ì´ íŠ¹ì • ê¸°ëŠ¥ì„ ë¬¶ì€ ì½”ë“œ ë‹¨ìœ„ë¥¼ ì˜ì–´ë¡œ ì…ë ¥í•˜ì„¸ìš”.";
+		tutor_Questions[2].code = "int Add(int number_A, int number_B)\n" "{\n" "\treturn number_A + number_B;\n" "}\n" "// ìœ„ ì½”ë“œ ë‹¨ìœ„: ____";
 		tutor_Questions[2].correct_Answer = "function";
 
 		break;
@@ -737,16 +737,16 @@ void Dungeon_Manager::Get_Tutor_Questions(Chapter_Type chapter_Type, Tutor_Quest
 
 	case Chapter_Type::POINTER_MEMORY_GRAVEYARD:
 	{
-		tutor_Questions[0].description = "¸Ş¸ğ¸® ÁÖ¼Ò¸¦ ÀúÀåÇÏ´Â º¯¼öÀÇ Á¾·ù¸¦ ¿µ¾î·Î ÀÔ·ÂÇÏ¼¼¿ä.";
-		tutor_Questions[0].code = "int value = 10;\n" "int* value_Pointer = &value;\n" "// value_PointerÀÇ Á¾·ù: ____";
+		tutor_Questions[0].description = "ë©”ëª¨ë¦¬ ì£¼ì†Œë¥¼ ì €ì¥í•˜ëŠ” ë³€ìˆ˜ì˜ ì¢…ë¥˜ë¥¼ ì˜ì–´ë¡œ ì…ë ¥í•˜ì„¸ìš”.";
+		tutor_Questions[0].code = "int value = 10;\n" "int* value_Pointer = &value;\n" "// value_Pointerì˜ ì¢…ë¥˜: ____";
 		tutor_Questions[0].correct_Answer = "pointer";
 
-		tutor_Questions[1].description = "Æ÷ÀÎÅÍ°¡ ¾Æ¹« ÁÖ¼Òµµ °¡¸®Å°Áö ¾Ê´Â »óÅÂ¸¦ ¿µ¾î·Î ÀÔ·ÂÇÏ¼¼¿ä.";
-		tutor_Questions[1].code = "int* value_Pointer = nullptr;\n" "// °ªÀÌ ¾ø´Â »óÅÂ: ____";
+		tutor_Questions[1].description = "í¬ì¸í„°ê°€ ì•„ë¬´ ì£¼ì†Œë„ ê°€ë¦¬í‚¤ì§€ ì•ŠëŠ” ìƒíƒœë¥¼ ì˜ì–´ë¡œ ì…ë ¥í•˜ì„¸ìš”.";
+		tutor_Questions[1].code = "int* value_Pointer = nullptr;\n" "// ê°’ì´ ì—†ëŠ” ìƒíƒœ: ____";
 		tutor_Questions[1].correct_Answer = "null";
 
-		tutor_Questions[2].description = "º¯¼öÀÇ °ªÀÌ ÀúÀåµÇ´Â °ø°£À» ¿µ¾î·Î ÀÔ·ÂÇÏ¼¼¿ä.";
-		tutor_Questions[2].code = "int value = 10;\n" "// value°¡ ÀúÀåµÇ´Â °ø°£: ____";
+		tutor_Questions[2].description = "ë³€ìˆ˜ì˜ ê°’ì´ ì €ì¥ë˜ëŠ” ê³µê°„ì„ ì˜ì–´ë¡œ ì…ë ¥í•˜ì„¸ìš”.";
+		tutor_Questions[2].code = "int value = 10;\n" "// valueê°€ ì €ì¥ë˜ëŠ” ê³µê°„: ____";
 		tutor_Questions[2].correct_Answer = "memory";
 
 		break;
@@ -754,15 +754,15 @@ void Dungeon_Manager::Get_Tutor_Questions(Chapter_Type chapter_Type, Tutor_Quest
 
 	case Chapter_Type::OBJECT_STL_FACTORY:
 	{
-		tutor_Questions[0].description = "°´Ã¼¸¦ ¸¸µé±â À§ÇÑ ¼³°èµµ¸¦ ¼±¾ğÇÏ´Â ÄÚµå¸¦ ÀÔ·ÂÇÏ¼¼¿ä.";
+		tutor_Questions[0].description = "ê°ì²´ë¥¼ ë§Œë“¤ê¸° ìœ„í•œ ì„¤ê³„ë„ë¥¼ ì„ ì–¸í•˜ëŠ” ì½”ë“œë¥¼ ì…ë ¥í•˜ì„¸ìš”.";
 		tutor_Questions[0].code = "____ Player\n" "{\n" "public:\n" "\tint hp;\n" "};";
 		tutor_Questions[0].correct_Answer = "class";
 
-		tutor_Questions[1].description = "ºÎ¸ğ Å¬·¡½ºÀÇ ±â´ÉÀ» ÀÚ½Ä Å¬·¡½º°¡ ¹°·Á¹Ş´Â °ü°è¸¦ ¿µ¾î·Î ÀÔ·ÂÇÏ¼¼¿ä.";
-		tutor_Questions[1].code = "class Child : public Parent\n" "{\n" "};\n" "// À§ Å¬·¡½º °ü°è: ____";
+		tutor_Questions[1].description = "ë¶€ëª¨ í´ë˜ìŠ¤ì˜ ê¸°ëŠ¥ì„ ìì‹ í´ë˜ìŠ¤ê°€ ë¬¼ë ¤ë°›ëŠ” ê´€ê³„ë¥¼ ì˜ì–´ë¡œ ì…ë ¥í•˜ì„¸ìš”.";
+		tutor_Questions[1].code = "class Child : public Parent\n" "{\n" "};\n" "// ìœ„ í´ë˜ìŠ¤ ê´€ê³„: ____";
 		tutor_Questions[1].correct_Answer = "inheritance";
 
-		tutor_Questions[2].description = "Å©±â°¡ µ¿ÀûÀ¸·Î º¯ÇÏ´Â STL ÄÁÅ×ÀÌ³Ê¸¦ ÀÔ·ÂÇÏ¼¼¿ä.";
+		tutor_Questions[2].description = "í¬ê¸°ê°€ ë™ì ìœ¼ë¡œ ë³€í•˜ëŠ” STL ì»¨í…Œì´ë„ˆë¥¼ ì…ë ¥í•˜ì„¸ìš”.";
 		tutor_Questions[2].code = "____<int> numbers;\n" "numbers.push_back(10);";
 		tutor_Questions[2].correct_Answer = "vector";
 
@@ -771,15 +771,15 @@ void Dungeon_Manager::Get_Tutor_Questions(Chapter_Type chapter_Type, Tutor_Quest
 
 	default:
 	{
-		tutor_Questions[0].description = "Á¤¼ö¸¦ ÀúÀåÇÒ ÀÚ·áÇüÀ» ÀÔ·ÂÇÏ¼¼¿ä.";
+		tutor_Questions[0].description = "ì •ìˆ˜ë¥¼ ì €ì¥í•  ìë£Œí˜•ì„ ì…ë ¥í•˜ì„¸ìš”.";
 		tutor_Questions[0].code = "____ score = 100;";
 		tutor_Questions[0].correct_Answer = "int";
 
-		tutor_Questions[1].description = "Âü ¶Ç´Â °ÅÁşÀ» ÀúÀåÇÒ ÀÚ·áÇüÀ» ÀÔ·ÂÇÏ¼¼¿ä.";
+		tutor_Questions[1].description = "ì°¸ ë˜ëŠ” ê±°ì§“ì„ ì €ì¥í•  ìë£Œí˜•ì„ ì…ë ¥í•˜ì„¸ìš”.";
 		tutor_Questions[1].code = "____ is_Clear = true;";
 		tutor_Questions[1].correct_Answer = "bool";
 
-		tutor_Questions[2].description = "Á¶°ÇÀ» °Ë»çÇÏ´Â ÄÚµå¸¦ ÀÔ·ÂÇÏ¼¼¿ä.";
+		tutor_Questions[2].description = "ì¡°ê±´ì„ ê²€ì‚¬í•˜ëŠ” ì½”ë“œë¥¼ ì…ë ¥í•˜ì„¸ìš”.";
 		tutor_Questions[2].code = "____ (score >= 100)";
 		tutor_Questions[2].correct_Answer = "if";
 
@@ -787,7 +787,7 @@ void Dungeon_Manager::Get_Tutor_Questions(Chapter_Type chapter_Type, Tutor_Quest
 	}
 	}
 }
-// 6-2. Ã©ÅÍº° Æ©ÅÍ ´ë»ç ±¸¼º
+// 6-2. ì±•í„°ë³„ íŠœí„° ëŒ€ì‚¬ êµ¬ì„±
 Tutor_Dialogue Dungeon_Manager::Get_Tutor_Dialogue(Chapter_Type chapter_Type) const
 {
 	Tutor_Dialogue tutor_Dialogue;
@@ -796,60 +796,60 @@ Tutor_Dialogue Dungeon_Manager::Get_Tutor_Dialogue(Chapter_Type chapter_Type) co
 	{
 	case Chapter_Type::VARIABLE_CONDITION_FOREST:
 	{
-		tutor_Dialogue.appearance_Message = "µîÀå";
-		tutor_Dialogue.correct_Message = "¸ÂÀ½";
-		tutor_Dialogue.wrong_Message = "Æ²¸²";
-		tutor_Dialogue.exit_Message = "ÅğÀå";
+		tutor_Dialogue.appearance_Message = "ë“±ì¥";
+		tutor_Dialogue.correct_Message = "ë§ìŒ";
+		tutor_Dialogue.wrong_Message = "í‹€ë¦¼";
+		tutor_Dialogue.exit_Message = "í‡´ì¥";
 
 		break;
 	}
 
 	case Chapter_Type::ARRAY_LOOP_OCEAN:
 	{
-		tutor_Dialogue.appearance_Message = "µîÀå";
-		tutor_Dialogue.correct_Message = "¸ÂÀ½";
-		tutor_Dialogue.wrong_Message = "Æ²¸²";
-		tutor_Dialogue.exit_Message = "ÅğÀå";
+		tutor_Dialogue.appearance_Message = "ë“±ì¥";
+		tutor_Dialogue.correct_Message = "ë§ìŒ";
+		tutor_Dialogue.wrong_Message = "í‹€ë¦¼";
+		tutor_Dialogue.exit_Message = "í‡´ì¥";
 
 		break;
 	}
 
 	case Chapter_Type::FUNCTION_RUINS:
 	{
-		tutor_Dialogue.appearance_Message = "µîÀå";
-		tutor_Dialogue.correct_Message = "¸ÂÀ½";
-		tutor_Dialogue.wrong_Message = "Æ²¸²";
-		tutor_Dialogue.exit_Message = "ÅğÀå";
+		tutor_Dialogue.appearance_Message = "ë“±ì¥";
+		tutor_Dialogue.correct_Message = "ë§ìŒ";
+		tutor_Dialogue.wrong_Message = "í‹€ë¦¼";
+		tutor_Dialogue.exit_Message = "í‡´ì¥";
 
 		break;
 	}
 
 	case Chapter_Type::POINTER_MEMORY_GRAVEYARD:
 	{
-		tutor_Dialogue.appearance_Message = "µîÀå";
-		tutor_Dialogue.correct_Message = "¸ÂÀ½";
-		tutor_Dialogue.wrong_Message = "Æ²¸²";
-		tutor_Dialogue.exit_Message = "ÅğÀå";
+		tutor_Dialogue.appearance_Message = "ë“±ì¥";
+		tutor_Dialogue.correct_Message = "ë§ìŒ";
+		tutor_Dialogue.wrong_Message = "í‹€ë¦¼";
+		tutor_Dialogue.exit_Message = "í‡´ì¥";
 
 		break;
 	}
 
 	case Chapter_Type::OBJECT_STL_FACTORY:
 	{
-		tutor_Dialogue.appearance_Message = "µîÀå";
-		tutor_Dialogue.correct_Message = "¸ÂÀ½";
-		tutor_Dialogue.wrong_Message = "Æ²¸²";
-		tutor_Dialogue.exit_Message = "ÅğÀå";
+		tutor_Dialogue.appearance_Message = "ë“±ì¥";
+		tutor_Dialogue.correct_Message = "ë§ìŒ";
+		tutor_Dialogue.wrong_Message = "í‹€ë¦¼";
+		tutor_Dialogue.exit_Message = "í‡´ì¥";
 
 		break;
 	}
 
 	default:
 	{
-		tutor_Dialogue.appearance_Message = "µîÀå";
-		tutor_Dialogue.correct_Message = "¸ÂÀ½";
-		tutor_Dialogue.wrong_Message = "Æ²¸²";
-		tutor_Dialogue.exit_Message = "ÅğÀå";
+		tutor_Dialogue.appearance_Message = "ë“±ì¥";
+		tutor_Dialogue.correct_Message = "ë§ìŒ";
+		tutor_Dialogue.wrong_Message = "í‹€ë¦¼";
+		tutor_Dialogue.exit_Message = "í‡´ì¥";
 
 		break;
 	}
@@ -857,7 +857,7 @@ Tutor_Dialogue Dungeon_Manager::Get_Tutor_Dialogue(Chapter_Type chapter_Type) co
 
 	return tutor_Dialogue;
 }
-// 6-3. Æ©ÅÍ ÄÚµå ¹®Á¦ 3°³ ÁøÇà
+// 6-3. íŠœí„° ì½”ë“œ ë¬¸ì œ 3ê°œ ì§„í–‰
 bool Dungeon_Manager::Run_Tutor_Code_Challenge(const Monster& tutor_Monster)
 {
 	Tutor_Question tutor_Questions[TUTOR_QUESTION_COUNT];
@@ -870,12 +870,12 @@ bool Dungeon_Manager::Run_Tutor_Code_Challenge(const Monster& tutor_Monster)
 
 	cout << endl;
 	cout << "========================================" << endl;
-	cout << "[ " << tutor_Monster.getName() << " ÄÚµå °ËÁõ ]" << endl;
+	cout << "[ " << tutor_Monster.getName() << " ì½”ë“œ ê²€ì¦ ]" << endl;
 	cout << "========================================" << endl;
 	cout << tutor_Monster.getName() << ": " << tutor_Dialogue.appearance_Message << endl;
 	cout << endl;
-	cout << "ÇöÀç Ã©ÅÍ: " << Get_Chapter_Name(_current_Chapter) << endl;
-	cout << "3¹®Á¦ Áß 2¹®Á¦ ÀÌ»ó ¸ÂÈ÷¸é Å¬¸®¾îµË´Ï´Ù." << endl;
+	cout << "í˜„ì¬ ì±•í„°: " << Get_Chapter_Name(_current_Chapter) << endl;
+	cout << "3ë¬¸ì œ ì¤‘ 2ë¬¸ì œ ì´ìƒ ë§íˆë©´ í´ë¦¬ì–´ë©ë‹ˆë‹¤." << endl;
 
 	for
 		(
@@ -886,12 +886,12 @@ bool Dungeon_Manager::Run_Tutor_Code_Challenge(const Monster& tutor_Monster)
 	{
 		cout << endl;
 		cout << "----------------------------------------" << endl;
-		cout << "[ ¹®Á¦ " << question_Index + 1 << " ]" << endl;
+		cout << "[ ë¬¸ì œ " << question_Index + 1 << " ]" << endl;
 		cout << tutor_Questions[question_Index].description << endl;
 		cout << endl;
 		cout << tutor_Questions[question_Index].code << endl;
 		cout << endl;
-		cout << "Á¤´ä: ";
+		cout << "ì •ë‹µ: ";
 
 		string player_Answer;
 
@@ -905,38 +905,38 @@ bool Dungeon_Manager::Run_Tutor_Code_Challenge(const Monster& tutor_Monster)
 		{
 			correct_Count += 1;
 
-			cout << "Á¤´äÀÔ´Ï´Ù." << endl;
+			cout << "ì •ë‹µì…ë‹ˆë‹¤." << endl;
 			cout << tutor_Monster.getName() << ": " << tutor_Dialogue.correct_Message << endl;
 		}
 		else
 		{
-			cout << "¿À´äÀÔ´Ï´Ù." << endl;
-			cout << "Á¤´ä: " << tutor_Questions[question_Index].correct_Answer << endl;
+			cout << "ì˜¤ë‹µì…ë‹ˆë‹¤." << endl;
+			cout << "ì •ë‹µ: " << tutor_Questions[question_Index].correct_Answer << endl;
 			cout << tutor_Monster.getName() << ": " << tutor_Dialogue.wrong_Message << endl;
 		}
 	}
 
 	cout << endl;
 	cout << "========================================" << endl;
-	cout << "Á¤´ä ¼ö: " << correct_Count << " / " << TUTOR_QUESTION_COUNT << endl;
+	cout << "ì •ë‹µ ìˆ˜: " << correct_Count << " / " << TUTOR_QUESTION_COUNT << endl;
 
 	bool is_Cleared = correct_Count >= TUTOR_CLEAR_CORRECT_COUNT;
 
 	if (is_Cleared)
 	{
-		cout << tutor_Monster.getName() << "ÀÇ ÄÚµå °ËÁõÀ» Åë°úÇß½À´Ï´Ù!" << endl;
+		cout << tutor_Monster.getName() << "ì˜ ì½”ë“œ ê²€ì¦ì„ í†µê³¼í–ˆìŠµë‹ˆë‹¤!" << endl;
 	}
 	else
 	{
-		cout << tutor_Monster.getName() << "ÀÇ ÄÚµå °ËÁõ¿¡ ½ÇÆĞÇß½À´Ï´Ù." << endl;
-		cout << "2¹®Á¦ ÀÌ»ó ¸ÂÇô¾ß Ã©ÅÍ¸¦ Å¬¸®¾îÇÒ ¼ö ÀÖ½À´Ï´Ù." << endl;
+		cout << tutor_Monster.getName() << "ì˜ ì½”ë“œ ê²€ì¦ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤." << endl;
+		cout << "2ë¬¸ì œ ì´ìƒ ë§í˜€ì•¼ ì±•í„°ë¥¼ í´ë¦¬ì–´í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤." << endl;
 	}
 	cout << tutor_Monster.getName() << ": " << tutor_Dialogue.exit_Message << endl;
 	cout << "========================================" << endl;
 
 	return is_Cleared;
 }
-// 6-4. Æ©ÅÍ µµÀü ¹× Å¬¸®¾î Ã³¸®
+// 6-4. íŠœí„° ë„ì „ ë° í´ë¦¬ì–´ ì²˜ë¦¬
 void Dungeon_Manager::Run_Tutor_Challenge(Player* player, Inventory<Item>& inventory)
 {
 	if
@@ -948,9 +948,9 @@ void Dungeon_Manager::Run_Tutor_Challenge(Player* player, Inventory<Item>& inven
 
 		cout << endl;
 		cout << "========================================" << endl;
-		cout << "Æ©ÅÍ´ÔÀÇ ½ÃÇè Á¶°ÇÀ» ÃæÁ·ÇÏÁö ¸øÇß½À´Ï´Ù." << endl;
-		cout << "ÇöÀç Á¡¼ö: " << _current_Chapter_Score << " / " << required_Score << endl;
-		cout << "ÇÊ¿äÇÑ Ãß°¡ Á¡¼ö: " << remaining_Score << endl;
+		cout << "íŠœí„°ë‹˜ì˜ ì‹œí—˜ ì¡°ê±´ì„ ì¶©ì¡±í•˜ì§€ ëª»í–ˆìŠµë‹ˆë‹¤." << endl;
+		cout << "í˜„ì¬ ì ìˆ˜: " << _current_Chapter_Score << " / " << required_Score << endl;
+		cout << "í•„ìš”í•œ ì¶”ê°€ ì ìˆ˜: " << remaining_Score << endl;
 		cout << "========================================" << endl;
 
 		return;
@@ -964,7 +964,7 @@ void Dungeon_Manager::Run_Tutor_Challenge(Player* player, Inventory<Item>& inven
 
 	if (is_Cleared == false)
 	{
-		cout << "Æ©ÅÍ´Ô¿¡°Ô ´Ù½Ã µµÀüÇÒ ¼ö ÀÖ½À´Ï´Ù." << endl;
+		cout << "íŠœí„°ë‹˜ì—ê²Œ ë‹¤ì‹œ ë„ì „í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤." << endl;
 
 		return;
 	}
@@ -983,10 +983,10 @@ void Dungeon_Manager::Run_Tutor_Challenge(Player* player, Inventory<Item>& inven
 
 	cout << endl;
 	cout << "========================================" << endl;
-	cout << "[ " << tutor_Monster.getName() << " Å¬¸®¾î º¸»ó ]" << endl;
+	cout << "[ " << tutor_Monster.getName() << " í´ë¦¬ì–´ ë³´ìƒ ]" << endl;
 	cout << "========================================" << endl;
-	cout << "È¹µæ °æÇèÄ¡: " << tutor_Monster.getExpReward() << endl;
-	cout << "È¹µæ °íÀ¯ ¾ÆÀÌÅÛ: " << Create_Tutor_Clear_Item(_current_Chapter)._Item_Name << endl;
+	cout << "íšë“ ê²½í—˜ì¹˜: " << tutor_Monster.getExpReward() << endl;
+	cout << "íšë“ ê³ ìœ  ì•„ì´í…œ: " << Create_Tutor_Clear_Item(_current_Chapter)._Item_Name << endl;
 	cout << "========================================" << endl;
 
 	Record_Monster_Kill(tutor_Monster);
@@ -995,10 +995,10 @@ void Dungeon_Manager::Run_Tutor_Challenge(Player* player, Inventory<Item>& inven
 }
 
 //=============================================================================
-// 7. Ã³Ä¡ ±â·Ï ¹× ÀÏ¹İ º¸»ó ÆÄÆ®
+// 7. ì²˜ì¹˜ ê¸°ë¡ ë° ì¼ë°˜ ë³´ìƒ íŒŒíŠ¸
 //=============================================================================
 
-// 7-1. ¸ó½ºÅÍ Ã³Ä¡ ¹× Æ©ÅÍ Å¬¸®¾î ±â·Ï ÀúÀå
+// 7-1. ëª¬ìŠ¤í„° ì²˜ì¹˜ ë° íŠœí„° í´ë¦¬ì–´ ê¸°ë¡ ì €ì¥
 void Dungeon_Manager::Record_Monster_Kill(const Monster& monster)
 {
 	Monster_Type monster_Type = monster.getMonsterType();
@@ -1026,12 +1026,12 @@ void Dungeon_Manager::Record_Monster_Kill(const Monster& monster)
 		Add_Chapter_Score(monster.getScoreReward());
 	}
 }
-// 7-2. ÇöÀç Ã©ÅÍ Ã³Ä¡ ±â·Ï Ãâ·Â
+// 7-2. í˜„ì¬ ì±•í„° ì²˜ì¹˜ ê¸°ë¡ ì¶œë ¥
 void Dungeon_Manager::Print_Current_Chapter_Kill_Log() const
 {
 	cout << endl;
 	cout << "========================================" << endl;
-	cout << "[ " << Get_Chapter_Name(_current_Chapter) << " Ã³Ä¡ ±â·Ï ]" << endl;
+	cout << "[ " << Get_Chapter_Name(_current_Chapter) << " ì²˜ì¹˜ ê¸°ë¡ ]" << endl;
 	cout << "========================================" << endl;
 
 	auto chapter_Log = _monster_Kill_Log.find(_current_Chapter);
@@ -1043,7 +1043,7 @@ void Dungeon_Manager::Print_Current_Chapter_Kill_Log() const
 			|| chapter_Log->second.empty()
 			)
 	{
-		cout << "¾ÆÁ÷ Ã³Ä¡ÇÑ ¸ó½ºÅÍ°¡ ¾ø½À´Ï´Ù." << endl;
+		cout << "ì•„ì§ ì²˜ì¹˜í•œ ëª¬ìŠ¤í„°ê°€ ì—†ìŠµë‹ˆë‹¤." << endl;
 		cout << "========================================" << endl;
 
 		return;
@@ -1062,26 +1062,26 @@ void Dungeon_Manager::Print_Current_Chapter_Kill_Log() const
 		if
 			(kill_Record.monster_Grade == Monster_Grade::TUTOR)
 		{
-			cout << "È¸ Å¬¸®¾î";
+			cout << "íšŒ í´ë¦¬ì–´";
 		}
 		else
 		{
-			cout << "¸¶¸®";
+			cout << "ë§ˆë¦¬";
 		}
 
-		cout << " / È¹µæ Á¡¼ö " << kill_Record.earned_Score << endl;
+		cout << " / íšë“ ì ìˆ˜ " << kill_Record.earned_Score << endl;
 
 		total_Kill_Count += kill_Record.kill_Count;
 		total_Earned_Score += kill_Record.earned_Score;
 	}
 
 	cout << "----------------------------------------" << endl;
-	cout << "ÇöÀç Ã©ÅÍ ÃÑ Ã³Ä¡ ¼ö: " << total_Kill_Count << "¸¶¸®" << endl;
-	cout << "´©Àû È¹µæ Á¡¼ö: " << total_Earned_Score << endl;
-	cout << "ÇöÀç Àû¿ë Á¡¼ö: " << _current_Chapter_Score << " / " << Get_Required_Tutor_Score() << endl;
+	cout << "í˜„ì¬ ì±•í„° ì´ ì²˜ì¹˜ ìˆ˜: " << total_Kill_Count << "ë§ˆë¦¬" << endl;
+	cout << "ëˆ„ì  íšë“ ì ìˆ˜: " << total_Earned_Score << endl;
+	cout << "í˜„ì¬ ì ìš© ì ìˆ˜: " << _current_Chapter_Score << " / " << Get_Required_Tutor_Score() << endl;
 	cout << "========================================" << endl;
 }
-// 7-3. µå·Ó ¾ÆÀÌÅÛ ÀÎº¥Åä¸® Áö±Ş
+// 7-3. ë“œë¡­ ì•„ì´í…œ ì¸ë²¤í† ë¦¬ ì§€ê¸‰
 void Dungeon_Manager::Give_Drop_Items_To_Inventory(const Monster& monster, Inventory<Item>& inventory)
 {
 	const std::vector<Item>& drop_Items = monster.getDropItems();
@@ -1093,15 +1093,15 @@ void Dungeon_Manager::Give_Drop_Items_To_Inventory(const Monster& monster, Inven
 
 		if (is_Added == false)
 		{
-			cout << drop_Item._Item_Name << " È¹µæÀ» Ãë¼ÒÇß½À´Ï´Ù." << endl;
+			cout << drop_Item._Item_Name << " íšë“ì„ ì·¨ì†Œí–ˆìŠµë‹ˆë‹¤." << endl;
 		}
 	}
 }
 
 //=============================================================================
-// 8. Ã©ÅÍ Á¡¼ö ¹× ÀÌµ¿ ÆÄÆ®
+// 8. ì±•í„° ì ìˆ˜ ë° ì´ë™ íŒŒíŠ¸
 //=============================================================================
-// 8-1. ÇöÀç Ã©ÅÍ Á¡¼ö Ãß°¡
+// 8-1. í˜„ì¬ ì±•í„° ì ìˆ˜ ì¶”ê°€
 void Dungeon_Manager::Add_Chapter_Score(int score_Reward)
 {
 	if (score_Reward <= 0)
@@ -1116,7 +1116,7 @@ void Dungeon_Manager::Add_Chapter_Score(int score_Reward)
 		(_current_Chapter_Score >= max_Chapter_Score)
 	{
 		_current_Chapter_Score = max_Chapter_Score;
-		cout << "ÇöÀç Ã©ÅÍ Á¡¼ö°¡ ÀÌ¹Ì ÃÖ´ëÀÔ´Ï´Ù." << endl;
+		cout << "í˜„ì¬ ì±•í„° ì ìˆ˜ê°€ ì´ë¯¸ ìµœëŒ€ì…ë‹ˆë‹¤." << endl;
 
 		return;
 	}
@@ -1133,16 +1133,16 @@ void Dungeon_Manager::Add_Chapter_Score(int score_Reward)
 
 	int added_Score = _current_Chapter_Score - previous_Score;
 
-	cout << "Ã©ÅÍ Á¡¼ö +" << added_Score << endl;
-	cout << "ÇöÀç Ã©ÅÍ Á¡¼ö: " << _current_Chapter_Score << " / " << max_Chapter_Score << endl;
+	cout << "ì±•í„° ì ìˆ˜ +" << added_Score << endl;
+	cout << "í˜„ì¬ ì±•í„° ì ìˆ˜: " << _current_Chapter_Score << " / " << max_Chapter_Score << endl;
 
 	if
 		(_current_Chapter_Score >= max_Chapter_Score)
 	{
-		cout << "Æ©ÅÍ´Ô ½ÃÇè Á¶°ÇÀ» ´Ş¼ºÇß½À´Ï´Ù!" << endl;
+		cout << "íŠœí„°ë‹˜ ì‹œí—˜ ì¡°ê±´ì„ ë‹¬ì„±í–ˆìŠµë‹ˆë‹¤!" << endl;
 	}
 }
-// 8-2. Ã©ÅÍº° Æ©ÅÍ µµÀü ¿ä±¸ Á¡¼ö °è»ê
+// 8-2. ì±•í„°ë³„ íŠœí„° ë„ì „ ìš”êµ¬ ì ìˆ˜ ê³„ì‚°
 int Dungeon_Manager::Get_Required_Tutor_Score() const
 {
 	int chapter_Number = 1;
@@ -1205,18 +1205,18 @@ int Dungeon_Manager::Get_Required_Tutor_Score() const
 	return static_cast<int>
 		(required_Score + 0.5);
 }
-// 8-3. Æ©ÅÍ µµÀü °¡´É ¿©ºÎ È®ÀÎ
+// 8-3. íŠœí„° ë„ì „ ê°€ëŠ¥ ì—¬ë¶€ í™•ì¸
 bool Dungeon_Manager::Check_Tutor_Challenge_Available() const
 {
 	return
 		_current_Chapter_Score >= Get_Required_Tutor_Score();
 }
-// 8-4. ÇöÀç Ã©ÅÍ Å¬¸®¾î Ã³¸®
+// 8-4. í˜„ì¬ ì±•í„° í´ë¦¬ì–´ ì²˜ë¦¬
 void Dungeon_Manager::Clear_Current_Chapter()
 {
 	cout << endl;
 
-	cout << Get_Chapter_Name(_current_Chapter) << "À»(¸¦) Å¬¸®¾îÇß½À´Ï´Ù!" << endl;
+	cout << Get_Chapter_Name(_current_Chapter) << "ì„(ë¥¼) í´ë¦¬ì–´í–ˆìŠµë‹ˆë‹¤!" << endl;
 
 	Move_Next_Chapter();
 
@@ -1225,16 +1225,16 @@ void Dungeon_Manager::Clear_Current_Chapter()
 	if (_is_All_Chapter_Cleared)
 	{
 		cout
-			<< "¸ğµç ÀÏ¹İ Ã©ÅÍ¸¦ Å¬¸®¾îÇß½À´Ï´Ù!" << endl;
+			<< "ëª¨ë“  ì¼ë°˜ ì±•í„°ë¥¼ í´ë¦¬ì–´í–ˆìŠµë‹ˆë‹¤!" << endl;
 
 	}
 	else
 	{
 		cout
-			<< Get_Chapter_Name (_current_Chapter) << "ÀÌ(°¡) ¿­·È½À´Ï´Ù!" << endl;
+			<< Get_Chapter_Name (_current_Chapter) << "ì´(ê°€) ì—´ë ¸ìŠµë‹ˆë‹¤!" << endl;
 	}
 }
-// 8-5. ´ÙÀ½ Ã©ÅÍ ÀÌµ¿
+// 8-5. ë‹¤ìŒ ì±•í„° ì´ë™
 void Dungeon_Manager::Move_Next_Chapter()
 {
 	switch (_current_Chapter)
@@ -1283,10 +1283,10 @@ void Dungeon_Manager::Move_Next_Chapter()
 }
 
 //=============================================================================
-// 9. Æ©ÅÍ °íÀ¯ ¾ÆÀÌÅÛ ¹× ÃÖÁ¾º¸½º¹æ Á¶°Ç ÆÄÆ®
+// 9. íŠœí„° ê³ ìœ  ì•„ì´í…œ ë° ìµœì¢…ë³´ìŠ¤ë°© ì¡°ê±´ íŒŒíŠ¸
 //=============================================================================
 
-// 9-1. Ã©ÅÍº° Æ©ÅÍ °íÀ¯ ¾ÆÀÌÅÛ »ı¼º
+// 9-1. ì±•í„°ë³„ íŠœí„° ê³ ìœ  ì•„ì´í…œ ìƒì„±
 Item Dungeon_Manager::Create_Tutor_Clear_Item(Chapter_Type chapter_Type) const
 {
 	Item tutor_Item;
@@ -1299,7 +1299,7 @@ Item Dungeon_Manager::Create_Tutor_Clear_Item(Chapter_Type chapter_Type) const
 	{
 	case Chapter_Type::VARIABLE_CONDITION_FOREST:
 	{
-		tutor_Item._Item_Name = "¼Õ½ÂÇö Æ©ÅÍ´ÔÀÇ ·ÎÁöÅØ ¸¶¿ì½º";
+		tutor_Item._Item_Name = "ì†ìŠ¹í˜„ íŠœí„°ë‹˜ì˜ ë¡œì§€í… ë§ˆìš°ìŠ¤";
 		tutor_Item._Item_Weight = 0;
 
 		break;
@@ -1307,7 +1307,7 @@ Item Dungeon_Manager::Create_Tutor_Clear_Item(Chapter_Type chapter_Type) const
 
 	case Chapter_Type::ARRAY_LOOP_OCEAN:
 	{
-		tutor_Item._Item_Name = "¹ÚÀºÀÏ Æ©ÅÍ´ÔÀÇ °¥Ãà Å°Æ÷µå";
+		tutor_Item._Item_Name = "ë°•ì€ì¼ íŠœí„°ë‹˜ì˜ ê°ˆì¶• í‚¤í¬ë“œ";
 		tutor_Item._Item_Weight = 0;
 
 		break;
@@ -1315,7 +1315,7 @@ Item Dungeon_Manager::Create_Tutor_Clear_Item(Chapter_Type chapter_Type) const
 
 	case Chapter_Type::FUNCTION_RUINS:
 	{
-		tutor_Item._Item_Name = "°­½ÅÈ£ Æ©ÅÍ´ÔÀÇ °ÔÀÌ¹Ö Çìµå¼Â";
+		tutor_Item._Item_Name = "ê°•ì‹ í˜¸ íŠœí„°ë‹˜ì˜ ê²Œì´ë° í—¤ë“œì…‹";
 		tutor_Item._Item_Weight = 0;
 
 		break;
@@ -1323,7 +1323,7 @@ Item Dungeon_Manager::Create_Tutor_Clear_Item(Chapter_Type chapter_Type) const
 
 	case Chapter_Type::POINTER_MEMORY_GRAVEYARD:
 	{
-		tutor_Item._Item_Name = "¹®½ÂÇö Æ©ÅÍ´ÔÀÇ °í¾çÀÌ ¹öÃò¾ó";
+		tutor_Item._Item_Name = "ë¬¸ìŠ¹í˜„ íŠœí„°ë‹˜ì˜ ê³ ì–‘ì´ ë²„ì¸„ì–¼";
 		tutor_Item._Item_Weight = 0;
 
 		break;
@@ -1331,7 +1331,7 @@ Item Dungeon_Manager::Create_Tutor_Clear_Item(Chapter_Type chapter_Type) const
 
 	case Chapter_Type::OBJECT_STL_FACTORY:
 	{
-		tutor_Item._Item_Name = "±èÇÏ´Ã Æ©ÅÍ´ÔÀÇ µµ¼ö³ôÀº ¾È°æ";
+		tutor_Item._Item_Name = "ê¹€í•˜ëŠ˜ íŠœí„°ë‹˜ì˜ ë„ìˆ˜ë†’ì€ ì•ˆê²½";
 		tutor_Item._Item_Weight = 0;
 
 		break;
@@ -1349,7 +1349,7 @@ Item Dungeon_Manager::Create_Tutor_Clear_Item(Chapter_Type chapter_Type) const
 
 	return tutor_Item;
 }
-// 9-2. ÀÎº¥Åä¸® ¾ÆÀÌÅÛ º¸À¯ ¿©ºÎ È®ÀÎ
+// 9-2. ì¸ë²¤í† ë¦¬ ì•„ì´í…œ ë³´ìœ  ì—¬ë¶€ í™•ì¸
 bool Dungeon_Manager::Has_Item_In_Inventory(Inventory<Item>& inventory, const std::string& item_Name) const
 {
 	for
@@ -1374,7 +1374,7 @@ bool Dungeon_Manager::Has_Item_In_Inventory(Inventory<Item>& inventory, const st
 
 	return false;
 }
-// 9-3. Æ©ÅÍ °íÀ¯ ¾ÆÀÌÅÛ È®Á¤ Áö±Ş
+// 9-3. íŠœí„° ê³ ìœ  ì•„ì´í…œ í™•ì • ì§€ê¸‰
 bool Dungeon_Manager::Give_Tutor_Clear_Item(Chapter_Type chapter_Type, Inventory<Item>& inventory)
 {
 	Item tutor_Item =Create_Tutor_Clear_Item(chapter_Type);
@@ -1382,7 +1382,7 @@ bool Dungeon_Manager::Give_Tutor_Clear_Item(Chapter_Type chapter_Type, Inventory
 	if
 		(tutor_Item._Item_Name.empty() || tutor_Item._Item_Count <= 0)
 	{
-		cout << "Æ©ÅÍ °íÀ¯ ¾ÆÀÌÅÛ Á¤º¸¸¦ Ã£Áö ¸øÇß½À´Ï´Ù." << endl;
+		cout << "íŠœí„° ê³ ìœ  ì•„ì´í…œ ì •ë³´ë¥¼ ì°¾ì§€ ëª»í–ˆìŠµë‹ˆë‹¤." << endl;
 
 		return false;
 	}
@@ -1390,51 +1390,51 @@ bool Dungeon_Manager::Give_Tutor_Clear_Item(Chapter_Type chapter_Type, Inventory
 	if
 		(Has_Item_In_Inventory(inventory, tutor_Item._Item_Name))
 	{
-		cout << tutor_Item._Item_Name << "À»(¸¦) ÀÌ¹Ì º¸À¯ÇÏ°í ÀÖ½À´Ï´Ù." << endl;
+		cout << tutor_Item._Item_Name << "ì„(ë¥¼) ì´ë¯¸ ë³´ìœ í•˜ê³  ìˆìŠµë‹ˆë‹¤." << endl;
 
 		return true;
 	}
 
 	cout << endl;
 	cout << "========================================" << endl;
-	cout << "[ Æ©ÅÍ´Ô °íÀ¯ ¾ÆÀÌÅÛ È¹µæ ]" << endl;
+	cout << "[ íŠœí„°ë‹˜ ê³ ìœ  ì•„ì´í…œ íšë“ ]" << endl;
 	cout << "========================================" << endl;
 
-	cout << "È¹µæ ¾ÆÀÌÅÛ: " << tutor_Item._Item_Name << endl;
+	cout << "íšë“ ì•„ì´í…œ: " << tutor_Item._Item_Name << endl;
 
-	cout << "¼ö·®: " << tutor_Item._Item_Count << "°³" << endl;
+	cout << "ìˆ˜ëŸ‰: " << tutor_Item._Item_Count << "ê°œ" << endl;
 
-	cout << "¹«°Ô: " << tutor_Item._Item_Weight << endl;
+	cout << "ë¬´ê²Œ: " << tutor_Item._Item_Weight << endl;
 
 	bool is_Added = inventory.Add_Or_Increase_Item(tutor_Item);
 
 	if (is_Added == false)
 	{
-		cout << "°íÀ¯ ¾ÆÀÌÅÛÀ» ÀÎº¥Åä¸®¿¡ ³ÖÁö ¸øÇß½À´Ï´Ù." << endl;
-		cout << "ÀÎº¥Åä¸®¸¦ Á¤¸®ÇÑ µÚ ´Ù½Ã µµÀüÇØÁÖ¼¼¿ä." << endl;
+		cout << "ê³ ìœ  ì•„ì´í…œì„ ì¸ë²¤í† ë¦¬ì— ë„£ì§€ ëª»í–ˆìŠµë‹ˆë‹¤." << endl;
+		cout << "ì¸ë²¤í† ë¦¬ë¥¼ ì •ë¦¬í•œ ë’¤ ë‹¤ì‹œ ë„ì „í•´ì£¼ì„¸ìš”." << endl;
 		cout << "========================================" << endl;
 
 		return false;
 	}
 
-	cout << "ÃÖÁ¾º¸½º¹æÀ» ¿©´Â ¿­¼è ¾ÆÀÌÅÛÀ» È¹µæÇß½À´Ï´Ù." << endl;
+	cout << "ìµœì¢…ë³´ìŠ¤ë°©ì„ ì—¬ëŠ” ì—´ì‡  ì•„ì´í…œì„ íšë“í–ˆìŠµë‹ˆë‹¤." << endl;
 	cout << "========================================" << endl;
 
 	return true;
 }
-// 9-4. ÃÖÁ¾º¸½º¹æ °³¹æ Á¶°Ç È®ÀÎ
+// 9-4. ìµœì¢…ë³´ìŠ¤ë°© ê°œë°© ì¡°ê±´ í™•ì¸
 bool Dungeon_Manager::Check_Final_Boss_Room_Available(Inventory<Item>& inventory) const
 {
-	bool has_Mouse = Has_Item_In_Inventory(inventory, "¼Õ½ÂÇö Æ©ÅÍ´ÔÀÇ ·ÎÁöÅØ ¸¶¿ì½º");
+	bool has_Mouse = Has_Item_In_Inventory(inventory, "ì†ìŠ¹í˜„ íŠœí„°ë‹˜ì˜ ë¡œì§€í… ë§ˆìš°ìŠ¤");
 
-	bool has_Keyboard = Has_Item_In_Inventory (inventory, "¹ÚÀºÀÏ Æ©ÅÍ´ÔÀÇ °¥Ãà Å°Æ÷µå");
+	bool has_Keyboard = Has_Item_In_Inventory (inventory, "ë°•ì€ì¼ íŠœí„°ë‹˜ì˜ ê°ˆì¶• í‚¤í¬ë“œ");
 
-	bool has_Headset = Has_Item_In_Inventory(inventory, "°­½ÅÈ£ Æ©ÅÍ´ÔÀÇ °ÔÀÌ¹Ö Çìµå¼Â");
+	bool has_Headset = Has_Item_In_Inventory(inventory, "ê°•ì‹ í˜¸ íŠœí„°ë‹˜ì˜ ê²Œì´ë° í—¤ë“œì…‹");
 
-	bool has_Virtual_Cat = Has_Item_In_Inventory(inventory, "¹®½ÂÇö Æ©ÅÍ´ÔÀÇ °í¾çÀÌ ¹öÃò¾ó");
+	bool has_Virtual_Cat = Has_Item_In_Inventory(inventory, "ë¬¸ìŠ¹í˜„ íŠœí„°ë‹˜ì˜ ê³ ì–‘ì´ ë²„ì¸„ì–¼");
 
 	bool has_Glasses = Has_Item_In_Inventory
-		(inventory, "±èÇÏ´Ã Æ©ÅÍ´ÔÀÇ µµ¼ö³ôÀº ¾È°æ");
+		(inventory, "ê¹€í•˜ëŠ˜ íŠœí„°ë‹˜ì˜ ë„ìˆ˜ë†’ì€ ì•ˆê²½");
 
 	return
 		has_Mouse
@@ -1443,21 +1443,21 @@ bool Dungeon_Manager::Check_Final_Boss_Room_Available(Inventory<Item>& inventory
 		&& has_Virtual_Cat
 		&& has_Glasses;
 }
-// Æ©ÅÍ ¾ÆÀÌÅÛ 5Á¾ º¸À¯ ¿©ºÎ È®ÀÎ
+// íŠœí„° ì•„ì´í…œ 5ì¢… ë³´ìœ  ì—¬ë¶€ í™•ì¸
 void Dungeon_Manager::Print_Tutor_Item_Status(Inventory<Item>& inventory) const
 {
 	cout << endl;
 	cout << "========================================" << endl;
-	cout << "[ Æ©ÅÍ´Ô °íÀ¯ ¾ÆÀÌÅÛ ¼öÁı ÇöÈ² ]" << endl;
+	cout << "[ íŠœí„°ë‹˜ ê³ ìœ  ì•„ì´í…œ ìˆ˜ì§‘ í˜„í™© ]" << endl;
 	cout << "========================================" << endl;
 
 	std::string tutor_Item_Names[5] =
 	{
-		"¼Õ½ÂÇö Æ©ÅÍ´ÔÀÇ ·ÎÁöÅØ ¸¶¿ì½º",
-		"¹ÚÀºÀÏ Æ©ÅÍ´ÔÀÇ °¥Ãà Å°Æ÷µå",
-		"°­½ÅÈ£ Æ©ÅÍ´ÔÀÇ °ÔÀÌ¹Ö Çìµå¼Â",
-		"¹®½ÂÇö Æ©ÅÍ´ÔÀÇ °í¾çÀÌ ¹öÃò¾ó",
-		"±èÇÏ´Ã Æ©ÅÍ´ÔÀÇ µµ¼ö³ôÀº ¾È°æ"
+		"ì†ìŠ¹í˜„ íŠœí„°ë‹˜ì˜ ë¡œì§€í… ë§ˆìš°ìŠ¤",
+		"ë°•ì€ì¼ íŠœí„°ë‹˜ì˜ ê°ˆì¶• í‚¤í¬ë“œ",
+		"ê°•ì‹ í˜¸ íŠœí„°ë‹˜ì˜ ê²Œì´ë° í—¤ë“œì…‹",
+		"ë¬¸ìŠ¹í˜„ íŠœí„°ë‹˜ì˜ ê³ ì–‘ì´ ë²„ì¸„ì–¼",
+		"ê¹€í•˜ëŠ˜ íŠœí„°ë‹˜ì˜ ë„ìˆ˜ë†’ì€ ì•ˆê²½"
 	};
 
 	int obtained_Item_Count = 0;
@@ -1476,36 +1476,36 @@ void Dungeon_Manager::Print_Tutor_Item_Status(Inventory<Item>& inventory) const
 
 		if (has_Item)
 		{
-			cout << "º¸À¯" << endl;
+			cout << "ë³´ìœ " << endl;
 			obtained_Item_Count += 1;
 		}
 		else
 		{
-			cout << "¹Ìº¸À¯" << endl;
+			cout << "ë¯¸ë³´ìœ " << endl;
 		}
 	}
 
 	cout << "----------------------------------------" << endl;
-	cout << "¼öÁıÇÑ °íÀ¯ ¾ÆÀÌÅÛ: " << obtained_Item_Count << " / 5" << endl;
+	cout << "ìˆ˜ì§‘í•œ ê³ ìœ  ì•„ì´í…œ: " << obtained_Item_Count << " / 5" << endl;
 
 	if
 		(Check_Final_Boss_Room_Available(inventory))
 	{
-		cout << "°íÀ¯ ¾ÆÀÌÅÛÀÌ ¸ğµÎ ¸ğ¿´½À´Ï´Ù." << endl;
-		cout << "ÃÖÁ¾º¸½º¹æÀÌ ¿­·È½À´Ï´Ù!" << endl;
+		cout << "ê³ ìœ  ì•„ì´í…œì´ ëª¨ë‘ ëª¨ì˜€ìŠµë‹ˆë‹¤." << endl;
+		cout << "ìµœì¢…ë³´ìŠ¤ë°©ì´ ì—´ë ¸ìŠµë‹ˆë‹¤!" << endl;
 	}
 	else
 	{
-		cout << "ÃÖÁ¾º¸½º¹æÀº ¾ÆÁ÷ Àá°Ü ÀÖ½À´Ï´Ù." << endl;
+		cout << "ìµœì¢…ë³´ìŠ¤ë°©ì€ ì•„ì§ ì ê²¨ ìˆìŠµë‹ˆë‹¤." << endl;
 	}
 	cout << "========================================" << endl;
 }
-// 9-5. Æ©ÅÍ °íÀ¯ ¾ÆÀÌÅÛ ¼öÁı ÇöÈ² Ãâ·Â
+// 9-5. íŠœí„° ê³ ìœ  ì•„ì´í…œ ìˆ˜ì§‘ í˜„í™© ì¶œë ¥
 bool Dungeon_Manager::Run_Elite_Question(const Elite_Question& elite_Question)
 {
 	cout << endl;
 	cout << "========================================" << endl;
-	cout << "[ ÄÚµå½º´ÏÆêÀÇ ¸Á·É ¹®Á¦ ]" << endl;
+	cout << "[ ì½”ë“œìŠ¤ë‹ˆí«ì˜ ë§ë ¹ ë¬¸ì œ ]" << endl;
 	cout << "========================================" << endl;
 	cout << elite_Question.question << endl;
 	cout << endl;
@@ -1521,7 +1521,7 @@ bool Dungeon_Manager::Run_Elite_Question(const Elite_Question& elite_Question)
 	}
 
 	cout << "----------------------------------------" << endl;
-	cout << "Á¤´ä ¹øÈ£ ÀÔ·Â: ";
+	cout << "ì •ë‹µ ë²ˆí˜¸ ì…ë ¥: ";
 
 	int player_Answer = 0;
 
@@ -1534,18 +1534,18 @@ bool Dungeon_Manager::Run_Elite_Question(const Elite_Question& elite_Question)
 			)
 	{
 		cout << endl;
-		cout << "Á¤´äÀÔ´Ï´Ù!" << endl;
-		cout << "ÄÚµå½º´ÏÆêÀÇ ¸Á·ÉÀ» ¹°¸®ÃÆ½À´Ï´Ù." << endl;
+		cout << "ì •ë‹µì…ë‹ˆë‹¤!" << endl;
+		cout << "ì½”ë“œìŠ¤ë‹ˆí«ì˜ ë§ë ¹ì„ ë¬¼ë¦¬ì³¤ìŠµë‹ˆë‹¤." << endl;
 
 		return true;
 	}
 
 	cout << endl;
-	cout << "¿À´äÀÔ´Ï´Ù." << endl;
+	cout << "ì˜¤ë‹µì…ë‹ˆë‹¤." << endl;
 
-	cout << "Á¤´äÀº " << elite_Question.correct_Answer << "¹øÀÔ´Ï´Ù." << endl;
+	cout << "ì •ë‹µì€ " << elite_Question.correct_Answer << "ë²ˆì…ë‹ˆë‹¤." << endl;
 
-	cout << "ÄÚµå½º´ÏÆêÀÇ ¸Á·ÉÀÌ µµ¸Á°¬½À´Ï´Ù." << endl;
+	cout << "ì½”ë“œìŠ¤ë‹ˆí«ì˜ ë§ë ¹ì´ ë„ë§ê°”ìŠµë‹ˆë‹¤." << endl;
 
 	return false;
 }

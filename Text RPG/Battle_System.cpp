@@ -8,7 +8,7 @@
 using namespace std;
 
 //======================================================
-// ÀüÅõ ½ÃÀÛ
+// ì „íˆ¬ ì‹œì‘
 //======================================================
 
 void Battle(Player* player, Monster& monster, Inventory<Item>& inventory)
@@ -48,14 +48,14 @@ void Battle(Player* player, Monster& monster, Inventory<Item>& inventory)
 }
 
 //======================================================
-// UI (UI ´ã´ç)
+// UI (UI ë‹´ë‹¹)
 //======================================================
 
 void Show_Battle_Start(Player* player, Monster& monster)
 {
     cout << endl;
     cout << "==================================" << endl;
-    cout << "          ÀüÅõ ½ÃÀÛ!" << endl;
+    cout << "          ì „íˆ¬ ì‹œì‘!" << endl;
     cout << "==================================" << endl;
 
     cout << player->Get_Name()
@@ -94,31 +94,31 @@ void Show_Battle_Status(Player* player, Monster& monster, int turnCount)
 
 void Show_Battle_Menu()
 {
-    // UI ¼±ÅÃÁö
+    // UI ì„ íƒì§€
 
     cout << endl;
     cout << "==============================" << endl;
-    cout << "        ÇÃ·¹ÀÌ¾î ÅÏ" << endl;
+    cout << "        í”Œë ˆì´ì–´ í„´" << endl;
     cout << "==============================" << endl;
-    cout << "1. °ø°İ" << endl;
-    cout << "2. ½ºÅ³" << endl;
-    cout << "3. ¾ÆÀÌÅÛ" << endl;
+    cout << "1. ê³µê²©" << endl;
+    cout << "2. ìŠ¤í‚¬" << endl;
+    cout << "3. ì•„ì´í…œ" << endl;
     cout << "==============================" << endl;
-    cout << "¼±ÅÃ : ";
+    cout << "ì„ íƒ : ";
 }
 
 void Show_Battle_End(Player* player, Monster& monster)
 {
-    // UI ÀüÅõ Á¾·á
+    // UI ì „íˆ¬ ì¢…ë£Œ
 }
 
 //======================================================
-// ÇÃ·¹ÀÌ¾î ÅÏ
+// í”Œë ˆì´ì–´ í„´
 //======================================================
 
 void Player_Turn(Player* player, Monster& monster, Inventory<Item>& inventory)
 {
-    //ÇÃ·¹ÀÌ¾î Â÷·Ê (JRPG ÅÏ °³³ä)
+    //í”Œë ˆì´ì–´ ì°¨ë¡€ (JRPG í„´ ê°œë…)
 
     int menu;
 
@@ -150,7 +150,7 @@ void Player_Turn(Player* player, Monster& monster, Inventory<Item>& inventory)
 
     default:
     {
-        cout << "Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù." << endl;
+        cout << "ì˜ëª»ëœ ì…ë ¥ì…ë‹ˆë‹¤." << endl;
         break;
     }
     }
@@ -158,13 +158,13 @@ void Player_Turn(Player* player, Monster& monster, Inventory<Item>& inventory)
 
 void Use_Item(Player* player, Inventory<Item>& inventory)
 {
-    // ÀÎº¥Åä¸® ¾ÆÀÌÅÛ
+    // ì¸ë²¤í† ë¦¬ ì•„ì´í…œ
 
-    cout << "¾ÆÀÌÅÛ ±â´É ÁØºñ ÁßÀÔ´Ï´Ù." << endl;
+    cout << "ì•„ì´í…œ ê¸°ëŠ¥ ì¤€ë¹„ ì¤‘ì…ë‹ˆë‹¤." << endl;
 }
 
 //======================================================
-// ÇÃ·¹ÀÌ¾î °ø°İ
+// í”Œë ˆì´ì–´ ê³µê²©
 //======================================================
 
 void Attack(Player* player, Monster& monster)
@@ -172,12 +172,12 @@ void Attack(Player* player, Monster& monster)
     int Before_Monster_HP = monster.getHP();
 
     int Damage = player->Calculate_Damage(
-        1.0f, // ATK °è¼ö
-        0.0f, // DEF °è¼ö
-        0.0f, // HP °è¼ö
-        0.0f, // MP °è¼ö
-        0.0f, // SNE  ÀÌ°Å ¿ëµµ°¡????
-        0.0f, // AGI ÀÌ°Ç ¶Ç ¹¹Áö????
+        1.0f, // ATK ê³„ìˆ˜
+        0.0f, // DEF ê³„ìˆ˜
+        0.0f, // HP ê³„ìˆ˜
+        0.0f, // MP ê³„ìˆ˜
+        0.0f, // SNE  ì´ê±° ìš©ë„ê°€????
+        0.0f, // AGI ì´ê±´ ë˜ ë­ì§€????
         monster.getDefence()
     );
 
@@ -186,12 +186,12 @@ void Attack(Player* player, Monster& monster)
 
 
     cout << endl;
-    cout << "°ø°İ!" << endl;
+    cout << "ê³µê²©!" << endl;
 
     cout << monster.getName()
-        << "¿¡°Ô "
+        << "ì—ê²Œ "
         << Damage
-        << " µ¥¹ÌÁö!" << endl;
+        << " ë°ë¯¸ì§€!" << endl;
 
 
     cout << monster.getName()
@@ -203,24 +203,24 @@ void Attack(Player* player, Monster& monster)
 }
 
 //======================================================
-// ÇÃ·¹ÀÌ¾î ½ºÅ³
+// í”Œë ˆì´ì–´ ìŠ¤í‚¬
 //======================================================
 
 void Skill(Player* player, Monster& monster)
 {
-    // Á÷¾÷ ½ºÅ³
+    // ì§ì—… ìŠ¤í‚¬
 }
 
 //======================================================
-// ¸ó½ºÅÍ ÅÏ
+// ëª¬ìŠ¤í„° í„´
 //======================================================
 
 void Monster_Turn(Player* player, Monster& monster, int turnCount)
 {
-    // ¸ó½ºÅÍ Â÷·Ê
+    // ëª¬ìŠ¤í„° ì°¨ë¡€
 
     cout << endl;
-    cout << "------ ¸ó½ºÅÍ ÅÏ ------" << endl;
+    cout << "------ ëª¬ìŠ¤í„° í„´ ------" << endl;
 
     if (Check_Elite_Skill(monster, turnCount))
     {
@@ -233,7 +233,7 @@ void Monster_Turn(Player* player, Monster& monster, int turnCount)
 }
 
 //======================================================
-// ¸ó½ºÅÍ °ø°İ
+// ëª¬ìŠ¤í„° ê³µê²©
 //======================================================
 
 void Monster_Attack(Player* player, Monster& monster)
@@ -250,9 +250,9 @@ void Monster_Attack(Player* player, Monster& monster)
     player->Set_Hp(Before_Player_HP - Damage);
 
     cout << monster.getName()
-        << "ÀÇ °ø°İ!" << endl;
+        << "ì˜ ê³µê²©!" << endl;
 
-    cout << "ÇÃ·¹ÀÌ¾î HP : "
+    cout << "í”Œë ˆì´ì–´ HP : "
         << Before_Player_HP
         << " -> "
         << player->Get_Hp()
@@ -260,7 +260,7 @@ void Monster_Attack(Player* player, Monster& monster)
 }
 
 //======================================================
-// ÀüÅõ Á¾·á
+// ì „íˆ¬ ì¢…ë£Œ
 //======================================================
 
 bool Check_Battle_End(Player* player, Monster& monster, Inventory<Item>& inventory)
@@ -268,7 +268,7 @@ bool Check_Battle_End(Player* player, Monster& monster, Inventory<Item>& invento
     if (monster.getHP() <= 0)
     {
         cout << endl;
-        cout << "ÀüÅõ ½Â¸®!" << endl;
+        cout << "ì „íˆ¬ ìŠ¹ë¦¬!" << endl;
 
 
         int exp = monster.getExpReward();
@@ -276,12 +276,12 @@ bool Check_Battle_End(Player* player, Monster& monster, Inventory<Item>& invento
         player->Gain_Exp(exp);
 
         cout << exp
-            << " °æÇèÄ¡¸¦ È¹µæÇß½À´Ï´Ù."
+            << " ê²½í—˜ì¹˜ë¥¼ íšë“í–ˆìŠµë‹ˆë‹¤."
             << endl;
 
 
         cout << monster.getDropItemName()
-            << " È¹µæ!" << endl;
+            << " íšë“!" << endl;
 
 
         return true;
@@ -291,7 +291,7 @@ bool Check_Battle_End(Player* player, Monster& monster, Inventory<Item>& invento
     if (player->Get_Hp() <= 0)
     {
         cout << endl;
-        cout << "ÀüÅõ ÆĞ¹è!" << endl;
+        cout << "ì „íˆ¬ íŒ¨ë°°!" << endl;
 
         return true;
     }
