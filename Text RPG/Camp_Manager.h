@@ -24,7 +24,7 @@ private:
     void Give_Basic_Training_Item();
 
     Player& player;
-    Inventory<Item>& invnetory;
+    Inventory<Item>& inventory;
     Inventory_For_Equipments_Only& inventory_for_equipments;
     Currently_Equipped_Equipments& currently_equipped_equipments;
 

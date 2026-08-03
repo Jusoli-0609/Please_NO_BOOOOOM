@@ -1,5 +1,6 @@
 #include "Camp_Manager.h"
 #include <iostream>
+#include"Items_Equipments_Repository.h"
 
 using namespace std;
 
@@ -9,7 +10,7 @@ Camp_Manager::Camp_Manager(
     Inventory_For_Equipments_Only& inventory_for_equipments,
     Currently_Equipped_Equipments& currently_equipped_equipments)
     : player(player),
-    invnetory(inventory),
+    inventory(inventory),
     inventory_for_equipments(inventory_for_equipments),
     currently_equipped_equipments(currently_equipped_equipments)
 {
@@ -39,8 +40,10 @@ void Camp_Manager::Open_Camp_Menu()
             {
                 cout << "이미 보급을 받았다! 쿠키가 화내며 할퀸다!\n";
                 player.SetHP(player.GetHP() - 1);
+                break;
             }
             Give_Basic_Training_Item();
+            Received_Basic_Items = true;
             break;
         }
 
@@ -82,19 +85,69 @@ void Camp_Manager::Open_Camp_Menu()
     }
 }
 
+
+
+
 void Camp_Manager::Give_Basic_Training_Item()
 {
-    // TODO: 기본 지급 아이템 생성
-    // invnetory.Add_Item(...);
+    cout << "\n===== 내배캠 119 =====\n";
+    cout << "기본 보급품을 지급받았습니다!\n";
+    Basic_Mouse mouse;
+    Basic_Engine engine;
+    Basic_BlueLight_Glass glass;
+    Basic_Keyboard keyboard;
+    Basic_Headset headset;
+    currently_equipped_equipments.Equip_Equipment(mouse);
+    currently_equipped_equipments.Equip_Equipment(engine);
+    currently_equipped_equipments.Equip_Equipment(keyboard);
+    currently_equipped_equipments.Equip_Equipment(headset);
+    currently_equipped_equipments.Equip_Equipment(glass);
 }
 
 void Camp_Manager::Open_Pep_Store_Menu()
 {
-    cout << "\n===== 펩 스토어 =====\n";
+    while (true)
+    {
+        cout << "\n===== 펩 스토어 =====\n";
+        cout << "1. 장비 구매\n";
+        cout << "2. 장비 판매\n";
+        cout << "0. 뒤로가기\n";
+        cout << "선택 : ";
 
-    // TODO: 장비 목록 출력
-    // TODO: 구매
-    // TODO: 판매
+        int choice;
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+        {
+            if (inventory.Get_Money() <= 0)
+            {
+                cout << "골드가 없다!\n";
+                break;
+            }
+            cout << "기본 CPU를 구매했습니다.\n";
+            break;
+        }
+
+        case 2:
+        {
+            // TODO : 판매
+            break;
+        }
+
+        case 0:
+        {
+            return;
+        }
+
+        default:
+        {
+            cout << "잘못된 입력입니다.\n";
+            break;
+        }
+        }
+    }
 }
 
 void Camp_Manager::Open_General_Store_Menu()
@@ -130,7 +183,7 @@ void Camp_Manager::Open_Cookie_Blacksmith_Menu()
         {
         case 1:
         {
-            // TODO: 강화
+            // TODO: 강화z
             break;
         }
 

@@ -44,10 +44,11 @@ private:
     string _Equipment_Description;
     Equipment_Type _Equipment_Type;
     string _Equipment__Ascii_Art;
+    int _Equipment_Price;
 
 public:
     Equipment();//1.기본 생성자
-    Equipment(string equipment_name, int attack, int defence, Equipment_Grade grade, Equipment_Type type, string art, string description, int weight);//2. 모든 걸 다 받는 생성자(아이템 저장소에서 이걸로 노가다 줄일예정)
+    Equipment(string equipment_name, int attack, int defence, Equipment_Grade grade, Equipment_Type type, string art, string description, int weight, int price);//2. 모든 걸 다 받는 생성자(아이템 저장소에서 이걸로 노가다 줄일예정)
     int Get_Enhance_Level() const;//3.강화 레벨 조회
     void Set_Enhance_Level(int enhance_level);//4.강화 레벨 설정
     int Get_Attack_Stat() const;//5.장비 공격 스텟 조회
@@ -66,6 +67,8 @@ public:
     Equipment_Type Get_Equipment_Type() const;// 17. 장비 타입 조회
     void Set_Equipment_Type(Equipment_Type type);//18. 장비 타입 설정
     string Equipment_Type_To_String(Equipment_Type type) const;//19.장비 타입 문자열로
+    int Get_Equipment_Price() const;//20.아이템 가격 조회
+    void Set_Equipment_Price(int price);//21.아이템 가격 설정
 };
 
 //현재 장비창
@@ -113,5 +116,5 @@ class Inventory_For_Equipments_Only
         void Sort_Equipment_Inventory();//10.정렬 
         void Change_Equipment_Inventory_Order();//11.순서 변경
         void Equip_Equipment_From_Inventory(Currently_Equipped_Equipments& equipped);//12.장비 착용시키기
-        int Get_Total_Equipment_Weight() const;//총무게
+        int Get_Total_Equipment_Weight() const;//13. 총무게 조회
 };

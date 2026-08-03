@@ -11,7 +11,8 @@ Basic_Mouse::Basic_Mouse()
         Equipment_Type::Mouse,
         "...",
         "...",
-        5
+        5,
+        3
     )
 {
 }

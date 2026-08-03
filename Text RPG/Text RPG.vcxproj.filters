@@ -87,17 +87,17 @@
     <ClCompile Include="Items_Equipments_Repository.cpp">
       <Filter>소스 파일\Item</Filter>
     </ClCompile>
-    <ClCompile Include="Basic_Mouse.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Basic_Engine.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Camp_Manager.cpp">
       <Filter>소스 파일\Camp</Filter>
     </ClCompile>
     <ClCompile Include="Craft_Item.cpp">
       <Filter>소스 파일\Camp</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic_Mouse.cpp">
+      <Filter>소스 파일\Specific_Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic_Engine.cpp">
+      <Filter>소스 파일\Specific_Items</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -158,9 +158,6 @@
     <ClInclude Include="Stat_Modifier.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Basic_Engine.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Game_Manager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -169,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="Camp_Manager.h">
       <Filter>헤더 파일\Camp</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic_Engine.h">
+      <Filter>헤더 파일\Specific_Items</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

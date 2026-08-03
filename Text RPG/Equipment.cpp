@@ -13,7 +13,8 @@ Equipment::Equipment()
     _Equipment_Type(Equipment_Type::Empty),
     _Equipment__Ascii_Art(""),
     _Equipment_Description(""),
-    _Equipment_Weight(0)
+    _Equipment_Weight(0),
+    _Equipment_Price(0)
 {
 }
 
@@ -26,7 +27,8 @@ Equipment::Equipment(
     Equipment_Type type,
     string art,
     string description,
-    int weight
+    int weight,
+    int price
 )
     : _Equipment_Name(equipment_name),
     _Attack_Stat(attack),
@@ -36,7 +38,8 @@ Equipment::Equipment(
     _Equipment_Type(type),
     _Equipment__Ascii_Art(art),
     _Equipment_Description(description),
-    _Equipment_Weight(weight)
+    _Equipment_Weight(weight),
+    _Equipment_Price(price)
 {
 }
 
@@ -204,6 +207,18 @@ Equipment_Type Equipment::Get_Equipment_Type()const
 void Equipment::Set_Equipment_Type(Equipment_Type type)
 {
     _Equipment_Type = type;
+}
+
+//장비 가격 조회
+int Equipment::Get_Equipment_Price() const
+{
+    return _Equipment_Price;
+}
+
+//장비 가격 설정
+void Equipment::Set_Equipment_Price(int price)
+{
+    _Equipment_Price = price;
 }
 
 //-----------------현재 장착 중인 아이템 장비창------------------------------------
@@ -484,9 +499,6 @@ int Currently_Equipped_Equipments::Get_All_Equipments_Grade_Score() const
 
     return Total_Grade_Score;
 }
-
-
-
 
 //-----------------장비 전용 인벤토리------------------------------------
 
