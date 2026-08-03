@@ -850,5 +850,20 @@ void Inventory<T>::Print_Inventory_Menu(
 
         return false;
     }
+    template <typename T>//10.제작용 숫자 가져오기
+    int Inventory<T>::Get_Item_Count_By_Name(const std::string& item_name) const
+    {
+        int count = 0;
+
+        for (int i = 0; i < _Current_Quantity_Of_Items; i++)
+        {
+            if (_Inventory_Items[i].Get_Item_Name() == item_name)
+            {
+                count += _Inventory_Items[i].Get_Item_Count();
+            }
+        }
+
+        return count;
+    }
 
     template class Inventory<Item>; // 명시적 인스턴스화
