@@ -455,7 +455,7 @@ void Inventory<T>::Print_Inventory() const
             cout << "�߸��� �Է��̴�! �ٽ� �����϶�." << endl;
             break;
         }
-        }
+        
     }
 
 

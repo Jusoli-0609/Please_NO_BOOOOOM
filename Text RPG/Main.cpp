@@ -27,8 +27,8 @@ int main()
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
     Ascii_Art_Manager Art_Manager;
-
-
+    Inventory<Item> inventory(10,100);
+    Currently_Equipped_Equipments currently_equipped_equipments;
     Console_Manager console(120, 40);
 
     console.Set_Console_Size();
@@ -94,11 +94,11 @@ int main()
         switch (menu)
         {
         case 1:
-            dungeonManager.Open_Dungeon(player, Equipment_Inventory);
+            dungeonManager.Open_Dungeon(player, inventory);
             break;
 
         case 2:
-            Equipment_Inventory.Print_Inventory();
+            inventory.Print_Inventory_Menu(currently_equipped_equipments,Equipment_Inventory,player);
             break;
 
 
