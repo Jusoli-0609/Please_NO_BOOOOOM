@@ -74,10 +74,7 @@ bool Ask_Quiz(Player* player, Monster& monster, const Quiz& quiz)
     }
 
     cout << endl << "오답!" << endl;
-    int damage = monster.getPower() * 2;
-    player->Set_Hp(player->Get_Hp() - damage);
-
-    cout << damage << " 피해를 입었습니다!" << endl;
+   
     return false;
 }
 

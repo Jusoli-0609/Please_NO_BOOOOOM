@@ -108,7 +108,6 @@ void Player_Turn(Player* player, Monster& monster, Inventory<Item>& inventory)
             break;
 
         case SKILL:
-            // 스킬 사용 선택 후 뒤로가기(0)를 한 경우 false 반환
             actionCompleted = Skill_Menu_Process(player, monster);
             break;
 
@@ -136,7 +135,6 @@ void Attack(Player* player, Monster& monster)
     player->Attack(&monster);
 }
 
-// 스킬 메뉴 처리 (행동 성공 여부를 bool로 반환하도록 내부 함수 구성)
 bool Skill_Menu_Process(Player* player, Monster& monster)
 {
     if (player == nullptr) return false;
@@ -163,7 +161,7 @@ bool Skill_Menu_Process(Player* player, Monster& monster)
         player->Skill3(&monster);
         return true;
     case 0:
-        return false; // 뒤로가기 선택 시 플레이어 행동 취소
+        return false;
     default:
         cout << "잘못된 입력입니다." << endl;
         return false;
@@ -185,14 +183,12 @@ void Monster_Turn(Player* player, Monster& monster, int turnCount)
     cout << endl;
     cout << "------ 몬스터 턴 ------" << endl;
 
-    // 튜터는 일반 공격 없이 시험 스킬만 진행
     if (Is_Tutor(monster))
     {
         Execute_Elite_Skill(player, monster);
         return;
     }
 
-    // 엘리트 몬스터 스킬 조건 체크
     if (Check_Elite_Skill(monster, turnCount))
     {
         Execute_Elite_Skill(player, monster);
@@ -215,12 +211,11 @@ void Monster_Attack(Player* player, Monster& monster)
     int After_HP = Before_Player_HP - Damage;
     if (After_HP < 0) After_HP = 0;
 
-    // 보정된 After_HP를 적용해 체력이 음수가 되는 것 방지
     player->Set_Hp(After_HP);
 
     cout << endl;
     cout << "[전투 로그]" << endl;
-    cout << monster.getName() << "이(가) 공격했습니다!" << endl;
+    monster.Print_Attack_Message();
     cout << "HP : " << Before_Player_HP << " → " << player->Get_Hp() << endl;
 }
 
@@ -229,7 +224,6 @@ void Monster_Attack(Player* player, Monster& monster)
 //======================================================
 bool Check_Battle_End(Player* player, Monster& monster, Inventory<Item>& inventory)
 {
-    // 1. 몬스터 처치 (승리)
     if (monster.getHP() <= 0)
     {
         if (Is_Tutor(monster))
@@ -251,25 +245,16 @@ bool Check_Battle_End(Player* player, Monster& monster, Inventory<Item>& invento
 
         player->Remove_Temporary_Modifiers();
 
-        // 경험치 획득
         int exp = monster.getExpReward();
         player->Gain_Exp(exp);
 
-        // 전투 아이템 및 골드 보상 지급
         Give_Battle_Item_Reward(player, monster, inventory);
 
         return true;
     }
 
-    // 2. 플레이어 사망 (패배)
     if (player->Get_Hp() <= 0)
     {
-        cout << endl;
-        cout << "==================================" << endl;
-        cout << "          전투 패배!" << endl;
-        cout << "==================================" << endl;
-        cout << "플레이어가 쓰러졌습니다." << endl;
-
         player->Remove_Temporary_Modifiers();
         return true;
     }
@@ -303,4 +288,151 @@ void Give_Battle_Item_Reward(Player* player, Monster& monster, Inventory<Item>& 
         cout << endl << "[재화 획득]" << endl;
         cout << "훈련장려금 " << goldReward << " 획득!" << endl;
     }
+}
+
+//======================================================
+// 최종 보스전 전용 퀴즈 시스템
+//======================================================
+bool Ask_Single_Quiz(const Quiz& quiz)
+{
+    cout << "\n[Q] " << quiz.question << "\n";
+    for (size_t j = 0; j < quiz.choices.size(); ++j)
+    {
+        cout << (j + 1) << ") " << quiz.choices[j] << "  ";
+    }
+    cout << "\n답을 입력하세요 (1~4): ";
+
+    int inputAnswer = 0;
+    cin >> inputAnswer;
+
+    if (inputAnswer == quiz.answer)
+    {
+        cout << ">> 정답입니다!\n";
+        return true;
+    }
+    else
+    {
+        cout << ">> 오답입니다! (정답: " << quiz.answer << "번)\n";
+        return false;
+    }
+}
+
+void First_Impression_Quiz_Phase(Player* player, Monster& monster, vector<Quiz>& quizPool)
+{
+    cout << "\n========================================\n";
+    cout << " [" << monster.getName() << "님의 기선제압 심사!]\n";
+    cout << " 전투 진입 직후 2개의 기습 질문이 들어옵니다!\n";
+    cout << "========================================\n";
+
+    for (int i = 0; i < 2 && !quizPool.empty(); ++i)
+    {
+        Quiz q = quizPool.back();
+        quizPool.pop_back();
+
+        bool isCorrect = Ask_Single_Quiz(q);
+
+        if (isCorrect)
+        {
+            int counterDamage = player->Get_ATK();
+            monster.setHP(monster.getHP() - counterDamage);
+            cout << ">> [기선제압 성공] 질문을 잘 받아쳐 " << counterDamage << "의 데미지를 입혔습니다!\n";
+        }
+        else
+        {
+            int bossDamage = static_cast<int>(monster.getPower() * 0.8);
+            player->Set_Hp(player->Get_Hp() - bossDamage);
+            cout << ">> [기선제압 실패] 질문에 당황하여 " << bossDamage << "의 데미지를 입었습니다!\n";
+        }
+
+        if (player->Get_Hp() <= 0 || monster.getHP() <= 0) break;
+    }
+}
+
+void Final_Boss_Monster_Turn(Player* player, Monster& monster, int turnCount, vector<Quiz>& quizPool)
+{
+    // 매 보스 턴마다 퀴즈 문제 출제
+    if (!quizPool.empty())
+    {
+        cout << "\n========================================\n";
+        cout << " [" << monster.getName() << "님의 실무 심사 패턴 발동!]\n";
+        cout << "========================================\n";
+
+        Quiz q = quizPool.back();
+        quizPool.pop_back();
+
+        monster.Print_Attack_Message();
+        bool isCorrect = Ask_Single_Quiz(q);
+
+        if (isCorrect)
+        {
+            int counterDamage = player->Get_ATK() * 2;
+            monster.setHP(monster.getHP() - counterDamage);
+            cout << "\n>> [성공] 패턴을 파악해 " << counterDamage << "의 카운터 데미지를 입혔습니다!\n";
+        }
+        else
+        {
+            int bossDamage = static_cast<int>(monster.getPower() * 1.5);
+            player->Set_Hp(player->Get_Hp() - bossDamage);
+            cout << "\n>> [실패] 답하지 못해 " << bossDamage << "의 특수 데미지를 입었습니다!\n";
+        }
+    }
+    else
+    {
+        Monster_Attack(player, monster);
+    }
+}
+
+void Boss_Battle(Player* player, Monster& monster, Inventory<Item>& inventory)
+{
+    Show_Battle_Start(player, monster);
+
+    vector<Quiz> quizPool;
+    if (monster.getMonsterType() == Monster_Type::KIM_DONG_HYUN_MANAGER)
+    {
+        quizPool = KimDongHyunManagerQuiz;
+    }
+    else if (monster.getMonsterType() == Monster_Type::MOON_SEUNG_HO_MANAGER)
+    {
+        quizPool = MoonSeungHoManagerQuiz;
+    }
+
+    for (size_t i = 0; i < quizPool.size(); ++i)
+    {
+        int randIdx = rand() % quizPool.size();
+        swap(quizPool[i], quizPool[randIdx]);
+    }
+
+    // 전투 시작 직후 기선제압 2문제 실행
+    if (monster.getMonsterGrade() == Monster_Grade::FINAL_BOSS)
+    {
+        First_Impression_Quiz_Phase(player, monster, quizPool);
+        if (Check_Battle_End(player, monster, inventory)) return;
+    }
+
+    int turnCount = 1;
+
+    while (player->Get_Hp() > 0 && monster.getHP() > 0)
+    {
+        Show_Battle_Status(player, monster, turnCount);
+
+        // 1. 플레이어 턴
+        Player_Turn(player, monster, inventory);
+        if (Check_Battle_End(player, monster, inventory)) break;
+
+        // 2. 보스 턴 (매 보스 턴마다 퀴즈 패턴 적용)
+        if (monster.getMonsterGrade() == Monster_Grade::FINAL_BOSS)
+        {
+            Final_Boss_Monster_Turn(player, monster, turnCount, quizPool);
+        }
+        else
+        {
+            Monster_Turn(player, monster, turnCount);
+        }
+
+        if (Check_Battle_End(player, monster, inventory)) break;
+
+        turnCount++;
+    }
+
+    Show_Battle_End(player, monster);
 }
