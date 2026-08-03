@@ -1,68 +1,193 @@
 #include "Battle_Elite_Skill.h"
+
 #include <iostream>
+#include <algorithm>
+#include <random>
+#include <ctime>
 
 using namespace std;
 
+//======================================================
+// 엘리트 / 튜터 스킬 발동 조건 체크
+//======================================================
 bool Check_Elite_Skill(Monster& monster, int turnCount)
 {
-	if (monster.getMonsterGrade() != Monster_Grade::ELITE &&
+    if (monster.getMonsterGrade() != Monster_Grade::ELITE &&
         monster.getMonsterGrade() != Monster_Grade::TUTOR &&
         monster.getMonsterGrade() != Monster_Grade::FINAL_BOSS)
-	{
-		return false;
-	}
+    {
+        return false;
+    }
 
-	switch (monster.getMonsterType())
-	{
-
-	case Monster_Type::CODE_SNIPPET_WRAITH:
-	{
-		if (turnCount % 3 == 0)
-		{
-			return true;
-		}
-
-		break;
-	}
-
+    switch (monster.getMonsterType())
+    {
+    case Monster_Type::CODE_SNIPPET_WRAITH:
     case Monster_Type::VARIABLE_CONDITION_TUTOR:
     {
-        if (turnCount % 3 == 0)
-        {
-            return true;
-        }
+        if (turnCount % 3 == 0) return true;
         break;
     }
 
     case Monster_Type::ARRAY_LOOP_TUTOR:
+    case Monster_Type::FUNCTION_TUTOR:
+    case Monster_Type::POINTER_MEMORY_TUTOR:
+    case Monster_Type::OBJECT_STL_TUTOR:
     {
-        if (monster.getHP() <= 50)
-        {
-            return true;
-        }
+        if (monster.getHP() <= 50) return true;
         break;
     }
 
-	default:
-		break;
-	}
-
-	return false;
+    default:
+        break;
+    }
+    return false;
 }
 
+//======================================================
+// 단일 퀴즈 출제 함수 (4지선다)
+//======================================================
+// Battle_Elite_Skill.cpp
+
+bool Ask_Quiz(Player* player, Monster& monster, const Quiz& quiz)
+{
+    cout << endl;
+    cout << "==============================" << endl;
+    cout << "[" << monster.getName() << "] 이(가) 문제를 출제합니다!" << endl;
+    cout << "문제를 맞혀라!" << endl;
+    cout << "==============================" << endl;
+    cout << quiz.question << endl << endl;
+
+    for (size_t i = 0; i < quiz.choices.size(); i++)
+    {
+        cout << i + 1 << ". " << quiz.choices[i] << endl;
+    }
+ 
+    cout << endl;
+    int answer;
+    cout << "선택 : ";
+    cin >> answer;
+
+    if (answer == quiz.answer)
+    {
+        cout << endl << "정답!" << endl;
+        return true;
+    }
+
+    cout << endl << "오답!" << endl;
+   
+    return false;
+}
+
+//======================================================
+// 엘리트 몬스터용 랜덤 1문제 출제
+//======================================================
+bool Ask_Random_Elite_Question(Player* player, Monster& monster)
+{
+    if (EliteQuiz.empty()) return false;
+
+    srand((unsigned int)time(nullptr));
+    int index = rand() % EliteQuiz.size();
+
+    return Ask_Quiz(player, monster, EliteQuiz[index]);
+}
+
+//======================================================
+// 튜터 타입별 문제 은행 포인터 반환
+//======================================================
+vector<Quiz>* Get_Tutor_Quiz(Monster_Type type)
+{
+    switch (type)
+    {
+    case Monster_Type::VARIABLE_CONDITION_TUTOR: return &VariableTutorQuiz;
+    case Monster_Type::ARRAY_LOOP_TUTOR:         return &ArrayTutorQuiz;
+    case Monster_Type::FUNCTION_TUTOR:           return &FunctionTutorQuiz;
+    case Monster_Type::POINTER_MEMORY_TUTOR:     return &PointerTutorQuiz;
+    case Monster_Type::OBJECT_STL_TUTOR:         return &ObjectTutorQuiz;
+    default:                                     return nullptr;
+    }
+}
+
+//======================================================
+// 튜터 보스용 시험 시스템 (3문제 중 2문제 이상 통과)
+//======================================================
+bool Tutor_Test(Player* player, Monster& monster)
+{
+    vector<Quiz>* quizList = Get_Tutor_Quiz(monster.getMonsterType());
+    if (quizList == nullptr || quizList->empty()) return false;
+
+    vector<int> order;
+    for (size_t i = 0; i < quizList->size(); i++)
+    {
+        order.push_back((int)i);
+    }
+
+    random_device rd;
+    mt19937 g(rd());
+    shuffle(order.begin(), order.end(), g);
+
+    int score = 0;
+    cout << endl;
+    cout << "======================================" << endl;
+    cout << monster.getName() << "의 시험이 시작됩니다!" << endl;
+    cout << "3문제 중 2문제 이상 맞히면 통과!" << endl;
+    cout << "======================================" << endl;
+
+    int questionCount = min(3, (int)quizList->size());
+
+    for (int i = 0; i < questionCount; i++)
+    {
+        cout << endl << "[ 문제 " << i + 1 << " ]" << endl;
+        if (Ask_Quiz(player, monster, (*quizList)[order[i]]))
+        {
+            score++;
+        }
+    }
+
+    cout << endl;
+    cout << "======================================" << endl;
+    cout << "결과 : " << score << " / " << questionCount << endl;
+
+    if (score >= 2)
+    {
+        cout << "시험 통과!" << endl;
+        return true;
+    }
+
+    cout << "시험 실패..." << endl;
+    return false;
+}
+
+//======================================================
+// 스킬 실행 분기
+//======================================================
 void Execute_Elite_Skill(Player* player, Monster& monster)
 {
+    if (player == nullptr) return;
+
     switch (monster.getMonsterType())
     {
     case Monster_Type::CODE_SNIPPET_WRAITH:
     {
-        Code_Snippet_Question(player, monster);
+        Ask_Random_Elite_Question(player, monster);
         break;
     }
 
     case Monster_Type::VARIABLE_CONDITION_TUTOR:
+    case Monster_Type::ARRAY_LOOP_TUTOR:
+    case Monster_Type::FUNCTION_TUTOR:
+    case Monster_Type::POINTER_MEMORY_TUTOR:
+    case Monster_Type::OBJECT_STL_TUTOR:
     {
-        Variable_Condition_Question(player, monster);
+        if (Tutor_Test(player, monster))
+        {
+            cout << endl << "튜터 시험을 통과했습니다!" << endl;
+            monster.setHP(0);
+        }
+        else
+        {
+            cout << endl << "튜터 시험에 실패했습니다..." << endl;
+            player->Set_Hp(0);
+        }
         break;
     }
 
@@ -71,65 +196,31 @@ void Execute_Elite_Skill(Player* player, Monster& monster)
     }
 }
 
-void Code_Snippet_Question(Player* player, Monster& monster)
+//======================================================
+// 레거시 래퍼 함수들
+//======================================================
+void Code_Snippet_Question(Player* player, Monster& monster) { Ask_Random_Elite_Question(player, monster); }
+void Variable_Condition_Question(Player* player, Monster& monster) { Tutor_Test(player, monster); }
+void Array_Loop_Question(Player* player, Monster& monster) { Tutor_Test(player, monster); }
+void Function_Question(Player* player, Monster& monster) { Tutor_Test(player, monster); }
+void Pointer_Memory_Question(Player* player, Monster& monster) { Tutor_Test(player, monster); }
+void Object_Stl_Question(Player* player, Monster& monster) { Tutor_Test(player, monster); }
+
+//======================================================
+// 튜터 판별 함수
+//======================================================
+bool Is_Tutor(Monster& monster)
 {
-    cout << endl;
-    cout << "=================================" << endl;
-    cout << "코드 스니펫의 망령이 문제를 냅니다!" << endl;
-    cout << "=================================" << endl;
-
-    cout << "객체지향 프로그래밍에서" << endl;
-    cout << "부모 클래스의 기능을 물려받는 것을 무엇이라고 할까요?" << endl;
-
-    cout << "총 4종류가 있으니까 잘 보고 입력하라고!" << endl;
-    cout << "-추상화, 다형성, 캡슐화, 상속-" << endl;
-
-    string answer;
-
-    cout << endl;
-    cout << "정답 : ";
-    cin >> answer;
-
-    if (answer == "상속")
+    switch (monster.getMonsterType())
     {
-        cout << "정답이다!!!" << endl;
-        cout << "망령의 공격을 무효화했습니다." << endl;
+    case Monster_Type::VARIABLE_CONDITION_TUTOR:
+    case Monster_Type::ARRAY_LOOP_TUTOR:
+    case Monster_Type::FUNCTION_TUTOR:
+    case Monster_Type::POINTER_MEMORY_TUTOR:
+    case Monster_Type::OBJECT_STL_TUTOR:
+        return true;
 
-
-    }
-    else
-    {
-        cout << "틀렸어!!" << endl;
-        cout << "망령이 분노합니다!" << endl;
-
-        int damage = monster.getPower() * 2;
-
-        player->Set_Hp(player->Get_Hp() - damage);
-
-        cout << damage << " 피해를 받았습니다." << endl;
-    }
-}
-
-void Variable_Condition_Question(Player* player, Monster& monster)
-{
-    cout << "변수와 조건문 문제입니다." << endl;
-
-    string answer;
-
-    cout << "정답 : ";
-    cin >> answer;
-
-
-    if (answer == "if")
-    {
-        cout << "정답!" << endl;
-    }
-    else
-    {
-        cout << "오답!" << endl;
-
-        int damage = monster.getPower();
-
-        player->Set_Hp(player->Get_Hp() - damage);
+    default:
+        return false;
     }
 }

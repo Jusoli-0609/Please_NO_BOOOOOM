@@ -8,43 +8,45 @@
 
 using namespace std;
 
-//1.아이템 내보내기
+//1.������ ��������
 void Item::Print_Info() const
 {
-    cout << "아이템 이름: "
-        << _Item_Name << ", 가격: "
-        << _Item_Price << ", 갯수:"
-        << _Item_Count << ", 갯수당 무게: "
+    cout << "������ �̸�: "
+        << _Item_Name << ", ����: "
+        << _Item_Description<< ", ����: "
+        << _Item_Price << ", ����:"
+        << _Item_Count << ", ������ ����: "
         << _Item_Weight << endl;
+    Print_Ascii_Art();
 }
 
-//2.아이템 효과 적용
+//2.������ ȿ�� ����
 bool Item::Item_Effect(Player& player, Monster& monster)
 {
-    if (_Item_Name == "HP 포션")
+    if (_Item_Name == "�Ŷ��")
     {
         player.Set_Hp(
                       min(player.Get_Hp() + 50, player.GetMaxHP()));
 
-        cout << "체력을 회복해 현재 체력은 "
+        cout << "ü���� ȸ���� ���� ü���� "
             << player.Get_Hp()
-            << "이다."
+            << "�̴�."
             << endl;
 
         return true;
     }
-    else if (_Item_Name == "MP 포션")
+    else if (_Item_Name == "�������帵ũ")
     {
         player.Set_Mp(min(player.Get_Mp() + 50, player.GetMaxMP()));
 
-        cout << "마나를 회복해 현재 마나는 "
+        cout << "������ ȸ���� ���� ������ "
             << player.Get_Mp()
-            << "이다."
+            << "�̴�."
             << endl;
 
         return true;
     }
-    else if (_Item_Name == "일시적인 공격력 버프 아이템 예시임")
+    else if (_Item_Name == "�Ͻ����� ���ݷ� ���� ������ ������")
     {
         player.Set_ATK(player.Get_ATK() + 50);
         _Need_Item_Reverse_Effect = true;
@@ -54,7 +56,7 @@ bool Item::Item_Effect(Player& player, Monster& monster)
     return false;
 }
 
-//3.아이템 효과 해제
+//3.������ ȿ�� ����
 bool Item::Item_Effect_Reverse(Player& player, Monster& monster)
 {
     if (_Need_Item_Reverse_Effect == true)
@@ -68,4 +70,9 @@ bool Item::Item_Effect_Reverse(Player& player, Monster& monster)
        return false;
     }
     return false;
+}
+
+void Item::Print_Ascii_Art() const
+{
+    cout << _Item_Ascii_Art << endl;
 }
