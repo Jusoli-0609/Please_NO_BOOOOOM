@@ -76,19 +76,19 @@ void Game_Manager::Show_Main_Menu()
         }
 
         case 0:
-            cout << "게임을 종료합니다." << endl;
+            cout << "게임 종료!" << endl;
             is_Running = false;
             break;
 
         default:
-            cout << "잘못된 선택입니다." << endl;
+            cout << "잘못된 선택!" << endl;
             break;
         }
 
         if (_Player != nullptr && _Player->Get_Hp() <= 0)
         {
             cout << endl;
-            cout << "플레이어가 사망했습니다. 게임을 종료합니다." << endl;
+            cout << "실패! 다시 시작해보자!" << endl;
             is_Running = false;
         }
     }

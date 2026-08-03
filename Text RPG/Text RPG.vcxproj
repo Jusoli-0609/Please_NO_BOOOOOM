@@ -127,12 +127,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Users\user\Desktop\백업\Recipe_Repository.cpp" />
     <ClCompile Include="Basic_Engine.cpp" />
     <ClCompile Include="Basic_Mouse.cpp" />
     <ClCompile Include="Ascii_Art_Manager.cpp" />
     <ClCompile Include="Basic_Sword.cpp" />
     <ClCompile Include="Battle_Elite_Skill.cpp" />
+    <ClCompile Include="Camp_Manager.cpp" />
     <ClCompile Include="Character_Creator.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
@@ -184,14 +184,15 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Quiz_Bank.cpp" />
+    <ClCompile Include="Recipe_Repository.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Users\user\Desktop\백업\Recipe_Repository.h" />
     <ClInclude Include="Basic_Engine.h" />
     <ClInclude Include="Basic_Mouse.h" />
     <ClInclude Include="Basic_Sword.h" />
     <ClInclude Include="Ascii_Art_Manager.h" />
     <ClInclude Include="Battle_Elite_Skill.h" />
+    <ClInclude Include="Camp_Manager.h" />
     <ClInclude Include="Character_Creator.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
@@ -244,7 +245,11 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Quiz_Bank.h" />
+    <ClInclude Include="Recipe_Repository.h" />
     <ClInclude Include="Stat_Modifier.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Title.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

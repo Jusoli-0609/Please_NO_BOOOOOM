@@ -99,7 +99,10 @@
     <ClCompile Include="Quiz_Bank.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Users\user\Desktop\백업\Recipe_Repository.cpp">
+    <ClCompile Include="Camp_Manager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Recipe_Repository.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -182,8 +185,14 @@
     <ClInclude Include="Quiz_Bank.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Users\user\Desktop\백업\Recipe_Repository.h">
-      <Filter>헤더 파일\Item</Filter>
+    <ClInclude Include="Camp_Manager.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Recipe_Repository.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Title.txt" />
   </ItemGroup>
 </Project>

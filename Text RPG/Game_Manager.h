@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Console_Manager.h"
 #include "Ascii_Art_Manager.h"
 #include "Intro.h"
