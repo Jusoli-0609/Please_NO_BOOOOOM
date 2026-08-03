@@ -5,6 +5,8 @@
 #include "Character_Creator.h"
 #include "Player.h"
 #include "Equipment.h"
+#include "Ascii_Art_Manager.h"
+
 
 #include <iostream>
 #include <ctime>
@@ -22,6 +24,10 @@ void Intro();
 int main()
 {
     srand(static_cast<unsigned int>(time(nullptr)));
+    SetConsoleOutputCP(CP_UTF8);
+    SetConsoleCP(CP_UTF8);
+    Ascii_Art_Manager Art_Manager;
+
 
     Console_Manager console(120, 40);
 
@@ -111,5 +117,6 @@ int main()
     }
 
     delete player;
+    return 0;
 }
 

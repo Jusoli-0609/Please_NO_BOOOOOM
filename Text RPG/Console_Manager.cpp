@@ -13,7 +13,6 @@ Console_Manager::Console_Manager()
 }
 //임시값입니다. 추후 수정.
 
-
 Console_Manager::Console_Manager(int Width, int Height)
 {
     _Width = Width;
@@ -48,8 +47,7 @@ void Console_Manager::Set_Cursor_Position(int x, int y)
         pos
     );
 }
-//windows에서 꺼내온 함수라 네이밍 수정 불가
-
+//windows에서 꺼내온 함수라 네이밍 수정 불가!
 
 void Console_Manager::Clear()
 {
@@ -69,3 +67,9 @@ void Console_Manager::Slow_Print(const std::string& Text, int DelayMs)
 //이거 어떤식으로 호출하냐면
 //Console.Slow_Print("당신은 8시 55분에 눈을 떴다!", 50);
 //이런식으로 써주시면 됩니다.
+
+void Console_Manager::Print_At(int x, int y, const std::string& Text)
+{
+    Set_Cursor_Position(x, y);
+    std::cout << Text;
+}
