@@ -1,68 +1,67 @@
-#include "Equipment.h"
 #include <iostream>
+#include "Equipment.h"
 
 using namespace std;
 
 int main()
 {
-    // 1. 강신호의 마우스 획득
+    Currently_Equipped_Equipments Current_Equipment;
+
+    Inventory_For_Equipments_Only Equipment_Inventory;
+
+
+    // 강신호의 마우스 생성
     Equipment KangShinho_Mouse(
         "강신호의 마우스",
-        50,                         // 공격력
-        10,                         // 방어력
+        50,
+        10,
         Equipment_Grade::Best,
         Equipment_Type::Mouse,
         R"(
-        __________________
-       |                  |
-       |   KSH MOUSE      |
-       |__________________|
+        ______________
+       |   강신호     |
+       |    Mouse     |
+       |______________|
         )",
-        "강신호 튜터가 사용했던 전설의 마우스",
+        "강신호 튜터가 사용하던 마우스",
         3
     );
 
 
-    // 2. 장비 전용 인벤토리 생성
-    Inventory_For_Equipments_Only Equipment_Inventory;
+    // 강화도 +1 설정
+    KangShinho_Mouse.Set_Enhance_Level(1);
 
 
-    // 3. 마우스 획득
+    cout << "===== 강신호의 마우스 획득 =====" << endl;
+
+    // 인벤토리에 추가
     Equipment_Inventory.Add_Equipment(KangShinho_Mouse);
 
 
     cout << endl;
-    cout << "===== 현재 장비 인벤토리 =====" << endl;
+    cout << "===== 장비 착용 =====" << endl;
 
-    Equipment_Inventory.Print_Equipment_Inventory();
-
-
-    // 4. 현재 장비창 생성
-    Currently_Equipped_Equipments Current_Equipment;
-
-
-    // 5. 인벤토리에서 장착
+    // 장착
     Equipment_Inventory.Equip_Equipment_From_Inventory(Current_Equipment);
 
 
     cout << endl;
-    cout << "================================" << endl;
-    cout << "       현재 장착 장비 확인       " << endl;
-    cout << "================================" << endl;
+    cout << "===== 현재 장착 장비 =====" << endl;
 
-
-    // 6. 장착 모습 출력
     Current_Equipment.Print_Currently_Equipped_Equipments();
 
 
     cout << endl;
-    cout << "================================" << endl;
-    cout << "     현재 마우스 공격력 조회     " << endl;
-    cout << "================================" << endl;
+    cout << "===== Player 조회 테스트 =====" << endl;
 
 
-    // 7. Player가 가져가는 것처럼 조회
-    cout << Current_Equipment.Get_Mouse().Get_Attack_Stat() << endl;
+    Equipment_Stats Stats = Current_Equipment.Get_All_Equipments_Stats();
+
+
+    cout << "총 공격력 : " << Stats.Attack << endl;
+    cout << "총 방어력 : " << Stats.Defence << endl;
+    cout << "총 강화도 : +" << Stats.Enhance_Level << endl;
+    cout << "총 장비 등급 점수 : " << Stats.Grade_Score << endl;
 
 
     return 0;

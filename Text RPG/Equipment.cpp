@@ -416,6 +416,7 @@ Equipment Currently_Equipped_Equipments::Get_Headset() const
     return _Headset;
 }
 
+//장비 총 스텟 얻기
 Equipment_Stats Currently_Equipped_Equipments::Get_All_Equipments_Stats() const
 {
     Equipment_Stats total_stats;
@@ -423,41 +424,62 @@ Equipment_Stats Currently_Equipped_Equipments::Get_All_Equipments_Stats() const
     total_stats.Attack = 0;
     total_stats.Defence = 0;
     total_stats.Enhance_Level = 0;
+    total_stats.Grade_Score = 0;
 
 
     // Engine
     total_stats.Attack += _Unreal_Engine_Version.Get_Attack_Stat();
     total_stats.Defence += _Unreal_Engine_Version.Get_Defence_Stat();
     total_stats.Enhance_Level += _Unreal_Engine_Version.Get_Enhance_Level();
+    total_stats.Grade_Score += static_cast<int>(_Unreal_Engine_Version.Get_Grade());
 
 
     // Keyboard
     total_stats.Attack += _Keyboard.Get_Attack_Stat();
     total_stats.Defence += _Keyboard.Get_Defence_Stat();
     total_stats.Enhance_Level += _Keyboard.Get_Enhance_Level();
+    total_stats.Grade_Score += static_cast<int>(_Keyboard.Get_Grade());
 
 
     // Mouse
     total_stats.Attack += _Mouse.Get_Attack_Stat();
     total_stats.Defence += _Mouse.Get_Defence_Stat();
     total_stats.Enhance_Level += _Mouse.Get_Enhance_Level();
+    total_stats.Grade_Score += static_cast<int>(_Mouse.Get_Grade());
 
 
     // BlueLight Glasses
     total_stats.Attack += _BlueLight_Glasses.Get_Attack_Stat();
     total_stats.Defence += _BlueLight_Glasses.Get_Defence_Stat();
     total_stats.Enhance_Level += _BlueLight_Glasses.Get_Enhance_Level();
+    total_stats.Grade_Score += static_cast<int>(_BlueLight_Glasses.Get_Grade());
 
 
     // Headset
     total_stats.Attack += _Headset.Get_Attack_Stat();
     total_stats.Defence += _Headset.Get_Defence_Stat();
     total_stats.Enhance_Level += _Headset.Get_Enhance_Level();
+    total_stats.Grade_Score += static_cast<int>(_Headset.Get_Grade());
 
 
     return total_stats;
 }
 
+//장비 총 등급 숫자화
+int Currently_Equipped_Equipments::Get_All_Equipments_Grade_Score() const
+{
+    int Total_Grade_Score = 0;
+
+
+    Total_Grade_Score += static_cast<int>(_Unreal_Engine_Version.Get_Grade());
+    Total_Grade_Score += static_cast<int>(_Keyboard.Get_Grade());
+    Total_Grade_Score += static_cast<int>(_Mouse.Get_Grade());
+    Total_Grade_Score += static_cast<int>(_BlueLight_Glasses.Get_Grade());
+    Total_Grade_Score += static_cast<int>(_Headset.Get_Grade());
+
+
+    return Total_Grade_Score;
+}
 //-----------------장비 전용 인벤토리------------------------------------
 
 

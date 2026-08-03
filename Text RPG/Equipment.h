@@ -28,6 +28,7 @@ struct Equipment_Stats
     int Attack;
     int Defence;
     int Enhance_Level;
+    int Grade_Score;
 };
 
 //장비 자세한 설명
@@ -86,7 +87,7 @@ class Currently_Equipped_Equipments
         bool Equip_Equipment(const Equipment& equipment);//2.장비 끼기
         void Print_Currently_Equipped_Equipments() const;//3.현재 장비 중인 장비창 조회
         bool Unequip_Equipment_To_Inventory(Inventory_For_Equipments_Only& equipment_inventory );//장비 해제 
-     
+        int Get_All_Equipments_Grade_Score() const;
         Equipment Get_Keyboard() const;
         Equipment Get_Headset() const;
         Equipment Get_Mouse() const;
