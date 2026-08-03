@@ -90,6 +90,18 @@
     <ClCompile Include="Basic_Engine.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Ascii_Art_Manager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic_Sword.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Quiz_Bank.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Users\user\Desktop\백업\Recipe_Repository.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h">
@@ -157,6 +169,21 @@
     </ClInclude>
     <ClInclude Include="Basic_Engine.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic_Sword.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Ascii_Art_Manager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Intro.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Quiz_Bank.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Users\user\Desktop\백업\Recipe_Repository.h">
+      <Filter>헤더 파일\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

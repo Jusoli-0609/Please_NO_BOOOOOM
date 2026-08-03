@@ -1,20 +1,40 @@
 ﻿#pragma once
+
 #include "All_Recipes.h"
-#include <vector>
-#include <string>
-#include <map>
+#include "Recipe_Repository.h"
+#include "Inventory.h"
+#include "Equipment.h"
 
 class Craft_Work_Shop
 {
+
 private:
-    std::vector<All_Recipes> recipes;
-    std::map<std::string, int> ingredients;
+
+    Recipe_Repository recipe_repository;
+
 
 public:
+
+
     Craft_Work_Shop();
 
+
     void Print_All_Recipes() const;
-    void Find_Recipe_By_Potion_Name(const std::string& _Recipe_Name) const;
-    void Find_Recipes_By_Ingredient_Name(const std::string& ingredientName) const;
-    bool Craft_Potion(const std::string& _Recipe_Name);
+
+
+    bool Craft_Item(
+        Inventory<Item>& inventory
+    );
+
+
+    bool Decomposition_Item(
+        Inventory_For_Equipments_Only& equipment_inventory,
+        Inventory<Item>& item_inventory
+    );
+
+
+    bool Enhance_Item(
+        Equipment& equipment
+    );
+
 };

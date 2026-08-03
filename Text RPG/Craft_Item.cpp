@@ -1,103 +1,73 @@
-#include "Craft_Item.h"
-#include "All_Recipes.h"
+﻿#include "Craft_Item.h"
+
 #include <iostream>
 
 using namespace std;
 
 Craft_Work_Shop::Craft_Work_Shop()
 {
-    All_Recipes hpPotion;
-
-    hpPotion._Recipe_Name = "�Ŷ��";
-    hpPotion._First_Ingredient_Name = "���";
-    hpPotion._First_Ingredient_Count = 1;
-    hpPotion._Second_Ingredient_Name = "������";
-    hpPotion._Second_Ingredient_Count = 1;
-
-    recipes.push_back(hpPotion);
-
-    All_Recipes staminaPotion;
-
-    staminaPotion._Recipe_Name = "���¹̳�����";
-    staminaPotion._First_Ingredient_Name = "���";
-    staminaPotion._First_Ingredient_Count = 1;
-    staminaPotion._Second_Ingredient_Name = "����";
-    staminaPotion._Second_Ingredient_Count = 1;
-
-    recipes.push_back(staminaPotion);
-
-    ingredients["���"] = 3;
-    ingredients["������"] = 2;
-    ingredients["����"] = 1;
+    // TODO: recipe_repository 초기화 코드
+    // 예: 기본 레시피 등록이 필요하다면 이 위치에 작성
 }
 
 void Craft_Work_Shop::Print_All_Recipes() const
 {
-    for (const All_Recipes& recipe : recipes)
-    {
-        recipe.PrintInfo();
-    }
+    // TODO: Recipe_Repository의 전체 레시피 출력 함수 호출 코드
+
+    // 예시 형태:
+    // recipe_repository.Print_All_Recipes();
 }
 
-void Craft_Work_Shop::Find_Recipe_By_Potion_Name(const string& _Recipe_Name) const
+bool Craft_Work_Shop::Craft_Item(
+    Inventory<Item>& inventory
+)
 {
-    bool found = false;
+    // TODO: 제작할 레시피 선택을 위한 입력 변수 선언
 
-    for (const All_Recipes& recipe : recipes)
-    {
-        if (recipe._Recipe_Name == _Recipe_Name)
-        {
-            recipe.PrintInfo();
-            found = true;
-        }
-    }
+    // TODO: 선택한 레시피 조회 코드
 
-    if (found == false)
-    {
-        cout << "�ش� ���� �����Ǹ� ã�� �� �����ϴ�." << endl;
-    }
+    // TODO: 인벤토리에 재료가 충분한지 확인하는 조건문
+
+    // TODO: 재료 차감 코드
+
+    // TODO: 제작 결과 아이템 추가 코드
+
+    // TODO: 제작 성공 여부 반환값
+    return false;
 }
 
-void Craft_Work_Shop::Find_Recipes_By_Ingredient_Name(const string& ingredientName) const
+bool Craft_Work_Shop::Decomposition_Item(
+    Inventory_For_Equipments_Only& equipment_inventory,
+    Inventory<Item>& item_inventory
+)
 {
-    bool found = false;
+    // TODO: 분해할 장비 선택을 위한 입력 변수 선언
 
-    for (const All_Recipes& recipe : recipes)
-    {
-        if (recipe._First_Ingredient_Name == ingredientName || recipe._Second_Ingredient_Name == ingredientName)
-        {
-            recipe.PrintInfo();
-            found = true;
-        }
-    }
+    // TODO: 장비 인벤토리에서 대상 장비 조회 코드
 
-    if (found == false)
-    {
-        cout << "�ش� ��ᰡ �� ���� �����Ǹ� ã�� �� �����ϴ�." << endl;
-    }
+    // TODO: 분해 가능 여부 확인 조건문
+
+    // TODO: 장비 제거 코드
+
+    // TODO: 분해 결과 아이템 추가 코드
+
+    // TODO: 분해 성공 여부 반환값
+    return false;
 }
- 
-bool Craft_Work_Shop::Craft_Potion(const std::string& _Recipe_Name)
+
+bool Craft_Work_Shop::Enhance_Item(
+    Equipment& equipment
+)
 {
-    for (const All_Recipes& recipe : recipes)
-    {
-        if (recipe._Recipe_Name == _Recipe_Name)
-        {
-            if (ingredients[recipe._First_Ingredient_Name] < recipe._First_Ingredient_Count ||
-                ingredients[recipe._Second_Ingredient_Name] < recipe._Second_Ingredient_Count)
-            {
-                cout << "��ᰡ �����մϴ�." << endl;
-                return false;
-            }
+    // TODO: 강화에 필요한 데이터 변수 선언
+    // 예: 강화 확률, 비용, 현재 강화 수치 등
 
-            ingredients[recipe._First_Ingredient_Name] -= recipe._First_Ingredient_Count;
-            ingredients[recipe._Second_Ingredient_Name] -= recipe._Second_Ingredient_Count;
+    // TODO: 강화 가능 여부 확인 조건문
 
-            cout << _Recipe_Name << " ���� ����!" << endl;
-            return true;
-        }
-    }
+    // TODO: 강화 성공/실패 판정에 필요한 코드 위치
 
-    cout << "�ش� ���� �����Ǹ� ã�� �� �����ϴ�." << endl;
+    // TODO: 성공 시 장비 능력치 변경 코드
+
+    // TODO: 강화 성공 여부 반환값
     return false;
 }

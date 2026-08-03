@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\Users\user\Desktop\백업\Recipe_Repository.cpp" />
     <ClCompile Include="Basic_Engine.cpp" />
     <ClCompile Include="Basic_Mouse.cpp" />
     <ClCompile Include="Ascii_Art_Manager.cpp" />
@@ -185,6 +186,7 @@
     <ClCompile Include="Quiz_Bank.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\Users\user\Desktop\백업\Recipe_Repository.h" />
     <ClInclude Include="Basic_Engine.h" />
     <ClInclude Include="Basic_Mouse.h" />
     <ClInclude Include="Basic_Sword.h" />

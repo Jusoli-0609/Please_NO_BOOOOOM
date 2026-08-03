@@ -1,4 +1,4 @@
-#include<algorithm>
+﻿#include<algorithm>
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
@@ -12,7 +12,7 @@
 
 using namespace std;
 
-template<typename T>//1-1 �⺻ ������
+template<typename T>//1-1 기본 생성자
 Inventory<T>::Inventory(int max_inventory_size, int max_capacity)
 {
     _Max_Inventory_Size = max_inventory_size;
@@ -94,13 +94,13 @@ int Inventory<T>::Get_Size()const
     return _Current_Quantity_Of_Items;
 }
 
-template<typename T>// 3-3 인벤토리 사이즈 가져오기
+template<typename T>// 3-4 인벤토리 무게 가져오기
 int Inventory<T>::Get_Capacity() const
 {
     return _Max_Capacity;
 }
 
-template <typename T>//4-1 �κ��丮 �� ���빰 ���
+template <typename T>//4-1 인벤토리 및 내용물 출력
 void Inventory<T>::Print_Inventory() const
 {
     cout << "=========소비/재료 전용 인벤토리========" << endl;
@@ -133,7 +133,7 @@ void Inventory<T>::Print_Inventory() const
     cout << "최대 허용 무게: " << _Max_Capacity << endl;
     cout << "남은 허용 무게: " << _Max_Capacity - Get_Total_Weight() << endl;
     cout << "========================================" << endl;
-}
+    }
 
 template <typename T>//4-2 인벤토리 메뉴 출력
 void Inventory<T>::Print_Inventory_Menu(
@@ -474,7 +474,7 @@ void Inventory<T>::Print_Inventory_Menu(
     }
 
     template <typename T>//5-3 전투 중 아이템 사용
-    void Inventory<T>::Use_Item(Player& player, Monster& monster)
+    void Inventory<T>::Use_Item(Player & player, Monster & monster)
     {
         if (_Current_Quantity_Of_Items == 0)
         {
@@ -591,7 +591,7 @@ void Inventory<T>::Print_Inventory_Menu(
     }
 
     template <typename T>//5-6 전투 아이템 사용
-    void Inventory<T>::Use_Random_Item_In_Battle(Player& player, Monster& monster)
+    void Inventory<T>::Use_Random_Item_In_Battle(Player & player, Monster & monster)
     {
         if (_Current_Quantity_Of_Items == 0)
         {
@@ -740,22 +740,56 @@ void Inventory<T>::Print_Inventory_Menu(
         cout << "아이템 순서를 변경했다." << endl;
     }
 
-    template<typename T>//7.인벤토리 용량 확장
-    void Inventory<T>::Increase_Max_Capacity(int new_max_capacity)
+    template<typename T>//7-1 슬롯 증가
+    void Inventory<T>::Increase_Slot_Capacity(int increase_slot)
     {
-        if (new_max_capacity <= _Max_Inventory_Size)
+        
+        if (increase_slot <= 0)
         {
+            cout << "확장할 슬롯 수는 1 이상이어야 합니다." << endl;
             return;
         }
-        T* new_items = new T[new_max_capacity];
+
+     
+        int new_max_inventory_size = _Max_Inventory_Size + increase_slot;
+
+
+        T* new_items = new T[new_max_inventory_size];
+
+        
         for (int i = 0; i < _Current_Quantity_Of_Items; i++)
         {
             new_items[i] = _Inventory_Items[i];
         }
+
+     
         delete[] _Inventory_Items;
+
+       
         _Inventory_Items = new_items;
-        _Max_Inventory_Size = new_max_capacity;
-        cout << "소비/재료 전용 인벤토리 슬롯이 " << new_max_capacity << "칸으로 확장되었다!" << endl;
+
+        
+        _Max_Inventory_Size = new_max_inventory_size;
+
+        cout << "소비/재료 전용 인벤토리 슬롯이 "
+            << _Max_Inventory_Size
+            << "칸으로 확장되었다!" << endl;
+    }
+
+    template<typename T>//7-2 무게 용량 증가
+    void Inventory<T>::Increase_Max_Capacity(int increase_capacity)
+    {
+        if (increase_capacity <= 0)
+        {
+            cout << "증가할 무게는 1 이상이어야 합니다." << endl;
+            return;
+        }
+
+        _Max_Capacity += increase_capacity;
+
+        cout << "소비/재료 전용 인벤토리의 최대 허용 무게가 "
+            << _Max_Capacity
+            << "으로 증가했다!" << endl;
     }
 
     template<typename T>//8.인벤토리 소멸자
@@ -776,4 +810,45 @@ void Inventory<T>::Print_Inventory_Menu(
     {
         this->_Money = money;
     }
+
+    template<typename T>//10.아이템 제작용 줄이기
+    bool Inventory<T>::Remove_Item_Count(
+        const std::string& item_name,
+        int count)
+    {
+        for (int i = 0; i < _Current_Quantity_Of_Items; i++)
+        {
+            if (_Inventory_Items[i]._Item_Name == item_name)
+            {
+
+                if (_Inventory_Items[i]._Item_Count < count)
+                {
+                    return false;
+                }
+
+
+                _Inventory_Items[i]._Item_Count -= count;
+
+
+                if (_Inventory_Items[i]._Item_Count == 0)
+                {
+                    for (int j = i; j < _Current_Quantity_Of_Items - 1; j++)
+                    {
+                        _Inventory_Items[j]
+                            =
+                            _Inventory_Items[j + 1];
+                    }
+
+                    _Current_Quantity_Of_Items--;
+                }
+
+
+                return true;
+            }
+        }
+
+
+        return false;
+    }
+
     template class Inventory<Item>; // 명시적 인스턴스화
