@@ -26,7 +26,8 @@ namespace
 Dungeon_Manager::Dungeon_Manager()
 	: _current_Chapter(Chapter_Type::VARIABLE_CONDITION_FOREST),
 	_is_All_Chapter_Cleared(false),
-	_current_Chapter_Score(0)
+	_current_Chapter_Score(0),
+	_has_Elite_Appeared_In_Current_Chapter(false)
 {
 }
 
@@ -337,10 +338,23 @@ Monster_Type Dungeon_Manager::Get_Random_Normal_Monster() const
 // 5. 정예 몬스터 파트
 //=============================================================================
 
-bool Dungeon_Manager::Check_Elite_Monster_Appearance() const
+bool Dungeon_Manager::Check_Elite_Monster_Appearance()
 {
+	if (_has_Elite_Appeared_In_Current_Chapter)
+	{
+		return false;
+	}
+
 	int appearance_Roll = rand() % 100 + 1;
-	return appearance_Roll <= ELITE_APPEARANCE_RATE;
+
+	bool is_Elite_Appeared = appearance_Roll <= ELITE_APPEARANCE_RATE;
+
+	if (is_Elite_Appeared)
+	{
+		_has_Elite_Appeared_In_Current_Chapter = true;
+	}
+
+	return is_Elite_Appeared;
 }
 
 Elite_Question Dungeon_Manager::Get_Elite_Question(Chapter_Type chapter_Type) const
@@ -673,6 +687,7 @@ void Dungeon_Manager::Clear_Current_Chapter()
 
 	Move_Next_Chapter();
 	_current_Chapter_Score = 0;
+	_has_Elite_Appeared_In_Current_Chapter = false;
 
 	if (_is_All_Chapter_Cleared)
 	{

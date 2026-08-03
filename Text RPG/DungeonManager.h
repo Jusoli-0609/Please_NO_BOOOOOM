@@ -71,16 +71,16 @@ private:
 	void Get_Current_Chapter_Monsters(Monster_Type monster_Types[]) const;
 	Monster_Type Get_Random_Normal_Monster() const;
 
-	// 9. 정예 몬스터 문제 파트 (cpp 정의와 1:1 일치 완료)
-	bool Check_Elite_Monster_Appearance() const;
+	// 9. 정예 몬스터 문제 파트
+	bool Check_Elite_Monster_Appearance();
 	Elite_Question Get_Elite_Question(Chapter_Type chapter_Type) const;
 	bool Run_Elite_Question(const Elite_Question& elite_Question);
-	bool Run_Elite_Quiz(Player* player, Monster& elite_Monster); // [수정] Player*와 Monster& 수신
+	bool Run_Elite_Quiz(Player* player, Monster& elite_Monster);
 
-	// 10. 튜터 문제 및 대사 파트 (cpp 정의와 1:1 일치 완료)
+	// 10. 튜터 문제 및 대사 파트
 	void Get_Tutor_Questions(Chapter_Type chapter_Type, Tutor_Question tutor_Questions[]) const;
 	Tutor_Dialogue Get_Tutor_Dialogue(Chapter_Type chapter_Type) const;
-	bool Run_Tutor_Code_Challenge(Player* player, Monster& tutor_Monster); // [수정] Player* 수신
+	bool Run_Tutor_Code_Challenge(Player* player, Monster& tutor_Monster);
 	void Run_Tutor_Challenge(Player* player, Inventory<Item>& inventory);
 
 	// 11. 기믹 실패 패널티
@@ -107,6 +107,7 @@ private:
 	Chapter_Type _current_Chapter;
 	bool _is_All_Chapter_Cleared;
 	int _current_Chapter_Score;
+	bool _has_Elite_Appeared_In_Current_Chapter; // 현재 챕터에서 정예 몬스터가 등장했는지 저장
 
 	// 16. 챕터별 몬스터 처치 기록 데이터 파트
 	std::map<Chapter_Type, std::map<Monster_Type, Monster_Kill_Record>> _monster_Kill_Log;
