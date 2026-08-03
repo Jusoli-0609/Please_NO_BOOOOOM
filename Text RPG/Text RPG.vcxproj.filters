@@ -19,6 +19,12 @@
     <Filter Include="헤더 파일\Item">
       <UniqueIdentifier>{2ff36e5c-cac5-435e-b9d1-884c08bd12bb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Specific_Items">
+      <UniqueIdentifier>{0fe4aab7-1619-4e55-9f20-e77c5a867223}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Specific_Items">
+      <UniqueIdentifier>{38054b4f-0d7e-433d-a8f7-35b1b2021b75}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -75,8 +81,11 @@
     <ClCompile Include="Equipment.cpp">
       <Filter>소스 파일\Item</Filter>
     </ClCompile>
-    <ClCompile Include="Basic_Sword.cpp">
+    <ClCompile Include="Items_Equipments_Repository.cpp">
       <Filter>소스 파일\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic_Sword.cpp">
+      <Filter>소스 파일\Specific_Items</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -134,11 +143,11 @@
     <ClInclude Include="Equipment.h">
       <Filter>헤더 파일\Item</Filter>
     </ClInclude>
-    <ClInclude Include="Basic_Sword.h">
+    <ClInclude Include="Items_Equipments_Repository.h">
       <Filter>헤더 파일\Item</Filter>
     </ClInclude>
-    <ClInclude Include="Stat_Modifier.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Basic_Sword.h">
+      <Filter>헤더 파일\Specific_Items</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
