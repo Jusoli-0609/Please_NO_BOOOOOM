@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Inventory.h"
 #include "Equipment.h"
 #include "Items_Equipments_Repository.h"
@@ -28,6 +28,6 @@ private:
     Inventory_For_Equipments_Only& inventory_for_equipments;
     Currently_Equipped_Equipments& currently_equipped_equipments;
 
-    // TODO: °ñµå µ¥ÀÌÅÍ¿¡ Á¢±ÙÇÏ±â À§ÇÑ ¸â¹ö º¯¼ö ¶Ç´Â ÂüÁ¶ ¼±¾ğ
+    // TODO: ê³¨ë“œ ë°ì´í„°ì— ì ‘ê·¼í•˜ê¸° ìœ„í•œ ë©¤ë²„ ë³€ìˆ˜ ë˜ëŠ” ì°¸ì¡° ì„ ì–¸
 };
 

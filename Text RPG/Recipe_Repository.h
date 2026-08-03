@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "All_Recipes.h"
 #include <vector>
@@ -17,7 +17,7 @@ public:
     Recipe_Repository();
 
 
-    // ÀüÃ¼ ·¹½ÃÇÇ ¹ÝÈ¯ (º¹»ç ¹æÁö)
+    // ì „ì²´ ë ˆì‹œí”¼ ë°˜í™˜ (ë³µì‚¬ ë°©ì§€)
     const std::vector<All_Recipes>& Get_All_Recipes() const;
 
 

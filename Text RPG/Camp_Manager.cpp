@@ -1,4 +1,4 @@
-#include "Camp_Manager.h"
+ï»¿#include "Camp_Manager.h"
 #include <iostream>
 #include"Items_Equipments_Repository.h"
 
@@ -20,14 +20,14 @@ void Camp_Manager::Open_Camp_Menu()
 {
     while (true)
     {
-        cout << "\n===== ³»ÀÏ¹è¿òÄ·ÇÁ ÀçÁ¤ºñ¼Ò =====\n";
-        cout << "1. ³»¹èÄ· 119 ±âº» º¸±Þ ¹Þ±â\n";
-        cout << "2. Æé ½ºÅä¾î\n";
-        cout << "3. ¹®½ÂÈ£ ¸Å´ÏÀú´ÔÀÇ ¸¸¹° ÀâÈ­Á¡\n";
-        cout << "4. ±èµ¿Çö ¸Å´ÏÀú´ÔÀÇ Àü¸®Ç° ¸ÅÀÔ¼Ò\n";
-        cout << "5. ÄíÅ°ÀÇ ´ëÀå°£\n";
-        cout << "0. ³ª°¡±â\n";
-        cout << "¼±ÅÃ: ";
+        cout << "\n===== ë‚´ì¼ë°°ì›€ìº í”„ ìž¬ì •ë¹„ì†Œ =====\n";
+        cout << "1. ë‚´ë°°ìº  119 ê¸°ë³¸ ë³´ê¸‰ ë°›ê¸°\n";
+        cout << "2. íŽ© ìŠ¤í† ì–´\n";
+        cout << "3. ë¬¸ìŠ¹í˜¸ ë§¤ë‹ˆì €ë‹˜ì˜ ë§Œë¬¼ ìž¡í™”ì \n";
+        cout << "4. ê¹€ë™í˜„ ë§¤ë‹ˆì €ë‹˜ì˜ ì „ë¦¬í’ˆ ë§¤ìž…ì†Œ\n";
+        cout << "5. ì¿ í‚¤ì˜ ëŒ€ìž¥ê°„\n";
+        cout << "0. ë‚˜ê°€ê¸°\n";
+        cout << "ì„ íƒ: ";
 
         int choice;
         cin >> choice;
@@ -38,7 +38,7 @@ void Camp_Manager::Open_Camp_Menu()
         {
             if (Received_Basic_Items == true)
             {
-                cout << "ÀÌ¹Ì º¸±ÞÀ» ¹Þ¾Ò´Ù! ÄíÅ°°¡ È­³»¸ç ÇÒÄý´Ù!\n";
+                cout << "ì´ë¯¸ ë³´ê¸‰ì„ ë°›ì•˜ë‹¤! ì¿ í‚¤ê°€ í™”ë‚´ë©° í• í€¸ë‹¤!\n";
                 player.SetHP(player.GetHP() - 1);
                 break;
             }
@@ -78,7 +78,7 @@ void Camp_Manager::Open_Camp_Menu()
 
         default:
         {
-            cout << "Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù.\n";
+            cout << "ìž˜ëª»ëœ ìž…ë ¥ìž…ë‹ˆë‹¤.\n";
             break;
         }
         }
@@ -90,29 +90,19 @@ void Camp_Manager::Open_Camp_Menu()
 
 void Camp_Manager::Give_Basic_Training_Item()
 {
-    cout << "\n===== ³»¹èÄ· 119 =====\n";
-    cout << "±âº» º¸±ÞÇ°À» Áö±Þ¹Þ¾Ò½À´Ï´Ù!\n";
-    s glass;
-    Basic_Engine engine;
-    Basic_BlueLight_Glass glass;
-    Basic_Keyboard keyboard;
-    Basic_Headset headset;
-    currently_equipped_equipments.Equip_Equipment(mouse);
-    currently_equipped_equipments.Equip_Equipment(engine);
-    currently_equipped_equipments.Equip_Equipment(keyboard);
-    currently_equipped_equipments.Equip_Equipment(headset);
-    currently_equipped_equipments.Equip_Equipment(glass);
+    cout << "\n===== ë‚´ë°°ìº  119 =====\n";
+    cout << "ê¸°ë³¸ ë³´ê¸‰í’ˆì„ ì§€ê¸‰ë°›ì•˜ìŠµë‹ˆë‹¤!\n";
 }
 
 void Camp_Manager::Open_Pep_Store_Menu()
 {
     while (true)
     {
-        cout << "\n===== Æé ½ºÅä¾î =====\n";
-        cout << "1. Àåºñ ±¸¸Å\n";
-        cout << "2. Àåºñ ÆÇ¸Å\n";
-        cout << "0. µÚ·Î°¡±â\n";
-        cout << "¼±ÅÃ : ";
+        cout << "\n===== íŽ© ìŠ¤í† ì–´ =====\n";
+        cout << "1. ìž¥ë¹„ êµ¬ë§¤\n";
+        cout << "2. ìž¥ë¹„ íŒë§¤\n";
+        cout << "0. ë’¤ë¡œê°€ê¸°\n";
+        cout << "ì„ íƒ : ";
 
         int choice;
         cin >> choice;
@@ -123,16 +113,16 @@ void Camp_Manager::Open_Pep_Store_Menu()
         {
             if (inventory.Get_Money() <= 0)
             {
-                cout << "°ñµå°¡ ¾ø´Ù!\n";
+                cout << "ê³¨ë“œê°€ ì—†ë‹¤!\n";
                 break;
             }
-            cout << "±âº» CPU¸¦ ±¸¸ÅÇß½À´Ï´Ù.\n";
+            cout << "ê¸°ë³¸ CPUë¥¼ êµ¬ë§¤í–ˆìŠµë‹ˆë‹¤.\n";
             break;
         }
 
         case 2:
         {
-            // TODO : ÆÇ¸Å
+            // TODO : íŒë§¤
             break;
         }
 
@@ -143,7 +133,7 @@ void Camp_Manager::Open_Pep_Store_Menu()
 
         default:
         {
-            cout << "Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù.\n";
+            cout << "ìž˜ëª»ëœ ìž…ë ¥ìž…ë‹ˆë‹¤.\n";
             break;
         }
         }
@@ -152,29 +142,29 @@ void Camp_Manager::Open_Pep_Store_Menu()
 
 void Camp_Manager::Open_General_Store_Menu()
 {
-    cout << "\n===== ¹®½ÂÈ£ ¸Å´ÏÀú´ÔÀÇ ¸¸¹° ÀâÈ­Á¡ =====\n";
+    cout << "\n===== ë¬¸ìŠ¹í˜¸ ë§¤ë‹ˆì €ë‹˜ì˜ ë§Œë¬¼ ìž¡í™”ì  =====\n";
 
-    // TODO: ¼Òºñ ¾ÆÀÌÅÛ Ãâ·Â
-    // TODO: ±¸¸Å Ã³¸®
+    // TODO: ì†Œë¹„ ì•„ì´í…œ ì¶œë ¥
+    // TODO: êµ¬ë§¤ ì²˜ë¦¬
 }
 
 void Camp_Manager::Open_Loot_Shop_Menu()
 {
-    cout << "\n===== ±èµ¿Çö ¸Å´ÏÀú´ÔÀÇ Àü¸®Ç° ¸ÅÀÔ¼Ò =====\n";
+    cout << "\n===== ê¹€ë™í˜„ ë§¤ë‹ˆì €ë‹˜ì˜ ì „ë¦¬í’ˆ ë§¤ìž…ì†Œ =====\n";
 
-    // TODO: Àü¸®Ç° ÆÇ¸Å
+    // TODO: ì „ë¦¬í’ˆ íŒë§¤
 }
 
 void Camp_Manager::Open_Cookie_Blacksmith_Menu()
 {
     while (true)
     {
-        cout << "\n===== Äí±âÀÇ ´ëÀå°£ =====\n";
-        cout << "1. °­È­\n";
-        cout << "2. Á¦ÀÛ\n";
-        cout << "3. ºÐÇØ\n";
-        cout << "0. µÚ·Î°¡±â\n";
-        cout << "¼±ÅÃ : ";
+        cout << "\n===== ì¿ ê¸°ì˜ ëŒ€ìž¥ê°„ =====\n";
+        cout << "1. ê°•í™”\n";
+        cout << "2. ì œìž‘\n";
+        cout << "3. ë¶„í•´\n";
+        cout << "0. ë’¤ë¡œê°€ê¸°\n";
+        cout << "ì„ íƒ : ";
 
         int choice;
         cin >> choice;
@@ -183,19 +173,19 @@ void Camp_Manager::Open_Cookie_Blacksmith_Menu()
         {
         case 1:
         {
-            // TODO: °­È­z
+            // TODO: ê°•í™”z
             break;
         }
 
         case 2:
         {
-            // TODO: Á¦ÀÛ
+            // TODO: ì œìž‘
             break;
         }
 
         case 3:
         {
-            // TODO: ºÐÇØ
+            // TODO: ë¶„í•´
             break;
         }
 
@@ -206,7 +196,7 @@ void Camp_Manager::Open_Cookie_Blacksmith_Menu()
 
         default:
         {
-            cout << "Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù.\n";
+            cout << "ìž˜ëª»ëœ ìž…ë ¥ìž…ë‹ˆë‹¤.\n";
             break;
         }
         }
