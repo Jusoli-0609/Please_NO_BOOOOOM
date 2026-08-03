@@ -411,7 +411,6 @@ void Dungeon_Manager::Get_Current_Chapter_Monsters(Monster_Type monster_Types[])
 		monster_Types[1] = Monster_Type::BOOL_MUSHROOM;
 		monster_Types[2] = Monster_Type::IF_GOBLIN;
 		break;
-	}
 	 
 	case Chapter_Type::ARRAY_LOOP_OCEAN:
 		monster_Types[0] = Monster_Type::ARRAY_JELLYFISH;
