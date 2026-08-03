@@ -1,10 +1,10 @@
-#include "Equipment.h"
+ï»¿#include "Equipment.h"
 #include "Level_5_Headset.h"
 
 Level_5_Headset::Level_5_Headset()
 	: Equipment
 	(
-		"5Çìµå¼Â",
+		"5í—¤ë“œì…‹",
 		0,
 		16,
 		Equipment_Grade::Best,
@@ -13,8 +13,9 @@ Level_5_Headset::Level_5_Headset()
 | MASTER |
 | <7.1>  |
  \_||||_/)",
-		"¼³¸í",
-		4
+		"ì„¤ëª…",
+		4,
+		1
 	)
 {
 }

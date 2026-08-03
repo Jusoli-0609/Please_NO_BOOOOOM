@@ -1,4 +1,4 @@
-#include "Equipment.h"
+ï»¿#include "Equipment.h"
 #include "Level_1_Headset.h"
 
 #include "Level_1_Headset.h"
@@ -6,7 +6,7 @@
 Level_1_Headset::Level_1_Headset()
 	: Equipment
 	(
-		"1Çìµå¼Â",
+		"1í—¤ë“œì…‹",
 		0,
 		2,
 		Equipment_Grade::Worst,
@@ -15,8 +15,9 @@ Level_1_Headset::Level_1_Headset()
 |  L  R  |
 |  MIC   |
  \_||||_/)",
-		"¼³¸í",
-		4
+        "ì„¤ëª…",
+		4,
+		1
 	)
 {
 }

@@ -1,10 +1,10 @@
-#include "Equipment.h"
+ο»Ώ#include "Equipment.h"
 #include "Level_4_Keyboard.h"
 
 Level_4_Keyboard::Level_4_Keyboard()
 	: Equipment
 	(
-		"4Ε°ΊΈµε",
+		"4ν‚¤λ³΄λ“",
 		11,
 		0,
 		Equipment_Grade::High,
@@ -13,8 +13,9 @@ Level_4_Keyboard::Level_4_Keyboard()
 |CUSTOM<>|
 |[______]|
 +--------+)",
-"Ό³Έν",
-6
-)
+        "μ„¤λª…",
+        6,
+        1
+    )
 {
 }

@@ -1,10 +1,10 @@
-#include "Equipment.h"
+ο»Ώ#include "Equipment.h"
 #include "Level_5_Glasses.h"
 
 Level_5_Glasses::Level_5_Glasses()
 	: Equipment
 	(
-		"5ΎΘ°ζ",
+		"5μ•κ²½",
 		0,
 		16,
 		Equipment_Grade::Best,
@@ -12,7 +12,9 @@ Level_5_Glasses::Level_5_Glasses()
 		R"( .@@..@@.
 (@@)(@@)
  '@@''@@')",
-		"Ό³Έν",
-		2
+		"μ„¤λª…",
+		2,
+		1
 	)
 {
+}

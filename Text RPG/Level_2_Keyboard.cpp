@@ -1,10 +1,10 @@
-#include "Equipment.h"
+ο»Ώ#include "Equipment.h"
 #include "Level_2_Keyboard.h"
 
 Level_2_Keyboard::Level_2_Keyboard()
 	: Equipment
 	(
-		"2Ε°ΊΈµε",
+		"2ν‚¤λ³΄λ“",
 		4,
 		0,
 		Equipment_Grade::Low,
@@ -13,8 +13,9 @@ Level_2_Keyboard::Level_2_Keyboard()
 |MEMBRANE|
 |[______]|
 +--------+)",
-"Ό³Έν",
-6
-)
+        "μ„¤λª…",
+        6,
+        1
+    )
 {
 }

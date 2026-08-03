@@ -1,10 +1,10 @@
-#include "Equipment.h"
+ο»Ώ#include "Equipment.h"
 #include "Level_3_Glasses.h"
 
 Level_3_Glasses::Level_3_Glasses()
 	: Equipment
 	(
-		"3ΎΘ°ζ",
+		"3μ•κ²½",
 		0,
 		7,
 		Equipment_Grade::Middle,
@@ -12,8 +12,9 @@ Level_3_Glasses::Level_3_Glasses()
 		R"( .##..##.
 ( @)(@ )
  '##''##')",
-		"Ό³Έν",
-		2
+        "μ„¤λª…",
+		2,
+		1
 	)
 {
 }

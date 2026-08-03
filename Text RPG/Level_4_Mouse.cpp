@@ -1,10 +1,10 @@
-#include "Equipment.h"
+ο»Ώ#include "Equipment.h"
 #include "Level_4_Mouse.h"
 
 Level_4_Mouse::Level_4_Mouse()
 	: Equipment
 	(
-		"4Έ¶Ώμ½Ί",
+		"4λ§μ°μ¤",
 		11,
 		0,
 		Equipment_Grade::High,
@@ -13,8 +13,9 @@ Level_4_Mouse::Level_4_Mouse()
  /[MACRO]\
 | <CODE> |
  \______/)",
-		"Ό³Έν",
-		5
+        "μ„¤λª…",
+		5,
+		1
 	)
 {
 }

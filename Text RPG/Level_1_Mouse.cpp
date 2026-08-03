@@ -1,10 +1,10 @@
-#include "Equipment.h"
+ο»Ώ#include "Equipment.h"
 #include "Level_1_Mouse.h"
 
 Level_1_Mouse::Level_1_Mouse()
 	: Equipment
 	(
-		"1Έ¶Ώμ½Ί",
+		"1λ§μ°μ¤",
 		2,
 		0,
 		Equipment_Grade::Worst,
@@ -13,8 +13,9 @@ Level_1_Mouse::Level_1_Mouse()
  /  ||  \
 |   ||   |
  \______/)",
-		"Ό³Έν",
-		5
+        "μ„¤λª…",
+		5,
+		1
 	)
 {
 }

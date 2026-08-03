@@ -1,10 +1,10 @@
-#include "Equipment.h"
+ο»Ώ#include "Equipment.h"
 #include "Level_5_Keyboard.h"
 
 Level_5_Keyboard::Level_5_Keyboard()
 	: Equipment
 	(
-		"5Ε°ΊΈµε",
+		"5ν‚¤λ³΄λ“",
 		16,
 		0,
 		Equipment_Grade::Best,
@@ -13,8 +13,9 @@ Level_5_Keyboard::Level_5_Keyboard()
 |MASTER{}|
 |[______]|
 +--------+)",
-"Ό³Έν",
-6
-)
+        "μ„¤λª…",
+        6,
+        1
+    )
 {
 }

@@ -1,10 +1,10 @@
-#include "Equipment.h"
+ο»Ώ#include "Equipment.h"
 #include "Level_5_Mouse.h"
 
 Level_5_Mouse::Level_5_Mouse()
 	: Equipment
 	(
-		"5Έ¶Ώμ½Ί",
+		"5λ§μ°μ¤",
 		16,
 		0,
 		Equipment_Grade::Best,
@@ -13,8 +13,9 @@ Level_5_Mouse::Level_5_Mouse()
  /[MASTER]\
 | <CODE> |
  \______/)",
-		"Ό³Έν",
-		5
+        "μ„¤λª…",
+		5,
+		1
 	)
 {
 }

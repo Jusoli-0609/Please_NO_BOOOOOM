@@ -1,10 +1,10 @@
-#include "Equipment.h"
+ï»¿#include "Equipment.h"
 #include "Level_4_Headset.h"
 
 Level_4_Headset::Level_4_Headset()
 	: Equipment
 	(
-		"4 Çìµå¼Â",
+		"4 í—¤ë“œì…‹",
 		0,
 		11,
 		Equipment_Grade::High,
@@ -13,8 +13,9 @@ Level_4_Headset::Level_4_Headset()
 |  ANC   |
 | <MUTE> |
  \_||||_/)",
-		"¼³¸í",
-		4
+		"ì„¤ëª…",
+		4,
+		1
 	)
 {
 }

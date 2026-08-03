@@ -1,10 +1,10 @@
-#include "Equipment.h"
+ï»¿#include "Equipment.h"
 #include "Level_3_Engine.h"
 
 Level_3_Engine::Level_3_Engine()
 	: Equipment
 	(
-		"3¾ð¸®¾ó ¿£Áø",
+		"3ì–¸ë¦¬ì–¼ ì—”ì§„",
 		4,
 		4,
 		Equipment_Grade::Middle,
@@ -13,8 +13,9 @@ Level_3_Engine::Level_3_Engine()
 | UE 5.0 |
 | [FAST] |
 +--------+)",
-"¼³¸í",
-8
-)
+        "ì„¤ëª…",
+        8,
+        1
+    )
 {
 }

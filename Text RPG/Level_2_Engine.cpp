@@ -1,10 +1,10 @@
-#include "Equipment.h"
+ï»¿#include "Equipment.h"
 #include "Level_2_Engine.h"
 
 Level_2_Engine::Level_2_Engine()
 	: Equipment
 	(
-		"2¾ð¸®¾ó ¿£Áø",
+		"2ì–¸ë¦¬ì–¼ ì—”ì§„",
 		2,
 		2,
 		Equipment_Grade::Low,
@@ -13,8 +13,9 @@ Level_2_Engine::Level_2_Engine()
 | UE 4.5 |
 | [STBL] |
 +--------+)",
-"¼³¸í",
-8
-)
+        "ì„¤ëª…",
+        8,
+        1
+    )
 {
 }

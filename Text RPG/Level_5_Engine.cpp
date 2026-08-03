@@ -1,10 +1,10 @@
-#include "Equipment.h"
+ï»¿#include "Equipment.h"
 #include "Level_5_Engine.h"
 
 Level_5_Engine::Level_5_Engine()
 	: Equipment
 	(
-		"5¾ð¸®¾ó ¿£Áø",
+		"5ì–¸ë¦¬ì–¼ ì—”ì§„",
 		10,
 		10,
 		Equipment_Grade::Best,
@@ -13,8 +13,9 @@ Level_5_Engine::Level_5_Engine()
 | UE 5.X |
 | MASTER |
 +--------+)",
-"¼³¸í",
-8
-)
+        "ì„¤ëª…",
+        8,
+        1
+    )
 {
 }

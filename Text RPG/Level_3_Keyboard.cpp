@@ -1,10 +1,10 @@
-#include "Equipment.h"
+ο»Ώ#include "Equipment.h"
 #include "Level_3_Keyboard.h"
 
 Level_3_Keyboard::Level_3_Keyboard()
 	: Equipment
 	(
-		"3Ε°ΊΈµε",
+		"3ν‚¤λ³΄λ“",
 		7,
 		0,
 		Equipment_Grade::Middle,
@@ -13,8 +13,9 @@ Level_3_Keyboard::Level_3_Keyboard()
 |MECH++++|
 |[______]|
 +--------+)",
-"Ό³Έν",
-6
-)
+        "μ„¤λª…",
+        6,
+        1
+    )
 {
 }

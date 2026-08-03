@@ -1,10 +1,10 @@
-#include "Equipment.h"
+ï»¿#include "Equipment.h"
 #include "Level_3_Headset.h"
 
 Level_3_Headset::Level_3_Headset()
 	: Equipment
 	(
-		"3Çìµå¼Â",
+		"3í—¤ë“œì…‹",
 		0,
 		7,
 		Equipment_Grade::Middle,
@@ -13,8 +13,9 @@ Level_3_Headset::Level_3_Headset()
 |  7.1   |
 | <MIC>  |
  \_||||_/)",
-		"¼³¸í",
-		4
+        "ì„¤ëª…",
+		4,
+		1
 	)
 {
 }

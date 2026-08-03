@@ -1,10 +1,10 @@
-#include "Equipment.h"
+ο»Ώ#include "Equipment.h"
 #include "Level_3_Mouse.h"
 
 Level_3_Mouse::Level_3_Mouse()
 	: Equipment
 	(
-		"3Έ¶Ώμ½Ί",
+		"3λ§μ°μ¤",
 		7,
 		0,
 		Equipment_Grade::Middle,
@@ -13,8 +13,9 @@ Level_3_Mouse::Level_3_Mouse()
  / [RGB]\
 |  DPI+ |
  \______/)",
-		"Ό³Έν",
-		5
+"μ„¤λª…",
+		5,
+		1
 	)
 {
 }

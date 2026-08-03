@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Equipment.h"
 
 class Level_1_Keyboard : public Equipment
