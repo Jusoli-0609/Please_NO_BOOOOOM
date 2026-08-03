@@ -173,7 +173,7 @@ void Use_Item(Player* player, Monster& monster, Inventory<Item>& inventory)
         return;
     }
 
-    inventory.Use_Item_In_Battle(*player, monster);
+    inventory.Use_Item(*player, monster);
 }
 
 //======================================================

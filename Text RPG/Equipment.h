@@ -7,12 +7,12 @@ using namespace std;
 
 enum class Equipment_Grade
 {
-    Empty,
-    Worst,
-    Low,
-    Middle,
-    High,
-    Best
+    Empty, 
+    Worst, 
+    Low, 
+    Middle, 
+    High, 
+    Best 
 };
 
 enum class Equipment_Type
@@ -22,6 +22,12 @@ enum class Equipment_Type
     BlueLight_Glasses, 
     Headset,           
     Empty
+};
+struct Equipment_Stats
+{
+    int Attack;
+    int Defence;
+    int Enhance_Level;
 };
 
 //장비 자세한 설명
@@ -80,6 +86,13 @@ class Currently_Equipped_Equipments
         bool Equip_Equipment(const Equipment& equipment);//2.장비 끼기
         void Print_Currently_Equipped_Equipments() const;//3.현재 장비 중인 장비창 조회
         bool Unequip_Equipment_To_Inventory(Inventory_For_Equipments_Only& equipment_inventory );//장비 해제 
+     
+        Equipment Get_Keyboard() const;
+        Equipment Get_Headset() const;
+        Equipment Get_Mouse() const;
+        Equipment Get_BlueLight_Glasses() const;
+        Equipment Get_Engine() const;
+        Equipment_Stats Get_All_Equipments_Stats() const;
 
 };
 
@@ -89,9 +102,10 @@ class Inventory_For_Equipments_Only
         vector<Equipment> _Equipments; //장비 아이템들을 저장하는 전용 보관함
         int _Equipment_Current_Count;//현재 장비창에 들어있는 장비 갯수
         int _Equipment_Max_Count;//장비창 최대 착용 가능 갯수
+        int _Equipment_Max_Weight;//장비창 총 무게
     public:
         Inventory_For_Equipments_Only(); //1. 장비 전용 인벤토리 기본 생성자
-        Inventory_For_Equipments_Only(int max_count); //2. 최대 장비 보관 개수를 직접 정하는 생성자
+        Inventory_For_Equipments_Only(int max_count, int max_weight); //2. 최대 장비 보관 개수를 직접 정하는 생성자
         bool Add_Equipment(const Equipment& equipment); //3. 장비를 인벤토리에 추가하는 함수
         void Print_Equipment_Inventory() const; //4. 현재 장비 인벤토리에 들어있는 장비 목록 출력
         int Get_Equipment_Current_Count() const; //5. 현재 보관 중인 장비 개수 조회
@@ -102,4 +116,5 @@ class Inventory_For_Equipments_Only
         void Sort_Equipment_Inventory();//10.정렬 
         void Change_Equipment_Inventory_Order();//11.순서 변경
         void Equip_Equipment_From_Inventory(Currently_Equipped_Equipments& equipped);//12.장비 착용시키기
+        int Get_Total_Equipment_Weight() const;//총무게
 };

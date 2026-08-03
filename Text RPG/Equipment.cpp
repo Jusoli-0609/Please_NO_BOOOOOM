@@ -76,13 +76,14 @@ string Equipment:: Equipment_Grade_To_String(Equipment_Grade grade) const
     }
 }
 
+
 //장비 타입을 문자열 출력으로~!
 string Equipment::Equipment_Type_To_String(Equipment_Type type) const
 {
     switch (type)
     {
     case Equipment_Type::Engine:
-        return "CPU";
+        return "Unreal Engine";
 
     case Equipment_Type::Keyboard:
         return "Keyboard";
@@ -382,22 +383,98 @@ bool Currently_Equipped_Equipments::Unequip_One_Equipment(Equipment& equipped_it
     cout << slot_name << " 장비를 해제했다!" << endl;
     return true;
 }
+
+//-----------------현재 장착 장비 조회-----------------
+
+// 현재 장착된 엔진 조회
+Equipment Currently_Equipped_Equipments::Get_Engine() const
+{
+    return _Unreal_Engine_Version;
+}
+
+// 현재 장착된 키보드 조회
+Equipment Currently_Equipped_Equipments::Get_Keyboard() const
+{
+    return _Keyboard;
+}
+
+// 현재 장착된 마우스 조회
+Equipment Currently_Equipped_Equipments::Get_Mouse() const
+{
+    return _Mouse;
+}
+
+// 현재 장착된 블루라이트 안경 조회
+Equipment Currently_Equipped_Equipments::Get_BlueLight_Glasses() const
+{
+    return _BlueLight_Glasses;
+}
+
+// 현재 장착된 헤드셋 조회
+Equipment Currently_Equipped_Equipments::Get_Headset() const
+{
+    return _Headset;
+}
+
+Equipment_Stats Currently_Equipped_Equipments::Get_All_Equipments_Stats() const
+{
+    Equipment_Stats total_stats;
+
+    total_stats.Attack = 0;
+    total_stats.Defence = 0;
+    total_stats.Enhance_Level = 0;
+
+
+    // Engine
+    total_stats.Attack += _Unreal_Engine_Version.Get_Attack_Stat();
+    total_stats.Defence += _Unreal_Engine_Version.Get_Defence_Stat();
+    total_stats.Enhance_Level += _Unreal_Engine_Version.Get_Enhance_Level();
+
+
+    // Keyboard
+    total_stats.Attack += _Keyboard.Get_Attack_Stat();
+    total_stats.Defence += _Keyboard.Get_Defence_Stat();
+    total_stats.Enhance_Level += _Keyboard.Get_Enhance_Level();
+
+
+    // Mouse
+    total_stats.Attack += _Mouse.Get_Attack_Stat();
+    total_stats.Defence += _Mouse.Get_Defence_Stat();
+    total_stats.Enhance_Level += _Mouse.Get_Enhance_Level();
+
+
+    // BlueLight Glasses
+    total_stats.Attack += _BlueLight_Glasses.Get_Attack_Stat();
+    total_stats.Defence += _BlueLight_Glasses.Get_Defence_Stat();
+    total_stats.Enhance_Level += _BlueLight_Glasses.Get_Enhance_Level();
+
+
+    // Headset
+    total_stats.Attack += _Headset.Get_Attack_Stat();
+    total_stats.Defence += _Headset.Get_Defence_Stat();
+    total_stats.Enhance_Level += _Headset.Get_Enhance_Level();
+
+
+    return total_stats;
+}
+
 //-----------------장비 전용 인벤토리------------------------------------
 
 
 //장비 전용 인벤토리 기본 생성자
 Inventory_For_Equipments_Only::Inventory_For_Equipments_Only()
     : _Equipment_Current_Count(0),
-    _Equipment_Max_Count(10)
+    _Equipment_Max_Count(10),
+    _Equipment_Max_Weight(100)
 {
 }
 
 
 //장비 전용 인벤토리 최대 개수 설정 생성자
-Inventory_For_Equipments_Only::Inventory_For_Equipments_Only(int max_count)
+Inventory_For_Equipments_Only::Inventory_For_Equipments_Only(int max_count,int max_weight)
     : _Equipment_Current_Count(0),
-    _Equipment_Max_Count(max_count)
-
+    _Equipment_Max_Count(max_count),
+    _Equipment_Max_Weight(max_weight)
 {
 }
 
@@ -405,12 +482,16 @@ Inventory_For_Equipments_Only::Inventory_For_Equipments_Only(int max_count)
 //장비 추가
 bool Inventory_For_Equipments_Only::Add_Equipment(const Equipment& equipment)
 {
-    while (_Equipment_Current_Count >= _Equipment_Max_Count)
+    // 1. 무게 검사
+    while (Get_Total_Equipment_Weight() + equipment.Get_Equipment_Weight() > _Equipment_Max_Weight)
     {
-        cout << "슬롯이 가득 찼다!" << endl;
-        cout << "장비를 버릴려면 1번 아니면 2번을 눌러라!" << endl;
+        cout << "장비 인벤토리의 무게가 총 용량을 초과했다! 장비를 버릴 것인가?" << endl;
+        cout << "1. 버리기" << endl;
+        cout << "2. 취소" << endl;
+
         int Choose_To_Get_Rid_Of_Equipment;
         cin >> Choose_To_Get_Rid_Of_Equipment;
+
         if (Choose_To_Get_Rid_Of_Equipment == 1)
         {
             Throw_Away_Equipment();
@@ -421,12 +502,44 @@ bool Inventory_For_Equipments_Only::Add_Equipment(const Equipment& equipment)
         }
         else
         {
+            cout << "잘못된 입력이다!" << endl;
+        }
+    }
+
+    // 2. 슬롯 검사
+    while (_Equipment_Current_Count >= _Equipment_Max_Count)
+    {
+        cout << "슬롯이 가득 찼다!" << endl;
+        cout << "장비를 버릴려면 1번 아니면 2번을 눌러라!" << endl;
+
+        int Choose_To_Get_Rid_Of_Equipment;
+        cin >> Choose_To_Get_Rid_Of_Equipment;
+
+        if (Choose_To_Get_Rid_Of_Equipment == 1)
+        {
+            Throw_Away_Equipment();
+
+            if (_Equipment_Current_Count >= _Equipment_Max_Count)
+            {
+                cout << "아직 슬롯이 부족하다!" << endl;
+            }
+        }
+        else if (Choose_To_Get_Rid_Of_Equipment == 2)
+        {
+            return false;
+        }
+        else
+        {
             cout << "잘못된 입력이다! 다시 입력하라." << endl;
         }
     }
+
+    // 3. 장비 추가
     _Equipments.push_back(equipment);
     _Equipment_Current_Count++;
+
     cout << equipment.Get_Equipment_Name() << "을(를) 획득했다!" << endl;
+
     return true;
 }
 
@@ -542,7 +655,7 @@ void Inventory_For_Equipments_Only::Sort_Equipment_Inventory()
         sort(_Equipments.begin(), _Equipments.end(),
             [](const Equipment& a, const Equipment& b)
             {
-                return a.Get_Equipment_Name() < b.Get_Equipment_Name();
+                return a.Get_Equipment_Name() > b.Get_Equipment_Name();
             });
         break;
     }
@@ -551,7 +664,7 @@ void Inventory_For_Equipments_Only::Sort_Equipment_Inventory()
         sort(_Equipments.begin(), _Equipments.end(),
             [](const Equipment& a, const Equipment& b)
             {
-                return a.Get_Attack_Stat() < b.Get_Attack_Stat();
+                return a.Get_Attack_Stat() > b.Get_Attack_Stat();
             });
         break;
     }
@@ -560,7 +673,7 @@ void Inventory_For_Equipments_Only::Sort_Equipment_Inventory()
         sort(_Equipments.begin(), _Equipments.end(),
             [](const Equipment& a, const Equipment& b)
             {
-                return a.Get_Defence_Stat() < b.Get_Defence_Stat();
+                return a.Get_Defence_Stat() > b.Get_Defence_Stat();
             });
         break;
     }
@@ -569,7 +682,7 @@ void Inventory_For_Equipments_Only::Sort_Equipment_Inventory()
         sort(_Equipments.begin(), _Equipments.end(),
             [](const Equipment& a, const Equipment& b)
             {
-                return a.Get_Equipment_Weight() < b.Get_Equipment_Weight();
+                return a.Get_Equipment_Weight() > b.Get_Equipment_Weight();
             });
         break;
     }
@@ -671,4 +784,17 @@ void Inventory_For_Equipments_Only::Equip_Equipment_From_Inventory(Currently_Equ
 
         cout << Selected_Equipment.Get_Equipment_Name() << "을(를) 장착했다!" << endl;
     }
+}
+
+//장비창 무게 총 조히
+int Inventory_For_Equipments_Only::Get_Total_Equipment_Weight() const
+{
+    int Total_Weight = 0;
+
+    for (int i = 0; i < _Equipment_Current_Count; i++)
+    {
+        Total_Weight += _Equipments[i].Get_Equipment_Weight();
+    }
+
+    return Total_Weight;
 }

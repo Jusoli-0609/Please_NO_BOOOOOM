@@ -135,199 +135,236 @@ void Inventory<T>::Print_Inventory() const
     cout << "========================================" << endl;
     }
 
-    template <typename T>//4-2 인벤토리 메뉴 출력
-    void Inventory<T>::Print_Inventory_Menu(Currently_Equipped_Equipments& currently_equipped_equipments,
-        Inventory_For_Equipments_Only& inventory_for_equipments_only)
+template <typename T>//4-2 인벤토리 메뉴 출력
+void Inventory<T>::Print_Inventory_Menu(
+    Currently_Equipped_Equipments& currently_equipped_equipments,
+    Inventory_For_Equipments_Only& inventory_for_equipments_only
+)
+{
+    int Choose_Inventory_Menu;
+
+    while (true)
     {
-        int Choose_Inventory_Menu;
-  
-        while (true)
+        cout << endl;
+        cout << "========================================" << endl;
+        cout << "              인벤토리 메뉴" << endl;
+        cout << "========================================" << endl;
+        cout << "1. 전체 인벤토리 보기" << endl;
+        cout << "2. 현재 착용 중인 장비 관리" << endl;
+        cout << "3. 장비 전용 인벤토리 관리" << endl;
+        cout << "4. 소비/재료 아이템 전용 인벤토리 관리" << endl;
+        cout << "0. 되돌아가기" << endl;
+        cout << "----------------------------------------" << endl;
+        cout << "무엇을 할까?: ";
+
+        cin >> Choose_Inventory_Menu;
+
+        switch (Choose_Inventory_Menu)
         {
-            cout << endl;
-            cout << "========================================" << endl;
-            cout << "              인벤토리 메뉴" << endl;
-            cout << "========================================" << endl;
-            cout << "1. 전체 인벤토리 보기" << endl;
-            cout << "2. 현재 착용 중인 장비 관리" << endl;
-            cout << "3. 장비 전용 인벤토리 관리" << endl;
-            cout << "4. 소비/재료 아이템 전용 인벤토리 관리" << endl;
-            cout << "0. 되돌아가기" << endl;
-            cout << "----------------------------------------" << endl;
-            cout << "무엇을 할까?: ";
+        case 1:
+        {
+            currently_equipped_equipments.Print_Currently_Equipped_Equipments();
+            inventory_for_equipments_only.Print_Equipment_Inventory();
+            Print_Inventory();
+            break;
+        }
 
-            cin >> Choose_Inventory_Menu;
+        case 2:
+        {
+            currently_equipped_equipments.Print_Currently_Equipped_Equipments();
 
-            switch (Choose_Inventory_Menu)
-            {
-            case 1:
-            {
-                currently_equipped_equipments.Print_Currently_Equipped_Equipments();
-                inventory_for_equipments_only.Print_Equipment_Inventory();
-                Print_Inventory();
-                break;
-            }
-            case 2:
-            {
-                currently_equipped_equipments.Print_Currently_Equipped_Equipments();
-
-                cout << R"(
+            cout << R"(
 무엇을 하시겠습니까?
-1. 장비 착용
+1. 장착된 장비 보기
 2. 장비 해제
 0. 되돌아가기
 )" << endl;
 
-                int Choose_Currently_Equipped_Equipments_Menu;
-                cin >> Choose_Currently_Equipped_Equipments_Menu;
+            int Choose_Currently_Equipped_Equipments_Menu;
+            cin >> Choose_Currently_Equipped_Equipments_Menu;
 
-                switch (Choose_Currently_Equipped_Equipments_Menu)
-                {
-                case 1:
-                {
-                    inventory_for_equipments_only.Equip_Equipment_From_Inventory(
-                        currently_equipped_equipments
-                    );
-                    break;
-                }
-
-                case 2:
-                {
-                    currently_equipped_equipments.Unequip_Equipment_To_Inventory(
-                        inventory_for_equipments_only
-                    );
-                    break;
-                }
-
-                case 0:
-                {
-                    break;
-                }
-
-                default:
-                {
-                    cout << "잘못된 입력이다!" << endl;
-                    break;
-                }
-                }
-
+            switch (Choose_Currently_Equipped_Equipments_Menu)
+            {
+            case 1:
+            {
+                currently_equipped_equipments.Print_Currently_Equipped_Equipments();
                 break;
             }
-            case 3:
-            {
-                inventory_for_equipments_only.Print_Equipment_Inventory();
 
-                cout << R"(
+            case 2:
+            {
+                currently_equipped_equipments.Unequip_Equipment_To_Inventory(
+                    inventory_for_equipments_only
+                );
+                break;
+            }
+
+            case 0:
+            {
+                break;
+            }
+
+            default:
+            {
+                cout << "잘못된 입력이다!" << endl;
+                break;
+            }
+            }
+
+            break;
+        }
+
+        case 3:
+        {
+            inventory_for_equipments_only.Print_Equipment_Inventory();
+
+            cout << R"(
 무엇을 하시겠습니까?
-1. 장비 장착
-2. 장비 버리기
-3. 장비 정보 보기
-4. 장비 정렬
-5. 장비 순서 바꾸기
+1. 장비 인벤토리 보기
+2. 장비 장착
+3. 장비 버리기
+4. 장비 정보 보기
+5. 장비 정렬
+6. 장비 순서 바꾸기
 0. 되돌아가기
 )" << endl;
 
-                int Choose_Equipment_Inventory_Menu;
-                cin >> Choose_Equipment_Inventory_Menu;
+            int Choose_Equipment_Inventory_Menu;
+            cin >> Choose_Equipment_Inventory_Menu;
 
-                switch (Choose_Equipment_Inventory_Menu)
-                {
-                case 1:
-                {
-                    inventory_for_equipments_only.Equip_Equipment_From_Inventory(
-                        currently_equipped_equipments
-                    );
-                    break;
-                }
-
-                case 2:
-                {
-                    inventory_for_equipments_only.Throw_Away_Equipment();
-                    break;
-                }
-
-                case 3:
-                {
-                    inventory_for_equipments_only.Print_Equipment_Inventory();
-                    break;
-                }
-                case 4:
-                {
-                    inventory_for_equipments_only.Sort_Equipment_Inventory();
-                    break;
-                }
-
-                case 5:
-                {
-                    inventory_for_equipments_only.Change_Equipment_Inventory_Order();
-                    break;
-                }
-                case 0:
-                {
-                    break;
-                }
-
-                default:
-                {
-                    cout << "잘못된 입력이다!" << endl;
-                    break;
-                }
-                }
-
+            switch (Choose_Equipment_Inventory_Menu)
+            {
+            case 1:
+            {
+                inventory_for_equipments_only.Print_Equipment_Inventory();
                 break;
             }
+
+            case 2:
+            {
+                inventory_for_equipments_only.Equip_Equipment_From_Inventory(
+                    currently_equipped_equipments
+                );
+                break;
+            }
+
+            case 3:
+            {
+                inventory_for_equipments_only.Throw_Away_Equipment();
+                break;
+            }
+
             case 4:
             {
-                Print_Inventory();
-                cout << R"( 
-무엇을 하시겠습니까 ?
-1.아이템 정렬
-2.아이템 순서 바꾸기
-3.아이템 버리기
-0.되돌아가기)" << endl;
-                    int ChooseInventoryMenu;
-                cin >> ChooseInventoryMenu;
-                switch (ChooseInventoryMenu)
-                {
-                    case 1:
-                    {
-                        Sort_Inventory();
-                        break;
-                    }    
-                    case 2:
-                    {
-                        Change_Inventory_Order();
-                        break;
-                    }
-                    case 3:
-                    {
-                        Throw_Away_Item();
-                        break;
-                    }
-                    case 0:
-                    {
-                        break;
-                    }
-                    default:
-                    {
-                        break;
-                    }
-                }
-            break;
+                inventory_for_equipments_only.Print_Equipment_Inventory();
+                break;
             }
+
+            case 5:
+            {
+                inventory_for_equipments_only.Sort_Equipment_Inventory();
+                break;
+            }
+
+            case 6:
+            {
+                inventory_for_equipments_only.Change_Equipment_Inventory_Order();
+                break;
+            }
+
             case 0:
             {
-                cout << "인벤토리 메뉴를 닫았다!" << endl;
-                return;
+                break;
             }
+
             default:
             {
-                cout << "잘못된 입력이다! 다시 선택하라." << endl;
+                cout << "잘못된 입력이다!" << endl;
                 break;
             }
             }
+
+            break;
+        }
+
+        case 4:
+        {
+            cout << R"(
+무엇을 하시겠습니까?
+1. 아이템 보기
+2. 아이템 정렬
+3. 아이템 순서 바꾸기
+4. 아이템 버리기
+5. 아이템 사용하기
+0. 되돌아가기
+)" << endl;
+
+            int ChooseInventoryMenu;
+            cin >> ChooseInventoryMenu;
+
+            switch (ChooseInventoryMenu)
+            {
+            case 1:
+            {
+                Print_Inventory();
+                break;
+            }
+
+            case 2:
+            {
+                Sort_Inventory();
+                break;
+            }
+
+            case 3:
+            {
+                Change_Inventory_Order();
+                break;
+            }
+
+            case 4:
+            {
+                Throw_Away_Item();
+                break;
+            }
+
+            case 5:
+            {
+                // TODO: Player, Monster 객체 참조 전달 구조
+                // Use_Item(player, monster);
+                cout << "전투 중 아이템 사용은 전투 시스템에서 호출해야 한다!" << endl;
+                break;
+            }
+
+            case 0:
+            {
+                break;
+            }
+
+            default:
+            {
+                cout << "잘못된 입력이다!" << endl;
+                break;
+            }
+            }
+
+            break;
+        }
+
+        case 0:
+        {
+            cout << "인벤토리 메뉴를 닫았다!" << endl;
+            return;
+        }
+
+        default:
+        {
+            cout << "잘못된 입력이다! 다시 선택하라." << endl;
+            break;
+        }
         }
     }
-
+}
     template<typename T>//5-1 아이템 추가 및 갯수 증가
     bool Inventory<T>::Add_Or_Increase_Item(const T & new_item)
     {
@@ -410,7 +447,7 @@ void Inventory<T>::Print_Inventory() const
         return true;
     }
 
-    template<typename T>//5-2 이름으로 아이템 사용 성공 및 갯수 감소
+    template<typename T>//5-2 이름으로 아이템 사용 성공 및 갯수 감소(폐기한 기능)
     bool Inventory<T>::Use_Item_By_Name(const string & item_name)
     {
         for (int i = 0; i < _Current_Quantity_Of_Items; i++)
@@ -437,7 +474,7 @@ void Inventory<T>::Print_Inventory() const
     }
 
     template <typename T>//5-3 전투 중 아이템 사용
-    void Inventory<T>::Use_Item_In_Battle(Player & player, Monster & monster)
+    void Inventory<T>::Use_Item(Player & player, Monster & monster)
     {
         if (_Current_Quantity_Of_Items == 0)
         {
@@ -446,7 +483,7 @@ void Inventory<T>::Print_Inventory() const
         }
         Print_Inventory();
         int Choose_Item_To_Use_In_Battle;
-        cout << "전투 중 사용할 아이템을 고르세요!" << endl;
+        cout << "사용할 아이템을 고르세요!" << endl;
         cin >> Choose_Item_To_Use_In_Battle;
         int Vector_Index = Choose_Item_To_Use_In_Battle - 1;
         T* selected_item = Get_Item_By_Index(Vector_Index); //  GetItemByIndex 호출 결과를 저장할 Item 포인터 변수 선언
@@ -553,7 +590,7 @@ void Inventory<T>::Print_Inventory() const
         cout << "마지막 아이템을 제거했다!" << endl;
     }
 
-    template <typename T>//5-6 전투 중 아이템 랜덤 사용
+    template <typename T>//5-6 전투 아이템 사용
     void Inventory<T>::Use_Random_Item_In_Battle(Player & player, Monster & monster)
     {
         if (_Current_Quantity_Of_Items == 0)
