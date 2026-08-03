@@ -42,6 +42,8 @@ private:
 	// 6. 현재 챕터 실행 파트
 	void Print_Current_Chapter() const;
 	void Run_Current_Chapter(Player* player, Inventory<Item>& inventory);
+	void Select_Chapter_And_Enter
+	(Player* player,Inventory<Item>& inventory);
 	std::string Get_Chapter_Name(Chapter_Type chapter_Type) const;
 
 	// 7. 일반 몬스터 선택 파트

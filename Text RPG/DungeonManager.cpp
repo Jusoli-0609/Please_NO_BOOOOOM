@@ -51,18 +51,32 @@ void Dungeon_Manager::Open_Dungeon(Player* player, Inventory<Item>& inventory)
 
 	if (_is_All_Chapter_Cleared)
 	{
+		cout << endl;
+		cout << "========================================" << endl;
+		cout << "[ 최종 과정 선택 ]" << endl;
+		cout << "========================================" << endl;
+
 		cout << "모든 튜터님에게 인정받았다." << endl;
+
 		Print_Tutor_Item_Status(inventory);
 
-		if(Check_Final_Boss_Room_Available(inventory) == false)
-		{
-			return;
-		}
+		bool is_Final_Boss_Room_Available = Check_Final_Boss_Room_Available (inventory);
 
 		int final_Boss_Choice = -1;
 
 		cout << endl;
-		cout << "1. 알 수 없는 공간으로 이동" << endl;
+
+		if (is_Final_Boss_Room_Available)
+		{
+			cout << "1. 알 수 없는 공간으로 이동" << endl;
+		}
+		else
+		{
+			cout << "1. 알 수 없는 공간으로 이동 [입장 불가]" << endl;
+		}
+
+		cout << "2. 코드 해결 및 튜터님의 시험 기록" << endl;
+		cout << "3. 챕터 입장" << endl;
 		cout << "0. 메인 메뉴로 돌아가기" << endl;
 		cout << "선택: ";
 
@@ -72,23 +86,45 @@ void Dungeon_Manager::Open_Dungeon(Player* player, Inventory<Item>& inventory)
 		{
 		case 1:
 		{
-			Run_Final_Boss_Room(player, inventory);
+			if (!is_Final_Boss_Room_Available)
+			{
+				cout << endl;
+				cout << "최종 보스방을 여는 데 필요한 " << "튜터님의 선물이 부족하다." << endl;
+
+				Print_Tutor_Item_Status(inventory);
+
+				break;
+			}
+
+			Run_Final_Boss_Room(player,inventory);
+
+			break;
+		}
+
+		case 2:
+		{
+			Print_Total_Monster_Kill_Log();
+
+			break;
+		}
+
+		case 3:
+		{
+			Select_Chapter_And_Enter(player, inventory);
 
 			break;
 		}
 
 		case 0:
 		{
-			cout
-				<< "메인 메뉴로 돌아간다." << endl;
+			cout << "메인 메뉴로 돌아간다." << endl;
 
 			break;
 		}
 
 		default:
 		{
-			cout
-				<< "잘못된 선택." << endl;
+			cout << "잘못된 선택." << endl;
 
 			break;
 		}
@@ -165,6 +201,101 @@ void Dungeon_Manager::Print_Current_Chapter() const
 	cout << "현재 입장 가능한 챕터" << endl;
 	cout << Get_Chapter_Name(_current_Chapter) << endl;
 	cout << "========================================" << endl;
+}
+
+void Dungeon_Manager::Select_Chapter_And_Enter(Player* player, Inventory<Item>& inventory)
+{
+	if (player == nullptr)
+	{
+		cout << "조원의 정보를 찾을 수 없다." << endl;
+
+		return;
+	}
+
+	int chapter_Choice = -1;
+
+	cout << endl;
+	cout << "========================================" << endl;
+	cout << "[ 챕터 선택 ]" << endl;
+	cout << "========================================" << endl;
+
+	cout << "1. 챕터 1 - 변수·조건문 숲" << endl;
+	cout << "2. 챕터 2 - 배열·반복문 바다" << endl;
+	cout << "3. 챕터 3 - 함수 유적" << endl;
+	cout << "4. 챕터 4 - 포인터·메모리 묘지" << endl;
+	cout << "5. 챕터 5 - 객체지향·STL 공장" << endl;
+	cout << "0. 이전 메뉴로 돌아가기" << endl;
+	cout << "========================================" << endl;
+	cout << "선택: ";
+
+	cin >> chapter_Choice;
+
+	Chapter_Type selected_Chapter = Chapter_Type::VARIABLE_CONDITION_FOREST;
+
+	switch (chapter_Choice)
+	{
+	case 1:
+	{
+		selected_Chapter = Chapter_Type::VARIABLE_CONDITION_FOREST;
+
+		break;
+	}
+
+	case 2:
+	{
+		selected_Chapter = Chapter_Type::ARRAY_LOOP_OCEAN;
+
+		break;
+	}
+
+	case 3:
+	{
+		selected_Chapter = Chapter_Type::FUNCTION_RUINS;
+
+		break;
+	}
+
+	case 4:
+	{
+		selected_Chapter = Chapter_Type::POINTER_MEMORY_GRAVEYARD;
+
+		break;
+	}
+
+	case 5:
+	{
+		selected_Chapter = Chapter_Type::OBJECT_STL_FACTORY;
+
+		break;
+	}
+
+	case 0:
+	{
+		cout << "이전 메뉴로 돌아간다." << endl;
+
+		return;
+	}
+
+	default:
+	{
+		cout << "잘못된 챕터 선택." << endl;
+
+		return;
+	}
+	}
+
+	_current_Chapter = selected_Chapter;
+	_current_Chapter_Score = 0;
+	_has_Elite_Appeared_In_Current_Chapter = false;
+
+	cout << endl;
+	cout << "========================================" << endl;
+	cout << "[ 선택한 챕터로 이동 ]" << endl;
+	cout << "========================================" << endl;
+	cout << Get_Chapter_Name(_current_Chapter) << "에 들어선다." << endl;
+	cout << "========================================" << endl;
+
+	Run_Current_Chapter(player, inventory);
 }
 
 string Dungeon_Manager::Get_Chapter_Name(Chapter_Type chapter_Type) const
@@ -382,7 +513,7 @@ void Dungeon_Manager::Run_Tutor_Challenge(Player* player, Inventory<Item>& inven
 	{
 		Apply_Tutor_Gimmick_Failure_Penalty();
 
-		cout << endl << "튜터님 시험에 다시 도전할 수 있다." << endl;
+		cout << endl << "다시 점수를 채워 튜터님 시험에 다시 도전하세요." << endl;
 		return;
 	}
 

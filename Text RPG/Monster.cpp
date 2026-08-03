@@ -1103,7 +1103,7 @@ void Monster::Generate_Drop_Reward()
 		energy_Drink._Item_Type_Usable = true;
 		energy_Drink._Item_Type_Wearable = false;
 		energy_Drink._Item_Description =
-			"집중력을 다시 끌어올리는 에너지드링크. "
+			"집중력을 끌어올리는 에너지드링크. "
 			"사용하면 MP를 50 회복한다.";
 
 		_drop_Items.push_back(energy_Drink);
