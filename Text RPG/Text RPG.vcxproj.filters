@@ -146,7 +146,7 @@
     <ClInclude Include="Items_Equipments_Repository.h">
       <Filter>헤더 파일\Item</Filter>
     </ClInclude>
-    <ClInclude Include="Basic_Sword.h">
+    <ClInclude Include="Basic_Mouse.h">
       <Filter>헤더 파일\Specific_Items</Filter>
     </ClInclude>
   </ItemGroup>
