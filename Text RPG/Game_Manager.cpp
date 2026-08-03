@@ -1,4 +1,4 @@
-#include "Game_Manager.h"
+ï»¿#include "Game_Manager.h"
 #include "Player.h"
 #include "Job_Selection.h"
 #include "JYJ.h"  
@@ -17,7 +17,7 @@ Game_Manager::Game_Manager()
 
 Game_Manager::~Game_Manager()
 {
-    delete _Player;   //¼Ò¸êÀÚ¿¡¼­ ¹İµå½Ã ÇØÁ¦
+    delete _Player;   //ì†Œë©¸ìì—ì„œ ë°˜ë“œì‹œ í•´ì œ
 }
 
 void Game_Manager::Run()
@@ -25,7 +25,7 @@ void Game_Manager::Run()
     _Console.Set_Console_Size();
     _Console.Clear();
 
-    _Intro.Show(_Console, _Art);   // ¸â¹ö ÇÔ¼ö È£Ãâ
+    _Intro.Show(_Console, _Art);   // ë©¤ë²„ í•¨ìˆ˜ í˜¸ì¶œ
 
     Create_Player();
     Show_Main_Menu();
@@ -41,7 +41,7 @@ void Game_Manager::Create_Player()
         break;
 
     default:
-        cout << "Àß¸øµÈ Á÷¾÷ ¼±ÅÃÀÔ´Ï´Ù. ±âº» Á÷¾÷À¸·Î ½ÃÀÛÇÕ´Ï´Ù." << endl;
+        cout << "ì˜ëª»ëœ ì§ì—… ì„ íƒì…ë‹ˆë‹¤. ê¸°ë³¸ ì§ì—…ìœ¼ë¡œ ì‹œì‘í•©ë‹ˆë‹¤." << endl;
         _Player = new JYJ("JYJ");
         break;
     }
@@ -55,10 +55,10 @@ void Game_Manager::Show_Main_Menu()
     {
         cout << endl;
         cout << "========================================" << endl;
-        cout << "1. ´øÀü ÀÔÀå" << endl;
-        cout << "2. ÀÎº¥Åä¸®" << endl;
-        cout << "0. °ÔÀÓ Á¾·á" << endl;
-        cout << "¼±ÅÃ: ";
+        cout << "1. ë˜ì „ ì…ì¥" << endl;
+        cout << "2. ì¸ë²¤í† ë¦¬" << endl;
+        cout << "0. ê²Œì„ ì¢…ë£Œ" << endl;
+        cout << "ì„ íƒ: ";
 
         int choice = -1;
         cin >> choice;
@@ -74,19 +74,19 @@ void Game_Manager::Show_Main_Menu()
             break;
 
         case 0:
-            cout << "°ÔÀÓÀ» Á¾·áÇÕ´Ï´Ù." << endl;
+            cout << "ê²Œì„ì„ ì¢…ë£Œí•©ë‹ˆë‹¤." << endl;
             is_Running = false;
             break;
 
         default:
-            cout << "Àß¸øµÈ ¼±ÅÃÀÔ´Ï´Ù." << endl;
+            cout << "ì˜ëª»ëœ ì„ íƒì…ë‹ˆë‹¤." << endl;
             break;
         }
 
         if (_Player != nullptr && _Player->Get_Hp() <= 0)
         {
             cout << endl;
-            cout << "ÇÃ·¹ÀÌ¾î°¡ »ç¸ÁÇß½À´Ï´Ù. °ÔÀÓÀ» Á¾·áÇÕ´Ï´Ù." << endl;
+            cout << "í”Œë ˆì´ì–´ê°€ ì‚¬ë§í–ˆìŠµë‹ˆë‹¤. ê²Œì„ì„ ì¢…ë£Œí•©ë‹ˆë‹¤." << endl;
             is_Running = false;
         }
     }

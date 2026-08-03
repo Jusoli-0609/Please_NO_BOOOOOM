@@ -1,7 +1,7 @@
-#pragma once
+ï»¿#pragma once
 
 class Console_Manager;     
-class Ascii_Art_Manager;    // Àü¹æ ¼±¾ð
+class Ascii_Art_Manager;    // ì „ë°© ì„ ì–¸
 
 class Intro
 {
