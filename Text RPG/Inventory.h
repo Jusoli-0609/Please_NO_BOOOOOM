@@ -3,6 +3,7 @@
 	#include <map>
 	#include <string>
 	#include <vector>
+#include "Equipment.h"
 
 	#include "Item.h"
 	#include "Player.h"
@@ -29,7 +30,8 @@
 		int Get_Capacity() const;//3-4 무게 조회
 		//4.인벤토리 출력 관련 함수 파트
 		void Print_Inventory() const;//4-1 인벤토리 및 내용물 출력
-		void Print_Inventory_Menu();//4-2 인벤토리 메뉴(선택지) 출력
+		void Print_Inventory_Menu(Currently_Equipped_Equipments& currently_equipped_equipments,
+			Inventory_For_Equipments_Only& inventory_for_equipments_only);//4-2 인벤토리 메뉴(선택지) 출력
 		//5.인벤토리 기능 함수 파트
 		bool Add_Or_Increase_Item(const T& new_item);// 5-1 아이템 추가 및 갯수 증가
 		bool Use_Item_By_Name(const std::string& item_name);// 5-2 5-2 이름으로 아이템 사용 성공 및 갯수 감소
