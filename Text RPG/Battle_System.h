@@ -5,6 +5,9 @@
 #include "Monster.h"
 #include "Inventory.h"
 #include "Item.h"
+#include "Quiz_Bank.h" // [추가] Quiz 및 vector<Quiz> 인식을 위해 필수
+
+#include <vector>
 
 // 전투 메뉴 상수
 enum Battle_Menu
@@ -13,7 +16,6 @@ enum Battle_Menu
     SKILL = 2,
     ITEM = 3
 };
-
 
 void Battle(Player* player, Monster& monster, Inventory<Item>& inventory);
 
@@ -37,7 +39,11 @@ void Give_Battle_Item_Reward(Player* player, Monster& monster, Inventory<Item>& 
 
 void Boss_Battle(Player* player, Monster& monster, Inventory<Item>& inventory);
 
-bool Run_Final_Boss_Quiz_Phase(Monster_Type bossType);
-void Final_Boss_Monster_Turn(Player* player, Monster& monster);
+// ===================================================
+// [최종 보스전 전용 함수 선언]
+// ===================================================
+bool Ask_Single_Quiz(const Quiz& quiz);
+void First_Impression_Quiz_Phase(Player* player, Monster& monster, std::vector<Quiz>& quizPool);
+void Final_Boss_Monster_Turn(Player* player, Monster& monster, int turnCount, std::vector<Quiz>& quizPool);
 
 #endif // BATTLE_SYSTEM_H
