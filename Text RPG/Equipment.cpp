@@ -268,7 +268,7 @@ bool Currently_Equipped_Equipments::Equip_Equipment(const Equipment& equipment)
 
     return true;
 }
-
+//Âø¿ëÁßÀÎ°¡
 bool Currently_Equipped_Equipments::Is_Equipment_Equipped(Equipment_Type type) const
 {
     switch (type)
