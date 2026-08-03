@@ -123,7 +123,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Basic_Sword.cpp" />
+    <ClCompile Include="Basic_Engine.cpp" />
+    <ClCompile Include="Basic_Mouse.cpp" />
     <ClCompile Include="Battle_Elite_Skill.cpp" />
     <ClCompile Include="Character_Creator.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -177,6 +178,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Basic_Engine.h" />
     <ClInclude Include="Basic_Mouse.h" />
     <ClInclude Include="Battle_Elite_Skill.h" />
     <ClInclude Include="Character_Creator.h">
@@ -229,6 +231,7 @@
     <ClInclude Include="Player_Stat_Index.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="Stat_Modifier.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
