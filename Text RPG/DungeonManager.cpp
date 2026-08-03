@@ -890,39 +890,43 @@ Item Dungeon_Manager::Create_Tutor_Clear_Item(Chapter_Type chapter_Type) const
 	case Chapter_Type::VARIABLE_CONDITION_FOREST:
 		tutor_Item._Item_Name = "손승현 튜터님의 로지텍 마우스";
 		tutor_Item._Item_Ascii_Art =
-			R"( .----.
-|  |   |
-|      |
- '----')";
+			R"(  .----.
+ /  ||  \
+|   ||   |
+ \______/)";
 		break;
 	case Chapter_Type::ARRAY_LOOP_OCEAN:
 		tutor_Item._Item_Name = "박은일 튜터님의 갈축 키보드";
 		tutor_Item._Item_Ascii_Art =
 			R"(+--------+
 |[][][][]|
-|[][][][]|
+|[______]|
 +--------+)";
 		break;
 	case Chapter_Type::FUNCTION_RUINS:
 		tutor_Item._Item_Name = "강신호 튜터님의 게이밍 헤드셋";
 		tutor_Item._Item_Ascii_Art =
-			R"( /----\
-| ()() |
-|_||___|)";
+			tutor_Item._Item_Ascii_Art =
+			R"( /------\
+| ()  ()|
+|  \__/ |
+ \_||__/)";
 
 		break;
 	case Chapter_Type::POINTER_MEMORY_GRAVEYARD:
 		tutor_Item._Item_Name = "문승현 튜터님의 최고버전 언리얼엔진";
 		tutor_Item._Item_Ascii_Art =
 			R"(+--------+
-| UE 5.X |
-| [MAX]  |
+| UE5.X  |
+| <MAX>  |
 +--------+)";
 		break;
 	case Chapter_Type::OBJECT_STL_FACTORY:
 		tutor_Item._Item_Name = "김하늘 튜터님의 도수높은 안경";
 		tutor_Item._Item_Ascii_Art =
-			R"(()--())";
+			R"( .--..--.
+(  )(  )
+ '--''--')";
 		break;
 	default:
 		tutor_Item._Item_Name = "";
