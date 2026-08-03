@@ -8,43 +8,43 @@
 
 using namespace std;
 
-//1.¾ÆÀÌÅÛ ³»º¸³»±â
+//1.ì•„ì´í…œ ë‚´ë³´ë‚´ê¸°
 void Item::Print_Info() const
 {
-    cout << "¾ÆÀÌÅÛ ÀÌ¸§: "
-        << _Item_Name << ", °¡°İ: "
-        << _Item_Price << ", °¹¼ö:"
-        << _Item_Count << ", °¹¼ö´ç ¹«°Ô: "
+    cout << "ì•„ì´í…œ ì´ë¦„: "
+        << _Item_Name << ", ê°€ê²©: "
+        << _Item_Price << ", ê°¯ìˆ˜:"
+        << _Item_Count << ", ê°¯ìˆ˜ë‹¹ ë¬´ê²Œ: "
         << _Item_Weight << endl;
 }
 
-//2.¾ÆÀÌÅÛ È¿°ú Àû¿ë
+//2.ì•„ì´í…œ íš¨ê³¼ ì ìš©
 bool Item::Item_Effect(Player& player, Monster& monster)
 {
-    if (_Item_Name == "HP Æ÷¼Ç")
+    if (_Item_Name == "HP í¬ì…˜")
     {
         player.Set_Hp(
                       min(player.Get_Hp() + 50, player.GetMaxHP()));
 
-        cout << "Ã¼·ÂÀ» È¸º¹ÇØ ÇöÀç Ã¼·ÂÀº "
+        cout << "ì²´ë ¥ì„ íšŒë³µí•´ í˜„ì¬ ì²´ë ¥ì€ "
             << player.Get_Hp()
-            << "ÀÌ´Ù."
+            << "ì´ë‹¤."
             << endl;
 
         return true;
     }
-    else if (_Item_Name == "MP Æ÷¼Ç")
+    else if (_Item_Name == "MP í¬ì…˜")
     {
         player.Set_Mp(min(player.Get_Mp() + 50, player.GetMaxMP()));
 
-        cout << "¸¶³ª¸¦ È¸º¹ÇØ ÇöÀç ¸¶³ª´Â "
+        cout << "ë§ˆë‚˜ë¥¼ íšŒë³µí•´ í˜„ì¬ ë§ˆë‚˜ëŠ” "
             << player.Get_Mp()
-            << "ÀÌ´Ù."
+            << "ì´ë‹¤."
             << endl;
 
         return true;
     }
-    else if (_Item_Name == "ÀÏ½ÃÀûÀÎ °ø°İ·Â ¹öÇÁ ¾ÆÀÌÅÛ ¿¹½ÃÀÓ")
+    else if (_Item_Name == "ì¼ì‹œì ì¸ ê³µê²©ë ¥ ë²„í”„ ì•„ì´í…œ ì˜ˆì‹œì„")
     {
         player.Set_ATK(player.Get_ATK() + 50);
         _Need_Item_Reverse_Effect = true;
@@ -54,7 +54,7 @@ bool Item::Item_Effect(Player& player, Monster& monster)
     return false;
 }
 
-//3.¾ÆÀÌÅÛ È¿°ú ÇØÁ¦
+//3.ì•„ì´í…œ íš¨ê³¼ í•´ì œ
 bool Item::Item_Effect_Reverse(Player& player, Monster& monster)
 {
     if (_Need_Item_Reverse_Effect == true)

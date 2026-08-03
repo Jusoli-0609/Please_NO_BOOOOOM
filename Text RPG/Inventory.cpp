@@ -11,7 +11,7 @@
 
 using namespace std;
 
-template<typename T>//1-1 ±âº» »ı¼ºÀÚ
+template<typename T>//1-1 ê¸°ë³¸ ìƒì„±ì
 Inventory<T>::Inventory(int max_inventory_size, int max_capacity)
 {
     _Max_Inventory_Size = max_inventory_size;
@@ -22,8 +22,8 @@ Inventory<T>::Inventory(int max_inventory_size, int max_capacity)
     }
 }
 
-template<typename T>//1- 2º¹»ç »ı¼ºÀÚ
-Inventory<T>::Inventory(const Inventory<T>& other)// ±âÁ¸ °´Ã¼¿Í °°Àº »óÅÂ¸¦ °¡Áø »õ °´Ã¼°¡ ÇÊ¿äÇÒ ¶§ ¾²ÀÓ)
+template<typename T>//1- 2ë³µì‚¬ ìƒì„±ì
+Inventory<T>::Inventory(const Inventory<T>& other)// ê¸°ì¡´ ê°ì²´ì™€ ê°™ì€ ìƒíƒœë¥¼ ê°€ì§„ ìƒˆ ê°ì²´ê°€ í•„ìš”í•  ë•Œ ì“°ì„)
 {
     _Max_Inventory_Size = other._Max_Inventory_Size;
     if (other._Current_Quantity_Of_Items > other._Max_Inventory_Size)
@@ -43,8 +43,8 @@ Inventory<T>::Inventory(const Inventory<T>& other)// ±âÁ¸ °´Ã¼¿Í °°Àº »óÅÂ¸¦ °¡Á
     }
 }
 
-template<typename T>//2-1 ´ëÀÔ ¿¬»êÀÚ 
-Inventory<T>& Inventory<T>::operator=(const Inventory<T>& other)//(´Ù¸¥ Inventory<T> °´Ã¼¸¦ ¹Ş¾Æ¼­, ÇöÀç °´Ã¼¿¡ º¹»çÇÏ°í, ÇöÀç °´Ã¼ ÀÚ½ÅÀ» ¹İÈ¯)
+template<typename T>//2-1 ëŒ€ì… ì—°ì‚°ì 
+Inventory<T>& Inventory<T>::operator=(const Inventory<T>& other)//(ë‹¤ë¥¸ Inventory<T> ê°ì²´ë¥¼ ë°›ì•„ì„œ, í˜„ì¬ ê°ì²´ì— ë³µì‚¬í•˜ê³ , í˜„ì¬ ê°ì²´ ìì‹ ì„ ë°˜í™˜)
 {
     if (this == &other)
     {
@@ -63,7 +63,7 @@ Inventory<T>& Inventory<T>::operator=(const Inventory<T>& other)//(´Ù¸¥ Inventor
     return *this;
 }
 
-template<typename T>//3-1 ÀÎº¥Åä¸® ÃÑ ¹«°Ô ÇÔ¼ö
+template<typename T>//3-1 ì¸ë²¤í† ë¦¬ ì´ ë¬´ê²Œ í•¨ìˆ˜
 int Inventory<T>::Get_Total_Weight()const
 {
     int Total_Weight = 0;
@@ -74,7 +74,7 @@ int Inventory<T>::Get_Total_Weight()const
     return Total_Weight;
 }
 
-template<typename T>// 3-2 ÀÎº¥Åä¸® Index  °¡Á®¿À±â
+template<typename T>// 3-2 ì¸ë²¤í† ë¦¬ Index  ê°€ì ¸ì˜¤ê¸°
 T* Inventory<T>::Get_Item_By_Index(int index)
 {
     if (index < 0 || index >= _Current_Quantity_Of_Items)
@@ -84,22 +84,22 @@ T* Inventory<T>::Get_Item_By_Index(int index)
     return &_Inventory_Items[index];
 }
 
-template<typename T>//3-3 ÀÎº¥Åä¸® »çÀÌÁî °¡Á®¿À±â
+template<typename T>//3-3 ì¸ë²¤í† ë¦¬ ì‚¬ì´ì¦ˆ ê°€ì ¸ì˜¤ê¸°
 int Inventory<T>::Get_Size()const
 {
     return _Current_Quantity_Of_Items;
 }
 
-template<typename T>// 3-4 ÀÎº¥Åä¸® ¹«°Ô °¡Á®¿À±â
+template<typename T>// 3-4 ì¸ë²¤í† ë¦¬ ë¬´ê²Œ ê°€ì ¸ì˜¤ê¸°
 int Inventory<T>::Get_Capacity() const
 {
     return _Max_Capacity;
 }
 
-template <typename T>//4-1 ÀÎº¥Åä¸® ¹× ³»¿ë¹° Ãâ·Â
+template <typename T>//4-1 ì¸ë²¤í† ë¦¬ ë° ë‚´ìš©ë¬¼ ì¶œë ¥
 void Inventory<T>::Print_Inventory() const
 {
-    cout << "===== ÀÎº¥Åä¸® =====" << endl;
+    cout << "===== ì¸ë²¤í† ë¦¬ =====" << endl;
     int  Inventory_Order_Index = 1;
     for (int i = 0; i < _Current_Quantity_Of_Items; i++)
     {
@@ -108,22 +108,22 @@ void Inventory<T>::Print_Inventory() const
         _Inventory_Items[i].Print_Info();
         Inventory_Order_Index++;
     }
-    cout << " ÇöÀç ¹«°Ô  : " <<
-        Get_Total_Weight() << "ÃÖ´ë Çã¿ë ¹«°Ô  : " <<
-        _Max_Capacity << " ³²Àº Çã¿ë ¹«°Ô  : " <<
+    cout << " í˜„ì¬ ë¬´ê²Œ  : " <<
+        Get_Total_Weight() << "ìµœëŒ€ í—ˆìš© ë¬´ê²Œ  : " <<
+        _Max_Capacity << " ë‚¨ì€ í—ˆìš© ë¬´ê²Œ  : " <<
         _Max_Capacity - Get_Total_Weight() << endl;
 }
 
-template <typename T>//4-2 ÀÎº¥Åä¸® ¸Ş´º Ãâ·Â
+template <typename T>//4-2 ì¸ë²¤í† ë¦¬ ë©”ë‰´ ì¶œë ¥
 void Inventory<T>::Print_Inventory_Menu()
 {
     cout << R"(
-    ¹«¾ùÀ» ÇÒ±î?
-    1. ÀüÃ¼ ÀÎº¥Åä¸® º¸±â
-    2. ¾ÆÀÌÅÛ Á¤·Ä
-    3. ¾ÆÀÌÅÛ ¼ø¼­ ¹Ù²Ù±â
-    4. ¾ÆÀÌÅÛ ¹ö¸®±â
-    0. µÇµ¹¾Æ°¡±â)" << endl;
+    ë¬´ì—‡ì„ í• ê¹Œ?
+    1. ì „ì²´ ì¸ë²¤í† ë¦¬ ë³´ê¸°
+    2. ì•„ì´í…œ ì •ë ¬
+    3. ì•„ì´í…œ ìˆœì„œ ë°”ê¾¸ê¸°
+    4. ì•„ì´í…œ ë²„ë¦¬ê¸°
+    0. ë˜ëŒì•„ê°€ê¸°)" << endl;
     int Choose_Inventory_Menu;
     cin >> Choose_Inventory_Menu;
     switch (Choose_Inventory_Menu)
@@ -160,25 +160,25 @@ void Inventory<T>::Print_Inventory_Menu()
     }
 }
 
-template<typename T>//5-1 ¾ÆÀÌÅÛ Ãß°¡ ¹× °¹¼ö Áõ°¡
+template<typename T>//5-1 ì•„ì´í…œ ì¶”ê°€ ë° ê°¯ìˆ˜ ì¦ê°€
 bool Inventory<T>::Add_Or_Increase_Item(const T& new_item)
 {
     int New_Item_Weight = new_item._Item_Weight * new_item._Item_Count;
-    T* Found_Item = nullptr;  //  °°Àº ¾ÆÀÌÅÛÀ» °¡¸®Å³ Æ÷ÀÎÅÍ º¯¼ö ¼±¾ğ
-    for (int i = 0; i < _Current_Quantity_Of_Items; i++)//¼øÈ¸ ¹İº¹¹®
+    T* Found_Item = nullptr;  //  ê°™ì€ ì•„ì´í…œì„ ê°€ë¦¬í‚¬ í¬ì¸í„° ë³€ìˆ˜ ì„ ì–¸
+    for (int i = 0; i < _Current_Quantity_Of_Items; i++)//ìˆœíšŒ ë°˜ë³µë¬¸
     {
         if (_Inventory_Items[i]._Item_Name == new_item._Item_Name)
         {
-            Found_Item = &_Inventory_Items[i];//foundItem¿¡ ÇöÀç itemÀÇ ÁÖ¼Ò ÀúÀå
+            Found_Item = &_Inventory_Items[i];//foundItemì— í˜„ì¬ itemì˜ ì£¼ì†Œ ì €ì¥
             break;
         }
     }
-    //1.¹«°Ô °Ë»ç
+    //1.ë¬´ê²Œ ê²€ì‚¬
     while (Get_Total_Weight() + New_Item_Weight > _Max_Capacity)
     {
-        cout << "ÀÎº¥Åä¸®ÀÇ ¹«°Ô°¡ ÃÑ ¿ë·®À» ÃÊ°úÇß´Ù! ¹°°ÇÀ» ¹ö¸± °ÍÀÎ°¡?" << endl;
-        cout << "1. ¹ö¸®±â" << endl;
-        cout << "2. Ãë¼Ò" << endl;
+        cout << "ì¸ë²¤í† ë¦¬ì˜ ë¬´ê²Œê°€ ì´ ìš©ëŸ‰ì„ ì´ˆê³¼í–ˆë‹¤! ë¬¼ê±´ì„ ë²„ë¦´ ê²ƒì¸ê°€?" << endl;
+        cout << "1. ë²„ë¦¬ê¸°" << endl;
+        cout << "2. ì·¨ì†Œ" << endl;
         int Choose_Item_To_Get_Rid_Of;
         cin >> Choose_Item_To_Get_Rid_Of;
         if (Choose_Item_To_Get_Rid_Of == 1)
@@ -189,7 +189,7 @@ bool Inventory<T>::Add_Or_Increase_Item(const T& new_item)
             {
                 if (_Inventory_Items[i]._Item_Name == new_item._Item_Name)
                 {
-                    Found_Item = &_Inventory_Items[i]; //´ó±Û¸µ Æ÷ÀÎÅÍ ¹æÁö
+                    Found_Item = &_Inventory_Items[i]; //ëŒ•ê¸€ë§ í¬ì¸í„° ë°©ì§€
                     break;
                 }
             }
@@ -200,20 +200,20 @@ bool Inventory<T>::Add_Or_Increase_Item(const T& new_item)
         }
         else
         {
-            cout << "Àß¸øµÈ ÀÔ·ÂÀÌ´Ù!" << endl;
+            cout << "ì˜ëª»ëœ ì…ë ¥ì´ë‹¤!" << endl;
         }
     }
     if (Found_Item != nullptr)
     {
         Found_Item->_Item_Count += new_item._Item_Count;
-        cout << new_item._Item_Name << "ÀÇ °¹¼ö°¡ " << new_item._Item_Count << "¸¸Å­ Áõ°¡Çß´Ù!" << endl;
+        cout << new_item._Item_Name << "ì˜ ê°¯ìˆ˜ê°€ " << new_item._Item_Count << "ë§Œí¼ ì¦ê°€í–ˆë‹¤!" << endl;
         return true;
     }
     while (_Current_Quantity_Of_Items >= _Max_Inventory_Size)
     {
-        cout << "ÀÎº¥Åä¸® ½½·ÔÀÌ °¡µæ Ã¡´Ù! ¾î¶² ¹°°ÇÀ» ¹ö¸± °ÍÀÎ°¡?" << endl;
-        cout << "1. ¹ö¸®±â" << endl;
-        cout << "2. Ãë¼Ò" << endl;
+        cout << "ì¸ë²¤í† ë¦¬ ìŠ¬ë¡¯ì´ ê°€ë“ ì°¼ë‹¤! ì–´ë–¤ ë¬¼ê±´ì„ ë²„ë¦´ ê²ƒì¸ê°€?" << endl;
+        cout << "1. ë²„ë¦¬ê¸°" << endl;
+        cout << "2. ì·¨ì†Œ" << endl;
         int Choose_Item_To_Get_Rid_Of;
         cin >> Choose_Item_To_Get_Rid_Of;
         if (Choose_Item_To_Get_Rid_Of == 1)
@@ -226,16 +226,16 @@ bool Inventory<T>::Add_Or_Increase_Item(const T& new_item)
         }
         else
         {
-            cout << "Àß¸øµÈ ÀÔ·ÂÀÌ´Ù!" << endl;
+            cout << "ì˜ëª»ëœ ì…ë ¥ì´ë‹¤!" << endl;
         }
     }
     _Inventory_Items[_Current_Quantity_Of_Items] = new_item;
     _Current_Quantity_Of_Items++;
-    cout << "»õ·Î¿î ¾ÆÀÌÅÛ : " << new_item._Item_Name << "°¡ Ãß°¡µÆ´Ù!" << endl;
+    cout << "ìƒˆë¡œìš´ ì•„ì´í…œ : " << new_item._Item_Name << "ê°€ ì¶”ê°€ëë‹¤!" << endl;
     return true;
 }
 
-template<typename T>//5-2 ÀÌ¸§À¸·Î ¾ÆÀÌÅÛ »ç¿ë ¼º°ø ¹× °¹¼ö °¨¼Ò
+template<typename T>//5-2 ì´ë¦„ìœ¼ë¡œ ì•„ì´í…œ ì‚¬ìš© ì„±ê³µ ë° ê°¯ìˆ˜ ê°ì†Œ
 bool Inventory<T>::Use_Item_By_Name(const string& item_name)
 {
     for (int i = 0; i < _Current_Quantity_Of_Items; i++)
@@ -261,26 +261,26 @@ bool Inventory<T>::Use_Item_By_Name(const string& item_name)
     return false;
 }
 
-template <typename T>//5-3 ÀüÅõ Áß ¾ÆÀÌÅÛ »ç¿ë
+template <typename T>//5-3 ì „íˆ¬ ì¤‘ ì•„ì´í…œ ì‚¬ìš©
 void Inventory<T>::Use_Item_In_Battle(Player& player, Monster& monster)
 {
     if (_Current_Quantity_Of_Items == 0)
     {
-        cout << "»ç¿ëÇÒ ¾ÆÀÌÅÛÀÌ ¾ø´Ù!" << endl;
+        cout << "ì‚¬ìš©í•  ì•„ì´í…œì´ ì—†ë‹¤!" << endl;
         return;
     }
     Print_Inventory();
     int Choose_Item_To_Use_In_Battle;
-    cout << "ÀüÅõ Áß »ç¿ëÇÒ ¾ÆÀÌÅÛÀ» °í¸£¼¼¿ä!" << endl;
+    cout << "ì „íˆ¬ ì¤‘ ì‚¬ìš©í•  ì•„ì´í…œì„ ê³ ë¥´ì„¸ìš”!" << endl;
     cin >> Choose_Item_To_Use_In_Battle;
     int Vector_Index = Choose_Item_To_Use_In_Battle - 1;
-    T* selected_item = Get_Item_By_Index(Vector_Index); //  GetItemByIndex È£Ãâ °á°ú¸¦ ÀúÀåÇÒ Item Æ÷ÀÎÅÍ º¯¼ö ¼±¾ğ
+    T* selected_item = Get_Item_By_Index(Vector_Index); //  GetItemByIndex í˜¸ì¶œ ê²°ê³¼ë¥¼ ì €ì¥í•  Item í¬ì¸í„° ë³€ìˆ˜ ì„ ì–¸
     if (selected_item == nullptr)
     {
-        cout << "Àß¸øµÈ ¾ÆÀÌÅÛ ¹øÈ£´Ù!" << endl;
+        cout << "ì˜ëª»ëœ ì•„ì´í…œ ë²ˆí˜¸ë‹¤!" << endl;
         return;
     }
-    string selected_item_name = selected_item->_Item_Name; // ¼±ÅÃÇÑ ¾ÆÀÌÅÛ ÀÌ¸§À» ÀúÀåÇÒ string º¯¼ö ¼±¾ğ
+    string selected_item_name = selected_item->_Item_Name; // ì„ íƒí•œ ì•„ì´í…œ ì´ë¦„ì„ ì €ì¥í•  string ë³€ìˆ˜ ì„ ì–¸
     if (selected_item->_Item_Type_Usable == true)
     {
         selected_item->Item_Effect(player, monster);
@@ -289,36 +289,36 @@ void Inventory<T>::Use_Item_In_Battle(Player& player, Monster& monster)
     }
     else
     {
-        cout << "»ç¿ëÇÒ ¼ö ¾ø´Â ¾ÆÀÌÅÛÀÌ´Ù!" << endl;
+        cout << "ì‚¬ìš©í•  ìˆ˜ ì—†ëŠ” ì•„ì´í…œì´ë‹¤!" << endl;
         return;
     }
 }
 
-template <typename T>//5-4 ¹°°Ç ¹ö¸®±â
+template <typename T>//5-4 ë¬¼ê±´ ë²„ë¦¬ê¸°
 void Inventory<T>::Throw_Away_Item()
 {
     if (_Current_Quantity_Of_Items == 0)
     {
-        cout << "¹ö¸± ¾ÆÀÌÅÛÀÌ ¾ø´Ù!" << endl;
+        cout << "ë²„ë¦´ ì•„ì´í…œì´ ì—†ë‹¤!" << endl;
         return;
     }
     Print_Inventory();
     int Selected_Index;
-    cout << "¸î ¹ø ¾ÆÀÌÅÛÀ» ¹ö¸± °ÍÀÎ°¡?" << endl;
+    cout << "ëª‡ ë²ˆ ì•„ì´í…œì„ ë²„ë¦´ ê²ƒì¸ê°€?" << endl;
     cin >> Selected_Index;
     while (Selected_Index<1 || Selected_Index>_Current_Quantity_Of_Items)
     {
-        cout << "Àß¸øµÈ ÀÔ·ÂÀÌ´Ù. ´Ù½Ã ÀÔ·ÂÇÏ¼¼¿ä." << endl;
+        cout << "ì˜ëª»ëœ ì…ë ¥ì´ë‹¤. ë‹¤ì‹œ ì…ë ¥í•˜ì„¸ìš”." << endl;
         cin >> Selected_Index;
     }
     int Vector_Index = Selected_Index - 1;
     int Trash_Count;
-    cout << "¹ö¸± ¾ÆÀÌÅÛ°ú °¹¼ö¸¦ ÀÔ·ÂÇÏ¼¼¿ä.(´Ù ¹ö¸®±æ ¿øÇÒ °æ¿ì 0¹øÀ» ´©¸£¼¼¿ä)" << endl;
-    cout << "Ãë¼Ò¸¦ ¿øÇÒ °æ¿ì ¼ıÀÚ ´ë½Å ¾Æ¹« Å°³ª ´©¸£¼¼¿ä." << endl;
+    cout << "ë²„ë¦´ ì•„ì´í…œê³¼ ê°¯ìˆ˜ë¥¼ ì…ë ¥í•˜ì„¸ìš”.(ë‹¤ ë²„ë¦¬ê¸¸ ì›í•  ê²½ìš° 0ë²ˆì„ ëˆ„ë¥´ì„¸ìš”)" << endl;
+    cout << "ì·¨ì†Œë¥¼ ì›í•  ê²½ìš° ìˆ«ì ëŒ€ì‹  ì•„ë¬´ í‚¤ë‚˜ ëˆ„ë¥´ì„¸ìš”." << endl;
     cin >> Trash_Count;
     if (cin.fail())
     {
-        cout << "¾ÆÀÌÅÛ ¹ö¸®±â¸¦ Ãë¼ÒÇÑ´Ù!" << endl;
+        cout << "ì•„ì´í…œ ë²„ë¦¬ê¸°ë¥¼ ì·¨ì†Œí•œë‹¤!" << endl;
         cin.clear();
         cin.ignore(1000, '\n');
         return;
@@ -331,17 +331,17 @@ void Inventory<T>::Throw_Away_Item()
             _Inventory_Items[i] = _Inventory_Items[i + 1];
         }
        _Current_Quantity_Of_Items--;
-        cout << Remove_Item_Name << "À»(¸¦) ¸ğµÎ ¹ö·È´Ù!" << endl;
+        cout << Remove_Item_Name << "ì„(ë¥¼) ëª¨ë‘ ë²„ë ¸ë‹¤!" << endl;
 
     }
     else if (Trash_Count < 0)
     {
-        cout << "À½¼ö¸¦ ÀÔ·ÂÇÑ´Ù°í ¾ÆÀÌÅÛÀÌ ´Ã¾î³ªÁö ¾Ê´Â´Ù! ´Ù½Ã ÀÔ·ÂÇÏ¼¼¿ä." << endl;
+        cout << "ìŒìˆ˜ë¥¼ ì…ë ¥í•œë‹¤ê³  ì•„ì´í…œì´ ëŠ˜ì–´ë‚˜ì§€ ì•ŠëŠ”ë‹¤! ë‹¤ì‹œ ì…ë ¥í•˜ì„¸ìš”." << endl;
         return;
     }
     else if (Trash_Count > _Inventory_Items[Vector_Index]._Item_Count)
     {
-        cout << "°®°í ÀÖ´Â °¹¼öº¸´Ù ´õ ¸¹Àº °É ¹ö¸±·Á°í Çß´Ù. È®ÀÎÇÏ°í ´Ù½Ã ÀÔ·ÂÇÏ¼¼¿ä." << endl;
+        cout << "ê°–ê³  ìˆëŠ” ê°¯ìˆ˜ë³´ë‹¤ ë” ë§ì€ ê±¸ ë²„ë¦´ë ¤ê³  í–ˆë‹¤. í™•ì¸í•˜ê³  ë‹¤ì‹œ ì…ë ¥í•˜ì„¸ìš”." << endl;
         return;
     }
     else
@@ -356,44 +356,44 @@ void Inventory<T>::Throw_Away_Item()
                 _Inventory_Items[i] = _Inventory_Items[i + 1];
             }
             _Current_Quantity_Of_Items--;
-            cout << Remove_Item_Name << "À»(¸¦) ¸ğµÎ ¹ö·È´Ù." << endl;
+            cout << Remove_Item_Name << "ì„(ë¥¼) ëª¨ë‘ ë²„ë ¸ë‹¤." << endl;
             return;
         }
         else
         {
-            cout << Remove_Item_Name << "À»(¸¦) " << Trash_Count << "¸¸Å­ ¹ö·È½À´Ï´Ù." << endl;
+            cout << Remove_Item_Name << "ì„(ë¥¼) " << Trash_Count << "ë§Œí¼ ë²„ë ¸ìŠµë‹ˆë‹¤." << endl;
         }
     }
 }
 
-template <typename T>//5-5 ¸¶Áö¸· ¾ÆÀÌÅÛ Á¦°Å
+template <typename T>//5-5 ë§ˆì§€ë§‰ ì•„ì´í…œ ì œê±°
 void Inventory<T>::Remove_Last_Item()
 {
     if (_Current_Quantity_Of_Items == 0)
     {
-        cout << "Á¦°ÅÇÒ ¾ÆÀÌÅÛÀÌ ¾ø´Ù!" << endl;
+        cout << "ì œê±°í•  ì•„ì´í…œì´ ì—†ë‹¤!" << endl;
         return;
     }
     _Current_Quantity_Of_Items--;
-    cout << "¸¶Áö¸· ¾ÆÀÌÅÛÀ» Á¦°ÅÇß´Ù!" << endl;
+    cout << "ë§ˆì§€ë§‰ ì•„ì´í…œì„ ì œê±°í–ˆë‹¤!" << endl;
 }
 
-template <typename T>//5-6 ÀüÅõ Áß ¾ÆÀÌÅÛ ·£´ı »ç¿ë
+template <typename T>//5-6 ì „íˆ¬ ì¤‘ ì•„ì´í…œ ëœë¤ ì‚¬ìš©
 void Inventory<T>::Use_Random_Item_In_Battle(Player& player, Monster& monster)
 {
     if (_Current_Quantity_Of_Items == 0)
     {
-        cout << "»ç¿ëÇÒ ¾ÆÀÌÅÛÀÌ ¾ø´Ù!" << endl;
+        cout << "ì‚¬ìš©í•  ì•„ì´í…œì´ ì—†ë‹¤!" << endl;
         return;
     }
     Print_Inventory();
     int Random_Item_use = rand() % _Current_Quantity_Of_Items;
-    T* selected_item = Get_Item_By_Index(Random_Item_use); //  GetItemByIndex È£Ãâ °á°ú¸¦ ÀúÀåÇÒ Item Æ÷ÀÎÅÍ º¯¼ö ¼±¾ğ
+    T* selected_item = Get_Item_By_Index(Random_Item_use); //  GetItemByIndex í˜¸ì¶œ ê²°ê³¼ë¥¼ ì €ì¥í•  Item í¬ì¸í„° ë³€ìˆ˜ ì„ ì–¸
     if (selected_item == nullptr)
     {
         return;
     }
-    string selected_item_name = selected_item->_Item_Name; // ¼±ÅÃÇÑ ¾ÆÀÌÅÛ ÀÌ¸§À» ÀúÀåÇÒ string º¯¼ö ¼±¾ğ
+    string selected_item_name = selected_item->_Item_Name; // ì„ íƒí•œ ì•„ì´í…œ ì´ë¦„ì„ ì €ì¥í•  string ë³€ìˆ˜ ì„ ì–¸
     if (selected_item->_Item_Type_Usable == true)
     {
         selected_item->Item_Effect(player, monster);
@@ -403,10 +403,10 @@ void Inventory<T>::Use_Random_Item_In_Battle(Player& player, Monster& monster)
     else
     {
         int Mental_Damage = 100;
-        cout << "»ç¿ëÇÒ ¼ö ¾ø´Â ¾ÆÀÌÅÛÀÌ´Ù!" << endl;
-        cout << "¾ÈÅ¸±î¿î ÀÏÀÔ´Ï´Ù!" << endl;
-        cout << "¿îÀÌ ¾ø´Â ´ç½ÅÀ» ÁÖ´ÔÀÌ ºñ¿ô´Â´Ù!" << endl;
-        cout << "Á¤½ÅÀûÀÎ °íÅëÀ» ¹Ş´Â´Ù! µ¥¹ÌÁö¸¦ " << Mental_Damage << "¸¸Å­ ¹Ş´Â´Ù!" << endl;
+        cout << "ì‚¬ìš©í•  ìˆ˜ ì—†ëŠ” ì•„ì´í…œì´ë‹¤!" << endl;
+        cout << "ì•ˆíƒ€ê¹Œìš´ ì¼ì…ë‹ˆë‹¤!" << endl;
+        cout << "ìš´ì´ ì—†ëŠ” ë‹¹ì‹ ì„ ì£¼ë‹˜ì´ ë¹„ì›ƒëŠ”ë‹¤!" << endl;
+        cout << "ì •ì‹ ì ì¸ ê³ í†µì„ ë°›ëŠ”ë‹¤! ë°ë¯¸ì§€ë¥¼ " << Mental_Damage << "ë§Œí¼ ë°›ëŠ”ë‹¤!" << endl;
         player.Set_Hp(
                       max(0,
                              player.Get_Hp() - Mental_Damage));
@@ -414,16 +414,16 @@ void Inventory<T>::Use_Random_Item_In_Battle(Player& player, Monster& monster)
     }
 }
 
-template<typename T>//6-1 ¾ÆÀÌÅÛ Á¤·Ä
+template<typename T>//6-1 ì•„ì´í…œ ì •ë ¬
 void Inventory<T>::Sort_Inventory()
 {
      cout << R"(
-    ¾î¶² ±âÁØÀ¸·Î Á¤·ÄÇÒ±î¿ä?
-    1.ÀÌ¸§¼ø
-    2.¹«°Ô¼ø
-    3.°³¼ö¼ø
-    4.°¡°İ¼ø
-    0.Ãë¼Ò
+    ì–´ë–¤ ê¸°ì¤€ìœ¼ë¡œ ì •ë ¬í• ê¹Œìš”?
+    1.ì´ë¦„ìˆœ
+    2.ë¬´ê²Œìˆœ
+    3.ê°œìˆ˜ìˆœ
+    4.ê°€ê²©ìˆœ
+    0.ì·¨ì†Œ
     )" << endl;
     int Sort_Choice;
     cin >> Sort_Choice;
@@ -471,64 +471,64 @@ void Inventory<T>::Sort_Inventory()
 
     case 0:
     {
-        cout << "Á¤·ÄÀ» Ãë¼ÒÇÑ´Ù." << endl;
+        cout << "ì •ë ¬ì„ ì·¨ì†Œí•œë‹¤." << endl;
         break;
     }
     default:
     {
 
-        cout << "Àß¸øµÈ ÀÔ·ÂÀÌ´Ù." << endl;
+        cout << "ì˜ëª»ëœ ì…ë ¥ì´ë‹¤." << endl;
         break;
     }
     }
 }
 
-template<typename T>//6-2 ¾ÆÀÌÅÛ ¼ø¼­ °ñ¶ó ¹Ù²Ù±â
+template<typename T>//6-2 ì•„ì´í…œ ìˆœì„œ ê³¨ë¼ ë°”ê¾¸ê¸°
 void Inventory<T>::Change_Inventory_Order()
 {
     if (_Current_Quantity_Of_Items==0)
            {
-               cout << "ÀÎº¥Åä¸®°¡ ºñ¾î ÀÖ´Ù." << endl;
+               cout << "ì¸ë²¤í† ë¦¬ê°€ ë¹„ì–´ ìˆë‹¤." << endl;
                return;
            }
            if (_Current_Quantity_Of_Items < 2)
            {
-               cout << "¼ø¼­¸¦ ¹Ù²Ü ¾ÆÀÌÅÛÀÌ ºÎÁ·ÇÏ´Ù." << endl;
+               cout << "ìˆœì„œë¥¼ ë°”ê¿€ ì•„ì´í…œì´ ë¶€ì¡±í•˜ë‹¤." << endl;
                return;
            }
            Print_Inventory();
            int First_Selected_Index;
            int Second_Selected_Index;
           
-           cout << "Ã¹ ¹øÂ°·Î ¹Ù²Ü ¾ÆÀÌÅÛ ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ";
+           cout << "ì²« ë²ˆì§¸ë¡œ ë°”ê¿€ ì•„ì´í…œ ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”: ";
            cin >> First_Selected_Index;
          
           
            while (First_Selected_Index<1 || First_Selected_Index > _Current_Quantity_Of_Items)
            {
-               cout << "Àß¸øµÈ ÀÔ·ÂÀÌ´Ù. ´Ù½Ã ÀÔ·ÂÇÏ¼¼¿ä: ";
+               cout << "ì˜ëª»ëœ ì…ë ¥ì´ë‹¤. ë‹¤ì‹œ ì…ë ¥í•˜ì„¸ìš”: ";
                cin >> First_Selected_Index;
 
            }
-           cout << "µÎ ¹øÂ°·Î ¹Ù²Ü ¾ÆÀÌÅÛ ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ";
+           cout << "ë‘ ë²ˆì§¸ë¡œ ë°”ê¿€ ì•„ì´í…œ ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”: ";
            cin >> Second_Selected_Index;
            while (Second_Selected_Index<1 || Second_Selected_Index >_Current_Quantity_Of_Items)
            {
-               cout << "Àß¸øµÈ ÀÔ·ÂÀÌ´Ù. ´Ù½Ã ÀÔ·ÂÇÏ¼¼¿ä: ";
+               cout << "ì˜ëª»ëœ ì…ë ¥ì´ë‹¤. ë‹¤ì‹œ ì…ë ¥í•˜ì„¸ìš”: ";
                cin >> Second_Selected_Index;
            }
            if (First_Selected_Index == Second_Selected_Index)
            {
-               cout << "°°Àº ¾ÆÀÌÅÛ ¹øÈ£¸¦ ¼±ÅÃÇß´Ù. ¼ø¼­¸¦ º¯°æÇÏÁö ¾Ê´Â´Ù." << endl;
+               cout << "ê°™ì€ ì•„ì´í…œ ë²ˆí˜¸ë¥¼ ì„ íƒí–ˆë‹¤. ìˆœì„œë¥¼ ë³€ê²½í•˜ì§€ ì•ŠëŠ”ë‹¤." << endl;
                return;
            }
            int First_Vector_Index = First_Selected_Index - 1;
            int Second_Vector_Index = Second_Selected_Index - 1;
            swap(_Inventory_Items[First_Vector_Index],_Inventory_Items[Second_Vector_Index]);
-           cout << "¾ÆÀÌÅÛ ¼ø¼­¸¦ º¯°æÇß´Ù." << endl;
+           cout << "ì•„ì´í…œ ìˆœì„œë¥¼ ë³€ê²½í–ˆë‹¤." << endl;
 }
 
-template<typename T>//7.ÀÎº¥Åä¸® ¿ë·® È®Àå
+template<typename T>//7.ì¸ë²¤í† ë¦¬ ìš©ëŸ‰ í™•ì¥
 void Inventory<T>::Increase_Max_Capacity(int new_max_capacity)
 {
     if (new_max_capacity <= _Max_Inventory_Size)
@@ -543,14 +543,14 @@ void Inventory<T>::Increase_Max_Capacity(int new_max_capacity)
     delete[] _Inventory_Items;
     _Inventory_Items = new_items;
     _Max_Inventory_Size = new_max_capacity;
-    cout << "ÀÎº¥Åä¸® ½½·ÔÀÌ " << new_max_capacity << "Ä­À¸·Î È®ÀåµÇ¾ú´Ù!" << endl;
+    cout << "ì¸ë²¤í† ë¦¬ ìŠ¬ë¡¯ì´ " << new_max_capacity << "ì¹¸ìœ¼ë¡œ í™•ì¥ë˜ì—ˆë‹¤!" << endl;
 }
 
-template<typename T>//8.ÀÎº¥Åä¸® ¼Ò¸êÀÚ
+template<typename T>//8.ì¸ë²¤í† ë¦¬ ì†Œë©¸ì
 Inventory<T>::~Inventory()
 {
     delete[] _Inventory_Items;
     _Inventory_Items = nullptr;
 }
 
-template class Inventory<Item>; // ¸í½ÃÀû ÀÎ½ºÅÏ½ºÈ­
+template class Inventory<Item>; // ëª…ì‹œì  ì¸ìŠ¤í„´ìŠ¤í™”
