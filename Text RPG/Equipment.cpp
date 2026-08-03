@@ -3,7 +3,6 @@
 using namespace std;
 
 //기본생성자
-//기본생성자
 Equipment::Equipment()
     : _Equipment_Name("None"),
     _Attack_Stat(0),
@@ -286,16 +285,16 @@ void Currently_Equipped_Equipments::Print_Currently_Equipped_Equipments() const
 
 //장비 전용 인벤토리 기본 생성자
 Inventory_For_Equipments_Only::Inventory_For_Equipments_Only()
-    : _Current_Count(0),
-    _Max_Count(10)
+    : _Equipment_Current_Count(0),
+    _Equipment_Max_Count(10)
 {
 }
 
 
 //장비 전용 인벤토리 최대 개수 설정 생성자
 Inventory_For_Equipments_Only::Inventory_For_Equipments_Only(int max_count)
-    : _Current_Count(0),
-    _Max_Count(max_count)
+    : _Equipment_Current_Count(0),
+    _Equipment_Max_Count(max_count)
 {
 }
 
@@ -303,101 +302,117 @@ Inventory_For_Equipments_Only::Inventory_For_Equipments_Only(int max_count)
 //장비 추가
 bool Inventory_For_Equipments_Only::Add_Equipment(const Equipment& equipment)
 {
-    //현재 장비 개수가 최대 장비 개수 이상인지 검사하는 조건문
-
-    //장비 인벤토리가 가득 찼을 때 안내 문구 출력 자리
-
-    //가득 찬 경우 추가 실패 반환 자리
-
-    //_Equipments 벡터에 equipment를 추가하는 코드 자리
-
-    //_Current_Count를 1 증가시키는 코드 자리
-
-    //추가된 장비 이름 출력 자리
-
-    //추가 성공 반환 자리
-    return false;
+    while (_Equipment_Current_Count >= _Equipment_Max_Count)
+    {
+        cout << "슬롯이 가득 찼다!" << endl;
+        cout << "장비를 버릴려면 1번 아니면 2번을 눌러라!" << endl;
+        int Choose_To_Get_Rid_Of_Equipment;
+        cin >> Choose_To_Get_Rid_Of_Equipment;
+        if (Choose_To_Get_Rid_Of_Equipment == 1)
+        {
+            Throw_Away_Equipment();
+        }
+        else if (Choose_To_Get_Rid_Of_Equipment == 2)
+        {
+            return false;
+        }
+        else
+        {
+            cout << "잘못된 입력이다! 다시 입력하라." << endl;
+        }
+    }
+    _Equipments.push_back(equipment);
+    _Equipment_Current_Count++;
+    cout << equipment.Get_Equipment_Name() << "을(를) 획득했다!" << endl;
+    return true;
 }
 
 
 //장비 인벤토리 출력
-void Inventory_For_Equipments_Only::Print_Inventory() const
+void Inventory_For_Equipments_Only::Print_Equipment_Inventory() const
 {
-    //장비 인벤토리가 비어있는지 검사하는 조건문
+    if (_Equipment_Current_Count == 0)
+    {
+        cout << "텅 비었다!" << endl;
+        return;
+    }
+    cout << endl;
+    cout << "========================================" << endl;
+    cout << "          장비 전용 인벤토리" << endl;
+    cout << "========================================" << endl;
+    cout << "보유 장비 수 : " << _Equipment_Current_Count << " / " << _Equipment_Max_Count << endl;
+    cout << "----------------------------------------" << endl;
 
-    //비어있을 때 안내 문구 출력 자리
-
-    //장비 인벤토리 제목 출력 자리
-
-    //_Equipments를 처음부터 끝까지 순회하는 반복문 자리
-
-    //사용자에게 보여줄 번호 출력 자리
-
-    //각 장비의 Print_Equipment_Info 호출 자리
+    for (int i = 0; i < _Equipment_Current_Count; i++)
+    {
+        cout << "[" << i + 1 << "번 장비]" << endl;
+        cout << "----------------------------------------" << endl;
+        _Equipments[i].Print_Equipment_Info();
+        cout << endl;
+    }
 }
 
 
 //현재 장비 개수 조회
-int Inventory_For_Equipments_Only::Get_Current_Count() const
+int Inventory_For_Equipments_Only::Get_Equipment_Current_Count() const
 {
-    //현재 장비 개수 반환 자리
-    return 0;
+    return _Equipment_Current_Count;
 }
 
 
 //최대 장비 개수 조회
-int Inventory_For_Equipments_Only::Get_Max_Count() const
+int Inventory_For_Equipments_Only::Get_Equipment_Max_Count() const
 {
-    //최대 장비 개수 반환 자리
-    return 0;
+    return _Equipment_Max_Count;
 }
 
 
 //인덱스로 장비 조회
 Equipment Inventory_For_Equipments_Only::Get_Equipment_By_Index(int index) const
 {
-    //index가 0보다 작거나 _Current_Count 이상인지 검사하는 조건문
-
-    //잘못된 index일 때 안내 문구 출력 자리
-
-    //잘못된 index일 때 기본 Equipment 반환 자리
-
-    //정상 index일 때 _Equipments[index] 반환 자리
-    return Equipment();
+    if (index<0 || index>= _Equipment_Current_Count)
+    {
+        cout << "잘못된 선택이다!" << endl;
+        return Equipment();
+    }
+    return _Equipments[index];
 }
 
 
 //장비 버리기
 void Inventory_For_Equipments_Only::Throw_Away_Equipment()
 {
-    //장비 인벤토리가 비어있는지 검사하는 조건문
-
-    //비어있을 때 안내 문구 출력 자리
-
-    //현재 장비 인벤토리 출력 함수 호출 자리
-
-    //버릴 장비 번호를 입력받을 int 변수 선언 자리
-
-    //입력받은 번호가 1보다 작거나 _Current_Count보다 큰지 검사하는 반복문 자리
-
-    //사용자 입력 번호를 vector index로 바꾸는 변수 선언 자리
-
-    //삭제할 장비 이름을 저장하는 string 변수 선언 자리
-
-    //_Equipments에서 선택한 위치의 장비를 제거하는 코드 자리
-
-    //_Current_Count를 1 감소시키는 코드 자리
-
-    //삭제 완료 문구 출력 자리
+    if (_Equipment_Current_Count==0)
+    {
+        cout << "텅 비어서 버릴 게 없다!" << endl;
+        return;
+    }
+    Print_Equipment_Inventory();
+    cout << "버릴 장비를 골라라!" << endl;
+    int Choose_What_Equipment_To_Get_Rid_Of;
+    cin >> Choose_What_Equipment_To_Get_Rid_Of;
+    while  (Choose_What_Equipment_To_Get_Rid_Of < 1 || _Equipment_Current_Count < Choose_What_Equipment_To_Get_Rid_Of)
+    {
+        cout << "잘못된 입력이다! 다시 입력하라." << endl;
+        cin >> Choose_What_Equipment_To_Get_Rid_Of;
+    }
+    int Vector_Index = Choose_What_Equipment_To_Get_Rid_Of-1;
+    string Bye_Equipment = _Equipments[Vector_Index].Get_Equipment_Name();
+    _Equipments.erase(_Equipments.begin() + Vector_Index);
+    _Equipment_Current_Count--;
+    cout << Bye_Equipment << "과 작별했다!" << endl;
 }
 
 
 //장비 인벤토리 최대 보관 칸 증가
-void Inventory_For_Equipments_Only::Increase_Max_Count(int increase_count)
+void Inventory_For_Equipments_Only::Increase_Equipment_Max_Count(int increase_count)
 {
-    //increase_count가 0보다 작거나 같은지 검사하는 조건문
+    if (increase_count <= 0)
+    {
+        cout << "증가량이 올바르지 않다!" << endl;
+        return;
+    }
 
-    //_Max_Count에 increase_count를 더하는 코드 자리
-
-    //장비 인벤토리 최대 칸 증가 안내 문구 출력 자리
+    _Equipment_Max_Count += increase_count;
+    cout << "장비 전용 인벤토리가 " << increase_count << "만큼 증가했다!" << endl;
 }
