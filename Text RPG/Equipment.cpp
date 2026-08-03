@@ -1,10 +1,10 @@
-// Equipment.cpp
+ï»¿// Equipment.cpp
 #include "Equipment.h"
 #include <iostream>
 using namespace std;
 
 
-Equipment::Equipment()//±âº»»ı¼ºÀÚ
+Equipment::Equipment()//ê¸°ë³¸ìƒì„±ì
 {
     _Equipment_Name = "None";
     _Attack_Stat = 0 ;
@@ -57,7 +57,7 @@ void Equipment::Print_Equipment_Info() const
     return;
 }
 
-//ÀåºñÃ¢
+//ì¥ë¹„ì°½
 
 
 Equipment_Inventory::Equipment_Inventory(int max_count)

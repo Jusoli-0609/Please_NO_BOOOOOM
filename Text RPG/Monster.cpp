@@ -7,37 +7,38 @@ using namespace std;
 
 namespace
 {
-	// �⺻ ����ġ �� ����
+	// 기본 경험치 및 점수
 	constexpr int BASE_EXP_REWARD = 100;
 	constexpr int BASE_SCORE_REWARD = 100;
-	// é�ͺ� ���� ���� ����
+	// 챕터별 보상 증가 배율
 	constexpr double CHAPTER_REWARD_MULTIPLIER = 1.3;
-	// �����ۺ� ���� ��� Ȯ��
+	// 아이템별 독립 드롭 확률
 	constexpr int CODE_FRAGMENT_DROP_CHANCE = 60;
 	constexpr int CUP_RAMEN_DROP_CHANCE = 60;
 	constexpr int ENERGY_DRINK_DROP_CHANCE = 60;
-	// �����ۺ� ���԰�
+	// 아이템별 무게값
 	constexpr int CODE_FRAGMENT_WEIGHT = 1;
 	constexpr int CUP_RAMEN_WEIGHT = 1;
 	constexpr int ENERGY_DRINK_WEIGHT = 1;
 }
 
 //=============================================================================
-// 1. ���� ���� ��Ʈ
+// 1. 몬스터 생성 파트
 //=============================================================================
 
-// 1-1. �⺻ ���� ������
+// 1-1. 기본 몬스터 생성자
 Monster::Monster()
 	: _monster_Type(Monster_Type::INT_SLIME),
 	_chapter_Type(Chapter_Type::VARIABLE_CONDITION_FOREST),
 	_monster_Grade(Monster_Grade::NORMAL),
 	_monster_Level(1),
-	_monster_Name("int ������"),
+	_monster_Name("int 슬라임"),
+	_monster_Ascii_Art(""),
 	_evasion(80),
 	_accuracy(80),
 	_exp_Reward(0),
 	_score_Reward(0),
-	_attack_Message("int �������� �����ߴ�."),
+	_attack_Message("int 슬라임이 공격했다."),
 	_drop_Item_Name(""),
 	_drop_Item_Price(0),
 	_drop_Item_Count(0),
@@ -52,24 +53,25 @@ Monster::Monster()
 	_exp_Reward = Calculate_Exp_Reward();
 	_score_Reward = Calculate_Score_Reward();
 }
-// 1-2. ���� Ÿ�� ���� ������
+// 1-2. 몬스터 타입 지정 생성자
 Monster::Monster(Monster_Type monster_Type)
 	: Monster()
 {
 	Initialize_Monster(monster_Type);
 }
-// 1-3. �ܺ� ������ �Է� ������
+// 1-3. 외부 데이터 입력 생성자
 Monster::Monster(string monster_Name, int monster_HP, int monster_Power, int monster_Defence, string drop_Item_Name, int drop_Item_Price)
 	: _monster_Type(Monster_Type::INT_SLIME),
 	_chapter_Type(Chapter_Type::VARIABLE_CONDITION_FOREST),
 	_monster_Grade(Monster_Grade::NORMAL),
 	_monster_Level(1),
 	_monster_Name(monster_Name),
+	_monster_Ascii_Art(""),
 	_evasion(80),
 	_accuracy(80),
 	_exp_Reward(0),
 	_score_Reward(0),
-	_attack_Message(monster_Name + "��(��) �����ߴ�."),
+	_attack_Message(monster_Name + "이(가) 공격했다."),
 	_drop_Item_Name(drop_Item_Name),
 	_drop_Item_Price(drop_Item_Price),
 	_drop_Item_Count(0),
@@ -86,13 +88,14 @@ Monster::Monster(string monster_Name, int monster_HP, int monster_Power, int mon
 }
 
 //=============================================================================
-// 2. ���� �ʱ�ȭ ��Ʈ
+// 2. 몬스터 초기화 파트
 //=============================================================================
 
-// 2-1. �Ϲ� ���� ���� �ʱ�ȭ
+// 2-1. 일반 몬스터 정보 초기화
 void Monster::Initialize_Monster(Monster_Type monster_Type)
 {
 	_monster_Type = monster_Type;
+	_monster_Ascii_Art = "";
 	_monster_Grade = Monster_Grade::NORMAL;
 	_monster_Level = 1;
 	_evasion = 80;
@@ -110,7 +113,16 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::INT_SLIME:
 	{
 		_chapter_Type = Chapter_Type::VARIABLE_CONDITION_FOREST;
-		_monster_Name = "int ������";
+		_monster_Name = "int 슬라임";
+		_monster_Ascii_Art =
+			R"(      .-""""-.
+   .-'  INT   '-.
+  /  0       0   \
+ |      ___       |
+ |   { 1234 }     |
+  \      ^       /
+   '._       _.'
+      '-----')";
 
 		_stat[MONSTER_HP] = 3;
 		_stat[MONSTER_MP] = 0;
@@ -126,7 +138,17 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::BOOL_MUSHROOM:
 	{
 		_chapter_Type = Chapter_Type::VARIABLE_CONDITION_FOREST;
-		_monster_Name = "bool ����";
+		_monster_Name = "bool 버섯";
+		_monster_Ascii_Art =
+			R"(      .-""""""-.
+    .' T BOOL F '.
+   /  [1]  [0]   \
+  /______________\
+      / o  o \
+     |  ____  |
+     | |____| |
+      \__||__/
+         ||)";
 
 		_stat[MONSTER_HP] = 4;
 		_stat[MONSTER_MP] = 0;
@@ -134,7 +156,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 4;
 		_stat[MONSTER_SPEED] = 1;
 
-		_attack_Message = "bool ������ �������� ���ڸ� �ѷȽ��ϴ�.";
+		_attack_Message = "bool 버섯이 참·거짓 포자를 뿌렸습니다.";
 
 		break;
 	}
@@ -142,7 +164,17 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::IF_GOBLIN:
 	{
 		_chapter_Type = Chapter_Type::VARIABLE_CONDITION_FOREST;
-		_monster_Name = "if ����";
+		_monster_Name = "if 고블린";
+		_monster_Ascii_Art =
+			_monster_Ascii_Art =
+			R"(       __/\__
+    .-/ IF ? \-.
+   /  o    o    \
+  |   { == }     |
+  |  /|  ||  |\  |
+  | /_|__||__|_\ |
+   \    /\     /
+    \__/  \___/)";
 
 		_stat[MONSTER_HP] = 2;
 		_stat[MONSTER_MP] = 0;
@@ -158,7 +190,17 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::ARRAY_JELLYFISH:
 	{
 		_chapter_Type = Chapter_Type::ARRAY_LOOP_OCEAN;
-		_monster_Name = "array ���ĸ�";
+		_monster_Name = "array 해파리";
+		_monster_Ascii_Art =
+			R"(   .[0][1][2].
+ .' ARRAY[]   '.
+/  o       o   \
+|     ___      |
+ \___________/
+   \ | | | /
+    \| | |/
+     | | |
+    [0][1][2])";
 
 		_stat[MONSTER_HP] = 3;
 		_stat[MONSTER_MP] = 0;
@@ -174,7 +216,14 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::FOR_SHARK:
 	{
 		_chapter_Type = Chapter_Type::ARRAY_LOOP_OCEAN;
-		_monster_Name = "for ���";
+		_monster_Name = "for 상어";
+		_monster_Ascii_Art =
+			R"(         __
+  ______/o \___
+<| FOR(i++)    _>
+  \____==_____/
+      /  \
+ ____/    \__)";
 
 		_stat[MONSTER_HP] = 2;
 		_stat[MONSTER_MP] = 0;
@@ -190,7 +239,15 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::WHILE_WHALE:
 	{
 		_chapter_Type = Chapter_Type::ARRAY_LOOP_OCEAN;
-		_monster_Name = "while ���";
+		_monster_Name = "while 고래";
+		_monster_Ascii_Art =
+			R"(      _________
+ ____/ WHILE   \__
+/  o      TRUE   \
+|      LOOP      )
+\____       ____/
+     \_____/
+       ||)";
 
 		_stat[MONSTER_HP] = 5;
 		_stat[MONSTER_MP] = 0;
@@ -206,7 +263,16 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::PARAMETER_GIANT_FLY:
 	{
 		_chapter_Type = Chapter_Type::FUNCTION_RUINS;
-		_monster_Name = "parameter ���ĸ�";
+		_monster_Name = "parameter 거대파리";
+		_monster_Ascii_Art =
+			R"( \  /\  /\  /
+  \/  \/  \/
+ .- PARAM -.
+(  o      o )
+ \   \__/  /
+ /|  ( )  |\
+/_|__| |__|_\
+   /_/ \_\)";
 
 		_stat[MONSTER_HP] = 2;
 		_stat[MONSTER_MP] = 0;
@@ -214,7 +280,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_DEFENCE] = 2;
 		_stat[MONSTER_SPEED] = 5;
 
-		_attack_Message = "parameter ���ĸ��� �Ű������� ���Ƚ��ϴ�.";
+		_attack_Message = "parameter 거대파리가 매개변수를 날렸습니다.";
 
 		break;
 	}
@@ -222,7 +288,16 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::RETURN_GARGOYLE:
 	{
 		_chapter_Type = Chapter_Type::FUNCTION_RUINS;
-		_monster_Name = "return ������";
+		_monster_Name = "return 가고일";
+		_monster_Ascii_Art =
+			R"( /\   RETURN   /\
+/  \__________/  \
+|   o        o   |
+|      /\        |
+|   __/  \__     |
+ \_/  {;}  \___/
+   \___||___/
+      /  \)";
 
 		_stat[MONSTER_HP] = 4;
 		_stat[MONSTER_MP] = 0;
@@ -238,7 +313,17 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::FUNCTION_MAGE:
 	{
 		_chapter_Type = Chapter_Type::FUNCTION_RUINS;
-		_monster_Name = "function ������";
+		_monster_Name = "function 마법사";
+		_monster_Ascii_Art =
+			R"(       /\
+      /FN\
+     /____\
+   .-'o  o'-.
+  /  FUNC()  \
+ |    /|\     |
+ |   /_|_\    |
+  \___/ \____/
+      / \)";
 
 		_stat[MONSTER_HP] = 3;
 		_stat[MONSTER_MP] = 0;
@@ -254,7 +339,16 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::POINTER_GHOST:
 	{
 		_chapter_Type = Chapter_Type::POINTER_MEMORY_GRAVEYARD;
-		_monster_Name = "pointer ����";
+		_monster_Name = "pointer 유령";
+		_monster_Ascii_Art =
+			R"(      .------.
+    .' PTR*   '.
+   /  o     o   \
+  |    ->0x00    |
+  |     NULL     |
+   \    ____    /
+    '._/    \_.'
+       \____/)";
 
 		_stat[MONSTER_HP] = 2;
 		_stat[MONSTER_MP] = 0;
@@ -270,7 +364,17 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::NULL_BANSHEE:
 	{
 		_chapter_Type = Chapter_Type::POINTER_MEMORY_GRAVEYARD;
-		_monster_Name = "null ���";
+		_monster_Name = "null 밴시";
+		_monster_Ascii_Art =
+			_monster_Ascii_Art =
+			R"(    .-NULLPTR-.
+  .'          '.
+ /   x      x   \
+|      ----      |
+|   < ACCESS >   |
+ \      !!      /
+  '._        _.'
+     '------')";
 
 		_stat[MONSTER_HP] = 3;
 		_stat[MONSTER_MP] = 0;
@@ -286,7 +390,17 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::MEMORY_REAPER:
 	{
 		_chapter_Type = Chapter_Type::POINTER_MEMORY_GRAVEYARD;
-		_monster_Name = "memory ���";
+		_monster_Name = "memory 사신";
+		_monster_Ascii_Art =
+			_monster_Ascii_Art =
+			R"(      ______
+    .' MEM  '.
+   /  x  x   \
+  |   [HEAP]  |
+   \___||____/
+      /||\    _
+  ___/ || \__/ )
+ /____/  \____/)";
 
 		_stat[MONSTER_HP] = 4;
 		_stat[MONSTER_MP] = 0;
@@ -302,7 +416,15 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::CLASS_MACHINE_DOLL:
 	{
 		_chapter_Type = Chapter_Type::OBJECT_STL_FACTORY;
-		_monster_Name = "class �������";
+		_monster_Name = "class 기계인형";
+		_monster_Ascii_Art =
+			R"(    .[ CLASS ].
+   /  o     o  \
+  |    [==]     |
+ /|---[OBJ]---|\
+/_|   /||\   |_\
+     /_||_\
+      /  \)";
 
 		_stat[MONSTER_HP] = 4;
 		_stat[MONSTER_MP] = 0;
@@ -318,7 +440,15 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::INHERITANCE_CHIMERA:
 	{
 		_chapter_Type = Chapter_Type::OBJECT_STL_FACTORY;
-		_monster_Name = "inheritance Ű�޶�";
+		_monster_Name = "inheritance 키메라";
+		_monster_Ascii_Art =
+			R"( /\   BASE   /\
+/  \________/  \
+| o  DERIVED o |
+|   /_A__B_\   |
+ \__\  ||  /__/
+    \__||__/
+      /  \)";
 
 		_stat[MONSTER_HP] = 4;
 		_stat[MONSTER_MP] = 0;
@@ -334,7 +464,16 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	case Monster_Type::VECTOR_DRONE:
 	{
 		_chapter_Type = Chapter_Type::OBJECT_STL_FACTORY;
-		_monster_Name = "vector ���";
+		_monster_Name = "vector 드론";
+		_monster_Ascii_Art =
+			_monster_Ascii_Art =
+			R"(   .< VECTOR >.
+  / [0][1][2] \
+ |      +      |
+  \____===____/
+    /  |  \
+  --   |   --
+      / \)";
 
 		_stat[MONSTER_HP] = 3;
 		_stat[MONSTER_MP] = 0;
@@ -366,7 +505,16 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	{
 		_monster_Type = Monster_Type::INT_SLIME;
 		_chapter_Type = Chapter_Type::VARIABLE_CONDITION_FOREST;
-		_monster_Name = "int ������";
+		_monster_Name = "int 슬라임";
+		_monster_Ascii_Art =
+			R"(      .-""""-.
+   .-'  INT   '-.
+  /  0       0   \
+ |      ___       |
+ |   { 1234 }     |
+  \      ^       /
+   '._       _.'
+      '-----')";
 
 		_stat[MONSTER_HP] = 3;
 		_stat[MONSTER_MP] = 0;
@@ -391,8 +539,20 @@ void Monster::Initialize_Elite_Monster(Chapter_Type chapter_Type)
 	_chapter_Type = chapter_Type;
 	_monster_Grade = Monster_Grade::ELITE;
 	_monster_Level = Get_Chapter_Number() * 3 + 1;
-	_monster_Name = "�ڵ� �������� ����";
-	_attack_Message = "�ڵ� �������� ������ ������ �����ߴ�.";
+	_monster_Name = "코드 스니펫의 망령";
+	_monster_Ascii_Art =
+		R"(        .-={ CODE FRAGMENT }=-.
+     .-' [ERR][404][NULL]    '-.
+    /   o                o      \
+   |       { BROKEN(); }         |
+   | 0101   STACK   1010         |
+   |      /\/\ /\/\              |
+    \    < SEG_FAULT >           /
+     '.___  ____  ____  _____.'
+         \_/    \/    \_/
+           /   ||   \
+          /____||____\)";
+	_attack_Message = "코드 스니펫의 망령이 문제를 제시했다.";
 
 	_stat[MONSTER_HP] = 0;
 	_stat[MONSTER_MP] = 0;
@@ -432,8 +592,22 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 	case Chapter_Type::VARIABLE_CONDITION_FOREST:
 	{
 		_monster_Type = Monster_Type::VARIABLE_CONDITION_TUTOR;
-		_monster_Name = "�ս��� Ʃ�ʹ�";
-		_attack_Message = "������ ���ǹ� �ڵ� ������ �����մϴ�.";
+		_monster_Name = "손승현 튜터님";
+		_monster_Ascii_Art =
+			R"(      .------------------.
+      | TUTOR_01 : VARIF |
+      | STATUS : READY   |
+      '------------------'
+           .-^^^^-.
+          /  o  o  \
+         |    ^     |
+         |  [ OK ]  |
+          \  ___   /
+        ___|/___\|___
+       /   | IF? |   \
+      /____|_____|____\
+           /   \)";
+		_attack_Message = "변수와 조건문 코드 시험을 시작합니다.";
 
 		break;
 	}
@@ -441,8 +615,22 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 	case Chapter_Type::ARRAY_LOOP_OCEAN:
 	{
 		_monster_Type = Monster_Type::ARRAY_LOOP_TUTOR;
-		_monster_Name = "������ Ʃ�ʹ�";
-		_attack_Message = "�迭�� �ݺ��� �ڵ� ������ �����մϴ�.";
+		_monster_Name = "박은일 튜터님";
+		_monster_Ascii_Art =
+			R"(      .------------------.
+      | TUTOR_02 : LOOP  |
+      | INDEX : 0 .. N   |
+      '------------------'
+           .------.
+          /  o  o  \
+         |  [i++]   |
+         |   ===    |
+          \  ___   /
+        ___|/___\|___
+       /  [0][1][2] \
+      /____|___|_____\
+          /     \)";
+		_attack_Message = "배열과 반복문 코드 시험을 시작합니다.";
 
 		break;
 	}
@@ -450,8 +638,22 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 	case Chapter_Type::FUNCTION_RUINS:
 	{
 		_monster_Type = Monster_Type::FUNCTION_TUTOR;
-		_monster_Name = "����ȣ Ʃ�ʹ�";
-		_attack_Message = "�Լ� �ڵ� ������ �����մϴ�.";
+		_monster_Name = "강신호 튜터님";
+		_monster_Ascii_Art =
+			R"(      .--------------------.
+      | TUTOR_03 : FUNCTION |
+      | RETURN : VALUE      |
+      '--------------------'
+           .------.
+          /  o  o  \
+         |   FUNC   |
+         | RETURN;  |
+          \  ___   /
+        ___|/___\|___
+       /   | ( ) |   \
+      /____|_____|____\
+           /   \)";
+		_attack_Message = "함수 코드 시험을 시작합니다.";
 
 		break;
 	}
@@ -459,8 +661,22 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 	case Chapter_Type::POINTER_MEMORY_GRAVEYARD:
 	{
 		_monster_Type = Monster_Type::POINTER_MEMORY_TUTOR;
-		_monster_Name = "������ Ʃ�ʹ�";
-		_attack_Message = "�����Ϳ� �޸� �ڵ� ������ �����մϴ�.";
+		_monster_Name = "문승현 튜터님";
+		_monster_Ascii_Art =
+			R"(      .------------------.
+      | TUTOR_04 : PTR   |
+      | ADDR : 0x7FF     |
+      '------------------'
+           .------.
+          /  o  o  \
+         |   -> *   |
+         |  [MEM]   |
+          \  ___   /
+        ___|/___\|___
+       /   | PTR |   \
+      /____|_____|____\
+           /   \)";
+		_attack_Message = "포인터와 메모리 코드 시험을 시작합니다.";
 
 		break;
 	}
@@ -468,8 +684,22 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 	case Chapter_Type::OBJECT_STL_FACTORY:
 	{
 		_monster_Type = Monster_Type::OBJECT_STL_TUTOR;
-		_monster_Name = "���ϴ� Ʃ�ʹ�";
-		_attack_Message = "��ü����� STL �ڵ� ������ �����մϴ�.";
+		_monster_Name = "김하늘 튜터님";
+		_monster_Ascii_Art =
+			R"(      .------------------.
+      | TUTOR_05 : OOP   |
+      | STL : VECTOR     |
+      '------------------'
+           .------.
+          /  o  o  \
+         |  CLASS   |
+         | <T, N>   |
+          \  ___   /
+        ___|/___\|___
+       /  <VECTOR>  \
+      /____|___|_____\
+          /     \)";
+		_attack_Message = "객체지향과 STL 코드 시험을 시작합니다.";
 
 		break;
 	}
@@ -478,8 +708,22 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 	{
 		_chapter_Type = Chapter_Type::VARIABLE_CONDITION_FOREST;
 		_monster_Type = Monster_Type::VARIABLE_CONDITION_TUTOR;
-		_monster_Name = "�ս��� Ʃ�ʹ�";
-		_attack_Message = "������ ���ǹ� �ڵ� ������ �����մϴ�.";
+		_monster_Name = "손승현 튜터님";
+		_monster_Ascii_Art =
+			R"(      .------------------.
+      | TUTOR_01 : VARIF |
+      | STATUS : READY   |
+      '------------------'
+           .-^^^^-.
+          /  o  o  \
+         |    ^     |
+         |  [ OK ]  |
+          \  ___   /
+        ___|/___\|___
+       /   | IF? |   \
+      /____|_____|____\
+           /   \)";
+		_attack_Message = "변수와 조건문 코드 시험을 시작합니다.";
 
 		break;
 	}
@@ -502,6 +746,7 @@ void Monster::Initialize_Final_Boss(Monster_Type final_Boss_Type)
 	_monster_Grade = Monster_Grade::FINAL_BOSS;
 	_monster_Level = 1;
 	_monster_Name = "";
+	_monster_Ascii_Art = "";
 	_attack_Message = "";
 
 	_stat[MONSTER_HP] = 0;
@@ -524,7 +769,26 @@ void Monster::Initialize_Final_Boss(Monster_Type final_Boss_Type)
 	{
 	case Monster_Type::KIM_DONG_HYUN_MANAGER:
 	{
-		_monster_Name = "�赿�� �Ŵ�����";
+		_monster_Name = "김동현 매니저님";
+		_monster_Ascii_Art =
+			R"(        .--------------------------------------.
+        | FINAL_MANAGER_01 :: CODE REVIEW MODE |
+        | SYSTEM STATUS : STRICT / ONLINE      |
+        '--------------------------------------'
+                    _________
+                  /|  _____  |\
+                 / | | o o | | \
+                |  | |  ^  | |  |
+                |  | |[OK?]| |  |
+                |  | |_____| |  |
+                 \ |___| |___| /
+                  \____| |____/
+                    __/||\__
+             ______/___||___\______
+            /     [ CODE REVIEW ]   \
+           /___ERR___WARN___PASS_____\
+              /      ||      \
+             /_______||_______\)";
 		_monster_Level = 16;
 
 		_stat[MONSTER_HP] = 250;
@@ -542,8 +806,26 @@ void Monster::Initialize_Final_Boss(Monster_Type final_Boss_Type)
 
 	case Monster_Type::MOON_SEUNG_HO_MANAGER:
 	{
-		_monster_Name ="����ȣ �Ŵ�����";
-		_monster_Level =18;
+		_monster_Name ="문승호 매니저님";
+		_monster_Ascii_Art =
+			R"(        .-------------------------------------------.
+        | FINAL_MANAGER_02 :: LAST VALIDATION MODE |
+        | DEPLOYMENT GATE : LOCKED                 |
+        '-------------------------------------------'
+                    ___________
+                  /|  _______  |\
+                 / | |  o o  | | \
+                |  | |   ^   | |  |
+                |  | | FINAL | |  |
+                |  | |_______| |  |
+                 \ |____| |____| /
+                  \_____| |_____/
+                   ___/||||\___
+            ______/___||||___\______
+           / [ BUILD ][ TEST ][ RUN ] \
+          /____FAIL____WARN____PASS____\
+              /       ||       \
+             /________||________\)";
 
 		_stat[MONSTER_HP] = 320;
 		_stat[MONSTER_MP] = 0;
@@ -561,7 +843,26 @@ void Monster::Initialize_Final_Boss(Monster_Type final_Boss_Type)
 	default:
 	{
 		_monster_Type = Monster_Type::KIM_DONG_HYUN_MANAGER;
-		_monster_Name = "�赿�� �Ŵ�����";
+		_monster_Name = "김동현 매니저님";
+		_monster_Ascii_Art =
+			R"(        .--------------------------------------.
+        | FINAL_MANAGER_01 :: CODE REVIEW MODE |
+        | SYSTEM STATUS : STRICT / ONLINE      |
+        '--------------------------------------'
+                    _________
+                  /|  _____  |\
+                 / | | o o | | \
+                |  | |  ^  | |  |
+                |  | |[OK?]| |  |
+                |  | |_____| |  |
+                 \ |___| |___| /
+                  \____| |____/
+                    __/||\__
+             ______/___||___\______
+            /     [ CODE REVIEW ]   \
+           /___ERR___WARN___PASS_____\
+              /      ||      \
+             /_______||_______\)";
 		_monster_Level = 16;
 
 		_stat[MONSTER_HP] = 250;
@@ -572,7 +873,7 @@ void Monster::Initialize_Final_Boss(Monster_Type final_Boss_Type)
 
 		_evasion = 85;
 		_accuracy = 90;
-		_attack_Message = "�����õ";
+		_attack_Message = "대사추천";
 
 		break;
 	}
@@ -580,10 +881,10 @@ void Monster::Initialize_Final_Boss(Monster_Type final_Boss_Type)
 }
 
 //=============================================================================
-// 3. ���� ���� �� �ɷ�ġ ���� ��Ʈ
+// 3. 몬스터 레벨 및 능력치 보정 파트
 //=============================================================================
 
-// 3-1. �÷��̾� ���� ��� �ɷ�ġ ����
+// 3-1. 플레이어 레벨 비례 능력치 증가
 void Monster::Apply_Player_Level_Scaling(int player_Level)
 {
 	if
@@ -609,7 +910,7 @@ void Monster::Apply_Player_Level_Scaling(int player_Level)
 	_stat[MONSTER_DEFENCE] += player_Level_Up_Count * DEFENCE_BONUS_PER_PLAYER_LEVEL;
 	_stat[MONSTER_SPEED] += player_Level_Up_Count / PLAYER_LEVELS_PER_SPEED_BONUS;
 }
-// 3-2. é�� ��ȣ ��ȯ
+// 3-2. 챕터 번호 변환
 int Monster::Get_Chapter_Number() const
 {
 	switch (_chapter_Type)
@@ -645,7 +946,7 @@ int Monster::Get_Chapter_Number() const
 	}
 	}
 }
-// 3-3. é�ͺ� ���� ���� ���� ����
+// 3-3. 챕터별 몬스터 랜덤 레벨 생성
 int Monster::Generate_Random_Level() const
 {
 	int chapter_Number = Get_Chapter_Number();
@@ -662,7 +963,7 @@ int Monster::Generate_Random_Level() const
 	return
 		rand() % level_Range + minimum_Level;
 }
-// 3-4. ���� ���� ���� ���ʽ� ����
+// 3-4. 몬스터 랜덤 레벨 보너스 적용
 void Monster::Apply_Level_Bonus()
 {
 	constexpr int LEVELS_PER_CHAPTER = 3;
@@ -685,10 +986,10 @@ void Monster::Apply_Level_Bonus()
 }
 
 //=============================================================================
-// 4. ���� ���� ��� ��Ʈ
+// 4. 몬스터 보상 계산 파트
 //=============================================================================
 
-// 4-1. é�ͺ� �ڵ� ���� �̸� ����
+// 4-1. 챕터별 코드 조각 이름 결정
 std::string Monster::Get_Code_Fragment_Name() const
 {
 	switch (_chapter_Type)
@@ -696,27 +997,27 @@ std::string Monster::Get_Code_Fragment_Name() const
 	case Chapter_Type::VARIABLE_CONDITION_FOREST:
 	case Chapter_Type::ARRAY_LOOP_OCEAN:
 	{
-		return "�ϱ� �ڵ� ����";
+		return "하급 코드 조각";
 	}
 
 	case Chapter_Type::FUNCTION_RUINS:
 	case Chapter_Type::POINTER_MEMORY_GRAVEYARD:
 	{
-		return "�߱� �ڵ� ����";
+		return "중급 코드 조각";
 	}
 
 	case Chapter_Type::OBJECT_STL_FACTORY:
 	{
-		return "��� �ڵ� ����";
+		return "상급 코드 조각";
 	}
 
 	default:
 	{
-		return "�ϱ� �ڵ� ����";
+		return "하급 코드 조각";
 	}
 	}
 }
-// 4-2. é�ͺ� �⺻ ����ġ ���
+// 4-2. 챕터별 기본 경험치 계산
 int Monster::Calculate_Exp_Reward() const
 {
 	double exp_Reward = static_cast<double>(BASE_EXP_REWARD);
@@ -730,7 +1031,7 @@ int Monster::Calculate_Exp_Reward() const
 
 	return static_cast<int>(exp_Reward + 0.5);
 }
-// 4-3. ���� ���� ����ġ ���ʽ� ���
+// 4-3. 랜덤 레벨 경험치 보너스 계산
 int Monster::Calculate_Level_Exp_Bonus() const
 {
 	constexpr int LEVELS_PER_CHAPTER = 3;
@@ -748,7 +1049,7 @@ int Monster::Calculate_Level_Exp_Bonus() const
 	return
 		level_Offset * EXP_BONUS_PER_LEVEL;
 }
-// 4-4. é�ͺ� ���� ���
+// 4-4. 챕터별 점수 계산
 int Monster::Calculate_Score_Reward() const
 {
 	double score_Reward = static_cast<double>(BASE_SCORE_REWARD);
@@ -762,17 +1063,17 @@ int Monster::Calculate_Score_Reward() const
 
 	return static_cast<int>(score_Reward + 0.5);
 }
-// 4-5. �Ʒ������ ���� ���
+// 4-5. 훈련장려금 랜덤 계산
 int Monster::Calculate_Gold_Reward() const
 {
 	return rand() % 31 + 20;
 }
 
 //=============================================================================
-// 5. ���� ��� ���� ���� ��Ʈ
+// 5. 몬스터 드롭 보상 생성 파트
 //=============================================================================
 
-// 5-1. �����ۺ� ���� ���� ��� ����
+// 5-1. 아이템별 독립 랜덤 드롭 생성
 void Monster::Generate_Drop_Reward()
 {
 	_drop_Items.clear();
@@ -798,11 +1099,19 @@ void Monster::Generate_Drop_Reward()
 		Item code_Fragment;
 
 		code_Fragment._Item_Name = Get_Code_Fragment_Name();
+		code_Fragment._Item_Ascii_Art =
+			R"(+--------+
+|{CODE;} |
+|01010101|
++--------+)";
 		code_Fragment._Item_Price = 0;
 		code_Fragment._Item_Count = 1;
 		code_Fragment._Item_Weight = CODE_FRAGMENT_WEIGHT;
 		code_Fragment._Item_Type_Usable = false;
 		code_Fragment._Item_Type_Wearable = false;
+		code_Fragment._Item_Description =
+			"깨진 코드 몬스터에게서 떨어져 나온 코드 조각. "
+			"아이템 제작과 코드 연구에 사용할 수 있다.";
 
 		_drop_Items.push_back(code_Fragment);
 	}
@@ -814,18 +1123,21 @@ void Monster::Generate_Drop_Reward()
 	{
 		Item cup_Ramen;
 
-		cup_Ramen._Item_Name = "�Ŷ��";
+		cup_Ramen._Item_Name = "컵라면";
+		cup_Ramen._Item_Ascii_Art =
+			R"( .------.
+ |RAMEN |
+ |~~~~~~|
+ '------')";
 		cup_Ramen._Item_Price = 0;
 		cup_Ramen._Item_Count = 1;
 		cup_Ramen._Item_Weight = CUP_RAMEN_WEIGHT;
 		cup_Ramen._Item_Type_Usable = true;
 		cup_Ramen._Item_Type_Wearable = false;
-		cup_Ramen._Item_Description = "HP�� 50 ȸ����Ų��.";
-		cup_Ramen._Item_Ascii_Art =
-			R"(
+		cup_Ramen._Item_Description =
+			"지친 체력을 채워 주는 컵라면. "
+			"사용하면 HP를 50 회복한다.";
 
-�ƽ�Ű ��Ʈ ���ּ���.
-)";
 		_drop_Items.push_back(cup_Ramen);
 	}
 
@@ -836,21 +1148,20 @@ void Monster::Generate_Drop_Reward()
 	{
 		Item energy_Drink;
 
-		energy_Drink._Item_Name = "�������帵ũ";
+		energy_Drink._Item_Name = "에너지드링크";
+		energy_Drink._Item_Ascii_Art =
+			R"( .------.
+ |ENRG++|
+ |[MP50]|
+ '------')";
 		energy_Drink._Item_Price = 0;
 		energy_Drink._Item_Count = 1;
 		energy_Drink._Item_Weight = ENERGY_DRINK_WEIGHT;
 		energy_Drink._Item_Type_Usable = true;
 		energy_Drink._Item_Type_Wearable = false;
-		energy_Drink._Item_Description = "MP�� 50 ȸ���Ѵ�.";
-		energy_Drink._Item_Ascii_Art = 
-R"(
-
-
-������ �ƽ�Ű ��Ʈ �̷� �������� �����ø� �˴ϴ�
-
-
-)";
+		energy_Drink._Item_Description =
+			"집중력을 끌어올리는 에너지드링크. "
+			"사용하면 MP를 50 회복한다.";
 
 		_drop_Items.push_back(energy_Drink);
 	}
@@ -860,11 +1171,19 @@ R"(
 		Item minimum_Reward;
 
 		minimum_Reward._Item_Name = Get_Code_Fragment_Name();
+		minimum_Reward._Item_Ascii_Art =
+			R"(+--------+
+| CODE{} |
+| 010101 |
++--------+)";
 		minimum_Reward._Item_Price = 0;
 		minimum_Reward._Item_Count = 1;
 		minimum_Reward._Item_Weight = CODE_FRAGMENT_WEIGHT;
 		minimum_Reward._Item_Type_Usable = false;
 		minimum_Reward._Item_Type_Wearable = false;
+		minimum_Reward._Item_Description =
+			"깨진 코드 몬스터에게서 떨어져 나온 코드 조각. "
+			"아이템 제작에 사용 할 수 있을거 같다.";
 
 		_drop_Items.push_back(minimum_Reward);
 	}
@@ -885,127 +1204,127 @@ R"(
 		_drop_Item_Name += drop_Item._Item_Name;
 		_drop_Item_Name += " ";
 		_drop_Item_Name += std::to_string(drop_Item._Item_Count);
-		_drop_Item_Name += "��";
+		_drop_Item_Name += "개";
 		_drop_Item_Count += drop_Item._Item_Count;
 		_drop_Item_Price += drop_Item._Item_Price * drop_Item._Item_Count;
 	}
 }
 
 //=============================================================================
-// 6. ���� �⺻ ���� ��ȸ ��Ʈ
+// 6. 몬스터 기본 정보 조회 파트
 //=============================================================================
 
-// 6-1. ���� �̸� ��ȸ
+// 6-1. 몬스터 이름 조회
 string Monster::getName() const
 {
 	return _monster_Name;
 }
-// 6-2. ���� HP ��ȸ
+// 6-2. 몬스터 HP 조회
 int Monster::getHP() const
 {
 	return _stat[MONSTER_HP];
 }
-// 6-3. ���� ���ݷ� ��ȸ
+// 6-3. 몬스터 공격력 조회
 int Monster::getPower() const
 {
 	return _stat[MONSTER_POWER];
 }
-// 6-4. ���� ���� ��ȸ
+// 6-4. 몬스터 방어력 조회
 int Monster::getDefence() const
 {
 	return _stat[MONSTER_DEFENCE];
 }
-// 6-5. ���� ���ǵ� ��ȸ
+// 6-5. 몬스터 스피드 조회
 int Monster::getSpeed() const
 {
 	return _stat[MONSTER_SPEED];
 }
-// 6-6. ���� ȸ���� ��ȸ
+// 6-6. 몬스터 회피율 조회
 int Monster::getEvasion() const
 {
 	return _evasion;
 }
-// 6-7. ���� ���߷� ��ȸ
+// 6-7. 몬스터 명중률 조회
 int Monster::getAccuracy() const
 {
 	return _accuracy;
 }
-// 6-8. ���� ���� ��ȸ
+// 6-8. 몬스터 레벨 조회
 int Monster::getMonsterLevel() const
 {
 	return _monster_Level;
 }
-// 6-9. ���� Ÿ�� ��ȸ
+// 6-9. 몬스터 타입 조회
 Monster_Type Monster::getMonsterType() const
 {
 	return _monster_Type;
 }
-// 6-10. ���� �Ҽ� é�� ��ȸ
+// 6-10. 몬스터 소속 챕터 조회
 Chapter_Type Monster::getChapterType() const
 {
 	return _chapter_Type;
 }
-// 6-11. ���� ��� ��ȸ
+// 6-11. 몬스터 등급 조회
 Monster_Grade Monster::getMonsterGrade() const
 {
 	return _monster_Grade;
 }
-// 6-12. ���� ���� ��� ��ȸ
+// 6-12. 몬스터 공격 대사 조회
 string Monster::getAttackMessage() const
 {
 	return _attack_Message;
 }
 
 //=============================================================================
-// 7. ���� ���� ���� ��ȸ ��Ʈ
+// 7. 몬스터 보상 정보 조회 파트
 //=============================================================================
 
-// 7-1. ����ġ ���� ��ȸ
+// 7-1. 경험치 보상 조회
 int Monster::getExpReward() const
 {
 	return _exp_Reward;
 }
-// 7-2. ���� ���� ��ȸ
+// 7-2. 점수 보상 조회
 int Monster::getScoreReward() const
 {
 	return _score_Reward;
 }
-// 7-3. ��� ������ ��ȸ
+// 7-3. 드롭 아이템 조회
 string Monster::getDropItemName() const
 {
 	return _drop_Item_Name;
 }
-// 7-4. ��� ������ ���� �հ� ��ȸ
+// 7-4. 드롭 아이템 가격 합계 조회
 int Monster::getDropItemPrice() const
 {
 	return _drop_Item_Price;
 }
-// 7-5. ��� ������ ���� �հ� ��ȸ
+// 7-5. 드롭 아이템 수량 합계 조회
 int Monster::getDropItemCount() const
 {
 	return _drop_Item_Count;
 }
-// 7-6. ��� ������ ��� ��ȸ
+// 7-6. 드롭 아이템 목록 조회
 const std::vector<Item>& Monster::getDropItems() const
 {
 	return _drop_Items;
 }
-// 7-7. �Ʒ������ ��ȸ
+// 7-7. 훈련장려금 조회
 int Monster::getGoldReward() const
 {
 	return _gold_Reward;
 }
 
 //=============================================================================
-// 8. ���� ���� ���� �� ���� ��Ʈ
+// 8. 몬스터 상태 변경 및 전투 파트
 //=============================================================================
 
-// 8-1. ���� ��� ����
+// 8-1. 몬스터 등급 변경
 void Monster::setMonsterGrade(Monster_Grade monster_Grade)
 {
 	_monster_Grade = monster_Grade;
 }
-// 8-2. ���� HP ����
+// 8-2. 몬스터 HP 변경
 void Monster::setHP(int hp)
 {
 	_stat[MONSTER_HP] = hp;
@@ -1015,7 +1334,7 @@ void Monster::setHP(int hp)
 		_stat[MONSTER_HP] = 0;
 	}
 }
-// 8-3. ���� ���� ó��
+// 8-3. 몬스터 공격 처리
 void Monster::attack(Player* player) const
 {
 	(void)player;
@@ -1024,31 +1343,43 @@ void Monster::attack(Player* player) const
 }
 
 //=============================================================================
-// 9. ���� ���� ��� ��Ʈ
+// 9. 몬스터 정보 출력 파트
 //=============================================================================
 
-// 9-1. ���� ���� ��� ���
+// 9-1. 몬스터 공격 대사 출력
 void Monster::Print_Attack_Message() const
 {
 	cout << _attack_Message << endl;
 }
-// 9-2. ���� ��ü ���� ���
+// 9-2. 몬스터 아스키 아트 출력
+void Monster::Print_Ascii_Art() const
+{
+	if (_monster_Ascii_Art.empty())
+	{
+		return;
+	}
+
+	cout << _monster_Ascii_Art << endl;
+}
+// 9-3. 몬스터 전체 정보 출력
 void Monster::Print_Monster_Info() const
 {
 	cout << "========================================" << endl;
-	cout << "���� �̸�: " << _monster_Name << endl;
-	cout << "����: " << _monster_Level << endl;
-	cout << "HP: " << _stat[MONSTER_HP] << endl;
-	cout << "���ݷ�: " << _stat[MONSTER_POWER] << endl;
-	cout << "����: " << _stat[MONSTER_DEFENCE] << endl;
-	cout << "���ǵ�: " << _stat[MONSTER_SPEED] << endl;
-	cout << "ȸ����: " << _evasion << "%" << endl;
-	cout << "���߷�: " << _accuracy << "%" << endl;
-	cout << "����ġ: " << _exp_Reward << endl;
-	cout << "����: " << _score_Reward << endl;
+	cout << "[ 몬스터 데이터 ]" << endl;
 	cout << "========================================" << endl;
-	cout << "��� ������: " << _drop_Item_Name << " " << _drop_Item_Count << "��" << endl;
-	cout << "�Ʒ������: " << _gold_Reward << " ��" << endl;
+	cout << "몬스터 이름: " << _monster_Name << endl;
+	cout << "레벨: " << _monster_Level << endl;
+	cout << "HP: " << _stat[MONSTER_HP] << endl;
+	cout << "공격력: " << _stat[MONSTER_POWER] << endl;
+	cout << "방어력: " << _stat[MONSTER_DEFENCE] << endl;
+	cout << "스피드: " << _stat[MONSTER_SPEED] << endl;
+	cout << "회피율: " << _evasion << "%" << endl;
+	cout << "명중률: " << _accuracy << "%" << endl;
+	cout << "경험치: " << _exp_Reward << endl;
+	cout << "점수: " << _score_Reward << endl;
+	cout << "========================================" << endl;
+	cout << "드롭 아이템: " << _drop_Item_Name << " " << _drop_Item_Count << "개" << endl;
+	cout << "훈련장려금: " << _gold_Reward << " 원" << endl;
 
 	if
 		(
@@ -1060,39 +1391,45 @@ void Monster::Print_Monster_Info() const
         cout << "�Ʒ������: " << _gold_Reward << "��" << endl;
 	}
 }
-// 9-3. ��� �����۰� ���� ���
+// 9-3. 드롭 아이템과 무게 출력
 void Monster::Print_Drop_Reward() const
 {
-	cout << "ȹ�� ������:" << endl;
+	cout << "획득 아이템:" << endl;
 
 	if (_drop_Items.empty())
 	{
-		cout << "- ȹ���� �������� �����ϴ�." << endl;
+		cout << "- 획득한 아이템이 없습니다." << endl;
 
 		return;
 	}
 
-	int total_Drop_Weight = 0;
-
-	for
-		(const Item& drop_Item :_drop_Items)
+	for (const Item& drop_Item : _drop_Items)
 	{
-		int item_Total_Weight = drop_Item._Item_Weight * drop_Item._Item_Count;
-
-		cout << "- "
+		cout
 			<< drop_Item._Item_Name
 			<< " "
 			<< drop_Item._Item_Count
-			<< "��"
-			<< " / ���� ���� "
+			<< "개"
+			<< " / 개당 무게 "
 			<< drop_Item._Item_Weight
-			<< " / �� ���� "
+			<< " / 총 무게 "
 			<< item_Total_Weight
 			<< endl;
-
-		total_Drop_Weight += item_Total_Weight;
 	}
 
-	cout << "��� ������ �� ����: " << total_Drop_Weight << endl;
+	cout << "----------------------------------------" << endl;
+}
+// 9-5. 드롭 아이템 아스키 아트 출력
+void Monster::Print_Drop_Item_Ascii_Art() const
+{
+	for
+		(const Item& drop_Item : _drop_Items)
+	{
+		if (drop_Item._Item_Ascii_Art.empty())
+		{
+			continue;
+		}
+
+	cout << "드롭 아이템 총 무게: " << total_Drop_Weight << endl;
 }
 

@@ -1,4 +1,4 @@
-// Equipment.h
+ï»¿// Equipment.h
 #pragma once
 #include <string>
 using namespace std;
@@ -17,34 +17,34 @@ enum class Equipment_Grade
 class Equipment
 {
 private:
-    string _Equipment_Name;//Àåºñ ÀÌ¸§
-    int _Attack_Stat;//Àåºñ °ø°İ°ª
-    int _Defence_Stat;//Àåºñ ±âº» ¹æ¾î°ª
-    Equipment_Grade _Grade;//Àåºñ µî±Ş
-    int _Enhance_Level;//Àåºñ °­È­ ·¹º§
+    string _Equipment_Name;//ì¥ë¹„ ì´ë¦„
+    int _Attack_Stat;//ì¥ë¹„ ê³µê²©ê°’
+    int _Defence_Stat;//ì¥ë¹„ ê¸°ë³¸ ë°©ì–´ê°’
+    Equipment_Grade _Grade;//ì¥ë¹„ ë“±ê¸‰
+    int _Enhance_Level;//ì¥ë¹„ ê°•í™” ë ˆë²¨
 
 public:
-    Equipment();//1.±âº» »ı¼ºÀÚ
-    Equipment(string equipment_name, int attack, int defence, Equipment_Grade grade);//2. Àåºñ ÀÌ¸§,  °ø°İ·Â,  ¹æ¾î·Â, µî±ŞÀ» ¹Ş¾Æ Àåºñ¸¦ »ı¼ºÇÏ´Â »ı¼ºÀÚ
-    int Get_Enhance_Level() const;//3.°­È­ ·¹º§ Á¶È¸
-    void Set_Enhance_Level(int enhance_level);//4.°­È­ ·¹º§ ¼³Á¤
-    int Get_Attack_Stat() const;//5.Àåºñ °ø°İ ½ºÅİ Á¶È¸
-    void Set_Attack_Stat(int attack_stat);//6.Àåºñ °ø°İ ½ºÅİ ¼³Á¤
-    int Get_Defence_Stat() const;//7. Àåºñ ¹æ¾î·Â ½ºÅİ Á¶È¸
-    void Set_Defence_Stat(int defence_stat);//8. ¹æ¾î·Â ½ºÅİ ¼³Á¤
-    void Print_Equipment_Info() const;//9.Àåºñ Á¤º¸ Ãâ·Â
+    Equipment();//1.ê¸°ë³¸ ìƒì„±ì
+    Equipment(string equipment_name, int attack, int defence, Equipment_Grade grade);//2. ì¥ë¹„ ì´ë¦„,  ê³µê²©ë ¥,  ë°©ì–´ë ¥, ë“±ê¸‰ì„ ë°›ì•„ ì¥ë¹„ë¥¼ ìƒì„±í•˜ëŠ” ìƒì„±ì
+    int Get_Enhance_Level() const;//3.ê°•í™” ë ˆë²¨ ì¡°íšŒ
+    void Set_Enhance_Level(int enhance_level);//4.ê°•í™” ë ˆë²¨ ì„¤ì •
+    int Get_Attack_Stat() const;//5.ì¥ë¹„ ê³µê²© ìŠ¤í…Ÿ ì¡°íšŒ
+    void Set_Attack_Stat(int attack_stat);//6.ì¥ë¹„ ê³µê²© ìŠ¤í…Ÿ ì„¤ì •
+    int Get_Defence_Stat() const;//7. ì¥ë¹„ ë°©ì–´ë ¥ ìŠ¤í…Ÿ ì¡°íšŒ
+    void Set_Defence_Stat(int defence_stat);//8. ë°©ì–´ë ¥ ìŠ¤í…Ÿ ì„¤ì •
+    void Print_Equipment_Info() const;//9.ì¥ë¹„ ì •ë³´ ì¶œë ¥
 };
 
 class Equipment_Inventory
 {
     private:
-        Equipment* _Equipments;//ÀåºñÃ¢
-        int _Current_Count;//ÇöÀç ÀåºñÃ¢¿¡ µé¾îÀÖ´Â Àåºñ °¹¼ö
-        int _Max_Count;//ÀåºñÃ¢ ÃÖ´ë Âø¿ë °¡´É °¹¼ö
+        Equipment* _Equipments;//ì¥ë¹„ì°½
+        int _Current_Count;//í˜„ì¬ ì¥ë¹„ì°½ì— ë“¤ì–´ìˆëŠ” ì¥ë¹„ ê°¯ìˆ˜
+        int _Max_Count;//ì¥ë¹„ì°½ ìµœëŒ€ ì°©ìš© ê°€ëŠ¥ ê°¯ìˆ˜
     public:
-        Equipment_Inventory(int max_count);//1.ÀåºñÃ¢ »ı¼ºÀÚ
-        ~Equipment_Inventory();//2.ÀåºñÃ¢ ¼Ò¸êÀÚ
-        bool Equip_Equipment(const Equipment& equipment);//3.Àåºñ ³¢±â
-        Equipment* Get_Equipment_By_Index(int index);//4.ÀÎµ¦½º·Î Àåºñ Á¶È¸
-        void Print_Equipment_Inventory() const;//5.ÀåºñÃ¢ Ãâ·Â
+        Equipment_Inventory(int max_count);//1.ì¥ë¹„ì°½ ìƒì„±ì
+        ~Equipment_Inventory();//2.ì¥ë¹„ì°½ ì†Œë©¸ì
+        bool Equip_Equipment(const Equipment& equipment);//3.ì¥ë¹„ ë¼ê¸°
+        Equipment* Get_Equipment_By_Index(int index);//4.ì¸ë±ìŠ¤ë¡œ ì¥ë¹„ ì¡°íšŒ
+        void Print_Equipment_Inventory() const;//5.ì¥ë¹„ì°½ ì¶œë ¥
 };
