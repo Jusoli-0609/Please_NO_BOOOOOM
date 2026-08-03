@@ -14,9 +14,7 @@ enum class Equipment_Grade
 };
 
 enum class Equipment_Type
-{
-    CPU,            
-    GPU,             
+{   Engine,     
     Keyboard,         
     Mouse,            
     BlueLight_Glasses, 
@@ -41,7 +39,7 @@ private:
 
 public:
     Equipment();//1.기본 생성자
-    Equipment(string equipment_name, int attack, int defence, Equipment_Grade grade,Equipment_Type type,string _Equipment__Ascii_Art);//2. 모든 걸 다 받는 생성자(아이템 저장소에서 이걸로 노가다 줄일예정)
+    Equipment(string equipment_name, int attack, int defence, Equipment_Grade grade, Equipment_Type type, string art, string description, int weight);//2. 모든 걸 다 받는 생성자(아이템 저장소에서 이걸로 노가다 줄일예정)
     int Get_Enhance_Level() const;//3.강화 레벨 조회
     void Set_Enhance_Level(int enhance_level);//4.강화 레벨 설정
     int Get_Attack_Stat() const;//5.장비 공격 스텟 조회
@@ -74,14 +72,24 @@ class Currently_Equipped_Equipments
         //장비들
     public:
         Currently_Equipped_Equipments();//1.현재 끼고 있는 장비  생성자
-        ~Currently_Equipped_Equipments();//2.장비창 소멸자
-        bool Equip_Equipment(const Equipment& equipment);//3.장비 끼기
-        void Print_Currently_Equipped_Equipments() const;//4.현재 장비 중인 장비창 조회
+        bool Equip_Equipment(const Equipment& equipment);//2.장비 끼기
+        void Print_Currently_Equipped_Equipments() const;//3.현재 장비 중인 장비창 조회
 };
 
 class Inventory_For_Equipments_Only
 {
-private:
-    int _Current_Count;//현재 장비창에 들어있는 장비 갯수
-    int _Max_Count;//장비창 최대 착용 가능 갯수
+    private:
+        vector<Equipment> _Equipments; //장비 아이템들을 저장하는 전용 보관함
+        int _Current_Count;//현재 장비창에 들어있는 장비 갯수
+        int _Max_Count;//장비창 최대 착용 가능 갯수
+    public:
+        Inventory_For_Equipments_Only(); //1. 장비 전용 인벤토리 기본 생성자
+        Inventory_For_Equipments_Only(int max_count); //2. 최대 장비 보관 개수를 직접 정하는 생성자
+        bool Add_Equipment(const Equipment& equipment); //3. 장비를 인벤토리에 추가하는 함수
+        void Print_Inventory() const; //4. 현재 장비 인벤토리에 들어있는 장비 목록 출력
+        int Get_Current_Count() const; //5. 현재 보관 중인 장비 개수 조회
+        int Get_Max_Count() const; //6. 최대 보관 가능한 장비 개수 조회
+        Equipment Get_Equipment_By_Index(int index) const; //7. 인덱스 번호로 특정 장비 조회
+        void Throw_Away_Equipment(); //8. 장비 인벤토리에서 선택한 장비 버리기
+        void Increase_Max_Count(int increase_count); //9. 장비 인벤토리 최대 보관 칸 증가
 };
