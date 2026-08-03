@@ -1,10 +1,10 @@
-#include "Equipment.h"
+ï»¿#include "Equipment.h"
 #include "Level_1_Engine.h"
 
 Level_1_Engine::Level_1_Engine()
 	: Equipment
 	(
-		"1¾ð¸®¾ó ¿£Áø",
+		"1ì–¸ë¦¬ì–¼ ì—”ì§„",
 		1,
 		1,
 		Equipment_Grade::Worst,
@@ -13,7 +13,7 @@ Level_1_Engine::Level_1_Engine()
 | UE 4.0 |
 | [OLD]  |
 +--------+)",
-"¼³¸í",
+"ì„¤ëª…",
 5
 )
 {
