@@ -23,21 +23,50 @@ Console_Manager::Console_Manager(int Width, int Height)
 
 void Console_Manager::Set_Console_Size()
 {
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    HANDLE hConsole =
+        GetStdHandle(STD_OUTPUT_HANDLE);
 
+    // 먼저 창을 임시로 작게 줄입니다.
+    SMALL_RECT temporaryRect;
+    temporaryRect.Left = 0;
+    temporaryRect.Top = 0;
+    temporaryRect.Right = 1;
+    temporaryRect.Bottom = 1;
+
+    SetConsoleWindowInfo(
+        hConsole,
+        TRUE,
+        &temporaryRect
+    );
+
+    // 그다음 버퍼 크기를 설정합니다.
     COORD bufferSize;
-    bufferSize.X = static_cast<SHORT>(_Width);
-    bufferSize.Y = static_cast<SHORT>(_Height);
+    bufferSize.X =
+        static_cast<SHORT>(_Width);
 
-    SetConsoleScreenBufferSize(hConsole, bufferSize);
+    bufferSize.Y =
+        static_cast<SHORT>(_Height);
 
-    SMALL_RECT rect;
-    rect.Left = 0;
-    rect.Top = 0;
-    rect.Right = _Width - 1;
-    rect.Bottom = _Height - 1;
+    SetConsoleScreenBufferSize(
+        hConsole,
+        bufferSize
+    );
 
-    SetConsoleWindowInfo(hConsole, TRUE, &rect);
+    // 마지막으로 실제 창 크기를 설정합니다.
+    SMALL_RECT windowRect;
+    windowRect.Left = 0;
+    windowRect.Top = 0;
+    windowRect.Right =
+        static_cast<SHORT>(_Width - 1);
+
+    windowRect.Bottom =
+        static_cast<SHORT>(_Height - 1);
+
+    SetConsoleWindowInfo(
+        hConsole,
+        TRUE,
+        &windowRect
+    );
 }
 
 void Console_Manager::Set_Cursor_Position(int x, int y)
