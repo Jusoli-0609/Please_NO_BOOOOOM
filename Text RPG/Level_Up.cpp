@@ -93,7 +93,7 @@ void Level_Up::ProcessLevelUp(Player* player)
 
     player->Add_Base_MaxHP(addedHp);
     player->Add_Base_ATK(addedPower);
-
+	player->Add_Stat_Points(5); // 레벨업 시 스탯 포인트 5 지급
     // 상승된 스탯 수치 로그 출력
     cout << "  -> 레벨업 보너스: 최대 체력 +" << addedHp << " (최대 HP: " << player->GetMaxHP() << ")\n";
     cout << "  -> 레벨업 보너스: 공격력 +" << addedPower << " (공격력: " << player->GetPower() << ")\n";
