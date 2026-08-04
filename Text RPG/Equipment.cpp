@@ -1,6 +1,7 @@
 ﻿    #include "Equipment.h"
     #include <iostream>
     #include <algorithm>
+
     using namespace std;
 
     //기본생성자
@@ -71,6 +72,10 @@
         case Equipment_Grade::Best:
         {
             return "Best";
+        }
+        case Equipment_Grade::Tutor:
+        {
+            return "튜터 장비";
         }
         default:
         {
@@ -283,29 +288,74 @@
 
         return true;
     }
-    //착용중인가
+	
     bool Currently_Equipped_Equipments::Is_Equipment_Equipped(Equipment_Type type) const
     {
         switch (type)
         {
         case Equipment_Type::Engine:
+        {
             return _Unreal_Engine_Version.Get_Equipment_Type() != Equipment_Type::Empty;
+        }
 
         case Equipment_Type::Keyboard:
+        {
             return _Keyboard.Get_Equipment_Type() != Equipment_Type::Empty;
+        }
 
         case Equipment_Type::Mouse:
+        {
             return _Mouse.Get_Equipment_Type() != Equipment_Type::Empty;
+        }
 
         case Equipment_Type::BlueLight_Glasses:
+        {
             return _BlueLight_Glasses.Get_Equipment_Type() != Equipment_Type::Empty;
+        }
 
         case Equipment_Type::Headset:
+        {
             return _Headset.Get_Equipment_Type() != Equipment_Type::Empty;
+        }
 
         default:
+        {
             return false;
         }
+        }
+    }
+    
+    bool Currently_Equipped_Equipments::Has_Equipment_By_Name (const string& equipment_Name) const
+    {
+        if(_Unreal_Engine_Version.Get_Equipment_Name() == equipment_Name)
+        {
+            return true;
+        }
+
+        if(_Keyboard.Get_Equipment_Name() == equipment_Name)
+        {
+            return true;
+        }
+
+        if
+            (_Mouse.Get_Equipment_Name() == equipment_Name)
+        {
+            return true;
+        }
+
+        if
+            (_BlueLight_Glasses.Get_Equipment_Name() == equipment_Name)
+        {
+            return true;
+        }
+
+        if
+            (_Headset.Get_Equipment_Name()== equipment_Name)
+        {
+            return true;
+        }
+
+        return false;
     }
     //장비창 출력
     void Currently_Equipped_Equipments::Print_Currently_Equipped_Equipments() const
@@ -583,6 +633,22 @@
         cout << equipment.Get_Equipment_Name() << "을(를) 획득했다!" << endl;
 
         return true;
+    }
+
+	//장비 이름으로 장착 여부 확인
+    bool Inventory_For_Equipments_Only::Has_Equipment_By_Name(const string& equipment_Name) const
+    {
+        for
+            (const Equipment& equipment : _Equipments)
+        {
+            if
+                (equipment.Get_Equipment_Name()== equipment_Name)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 

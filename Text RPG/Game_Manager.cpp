@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Job_Selection.h"
 #include "JYJ.h"  
+#include "Camp_Manager.h"
 #include <iostream>
 
 using namespace std;
@@ -33,28 +34,27 @@ void Game_Manager::Run()
 
 void Game_Manager::Create_Player()
 {
-    int job = Job_Selection();  
+    int job = Job_Selection();
     switch (job)
     {
     case 1:
+    {
         _Player = new JYJ("JYJ");
         break;
+    }
 
     default:
-        cout << "잘못된 직업 선택입니다. 기본 직업으로 시작합니다." << endl;
+    {
+        cout << "잘못된 직업 선택입니다. "  << "기본 직업으로 시작합니다." << endl;
         _Player = new JYJ("JYJ");
         break;
     }
-        // 플레이어에게 장비와 튜터 정보를 연결
-        if (_Player != nullptr)
-        {
-            _Player->Set_Status_References
-            (
-                &_Currently_Equipped_Equipments,
-                &_Currently_Equipped_Tutor
-            );
     }
 
+    if (_Player != nullptr)
+    {
+        _Player->Set_Status_References(&_Currently_Equipped_Equipments, &_Currently_Equipped_Tutor);
+    }
 }
 
 void Game_Manager::Show_Main_Menu()
@@ -67,7 +67,8 @@ void Game_Manager::Show_Main_Menu()
         cout << "========================================" << endl;
         cout << "1. 던전 입장" << endl;
         cout << "2. 인벤토리" << endl;
-		cout << "3. 상태창" << endl;
+        cout << "3. 캐릭터 정보" << endl;
+        cout << "4. 내일배움캠프 재정비소" << endl;
         cout << "0. 게임 종료" << endl;
         cout << "선택: ";
 
@@ -77,7 +78,7 @@ void Game_Manager::Show_Main_Menu()
         switch (choice)
         {
         case 1:
-            _Dungeon.Open_Dungeon(_Player, _Inventory);
+            _Dungeon.Open_Dungeon(_Player, _Inventory, _Equipment_Inventory, _Currently_Equipped_Equipments);
             break;
 
         case 2:
@@ -86,16 +87,30 @@ void Game_Manager::Show_Main_Menu()
             break;
         }
 
-		case 3:
-			if (_Player != nullptr)
-			{
-				_Player->Print_Status();
-			}
-			else
-			{
-				cout << "플레이어 정보가 없습니다." << endl;
-			}
-			break;
+        case 3:
+        {
+            if (_Player == nullptr)
+            {
+                cout << "캐릭터 정보를 찾을 수 없습니다." << endl;
+                break;
+            }
+            _Player->Print_Status();
+            break;
+        }
+
+        case 4:
+        {
+            if (_Player == nullptr)
+            {
+                cout << "플레이어 정보를 찾을 수 없습니다." << endl;
+                break;
+            }
+
+            Camp_Manager camp_Manager(*_Player, _Inventory,  _Equipment_Inventory, _Currently_Equipped_Equipments);
+            camp_Manager.Open_Camp_Menu();
+
+            break;
+        }
 
         case 0:
             cout << "게임 종료!" << endl;

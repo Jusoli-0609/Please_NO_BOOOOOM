@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <string>
+#include <iomanip>
 
 using namespace std;
 
@@ -50,35 +51,46 @@ void Battle(Player* player, Monster& monster, Inventory<Item>& inventory)
 //======================================================
 void Show_Battle_Start(Player* player, Monster& monster)
 {
-    cout << endl;
-    cout << "==================================" << endl;
-    cout << "          전투 시작!" << endl;
-    cout << "==================================" << endl;
-    cout << player->Get_Name() << " VS " << monster.getName() << endl;
-    cout << "==================================" << endl;
+    cout << "\n";
+    cout << "╔════════════════════════════════════════════════════╗\n";
+    cout << "║                   전 투 시 작                      ║\n";
+    cout << "╠════════════════════════════════════════════════════╣\n";
+    cout << "  PLAYER : " << player->Get_Name() << "\n";
+    cout << "║                                                    ║\n";
+    cout << "║                      V S                           ║\n";
+    cout << "║                                                    ║\n";
+    cout << "  ENEMY  : " << monster.getName() << "\n";
+    cout << "╚════════════════════════════════════════════════════╝\n";
 }
 
 void Show_Battle_Status(Player* player, Monster& monster, int turnCount)
 {
-    cout << endl;
-    cout << "==================================" << endl;
-    cout << "              " << turnCount << " TURN" << endl;
-    cout << "==================================" << endl;
-    cout << player->Get_Name() << " HP : " << player->Get_Hp() << endl;
-    cout << monster.getName() << " HP : " << monster.getHP() << endl;
-    cout << "==================================" << endl;
+    cout << "\n";
+    cout << "╔════════════════════════════════════════════════════╗\n";
+    cout << "                     TURN " << turnCount << " \n";
+    cout << "╠════════════════════════════════════════════════════╣\n";
+    cout << "  PLAYER : " << player->Get_Name() << " \n";
+    cout << "║ HP     : " << player->Get_Hp() << "\n";
+    cout << "║                                                    ║\n";
+    cout << "  ENEMY  : " << monster.getName() << " \n";
+    cout << "  HP     : " << monster.getHP() << "\n";
+    cout << "╚════════════════════════════════════════════════════╝\n";
 }
 
 void Show_Battle_Menu()
 {
-    cout << endl;
-    cout << "==============================" << endl;
-    cout << "        플레이어 턴" << endl;
-    cout << "==============================" << endl;
-    cout << "1. 공격" << endl;
-    cout << "2. 스킬" << endl;
-    cout << "3. 아이템" << endl;
-    cout << "==============================" << endl;
+    cout << "\n";
+    cout << "╔════════════════════════════════════════════════════╗\n";
+    cout << "║                  플레이어 턴                       ║\n";
+    cout << "╠════════════════════════════════════════════════════╣\n";
+    cout << "║                                                    ║\n";
+    cout << "║   [1] 공격                                         ║\n";
+    cout << "║   [2] 스킬                                         ║\n";
+    cout << "║   [3] 아이템                                       ║\n";
+    cout << "║                                                    ║\n";
+    cout << "╠════════════════════════════════════════════════════╣\n";
+    cout << "║ 행동을 선택하세요.                                 ║\n";
+    cout << "╚════════════════════════════════════════════════════╝\n";
     cout << "선택 : ";
 }
 
@@ -232,20 +244,28 @@ bool Check_Battle_End(Player* player, Monster& monster, Inventory<Item>& invento
     {
         if (Is_Tutor(monster))
         {
-            cout << endl;
-            cout << "==================================" << endl;
-            cout << "        튜터 시험 통과!" << endl;
-            cout << "    다음 챕터로 이동합니다." << endl;
-            cout << "==================================" << endl;
+            cout << "\n";
+            cout << "╔════════════════════════════════════════════════════╗\n";
+            cout << "║                 튜터 시험 통과!                    ║\n";
+            cout << "╠════════════════════════════════════════════════════╣\n";
+            cout << "║                                                    ║\n";
+            cout << "║   축하합니다!                                      ║\n";
+            cout << "║   다음 챕터가 해금되었습니다.                      ║\n";
+            cout << "║                                                    ║\n";
+            cout << "╚════════════════════════════════════════════════════╝\n";
 
             player->Remove_Temporary_Modifiers();
             return true;
         }
 
-        cout << endl;
-        cout << "==================================" << endl;
-        cout << "          전투 승리!" << endl;
-        cout << "==================================" << endl;
+        cout << "\n";
+        cout << "╔════════════════════════════════════════════════════╗\n";
+        cout << "║                    전 투 승 리                     ║\n";
+        cout << "╠════════════════════════════════════════════════════╣\n";
+        cout << "║                                                    ║\n";
+        cout << "    " << monster.getName() << " 처치 완료!\n";
+        cout << "║                                                    ║\n";
+        cout << "╚════════════════════════════════════════════════════╝\n";
 
         player->Remove_Temporary_Modifiers();
 
@@ -323,32 +343,60 @@ bool Ask_Single_Quiz(const Quiz& quiz)
 
 void First_Impression_Quiz_Phase(Player* player, Monster& monster, vector<Quiz>& quizPool)
 {
-    cout << "\n========================================\n";
-    cout << " [" << monster.getName() << "님의 기선제압 심사!]\n";
-    cout << " 전투 진입 직후 2개의 기습 질문이 들어옵니다!\n";
-    cout << "========================================\n";
+    cout << "\n";
+    cout << "╔════════════════════════════════════════════════════╗\n";
+    cout << "║                  기 선 제 압                       ║\n";
+    cout << "╠════════════════════════════════════════════════════╣\n";
+    cout << "║                                                    ║\n";
+    cout << " " << monster.getName() << "의 기습 심사가 시작됩니다!\n";
+    cout << "║                                                    ║\n";
+    cout << "║ 전투 시작 전 2개의 질문이 출제됩니다.              ║\n";
+    cout << "║ 정답을 맞히면 선제공격!                            ║\n";
+    cout << "║ 틀리면 기습 공격을 받습니다!                       ║\n";
+    cout << "║                                                    ║\n";
+    cout << "╚════════════════════════════════════════════════════╝\n";
 
     for (int i = 0; i < 2 && !quizPool.empty(); ++i)
     {
+        cout << "\n";
+        cout << "══════════════════════════════════════════════════════\n";
+        cout << "                [ 기습 문제 " << i + 1 << " / 2 ]\n";
+        cout << "══════════════════════════════════════════════════════\n";
+
         Quiz q = quizPool.back();
         quizPool.pop_back();
 
         bool isCorrect = Ask_Single_Quiz(q);
 
+        cout << "\n";
+
         if (isCorrect)
         {
             int counterDamage = player->Get_ATK();
             monster.setHP(monster.getHP() - counterDamage);
-            cout << ">> [기선제압 성공] 질문을 잘 받아쳐 " << counterDamage << "의 데미지를 입혔습니다!\n";
+
+            cout << "╔════════════════════════════════════════════════════╗\n";
+            cout << "║               기 선 제 압 성 공!                   ║\n";
+            cout << "╠════════════════════════════════════════════════════╣\n";
+            cout << "║ 선제공격 성공!                                     ║\n";
+            cout << "  데미지 : " << counterDamage << "\n";
+            cout << "╚════════════════════════════════════════════════════╝\n";
         }
         else
         {
             int bossDamage = static_cast<int>(monster.getPower() * 0.8);
             player->Set_Hp(player->Get_Hp() - bossDamage);
-            cout << ">> [기선제압 실패] 질문에 당황하여 " << bossDamage << "의 데미지를 입었습니다!\n";
+
+            cout << "╔════════════════════════════════════════════════════╗\n";
+            cout << "║               기 선 제 압 실 패                    ║\n";
+            cout << "╠════════════════════════════════════════════════════╣\n";
+            cout << "║ 기습 공격을 허용했습니다!                          ║\n";
+            cout << "  받은 피해 : " << bossDamage <<"\n";
+            cout << "╚════════════════════════════════════════════════════╝\n";
         }
 
-        if (player->Get_Hp() <= 0 || monster.getHP() <= 0) break;
+        if (player->Get_Hp() <= 0 || monster.getHP() <= 0)
+            break;
     }
 }
 
@@ -357,27 +405,59 @@ void Final_Boss_Monster_Turn(Player* player, Monster& monster, int turnCount, ve
     // 매 보스 턴마다 퀴즈 문제 출제
     if (!quizPool.empty())
     {
-        cout << "\n========================================\n";
-        cout << " [" << monster.getName() << "님의 실무 심사 패턴 발동!]\n";
-        cout << "========================================\n";
+        cout << "\n";
+        cout << "╔════════════════════════════════════════════════════╗\n";
+        cout << "║               실 무 심 사 패 턴                    ║\n";
+        cout << "╠════════════════════════════════════════════════════╣\n";
+        cout << "║                                                    ║\n";
+        cout << " " << monster.getName() << "의 특수 패턴이 발동!\n";
+        cout << "║                                                    ║\n";
+        cout << "║ 질문에 정답하면 카운터 공격!                       ║\n";
+        cout << "║ 틀리면 강력한 특수 공격을 받습니다!                ║\n";
+        cout << "║                                                    ║\n";
+        cout << "╚════════════════════════════════════════════════════╝\n";
 
         Quiz q = quizPool.back();
         quizPool.pop_back();
 
+        cout << "\n";
+        cout << "══════════════════════════════════════════════════════\n";
+        cout << "                 [ 실무 심사 문제 ]\n";
+        cout << "══════════════════════════════════════════════════════\n";
+
         monster.Print_Attack_Message();
+
         bool isCorrect = Ask_Single_Quiz(q);
+
+        cout << "\n";
 
         if (isCorrect)
         {
             int counterDamage = player->Get_ATK() * 2;
             monster.setHP(monster.getHP() - counterDamage);
-            cout << "\n>> [성공] 패턴을 파악해 " << counterDamage << "의 카운터 데미지를 입혔습니다!\n";
+
+            cout << "╔════════════════════════════════════════════════════╗\n";
+            cout << "║                 패 턴 파 훼 !                      ║\n";
+            cout << "╠════════════════════════════════════════════════════╣\n";
+            cout << "║                                                    ║\n";
+            cout << "║ 카운터 공격 성공!                                  ║\n";
+            cout << "  입힌 피해 : " << counterDamage << "\n";
+            cout << "║                                                    ║\n";
+            cout << "╚════════════════════════════════════════════════════╝\n";
         }
         else
         {
             int bossDamage = static_cast<int>(monster.getPower() * 1.5);
             player->Set_Hp(player->Get_Hp() - bossDamage);
-            cout << "\n>> [실패] 답하지 못해 " << bossDamage << "의 특수 데미지를 입었습니다!\n";
+
+            cout << "╔════════════════════════════════════════════════════╗\n";
+            cout << "║                패 턴 실 패...                      ║\n";
+            cout << "╠════════════════════════════════════════════════════╣\n";
+            cout << "║                                                    ║\n";
+            cout << "║ 특수 공격을 허용했습니다!                          ║\n";
+            cout << "  받은 피해 : " << bossDamage << "\n";
+            cout << "║                                                    ║\n";
+            cout << "╚════════════════════════════════════════════════════╝\n";
         }
     }
     else

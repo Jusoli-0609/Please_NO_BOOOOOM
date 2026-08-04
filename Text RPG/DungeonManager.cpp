@@ -1,10 +1,20 @@
 ﻿#include "DungeonManager.h"
-#include "Battle_System.h"
-#include "Battle_Elite_Skill.h"
 
+#include "Battle_Elite_Skill.h"
+#include "Battle_System.h"
+
+#include "Tutor_Engine.h"
+#include "Tutor_Glasses.h"
+#include "Tutor_Headset.h"
+#include "Tutor_Keyboard.h"
+#include "Tutor_Mouse.h"
+
+#include <algorithm>
 #include <cstdlib>
 #include <iostream>
 #include <limits>
+#include <string>
+#include <vector>
 
 using namespace std;
 
@@ -19,6 +29,7 @@ namespace
 	constexpr int MINIMUM_BATTLE_HP =1;
 }
 
+
 //=============================================================================
 // 1. 던전 생성 및 메뉴 실행 파트
 //=============================================================================
@@ -32,7 +43,7 @@ Dungeon_Manager::Dungeon_Manager()
 {
 }
 
-void Dungeon_Manager::Open_Dungeon(Player* player, Inventory<Item>& inventory)
+void Dungeon_Manager::Open_Dungeon(Player* player,Inventory<Item>& inventory, Inventory_For_Equipments_Only& equipment_Inventory, const Currently_Equipped_Equipments&equipped_Equipments)
 {
 	if (player == nullptr)
 	{
@@ -58,9 +69,9 @@ void Dungeon_Manager::Open_Dungeon(Player* player, Inventory<Item>& inventory)
 
 		cout << "모든 튜터님에게 인정받았다." << endl;
 
-		Print_Tutor_Item_Status(inventory);
+		Print_Tutor_Equipment_Status(equipment_Inventory, equipped_Equipments);
 
-		bool is_Final_Boss_Room_Available = Check_Final_Boss_Room_Available (inventory);
+		bool is_Final_Boss_Room_Available = Check_Final_Boss_Room_Available(equipment_Inventory,equipped_Equipments);
 
 		int final_Boss_Choice = -1;
 
@@ -91,12 +102,13 @@ void Dungeon_Manager::Open_Dungeon(Player* player, Inventory<Item>& inventory)
 				cout << endl;
 				cout << "최종 보스방을 여는 데 필요한 " << "튜터님의 선물이 부족하다." << endl;
 
-				Print_Tutor_Item_Status(inventory);
+				Print_Tutor_Equipment_Status(equipment_Inventory, equipped_Equipments);
 
 				break;
 			}
 
-			Run_Final_Boss_Room(player,inventory);
+			Run_Final_Boss_Room
+			(player, inventory, equipment_Inventory, equipped_Equipments);
 
 			break;
 		}
@@ -164,7 +176,7 @@ void Dungeon_Manager::Open_Dungeon(Player* player, Inventory<Item>& inventory)
 		Print_Total_Monster_Kill_Log();
 		break;
 	case 3:
-		Run_Tutor_Challenge(player, inventory);
+		Run_Tutor_Challenge(player, equipment_Inventory, equipped_Equipments);
 		break;
 	case 0:
 		cout << "메인 메뉴로 돌아간다." << endl;
@@ -485,7 +497,7 @@ bool Dungeon_Manager::Run_Elite_Quiz(Player* player,Monster& elite_Monster)
 // 6. 튜터 문제 및 대사 파트
 //=============================================================================
 
-void Dungeon_Manager::Run_Tutor_Challenge(Player* player, Inventory<Item>& inventory)
+void Dungeon_Manager::Run_Tutor_Challenge(Player* player, Inventory_For_Equipments_Only& equipment_Inventory, const Currently_Equipped_Equipments&equipped_Equipments)
 {
 	if (player == nullptr) return;
 
@@ -517,9 +529,12 @@ void Dungeon_Manager::Run_Tutor_Challenge(Player* player, Inventory<Item>& inven
 		return;
 	}
 
-	bool is_Tutor_Item_Given = Give_Tutor_Clear_Item(_current_Chapter, inventory);
+	bool is_Tutor_Equipment_Given = Give_Tutor_Clear_Equipment(_current_Chapter, equipment_Inventory, equipped_Equipments);
 
-	if (!is_Tutor_Item_Given) return;
+	if (!is_Tutor_Equipment_Given)
+	{
+		return;
+	}
 
 	player->Gain_Exp(tutor_Monster.getExpReward());
 
@@ -875,107 +890,74 @@ void Dungeon_Manager::Move_Next_Chapter()
 // 10. 튜터 고유 아이템 파트
 //=============================================================================
 
-Item Dungeon_Manager::Create_Tutor_Clear_Item(Chapter_Type chapter_Type) const
+Equipment Dungeon_Manager::Create_Tutor_Clear_Equipment(Chapter_Type chapter_Type) const
 {
-	Item tutor_Item;
-	tutor_Item._Item_Price = 0;
-	tutor_Item._Item_Count = 1;
-	tutor_Item._Item_Weight = 0;
-	tutor_Item._Item_Type_Usable = false;
-	tutor_Item._Item_Type_Wearable = false;
-	tutor_Item._Item_Ascii_Art = "";
-
 	switch (chapter_Type)
 	{
 	case Chapter_Type::VARIABLE_CONDITION_FOREST:
-		tutor_Item._Item_Name = "손승현 튜터님의 로지텍 마우스";
-		tutor_Item._Item_Ascii_Art =
-			R"(  .----.
- /  ||  \
-|   ||   |
- \______/)";
-		break;
+	{
+		return Tutor_Mouse();
+	}
+
 	case Chapter_Type::ARRAY_LOOP_OCEAN:
-		tutor_Item._Item_Name = "박은일 튜터님의 갈축 키보드";
-		tutor_Item._Item_Ascii_Art =
-			R"(+--------+
-|[][][][]|
-|[______]|
-+--------+)";
-		break;
+	{
+		return Tutor_Keyboard();
+	}
+
 	case Chapter_Type::FUNCTION_RUINS:
-		tutor_Item._Item_Name = "강신호 튜터님의 게이밍 헤드셋";
-		tutor_Item._Item_Ascii_Art =
-			tutor_Item._Item_Ascii_Art =
-			R"( /------\
-| ()  ()|
-|  \__/ |
- \_||__/)";
+	{
+		return Tutor_Headset();
+	}
 
-		break;
 	case Chapter_Type::POINTER_MEMORY_GRAVEYARD:
-		tutor_Item._Item_Name = "문승현 튜터님의 최고버전 언리얼엔진";
-		tutor_Item._Item_Ascii_Art =
-			R"(+--------+
-| UE5.X  |
-| <MAX>  |
-+--------+)";
-		break;
+	{
+		return Tutor_Engine();
+	}
+
 	case Chapter_Type::OBJECT_STL_FACTORY:
-		tutor_Item._Item_Name = "김하늘 튜터님의 도수높은 안경";
-		tutor_Item._Item_Ascii_Art =
-			R"( .--..--.
-(  )(  )
- '--''--')";
-		break;
+	{
+		return Tutor_Glasses();
+	}
+
 	default:
-		tutor_Item._Item_Name = "";
-		tutor_Item._Item_Ascii_Art = "";
-		tutor_Item._Item_Count = 0;
-		break;
+	{
+		return Equipment();
 	}
-
-	tutor_Item._Item_Weight = 0;
-	return tutor_Item;
+	}
 }
 
-bool Dungeon_Manager::Has_Item_In_Inventory(Inventory<Item>& inventory, const std::string& item_Name) const
+bool Dungeon_Manager::Has_Tutor_Equipment(const Inventory_For_Equipments_Only&equipment_Inventory, const Currently_Equipped_Equipments&equipped_Equipments, const string& equipment_Name) const
 {
-	for (int item_Index = 0; item_Index < inventory.Get_Size(); item_Index++)
+	if(equipment_Inventory.Has_Equipment_By_Name(equipment_Name))
 	{
-		Item* inventory_Item = inventory.Get_Item_By_Index(item_Index);
-
-		if (inventory_Item != nullptr && inventory_Item->_Item_Name == item_Name && inventory_Item->_Item_Count > 0)
-		{
-			return true;
-		}
-	}
-	return false;
-}
-
-bool Dungeon_Manager::Give_Tutor_Clear_Item(Chapter_Type chapter_Type, Inventory<Item>& inventory)
-{
-	Item tutor_Item = Create_Tutor_Clear_Item(chapter_Type);
-
-	if (tutor_Item._Item_Name.empty() || tutor_Item._Item_Count <= 0)
-	{
-		cout << "튜터 고유 아이템 정보를 찾지 못했습니다." << endl;
-		return false;
-	}
-
-	if (Has_Item_In_Inventory(inventory, tutor_Item._Item_Name))
-	{
-		cout << tutor_Item._Item_Name << "을(를) 이미 보유하고 있습니다." << endl;
 		return true;
 	}
 
-	bool is_Added =inventory.Add_Or_Increase_Item(tutor_Item);
-
-	if (!is_Added)
+	if(equipped_Equipments.Has_Equipment_By_Name(equipment_Name))
 	{
-		cout << "고유 아이템을 인벤토리에 넣지 못했다." << endl;
+		return true;
+	}
+
+	return false;
+}
+
+bool Dungeon_Manager::Give_Tutor_Clear_Equipment(Chapter_Type chapter_Type, Inventory_For_Equipments_Only& equipment_Inventory, const Currently_Equipped_Equipments& equipped_Equipments)
+{
+	Equipment tutor_Equipment = Create_Tutor_Clear_Equipment(chapter_Type);
+
+	if(tutor_Equipment.Get_Equipment_Type() == Equipment_Type::Empty)
+	{
+		cout << "튜터 전용 장비 정보를 찾지 못했다."<< endl;
 
 		return false;
+	}
+
+	if
+		(Has_Tutor_Equipment(equipment_Inventory, equipped_Equipments, tutor_Equipment.Get_Equipment_Name()))
+	{
+		cout << tutor_Equipment.Get_Equipment_Name() << "을(를) 이미 보유하고 있다." << endl;
+
+		return true;
 	}
 
 	cout << endl;
@@ -983,57 +965,109 @@ bool Dungeon_Manager::Give_Tutor_Clear_Item(Chapter_Type chapter_Type, Inventory
 	cout << "[ 튜터님이 선물을 주셨다. ]" << endl;
 	cout << "========================================" << endl;
 
-	cout << "받은 선물: " << tutor_Item._Item_Name << endl;
+	bool is_Added = equipment_Inventory.Add_Equipment(tutor_Equipment);
 
-	tutor_Item.Print_Ascii_Art();
+	if (!is_Added)
+	{
+		cout << "장비 인벤토리에 공간이 없어 " << "튜터 장비를 받지 못했다." << endl;
+
+		return false;
+	}
+
+	tutor_Equipment.Print_Equipment_Info();
+
+	cout << "========================================" << endl;
 
 	return true;
 }
 
-bool Dungeon_Manager::Check_Final_Boss_Room_Available(Inventory<Item>& inventory) const
+bool Dungeon_Manager::Check_Final_Boss_Room_Available(const Inventory_For_Equipments_Only& equipment_Inventory, const Currently_Equipped_Equipments&equipped_Equipments) const
 {
-	return Has_Item_In_Inventory(inventory, "손승현 튜터님의 로지텍 마우스")
-		&& Has_Item_In_Inventory(inventory, "박은일 튜터님의 갈축 키보드")
-		&& Has_Item_In_Inventory(inventory, "강신호 튜터님의 게이밍 헤드셋")
-		&& Has_Item_In_Inventory(inventory, "문승현 튜터님의 최고버전 언리얼엔진")
-		&& Has_Item_In_Inventory(inventory, "김하늘 튜터님의 도수높은 안경");
-}
-
-void Dungeon_Manager::Print_Tutor_Item_Status(Inventory<Item>& inventory) const
-{
-	cout << endl << "========================================" << endl;
-	cout << "[ 튜터님의 선물 수집 현황 ]" << endl;
-	cout << "========================================" << endl;
-
-	std::string tutor_Item_Names[5] =
+	const Chapter_Type tutor_Chapters[5] =
 	{
-		"손승현 튜터님의 로지텍 마우스",
-		"박은일 튜터님의 갈축 키보드",
-		"강신호 튜터님의 게이밍 헤드셋",
-		"문승현 튜터님의 최고버전 언리얼엔진",
-		"김하늘 튜터님의 도수높은 안경"
+		Chapter_Type::VARIABLE_CONDITION_FOREST,
+		Chapter_Type::ARRAY_LOOP_OCEAN,
+		Chapter_Type::FUNCTION_RUINS,
+		Chapter_Type::POINTER_MEMORY_GRAVEYARD,
+		Chapter_Type::OBJECT_STL_FACTORY
 	};
 
-	int obtained_Item_Count = 0;
-
-	for (int item_Index = 0; item_Index < 5; item_Index++)
+	for
+		(
+			int chapter_Index = 0;
+			chapter_Index < 5;
+			chapter_Index++
+			)
 	{
-		bool has_Item = Has_Item_In_Inventory(inventory, tutor_Item_Names[item_Index]);
-		cout << item_Index + 1 << ". " << tutor_Item_Names[item_Index] << " - " << (has_Item ? "보유" : "미보유") << endl;
-		if (has_Item) obtained_Item_Count++;
+		Equipment tutor_Equipment = Create_Tutor_Clear_Equipment(tutor_Chapters[chapter_Index]);
+
+		bool has_Equipment =Has_Tutor_Equipment(equipment_Inventory, equipped_Equipments, tutor_Equipment.Get_Equipment_Name());
+
+		if (!has_Equipment)
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
+void Dungeon_Manager::Print_Tutor_Equipment_Status(const Inventory_For_Equipments_Only&equipment_Inventory, const Currently_Equipped_Equipments&equipped_Equipments) const
+{
+	const Chapter_Type tutor_Chapters[5] =
+	{
+		Chapter_Type::VARIABLE_CONDITION_FOREST,
+		Chapter_Type::ARRAY_LOOP_OCEAN,
+		Chapter_Type::FUNCTION_RUINS,
+		Chapter_Type::POINTER_MEMORY_GRAVEYARD,
+		Chapter_Type::OBJECT_STL_FACTORY
+	};
+
+	cout << endl;
+	cout << "========================================" << endl;
+	cout << "[ 튜터 전용 장비 수집 현황 ]" << endl;
+	cout << "========================================" << endl;
+
+	int obtained_Count = 0;
+
+	for
+		(
+			int chapter_Index = 0;
+			chapter_Index < 5;
+			chapter_Index++
+			)
+	{
+		Equipment tutor_Equipment = Create_Tutor_Clear_Equipment(tutor_Chapters[chapter_Index]);
+
+		bool has_Equipment = Has_Tutor_Equipment
+			(equipment_Inventory, equipped_Equipments, tutor_Equipment.Get_Equipment_Name());
+
+		cout << chapter_Index + 1 << ". " << tutor_Equipment.Get_Equipment_Name() << " - " <<
+			(
+				has_Equipment
+				? "보유"
+				: "미보유"
+				)
+			<< endl;
+
+		if (has_Equipment)
+		{
+			obtained_Count++;
+		}
 	}
 
 	cout << "----------------------------------------" << endl;
-	cout << "수집한 튜터님의 선물: " << obtained_Item_Count << " / 5" << endl;
+	cout << "수집한 튜터 전용 장비: " << obtained_Count << " / 5" << endl;
 
-	if (Check_Final_Boss_Room_Available(inventory))
+	if(Check_Final_Boss_Room_Available(equipment_Inventory, equipped_Equipments))
 	{
-		cout << "입구를 막고 있던 코드들이 흩어졌다." << endl;
+		cout << "튜터님들의 장비가 반응하기 시작했다."<< endl;
 	}
 	else
 	{
-		cout << "수 많은 코드들이 입구를 막고 있다." << endl;
+		cout << "최종 과정에 필요한 튜터 장비가 부족하다." << endl;
 	}
+
 	cout << "========================================" << endl;
 }
 
@@ -1041,108 +1075,115 @@ void Dungeon_Manager::Print_Tutor_Item_Status(Inventory<Item>& inventory) const
 // 10. 최종보스방 파트
 //=============================================================================
 
-void Dungeon_Manager::Run_Final_Boss_Room(Player* player, Inventory<Item>& inventory)
+void Dungeon_Manager::Run_Final_Boss_Room(Player* player,Inventory<Item>& inventory, const Inventory_For_Equipments_Only&equipment_Inventory, const Currently_Equipped_Equipments&equipped_Equipments)
 {
 	if (player == nullptr)
 	{
-		cout << "조원의 정보를 찾을 수 없다" << endl;
+		cout << "조원의 정보를 찾을 수 없다." << endl;
 
 		return;
 	}
 
 	if (_is_Game_Cleared)
 	{
-		cout << "이미 매니저님께 인정을 받았다." << endl;
+		cout << "이미 매니저님들의 최종 시험을 통과했다." << endl;
 
 		return;
 	}
 
-	if (_is_All_Chapter_Cleared == false)
+	if (!_is_All_Chapter_Cleared)
 	{
 		cout << "모든 내일배움캠프 과정을 수료하지 못했다." << endl;
 
 		return;
 	}
 
-	if(Check_Final_Boss_Room_Available(inventory) == false)
+	if(!Check_Final_Boss_Room_Available(equipment_Inventory, equipped_Equipments))
 	{
-		cout << "모든 튜터님들에게 인정 받지 못했다." << endl;
+		cout << endl;
+		cout << "==================================================" << endl;
+		cout << "[ 최종 코드 검증실 입장 실패 ]" << endl;
+		cout << "==================================================" << endl;
+		cout << "최종 과정에 필요한 튜터 전용 장비가 부족하다." << endl;
+
+		Print_Tutor_Equipment_Status (equipment_Inventory, equipped_Equipments);
+
+		cout << "==================================================" << endl;
 
 		return;
 	}
 
 	Monster kim_Dong_Hyun_Manager;
-
 	kim_Dong_Hyun_Manager.Initialize_Final_Boss(Monster_Type::KIM_DONG_HYUN_MANAGER);
-
 	Monster moon_Seung_Ho_Manager;
-
 	moon_Seung_Ho_Manager.Initialize_Final_Boss(Monster_Type::MOON_SEUNG_HO_MANAGER);
 
 	cout << endl;
-	cout << "========================================" << endl;
-	cout << "[ 스포트라이트가 켜졌다. ]" << endl;
-	cout << "튜터님들의 선물이 반응한다." << endl;
+	cout << "==================================================" << endl;
+	cout << "[ 최종 코드 검증실 ]" << endl;
+	cout << "==================================================" << endl;
+	cout << "튜터님들에게 받은 장비가 동시에 반응하기 시작했다." << endl;
 	cout << "입구를 막고 있던 코드들이 흩어졌다." << endl;
-	cout << "========================================" << endl;
+	cout << "스포트라이트가 켜졌다." << endl;
 	cout << endl;
-	cout << "========================================" << endl;
-	cout << "[ 1차 최종 보스 ]" << endl;
-	cout << "========================================" << endl;
+	cout << kim_Dong_Hyun_Manager.getName() << "와 " << moon_Seung_Ho_Manager.getName() << "가 동시에 모습을 드러냈다." << endl;
+	cout << "==================================================" << endl;
+	cout << endl;
+	cout << "==================== FINAL BOSS ====================" << endl;
 
 	kim_Dong_Hyun_Manager.Print_Ascii_Art();
-	kim_Dong_Hyun_Manager.Print_Monster_Info();
-	kim_Dong_Hyun_Manager.Print_Attack_Message();
-
-	Battle(player, kim_Dong_Hyun_Manager,inventory);
-
-	if(player->Get_Hp() <= 0 || kim_Dong_Hyun_Manager.getHP() > 0)
-	{
-		cout << endl;
-		cout << "========================================" << endl;
-		cout << "[ 최종 보스 전투 실패 ]" << endl;
-		cout << "========================================" << endl;
-		cout << "김동현 매니저님의 시험을 통과하지 못했습니다." << endl;
-		cout << "조원의 상태를 정비한 뒤 다시 도전할 수 있습니다." << endl;
-		cout << "========================================" << endl;
-
-		return;
-	}
-
-	cout << endl;
-	cout << "========================================" << endl;
-	cout << "[ 1차 최종 보스 클리어 ]" << endl;
-	cout << "========================================" << endl;
-	cout << "김동현 매니저님의 시험을 통과했습니다." << endl;
-	cout << "곧바로 두 번째 최종 보스 전투가 시작됩니다." << endl;
-	cout << "========================================" << endl;
-	cout << endl;
-	cout << "========================================" << endl;
-	cout << "[ 2차 최종 보스 ]" << endl;
-	cout << "========================================" << endl;
 
 	moon_Seung_Ho_Manager.Print_Ascii_Art();
-	moon_Seung_Ho_Manager.Print_Monster_Info();
+
+	cout << "====================================================" << endl;
+
+	Print_Final_Boss_Duo_Introduction(kim_Dong_Hyun_Manager, moon_Seung_Ho_Manager);
+
+	cout << endl;
+	cout << "==================================================" << endl;
+	cout << "[ 최종 코드 검증 시작 ]" << endl;
+	cout << "==================================================" << endl;
+
+	kim_Dong_Hyun_Manager.Print_Attack_Message();
+
 	moon_Seung_Ho_Manager.Print_Attack_Message();
 
-	Battle(player, moon_Seung_Ho_Manager,inventory);
+	cout << endl;
+	cout << "두 매니저님이 동시에 최종 코드 검증을 시작했다." << endl;
+	cout << "플레이어는 공격할 대상을 직접 선택해야 한다." << endl;
+	cout << "두 매니저님은 모두 자신의 턴에 공격한다." << endl;
+	cout << "==================================================" << endl;
 
-	if
-		(player->Get_Hp() <= 0 || moon_Seung_Ho_Manager.getHP() > 0)
+	bool is_Final_Boss_Cleared = Final_Boss_Duo_Battle(player, kim_Dong_Hyun_Manager, moon_Seung_Ho_Manager, inventory);
+
+	if (!is_Final_Boss_Cleared)
 	{
 		cout << endl;
-		cout << "========================================" << endl;
-		cout << "[ 최종 보스 전투 실패 ]" << endl;
-		cout << "========================================" << endl;
-		cout << "문승호 매니저님의 시험을 통과하지 못했습니다." << endl;
-		cout << "첫 번째 시험부터 다시 시작됩니다." << endl;
-		cout << "========================================" << endl;
+		cout << "==================================================" << endl;
+		cout << "[ 최종 코드 검증 실패 ]" << endl;
+		cout << "==================================================" << endl;
+		cout << "두 매니저님의 최종 코드 검증을 통과하지 못했다." << endl;
+		cout << "재정비소에서 상태를 정비한 뒤 다시 도전할 수 있다." << endl;
+		cout << "==================================================" << endl;
 
 		return;
 	}
+
 	_is_Game_Cleared = true;
 
-	Run_Ending(player);
+	cout << endl;
+	cout << "==================================================" << endl;
+	cout << "[ 최종 코드 검증 완료 ]" << endl;
+	cout << "==================================================" << endl;
+	cout << kim_Dong_Hyun_Manager.getName() << "와 " << moon_Seung_Ho_Manager.getName() << "의 검증을 모두 통과했다." << endl;
+	cout << "검증실을 뒤덮고 있던 오류 메시지가 사라지기 시작했다." << endl;
+	cout << "마지막 모니터에 새로운 문장이 출력됐다." << endl;
+	cout << endl;
+	cout << "\"최종 코드 검증 완료\"" << endl;
+	cout << "==================================================" << endl;
+
+	Run_Ending
+	(player);
 }
 
 void Dungeon_Manager::Run_Ending(const Player* player) const
