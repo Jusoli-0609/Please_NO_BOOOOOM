@@ -31,7 +31,6 @@
 		//4.인벤토리 출력 관련 함수 파트
 		void Print_Inventory() const;//4-1 인벤토리 및 내용물 출력
 		void Print_Inventory_Menu(Currently_Equipped_Equipments& currently_equipped_equipments,
-
 			Inventory_For_Equipments_Only& inventory_for_equipments_only);//4-2 인벤토리 메뉴(선택지) 출력
 		//5.인벤토리 기능 함수 파트
 		bool Add_Or_Increase_Item(const T& new_item);// 5-1 아이템 추가 및 갯수 증가
@@ -49,7 +48,6 @@
 	    // 8. 인벤토리 소멸자	
 		~Inventory();//8.소멸자
 		//9. 인벤토리 내 골드
-
 		int Get_Money()const;
 		void Set_Money(int money);
 		//10.아이템 제작용 숫자 다운

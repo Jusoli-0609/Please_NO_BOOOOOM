@@ -1154,7 +1154,6 @@ void Dungeon_Manager::Run_Final_Boss_Room(Player* player,Inventory<Item>& invent
 	cout << "두 매니저님은 모두 자신의 턴에 공격한다." << endl;
 	cout << "==================================================" << endl;
 
-
 	bool is_Final_Boss_Cleared = Final_Boss_Duo_Battle(player, kim_Dong_Hyun_Manager, moon_Seung_Ho_Manager, inventory);
 
 	if (!is_Final_Boss_Cleared)

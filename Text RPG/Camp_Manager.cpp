@@ -1,6 +1,6 @@
-#include "Camp_Manager.h"
+﻿#include "Camp_Manager.h"
 #include <iostream>
-#include "Items_Equipments_Repository.h"
+#include"Items_Equipments_Repository.h"
 
 using namespace std;
 
@@ -8,14 +8,14 @@ Camp_Manager::Camp_Manager
 (
     Player& player,
     Inventory<Item>& inventory,
-    Inventory_For_Equipments_Only& 
+    Inventory_For_Equipments_Only&
     inventory_for_equipments,
-    Currently_Equipped_Equipments& 
+    Currently_Equipped_Equipments&
     currently_equipped_equipments
 )
     : player(player),
-    inventory(inventory),
-    inventory_for_equipments(inventory_for_equipments),
+    inventory(inventory), 
+    inventory_for_equipments(inventory_for_equipments), 
     currently_equipped_equipments(currently_equipped_equipments)
 {
 }
@@ -24,14 +24,14 @@ void Camp_Manager::Open_Camp_Menu()
 {
     while (true)
     {
-        cout << "\n===== ���Ϲ��ķ�� ������� =====\n";
-        cout << "1. ����ķ 119 �⺻ ���� �ޱ�\n";
-        cout << "2. �� �����\n";
-        cout << "3. ����ȣ �Ŵ������� ���� ��ȭ��\n";
-        cout << "4. �赿�� �Ŵ������� ����ǰ ���Լ�\n";
-        cout << "5. ��Ű�� ���尣\n";
-        cout << "0. ������\n";
-        cout << "����: ";
+        cout << "\n===== 내일배움캠프 재정비소 =====\n";
+        cout << "1. 내배캠 119 기본 보급 받기\n";
+        cout << "2. 펩 스토어\n";
+        cout << "3. 문승호 매니저님의 만물 잡화점\n";
+        cout << "4. 김동현 매니저님의 전리품 매입소\n";
+        cout << "5. 쿠키의 대장간\n";
+        cout << "0. 나가기\n";
+        cout << "선택: ";
 
         int choice;
         cin >> choice;
@@ -42,7 +42,7 @@ void Camp_Manager::Open_Camp_Menu()
         {
             if (Received_Basic_Items == true)
             {
-                cout << "�̹� ������ �޾Ҵ�! ��Ű�� ȭ���� ������!\n";
+                cout << "이미 보급을 받았다! 쿠키가 화내며 할퀸다!\n";
                 player.SetHP(player.GetHP() - 1);
                 break;
             }
@@ -77,34 +77,37 @@ void Camp_Manager::Open_Camp_Menu()
 
         case 0:
         {
-            cout << "������ҿ��� �����ϴ�." << endl;
+            cout << "재정비소에서 나갑니다."  << endl;
             return;
         }
 
         default:
         {
-            cout << "�߸��� �����Դϴ�." << endl;
+            cout << "잘못된 선택입니다." << endl;
             break;
         }
         }
     }
 }
 
+
+
+
 void Camp_Manager::Give_Basic_Training_Item()
 {
-    cout << "\n===== ����ķ 119 =====\n";
-    cout << "�⺻ ����ǰ�� ���޹޾ҽ��ϴ�!\n";
+    cout << "\n===== 내배캠 119 =====\n";
+    cout << "기본 보급품을 지급받았습니다!\n";
 }
 
 void Camp_Manager::Open_Pep_Store_Menu()
 {
     while (true)
     {
-        cout << "\n===== �� ����� =====\n";
-        cout << "1. ��� ����\n";
-        cout << "2. ��� �Ǹ�\n";
-        cout << "0. �ڷΰ���\n";
-        cout << "���� : ";
+        cout << "\n===== 펩 스토어 =====\n";
+        cout << "1. 장비 구매\n";
+        cout << "2. 장비 판매\n";
+        cout << "0. 뒤로가기\n";
+        cout << "선택 : ";
 
         int choice;
         cin >> choice;
@@ -115,15 +118,16 @@ void Camp_Manager::Open_Pep_Store_Menu()
         {
             if (inventory.Get_Money() <= 0)
             {
+                cout << "골드가 없다!\n";
                 break;
             }
-            cout << "�⺻ CPU�� �����߽��ϴ�.\n";
+            cout << "기본 CPU를 구매했습니다.\n";
             break;
         }
 
         case 2:
         {
-            // TODO : �Ǹ�
+            // TODO : 판매
             break;
         }
 
@@ -134,7 +138,7 @@ void Camp_Manager::Open_Pep_Store_Menu()
 
         default:
         {
-            cout << "�߸��� �Է��Դϴ�.\n";
+            cout << "잘못된 입력입니다.\n";
             break;
         }
         }
@@ -143,17 +147,17 @@ void Camp_Manager::Open_Pep_Store_Menu()
 
 void Camp_Manager::Open_General_Store_Menu()
 {
-    cout << "\n===== ����ȣ �Ŵ������� ���� ��ȭ�� =====\n";
+    cout << "\n===== 문승호 매니저님의 만물 잡화점 =====\n";
 
-    // TODO: �Һ� ������ ���
-    // TODO: ���� ó��
+    // TODO: 소비 아이템 출력
+    // TODO: 구매 처리
 }
 
 void Camp_Manager::Open_Loot_Shop_Menu()
 {
-    cout << "\n===== �赿�� �Ŵ������� ����ǰ ���Լ� =====\n";
+    cout << "\n===== 김동현 매니저님의 전리품 매입소 =====\n";
 
-    // TODO: ����ǰ �Ǹ�
+    // TODO: 전리품 판매
 }
 
 void Camp_Manager::Open_Cookie_Blacksmith_Menu()
@@ -162,22 +166,23 @@ void Camp_Manager::Open_Cookie_Blacksmith_Menu()
     {
         cout << endl;
         cout << "========================================" << endl;
-        cout << "[ ��Ű�� �ڵ� ���尣 ]" << endl;
+        cout << "[ 쿠키의 코드 대장간 ]" << endl;
         cout << "========================================" << endl;
-        cout << "1. ��� ��ȭ" << endl;
-        cout << "2. �ڵ� �������� ��� ����" << endl;
-        cout << "3. ��� ����" << endl;
-        cout << "0. �ڷΰ���" << endl;
-        cout << "����: ";
+        cout << "1. 장비 강화" << endl;
+        cout << "2. 코드 조각으로 장비 제작" << endl;
+        cout << "3. 장비 분해" << endl;
+        cout << "0. 뒤로가기" << endl;
+        cout << "선택: ";
 
-        int choice;
+        int choice = -1;
+
         cin >> choice;
 
         switch (choice)
         {
         case 1:
         {
-            cout << "����� �� ���ȭ��� ����� �ּ���" << endl;
+            cout << "윤재님 얼른 장비강화기능 만들어 주세요" << endl;
             break;
         }
 
@@ -200,7 +205,7 @@ void Camp_Manager::Open_Cookie_Blacksmith_Menu()
 
         default:
         {
-            cout << "�߸��� �Է��̴�." << endl;
+            cout << "잘못된 입력이다." << endl;
             break;
         }
         }
