@@ -315,6 +315,9 @@
     <ClInclude Include="Tutor_Mouse.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="..\..\..\Cookietheblacksmith.txt" />
+    <Text Include="..\..\..\naeilcampaskkkiart.txt" />
+    <Text Include="..\..\..\쿠키의 대장간 아스키아트.txt" />
     <Text Include="Title.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
