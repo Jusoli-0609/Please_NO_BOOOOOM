@@ -257,7 +257,7 @@ Tutor Create_Tutor_By_Number(int tutor_number)
 
         return Tutor(
             "문승현",
-            "문승현 튜터님의 고양이 버츄얼",
+            "문승현 튜터님의 최고버전 언리얼엔진",
             "MAX MP +20 / SNE +10",
             Tutor_Modifier
         );
