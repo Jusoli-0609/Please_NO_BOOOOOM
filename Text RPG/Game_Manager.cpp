@@ -150,7 +150,7 @@ void Game_Manager::Show_Main_Menu()
 
 		case 5:
 		{
-			Print_Tutor_Menu(_Inventory, _Currently_Equipped_Tutor, _Player);
+			Print_Tutor_Menu(_Equipment_Inventory, _Currently_Equipped_Equipments, _Currently_Equipped_Tutor, _Player);
 			break;
 		}
 

@@ -24,5 +24,5 @@ public:
 	void Print_Recipes_By_Level(int equipment_Level) const;
 	bool Craft_Item(Inventory<Item>& item_inventory,Inventory_For_Equipments_Only&equipment_inventory);
 	bool Decomposition_Item(Inventory_For_Equipments_Only&equipment_inventory,Inventory<Item>& item_inventory);
-    bool Enhance_Item(Inventory_For_Equipments_Only& equipment_inventory);
+    bool Enhance_Item(Inventory_For_Equipments_Only& equipment_inventory, Inventory<Item>& item_inventory);
 };
