@@ -1,6 +1,7 @@
 ﻿#include "Battle_System.h"
 #include "Battle_Elite_Skill.h"
 #include "Stat_Modifier.h"
+#include "Ascii_Art_Manager.h"
 
 #include "Level_Up.h"
 #include "Item.h"

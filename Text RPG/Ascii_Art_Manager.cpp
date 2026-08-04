@@ -1,4 +1,4 @@
-#include "Ascii_Art_Manager.h"
+﻿#include "Ascii_Art_Manager.h"
 #include <fstream>
 #include <iostream>
 
