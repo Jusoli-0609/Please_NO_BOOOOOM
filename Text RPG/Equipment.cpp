@@ -153,8 +153,8 @@
         cout << "장비 설명: " << _Equipment_Description << endl;
         cout << "장비 타입: " << Equipment_Type_To_String(_Equipment_Type) << endl;
         cout <<  "장비 무게: " << _Equipment_Weight << endl;
-        cout << "공격력: " << _Attack_Stat << endl;
-        cout << "방어력: " << _Defence_Stat << endl;
+        cout << "공격력: " << _Attack_Stat << " + " << (static_cast<int>(_Attack_Stat * (1.0f + (_Enhance_Level * 0.05f) + (static_cast<float>(_Grade) * 0.1f)))-_Attack_Stat) << " = " << static_cast<int>(_Attack_Stat * (1.0f + (_Enhance_Level * 0.05f) + (static_cast<float>(_Grade) * 0.1f))) << endl;
+        cout << "방어력: " << _Defence_Stat << " + " << (static_cast<int>(_Defence_Stat * (1.0f + (_Enhance_Level * 0.05f) + (static_cast<float>(_Grade) * 0.1f))) - _Defence_Stat) << " = " << static_cast<int>(_Defence_Stat * (1.0f + (_Enhance_Level * 0.05f) + (static_cast<float>(_Grade) * 0.1f))) << endl;
         cout << "등급: " << Equipment_Grade_To_String(_Grade) << endl;
         cout << "강화 레벨: +" << _Enhance_Level << endl;
         cout << _Equipment__Ascii_Art << endl;
@@ -508,36 +508,36 @@
 
 
         // Engine
-        total_stats.Attack += _Unreal_Engine_Version.Get_Attack_Stat();
-        total_stats.Defence += _Unreal_Engine_Version.Get_Defence_Stat();
+        total_stats.Attack += _Unreal_Engine_Version.Get_Attack_Stat()* (1 + (_Unreal_Engine_Version.Get_Enhance_Level() * 0.05f) + ((static_cast<float>(_Unreal_Engine_Version.Get_Grade()) * 0.1f)));
+        total_stats.Defence += _Unreal_Engine_Version.Get_Defence_Stat()* (1 + (_Unreal_Engine_Version.Get_Enhance_Level() * 0.05f) + ((static_cast<float>(_Unreal_Engine_Version.Get_Grade()) * 0.1f)));
         total_stats.Enhance_Level += _Unreal_Engine_Version.Get_Enhance_Level();
         total_stats.Grade_Score += static_cast<int>(_Unreal_Engine_Version.Get_Grade());
 
 
         // Keyboard
-        total_stats.Attack += _Keyboard.Get_Attack_Stat();
-        total_stats.Defence += _Keyboard.Get_Defence_Stat();
+        total_stats.Attack += _Keyboard.Get_Attack_Stat()* (1 + (_Keyboard.Get_Enhance_Level() * 0.05f) + ((static_cast<float>(_Keyboard.Get_Grade()) * 0.1f)));
+        total_stats.Defence += _Keyboard.Get_Defence_Stat()* (1 + (_Keyboard.Get_Enhance_Level() * 0.05f) + ((static_cast<float>(_Keyboard.Get_Grade()) * 0.1f)));
         total_stats.Enhance_Level += _Keyboard.Get_Enhance_Level();
         total_stats.Grade_Score += static_cast<int>(_Keyboard.Get_Grade());
 
 
         // Mouse
-        total_stats.Attack += _Mouse.Get_Attack_Stat();
-        total_stats.Defence += _Mouse.Get_Defence_Stat();
+        total_stats.Attack += _Mouse.Get_Attack_Stat()* (1 + (_Mouse.Get_Enhance_Level() * 0.05f) + ((static_cast<float>(_Mouse.Get_Grade()) * 0.1f)));
+        total_stats.Defence += _Mouse.Get_Defence_Stat()* (1 + (_Mouse.Get_Enhance_Level() * 0.05f) + ((static_cast<float>(_Mouse.Get_Grade()) * 0.1f)));
         total_stats.Enhance_Level += _Mouse.Get_Enhance_Level();
         total_stats.Grade_Score += static_cast<int>(_Mouse.Get_Grade());
 
 
         // BlueLight Glasses
-        total_stats.Attack += _BlueLight_Glasses.Get_Attack_Stat();
-        total_stats.Defence += _BlueLight_Glasses.Get_Defence_Stat();
+        total_stats.Attack += _BlueLight_Glasses.Get_Attack_Stat()* (1 + (_BlueLight_Glasses.Get_Enhance_Level() * 0.05f) + ((static_cast<float>(_BlueLight_Glasses.Get_Grade()) * 0.1f)));
+        total_stats.Defence += _BlueLight_Glasses.Get_Defence_Stat()* (1 + (_BlueLight_Glasses.Get_Enhance_Level() * 0.05f) + ((static_cast<float>(_BlueLight_Glasses.Get_Grade()) * 0.1f)));
         total_stats.Enhance_Level += _BlueLight_Glasses.Get_Enhance_Level();
         total_stats.Grade_Score += static_cast<int>(_BlueLight_Glasses.Get_Grade());
 
 
         // Headset
-        total_stats.Attack += _Headset.Get_Attack_Stat();
-        total_stats.Defence += _Headset.Get_Defence_Stat();
+        total_stats.Attack += _Headset.Get_Attack_Stat()* (1 + (_Headset.Get_Enhance_Level() * 0.05f) + ((static_cast<float>(_Headset.Get_Grade()) * 0.1f)));
+        total_stats.Defence += _Headset.Get_Defence_Stat()* (1 + (_Headset.Get_Enhance_Level() * 0.05f) + ((static_cast<float>(_Headset.Get_Grade()) * 0.1f)));
         total_stats.Enhance_Level += _Headset.Get_Enhance_Level();
         total_stats.Grade_Score += static_cast<int>(_Headset.Get_Grade());
 

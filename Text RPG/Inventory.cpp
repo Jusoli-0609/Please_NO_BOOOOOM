@@ -138,7 +138,8 @@ void Inventory<T>::Print_Inventory() const
 template <typename T>//4-2 인벤토리 메뉴 출력
 void Inventory<T>::Print_Inventory_Menu(
     Currently_Equipped_Equipments& currently_equipped_equipments,
-    Inventory_For_Equipments_Only& inventory_for_equipments_only
+    Inventory_For_Equipments_Only& inventory_for_equipments_only,
+    Player& player
 )
 {
     int Choose_Inventory_Menu;
@@ -331,9 +332,7 @@ void Inventory<T>::Print_Inventory_Menu(
 
             case 5:
             {
-                // TODO: Player, Monster 객체 참조 전달 구조
-                // Use_Item(player, monster);
-                cout << "전투 중 아이템 사용은 전투 시스템에서 호출해야 한다!" << endl;
+                Use_Item(player);
                 break;
             }
 
@@ -474,36 +473,55 @@ void Inventory<T>::Print_Inventory_Menu(
         return false;
     }
 
-    template <typename T>//5-3 전투 중 아이템 사용
-    void Inventory<T>::Use_Item(Player & player, Monster & monster)
+    template <typename T>//5-3  아이템 사용
+    bool Inventory<T>::Use_Item(Player & player)
     {
         if (_Current_Quantity_Of_Items == 0)
         {
             cout << "사용할 아이템이 없다!" << endl;
-            return;
+            return false;
         }
         Print_Inventory();
         int Choose_Item_To_Use_In_Battle;
         cout << "사용할 아이템을 고르세요!" << endl;
+        cout << "되돌아갈려면 0번을 누르세요!" << endl;
         cin >> Choose_Item_To_Use_In_Battle;
+        if (Choose_Item_To_Use_In_Battle==0)
+        {
+            return false;
+        }
         int Vector_Index = Choose_Item_To_Use_In_Battle - 1;
         T* selected_item = Get_Item_By_Index(Vector_Index); //  GetItemByIndex 호출 결과를 저장할 Item 포인터 변수 선언
         if (selected_item == nullptr)
         {
             cout << "잘못된 아이템 번호다!" << endl;
-            return;
+            return false;
         }
         string selected_item_name = selected_item->_Item_Name; // 선택한 아이템 이름을 저장할 string 변수 선언
-        if (selected_item->_Item_Type_Usable == true)
+        if (selected_item_name=="컵라면")
         {
-            selected_item->Item_Effect(player, monster);
+            player.Set_Hp(min(player.Get_Hp() + 50, player.GetMaxHP()));
+            cout << "체력을 회복해 현재 체력은 "
+                << player.Get_Hp()
+                << "이다."
+                << endl;
             Use_Item_By_Name(selected_item_name);
-            return;
+            return true;
+        }
+        else if (selected_item_name == "에너지드링크")
+        {
+            player.Set_Mp(min(player.Get_Mp() + 50, player.GetMaxMP()));
+            cout << "마나를 회복해 현재 마나는 "
+                << player.Get_Mp()
+                << "이다."
+                << endl;
+            Use_Item_By_Name(selected_item_name);
+            return true;
         }
         else
         {
             cout << "사용할 수 없는 아이템이다!" << endl;
-            return;
+            return false;
         }
     }
 

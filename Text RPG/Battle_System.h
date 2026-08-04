@@ -26,7 +26,7 @@ void Show_Battle_Menu();
 void Show_Battle_End(Player* player, Monster& monster, Console_Manager& console);   // 수정
 
 void Player_Turn(Player* player, Monster& monster, Inventory<Item>& inventory);
-void Use_Item(Player* player, Monster& monster, Inventory<Item>& inventory);
+bool Use_Item(Player* player, Monster& monster, Inventory<Item>& inventory);
 void Attack(Player* player, Monster& monster);
 
 bool Skill_Menu_Process(Player* player, Monster& monster);
