@@ -53,6 +53,7 @@ void Game_Manager::Show_Main_Menu()
 
     while (is_Running)
     {
+        _Console.Clear();
         cout << endl;
         cout << "========================================" << endl;
         cout << "1. 던전 입장" << endl;
@@ -76,19 +77,20 @@ void Game_Manager::Show_Main_Menu()
         }
 
         case 0:
-            cout << "게임 종료!" << endl;
+            _Console.Clear();
+            _Console.Print_At(0, 0, "게임 종료!");
             is_Running = false;
             break;
 
         default:
-            cout << "잘못된 선택!" << endl;
+            _Console.Print_At(0, 7, "잘못된 선택!");
             break;
         }
 
         if (_Player != nullptr && _Player->Get_Hp() <= 0)
         {
-            cout << endl;
-            cout << "실패! 다시 시작해보자!" << endl;
+            _Console.Clear();
+            _Console.Print_At(0, 0, "실패! 다시 시작해보자!");
             is_Running = false;
         }
     }
