@@ -8,6 +8,7 @@
 #include "LMR.h"
 #include "PSB.h"
 #include "Camp_Manager.h"
+#include "Sound_Manager.h"
 #include <iostream>
 
 using namespace std;
@@ -31,6 +32,8 @@ void Game_Manager::Run()
 {
     _Console.Set_Console_Size();
     _Console.Clear();
+
+	Sound_Manager::Get_Instance().Play_BGM(BGM_Type::Main);
 
     _Intro.Show(_Console, _Art);   // 멤버 함수 호출
     _Console.Clear();
@@ -96,12 +99,17 @@ void Game_Manager::Create_Player()
 
 void Game_Manager::Show_Main_Menu()
 {
+
+	Sound_Manager::Get_Instance().Play_BGM(BGM_Type::Main);
+
     bool is_Running = true;
 
     while (is_Running)
     {
         // 이전 화면 삭제 + 메인 UI 재출력
         _UI.Draw_Main_Menu(_Player);
+
+		Sound_Manager::Get_Instance().Play_BGM(BGM_Type::Main);
 
         int choice = -1;
         cin >> choice;

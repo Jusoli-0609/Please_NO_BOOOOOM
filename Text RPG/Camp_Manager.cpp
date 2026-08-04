@@ -28,7 +28,7 @@ void Camp_Manager::Open_Camp_Menu()
     while (true)
     {
         Ascii_Art_Manager art;
-        art.Print("TommorowLearnCamp.txt");
+        art.Print("TommorowLearnCamp");
 
         cout << "\n===== 내일배움캠프 재정비소 =====\n";
         cout << "1. 내배캠 119 기본 보급 받기\n";
