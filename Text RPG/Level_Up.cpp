@@ -11,7 +11,7 @@ using namespace std;
 // 생성자: 최초 레벨 및 경험치 초기화
 // ==========================================
 // - 게임 시작 시 플레이어의 초기 레벨은 1, 현재 경험치는 0으로 세팅합니다.
-// - 첫 레벨업에 필요한 목표 경험치는 100, 기본 스탯 포인트는 0으로 초기화합니다.
+// - 첫 레벨업에 필요한 목표 경험치는 100, 기본 스탯 포인트는 5로 
 Level_Up::Level_Up()
     : _current_level(1), _current_exp(0), _max_exp(100), _stat_points(0)
 {
@@ -93,7 +93,7 @@ void Level_Up::ProcessLevelUp(Player* player)
 
     player->Add_Base_MaxHP(addedHp);
     player->Add_Base_ATK(addedPower);
-
+	player->Add_Stat_Points(5); // 레벨업 시 스탯 포인트 5 지급
     // 상승된 스탯 수치 로그 출력
     cout << "  -> 레벨업 보너스: 최대 체력 +" << addedHp << " (최대 HP: " << player->GetMaxHP() << ")\n";
     cout << "  -> 레벨업 보너스: 공격력 +" << addedPower << " (공격력: " << player->GetPower() << ")\n";
@@ -114,20 +114,58 @@ void Level_Up::ProcessLevelUp(Player* player)
     }
     cout << "====================================\n\n";
 
-    // [추가된 부분] 레벨에 따라 대사가 3가지로 다채롭게 바뀌는 일시정지 처리
+    // ==========================================
+    // 캐릭터별 고유 레벨업 대사 출력 시스템
+    // ==========================================
     int messageIndex = _current_level % 3;
+    string job = player->Get_Job();
 
-    if (messageIndex == 1)
+    // 1. 정윤재 (풍둔 주둥아리술 마스터)
+    if (job == "풍둔 주둥아리술 마스터")
     {
-        cout << "야호!! 신난다! 다음으로 넘어가자! (Enter를 누르세요)";
+        if (messageIndex == 1) cout << "야호!! 블루투스식 레벨업이다! (Enter를 누르세요)";
+        else if (messageIndex == 2) cout << "커피 타오십시오! 주둥아리 연륜 상승! (Enter를 누르세요)";
+        else cout << "메챠쿠챠 카멜레온! (Enter를 누르세요)";
     }
-    else if (messageIndex == 2)
+    // 2. 주소리 (소리교 교주)
+    else if (job == "소리교 교주")
     {
-        cout << "한층 성장한 느낌이다! (Enter를 누르세요)";
+        if (messageIndex == 1) cout << "찬밥단 동원! 복음의 레벨이 올랐다! (Enter를 누르세요)";
+        else if (messageIndex == 2) cout << "음침하게 염탐하여 신도들을 홀린다! (Enter를 누르세요)";
+        else cout << "그림으로 정신공격! 교주의 힘이 강해진다! (Enter를 누르세요)";
+    }
+    // 3. 장우혁 (Grand Theif Academy(도둑))
+    else if (job == "Grand Theif Academy(도둑)")
+    {
+        if (messageIndex == 1) cout << "도적이 되기엔 너무 정직한 레벨업인가? (Enter를 누르세요)";
+        else if (messageIndex == 2) cout << "...제가 레벨업을 한 건가요? (Enter를 누르세요)";
+        else cout << "소리 없이 강해졌다! 낚아채기 준비 완료! (Enter를 누르세요)";
+    }
+    // 4. 이미르 (치코리타(반려식물))
+    else if (job == "치코리타(반려식물)")
+    {
+        if (messageIndex == 1) cout << "크와아오앙! 반려식물이 진화한다! (Enter를 누르세요)";
+        else if (messageIndex == 2) cout << "식물인 척하며 레벨을 훔쳤다! (Enter를 누르세요)";
+        else cout << "아재개그로 식물의 한계를 뛰어넘었다! (Enter를 누르세요)";
+    }
+    // 5. 이영빈 (고양이 집사(동물테이머))
+    else if (job == "고양이 집사(동물테이머)")
+    {
+        if (messageIndex == 1) cout << "오 잠시만요 고양이가 레벨업을 도와줬어요! (Enter를 누르세요)";
+        else if (messageIndex == 2) cout << "랜선 물어뜯기 급의 폭풍 성장을 이뤄냈다! (Enter를 누르세요)";
+        else cout << "츄르 바르기 버프 발동! 한층 더 강해졌다! (Enter를 누르세요)";
+    }
+    // 6. 박성빈 (도둑대장(전사))
+    else if (job == "도둑대장(전사)")
+    {
+        if (messageIndex == 1) cout << "허허허..., 제가 레벨업을 했습니다 (Enter를 누르세요)";
+        else if (messageIndex == 2) cout << "No Signal... 묵직하게 레벨업을 받아들인다. (Enter를 누르세요)";
+        else cout << "대장의 품격으로 든든하게 성장 완료! (Enter를 누르세요)";
     }
     else
     {
-        cout << "스파르타!! 이 기세로 달려간다! (Enter를 누르세요)";
+        // 예외 상황 발생 시 기본 출력
+        cout << "계속하려면 Enter를 누르세요...";
     }
 
     cin.ignore();

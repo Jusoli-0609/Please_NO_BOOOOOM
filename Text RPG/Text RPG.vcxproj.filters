@@ -128,8 +128,10 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Title.txt" />
-    <Text Include="..\..\..\쿠키의 대장간 아스키아트.txt" />
     <Text Include="..\..\..\Cookietheblacksmith.txt" />
-    <Text Include="..\..\..\naeilcampaskkkiart.txt" />
+    <Text Include="..\..\..\..\Downloads\TommorowLearnCamp.txt" />
+    <Text Include="..\..\..\..\Downloads\FepStore.txt" />
+    <Text Include="..\..\..\..\Downloads\MrMoonStore.txt" />
+    <Text Include="..\..\..\..\Downloads\MrKimStore.txt" />
   </ItemGroup>
 </Project>

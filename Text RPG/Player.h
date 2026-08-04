@@ -33,6 +33,9 @@ protected:
 
     float defenceDecreaseValue = 0.0f;
     float criticalBuffValue = 0.0f;
+
+	int statpoints;
+
     //명중 판정용
     bool Check_Hit(const Monster* monster) const;
 
@@ -253,5 +256,12 @@ public:
     void setAgi(int agi);
 
     void setLevel(int level);
+
+  
+	// 스탯 포인트 분배
+    void Distribute_Stat_Points();
+
+    int Get_Stat_Points() const;
+    void Add_Stat_Points(int amount);
 };
 

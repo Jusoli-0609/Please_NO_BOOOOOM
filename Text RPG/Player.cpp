@@ -20,7 +20,8 @@ Player::Player(const std::string& name)
     maxmp(100),
     level(1),
     currentlyEquippedEquipments(nullptr),
-    currentlyEquippedTutor(nullptr)
+    currentlyEquippedTutor(nullptr),
+    statpoints(5)
 {
 }
 
@@ -173,9 +174,14 @@ void Player::Set_Status_References(
     currentlyEquippedTutor = tutor;
 }
 
+void Add_statpoints(Player* player, int points)
+{
+	player->Add_Stat_Points(points);
+}
+
 void Player::Print_Status() const
 {
-	Update_Equipment_Buff();
+    Update_Equipment_Buff();
     auto Print_Stat = [](const std::string& stat_name,
         int base_stat,
         int final_stat)
@@ -242,6 +248,8 @@ void Player::Print_Status() const
     std::cout << "    ";
     Print_Stat("AGI", baseStat.agi, agi);
     std::cout << '\n';
+
+    std::cout << "남은 분배 가능 스탯포인트: " << statpoints << '\n';
 
     std::cout << "--------------------------------------------------------------------------------\n";
     std::cout << "[스킬]\n";
@@ -325,6 +333,110 @@ void Player::Print_Status() const
     }
 
     std::cout << "================================================================================\n";
+   
+    if (statpoints > 0)
+    {
+        std::cout << "스탯포인트를 분배하시겠습니까?\n";
+        std::cout << "1. 분배하기\n";
+        std::cout << "0. 돌아가기\n";
+        std::cout << "선택: ";
+
+        int choice;
+        std::cin >> choice;
+
+        if (choice == 1)
+        {
+            const_cast<Player*>(this)->Distribute_Stat_Points();
+        }
+    }
+}
+
+// 스탯포인트를 분배하는 함수
+void Player::Distribute_Stat_Points()
+{
+    while (statpoints > 0)
+    {
+        std::cout << "\n";
+        std::cout << "========================================\n";
+        std::cout << "           스탯포인트 분배\n";
+        std::cout << "========================================\n";
+        std::cout << "남은 스탯포인트: " << statpoints << '\n';
+        std::cout << "1. MAX HP +5\n";
+        std::cout << "2. MAX MP +5\n";
+        std::cout << "3. ATK +2\n";
+        std::cout << "4. DEF +5\n";
+        std::cout << "5. AP +2\n";
+        std::cout << "6. SNE +3\n";
+        std::cout << "7. AGI +3\n";
+        std::cout << "0. 종료\n";
+        std::cout << "선택: ";
+
+        int statChoice;
+        std::cin >> statChoice;
+
+        if (statChoice == 0)
+        {
+            return;
+        }
+
+        if (statChoice < 1 || statChoice > 7)
+        {
+            std::cout << "잘못된 선택이다.\n";
+            continue;
+        }
+
+        std::cout << "분배할 포인트 수: ";
+
+        int amount;
+        std::cin >> amount;
+
+        if (amount <= 0 || amount > statpoints)
+        {
+            std::cout << "잘못된 포인트 수다.\n";
+            continue;
+        }
+
+        switch (statChoice)
+        {
+        case 1:
+            baseStat.maxHp += 5* amount;
+            break;
+
+        case 2:
+            baseStat.maxMp += 5* amount;
+            break;
+
+        case 3:
+            baseStat.atk += 2 * amount;
+            break;
+
+        case 4:
+            baseStat.def += 5 * amount;
+            break;
+
+        case 5:
+            baseStat.ap += 2 * amount;
+            break;
+
+        case 6:
+            baseStat.sne += 3 * amount;
+            break;
+
+        case 7:
+            baseStat.agi += 3 * amount;
+            break;
+        }
+
+        statpoints -= amount;
+
+        Recalculate_Stats();
+
+        std::cout << amount << "포인트를 분배했다!\n";
+        std::cout << "남은 스탯포인트: "
+            << statpoints << '\n';
+    }
+
+    std::cout << "모든 스탯포인트를 분배했다.\n";
 }
 
 // 플레이어의 기본 스탯을 baseStat에 저장, 저장이 되었다면 이후에는 호출하지 않음
@@ -1058,6 +1170,17 @@ void Player::setLevel(int value)
     Set_Level(value);
 }
 
+void Player::Add_Stat_Points(int points)
+{
+	if (points < 0)
+	{
+		std::cout << "스탯포인트는 음수로 추가할 수 없습니다.\n";
+		return;
+	}
+	statpoints += points;
+	std::cout << "  -> " << points << " 스탯포인트를 획득했다! 현재 남은 스탯포인트: "
+		<< statpoints << "\n";
+}
 
 //기본 스탯 Getter
 int Player::Get_Base_MaxHP() const
