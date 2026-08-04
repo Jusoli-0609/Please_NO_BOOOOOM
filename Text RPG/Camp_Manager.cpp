@@ -90,8 +90,6 @@ void Camp_Manager::Open_Camp_Menu()
 }
 }
 
-void Camp_Manager::Give_Basic_Training_Item(Player& player, Currently_Equipped_Equipments& currently_equipped_equipments);
-
 void Camp_Manager::Give_Basic_Training_Item()
 {
     if (Received_Basic_Items == true)
@@ -134,23 +132,17 @@ void Camp_Manager::Open_Pep_Store_Menu()
             break;
     // TODO: 기본 지급 아이템 생성
     // invnetory.Add_Item(...);
-}
-
-void Camp_Manager::Open_Pep_Store_Menu()
-        case 0:
-{
-    cout << "\n===== 펩 스토어 =====\n";
-            return;
         }
-
-    // TODO: 장비 목록 출력
-    // TODO: 구매
-    // TODO: 판매
-        default:
+        case 0:
         {
             cout << "잘못된 입력입니다.\n";
             break;
         }
+    // TODO: 장비 목록 출력
+    // TODO: 구매
+    // TODO: 판매
+        default:
+            return;
         }
     }
 }
@@ -186,7 +178,6 @@ void Camp_Manager::Open_Cookie_Blacksmith_Menu()
 
         int choice = -1;
 
-        int choice;
         cin >> choice;
 
         switch (choice)
