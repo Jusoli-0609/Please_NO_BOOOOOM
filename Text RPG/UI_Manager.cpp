@@ -127,62 +127,26 @@ void UI_Manager::Draw_Menu_Box()
     const int x = 1;
     const int y = 15;
     const int width = _Console.Get_Width() - 3;
-    const int height = 20;
+    const int height = 18;
 
-    Draw_Box(
-        x,
-        y,
-        width,
-        height
-    );
+    Draw_Box(x, y, width, height);
 
-    _Console.Print_At(
-        x + 9,
-        y + 3,
-        "[1] 던전 입장"
-    );
+    const int menuX = x + 9;
 
-    _Console.Print_At(
-        x + 9,
-        y + 5,
-        "[2] 인벤토리"
-    );
+    _Console.Print_At(menuX, y + 4, "[1] 던전 입장");
+    _Console.Print_At(menuX, y + 5, "[2] 인벤토리");
+    _Console.Print_At(menuX, y + 6, "[3] 캐릭터 정보");
+    _Console.Print_At(menuX, y + 7, "[4] 내일배움캠프 재정비소");
+    _Console.Print_At(menuX, y + 8, "[5] 튜터 선택");
+    _Console.Print_At(menuX, y + 9, "[0] 게임 종료");
 
-    _Console.Print_At(
-        x + 9,
-        y + 7,
-        "[3] 캐릭터 정보"
-    );
+    // 게임 종료 바로 아래 줄
+    const int inputY = y + 11;
 
-    _Console.Print_At(
-        x + 9,
-        y + 9,
-        "[4] 내일배움캠프 재정비소"
-    );
-
-    _Console.Print_At(
-        x + 9,
-        y + 11,
-        "[5] 튜터 선택"
-    );
-
-    _Console.Print_At(
-        x + 9,
-        y + 13,
-        "[0] 게임 종료"
-    );
-
-    // 입력 위치를 메뉴 박스 안쪽에 배치
-    const int inputY = y + 16;
-
-    _Console.Print_At(
-        x + 3,
-        inputY,
-        "선택 : "
-    );
+    _Console.Print_At(menuX, inputY, "선택 : ");
 
     _Console.Set_Cursor_Position(
-        x + 10,
+        menuX + 7,
         inputY
     );
 }
@@ -194,18 +158,6 @@ void UI_Manager::Draw_Main_Menu(const Player* player)
     Draw_Title_Box();
     Draw_Player_Box(player);
     Draw_Menu_Box();
-
-    // 마지막에 출력해야 cin 입력 위치가 유지됩니다.
-    _Console.Print_At(
-        5,
-        29,
-        "선택 : "
-    );
-
-    _Console.Set_Cursor_Position(
-        12,
-        29
-    );
 }
 
 void UI_Manager::Draw_Game_Over()
