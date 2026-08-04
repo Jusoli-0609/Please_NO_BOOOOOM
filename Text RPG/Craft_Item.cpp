@@ -393,8 +393,7 @@ bool Craft_Work_Shop::Decomposition_Item(Inventory_For_Equipments_Only& equipmen
 //=============================================================================
 
 bool Craft_Work_Shop::Enhance_Item(
-	Inventory_For_Equipments_Only& equipment_inventory
-)
+	Inventory_For_Equipments_Only& equipment_inventory, Inventory<Item> inventory)
 {
 	cout << "장비 전용 인벤토리에 있는 장비만 강화할 수 있다냥." << endl;
 	if (equipment_inventory.Get_Equipment_Current_Count() == 0)
@@ -402,7 +401,10 @@ bool Craft_Work_Shop::Enhance_Item(
 		cout << "텅 비었다냥!" << endl;
 		return false;
 	}
-
+	if (inventory.Get_Money()<=0)
+	{
+		return false;
+	}
 	equipment_inventory.Print_Equipment_Inventory();
 
 	int choice = -1;
