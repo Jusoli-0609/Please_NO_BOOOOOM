@@ -101,7 +101,7 @@ void Dungeon_Manager::Open_Dungeon(Player* player,Inventory<Item>& inventory, In
 			if (!is_Final_Boss_Room_Available)
 			{
 				cout << endl;
-				cout << "최종 보스방을 여는 데 필요한 " << "튜터님의 선물이 부족하다." << endl;
+				cout << "모든 챕터를 수료해야 " << "최종 보스방에 입장할 수 있다.." << endl;
 
 				Print_Tutor_Equipment_Status(equipment_Inventory, equipped_Equipments);
 
@@ -498,35 +498,42 @@ bool Dungeon_Manager::Run_Elite_Quiz(Player* player,Monster& elite_Monster)
 // 6. 튜터 문제 및 대사 파트
 //=============================================================================
 
-void Dungeon_Manager::Run_Tutor_Challenge(Player* player, Inventory_For_Equipments_Only& equipment_Inventory, const Currently_Equipped_Equipments&equipped_Equipments)
+void Dungeon_Manager::Run_Tutor_Challenge(Player* player, Inventory_For_Equipments_Only& equipment_Inventory, const Currently_Equipped_Equipments& equipped_Equipments)
 {
-	if (player == nullptr) return;
+	if (player == nullptr)
+	{
+		return;
+	}
 
 	if (!Check_Tutor_Challenge_Available())
 	{
 		int required_Score = Get_Required_Tutor_Score();
 		int remaining_Score = required_Score - _current_Chapter_Score;
 
-		cout << endl << "========================================" << endl;
+		cout << endl;
+		cout << "========================================" << endl;
 		cout << "튜터님의 시험 조건을 충족하지 못했다." << endl;
 		cout << "현재 점수: " << _current_Chapter_Score << " / " << required_Score << endl;
-		cout << "필요한 추가 점수: " << remaining_Score << endl;
+		cout << "필요한 추가 점수: " << remaining_Score<< endl;
 		cout << "========================================" << endl;
+
 		return;
 	}
 
 	Monster tutor_Monster;
-	tutor_Monster.Initialize_Tutor_Monster(_current_Chapter);
 
+	tutor_Monster.Initialize_Tutor_Monster(_current_Chapter);
 	tutor_Monster.Print_Ascii_Art();
 
-	bool is_Cleared = Run_Tutor_Code_Challenge(player, tutor_Monster);
+	bool is_Cleared = Run_Tutor_Code_Challenge(player,tutor_Monster);
 
 	if (!is_Cleared)
 	{
 		Apply_Tutor_Gimmick_Failure_Penalty();
 
-		cout << endl << "다시 점수를 채워 튜터님 시험에 다시 도전하세요." << endl;
+		cout << endl;
+		cout << "다시 점수를 채워 튜터님 시험에 다시 도전하세요."<< endl;
+
 		return;
 	}
 
@@ -534,18 +541,21 @@ void Dungeon_Manager::Run_Tutor_Challenge(Player* player, Inventory_For_Equipmen
 
 	if (!is_Tutor_Equipment_Given)
 	{
-		return;
+		cout << endl;
+		cout << "튜터 장비를 받지 못했지만 " << "시험 클리어 기록은 정상적으로 저장해줘." << endl;
 	}
 
 	player->Gain_Exp(tutor_Monster.getExpReward());
 
-	cout << endl << "========================================" << endl;
+	cout << endl;
+	cout << "========================================" << endl;
 	cout << "[ " << tutor_Monster.getName() << " 클리어 보상 ]" << endl;
 	cout << "========================================" << endl;
 	cout << "획득 경험치: " << tutor_Monster.getExpReward() << endl;
 	cout << "========================================" << endl;
 
 	Record_Monster_Kill(tutor_Monster);
+
 	Clear_Current_Chapter();
 }
 
@@ -556,8 +566,7 @@ bool Dungeon_Manager::Run_Tutor_Code_Challenge(Player* player,Monster& tutor_Mon
 		return false;
 	}
 
-	return Tutor_Test
-	(player,tutor_Monster);
+	return Tutor_Test(player,tutor_Monster);
 }
 
 //=============================================================================
@@ -982,38 +991,15 @@ bool Dungeon_Manager::Give_Tutor_Clear_Equipment(Chapter_Type chapter_Type, Inve
 	return true;
 }
 
-bool Dungeon_Manager::Check_Final_Boss_Room_Available(const Inventory_For_Equipments_Only& equipment_Inventory, const Currently_Equipped_Equipments&equipped_Equipments) const
+bool Dungeon_Manager::Check_Final_Boss_Room_Available(const Inventory_For_Equipments_Only& equipment_Inventory, const Currently_Equipped_Equipments& equipped_Equipments) const
 {
-	const Chapter_Type tutor_Chapters[5] =
-	{
-		Chapter_Type::VARIABLE_CONDITION_FOREST,
-		Chapter_Type::ARRAY_LOOP_OCEAN,
-		Chapter_Type::FUNCTION_RUINS,
-		Chapter_Type::POINTER_MEMORY_GRAVEYARD,
-		Chapter_Type::OBJECT_STL_FACTORY
-	};
+	(void)equipment_Inventory;
+	(void)equipped_Equipments;
 
-	for
-		(
-			int chapter_Index = 0;
-			chapter_Index < 5;
-			chapter_Index++
-			)
-	{
-		Equipment tutor_Equipment = Create_Tutor_Clear_Equipment(tutor_Chapters[chapter_Index]);
-
-		bool has_Equipment =Has_Tutor_Equipment(equipment_Inventory, equipped_Equipments, tutor_Equipment.Get_Equipment_Name());
-
-		if (!has_Equipment)
-		{
-			return false;
-		}
-	}
-
-	return true;
+	return _is_All_Chapter_Cleared;
 }
 
-void Dungeon_Manager::Print_Tutor_Equipment_Status(const Inventory_For_Equipments_Only&equipment_Inventory, const Currently_Equipped_Equipments&equipped_Equipments) const
+void Dungeon_Manager::Print_Tutor_Equipment_Status(const Inventory_For_Equipments_Only& equipment_Inventory, const Currently_Equipped_Equipments& equipped_Equipments) const
 {
 	const Chapter_Type tutor_Chapters[5] =
 	{
@@ -1026,30 +1012,20 @@ void Dungeon_Manager::Print_Tutor_Equipment_Status(const Inventory_For_Equipment
 
 	cout << endl;
 	cout << "========================================" << endl;
-	cout << "[ 튜터 전용 장비 수집 현황 ]" << endl;
+	cout << "[ 튜터님께 받은 선물 현황 ]" << endl;
 	cout << "========================================" << endl;
 
 	int obtained_Count = 0;
 
-	for
-		(
-			int chapter_Index = 0;
-			chapter_Index < 5;
-			chapter_Index++
-			)
+	for (int chapter_Index = 0;
+		chapter_Index < 5;
+		chapter_Index++)
 	{
 		Equipment tutor_Equipment = Create_Tutor_Clear_Equipment(tutor_Chapters[chapter_Index]);
 
-		bool has_Equipment = Has_Tutor_Equipment
-			(equipment_Inventory, equipped_Equipments, tutor_Equipment.Get_Equipment_Name());
+		bool has_Equipment = Has_Tutor_Equipment(equipment_Inventory, equipped_Equipments, tutor_Equipment.Get_Equipment_Name());
 
-		cout << chapter_Index + 1 << ". " << tutor_Equipment.Get_Equipment_Name() << " - " <<
-			(
-				has_Equipment
-				? "보유"
-				: "미보유"
-				)
-			<< endl;
+		cout << chapter_Index + 1 << ". " << tutor_Equipment.Get_Equipment_Name() << " - " << (has_Equipment ? "보유" : "미보유") << endl;
 
 		if (has_Equipment)
 		{
@@ -1058,15 +1034,15 @@ void Dungeon_Manager::Print_Tutor_Equipment_Status(const Inventory_For_Equipment
 	}
 
 	cout << "----------------------------------------" << endl;
-	cout << "수집한 튜터 전용 장비: " << obtained_Count << " / 5" << endl;
+	cout << "튜터님께 받은 선물 : " << obtained_Count << " / 5" << endl;
 
-	if(Check_Final_Boss_Room_Available(equipment_Inventory, equipped_Equipments))
+	if (Check_Final_Boss_Room_Available(equipment_Inventory, equipped_Equipments))
 	{
-		cout << "튜터님들의 장비가 반응하기 시작했다."<< endl;
+		cout << "모든 챕터를 수료해 " << "최종 과정에 입장할 수 있다." << endl;
 	}
 	else
 	{
-		cout << "최종 과정에 필요한 튜터 장비가 부족하다." << endl;
+		cout << "아직 모든 챕터를 수료하지 못했다." << endl;
 	}
 
 	cout << "========================================" << endl;
@@ -1105,7 +1081,7 @@ void Dungeon_Manager::Run_Final_Boss_Room(Player* player,Inventory<Item>& invent
 		cout << "==================================================" << endl;
 		cout << "[ 최종 코드 검증실 입장 실패 ]" << endl;
 		cout << "==================================================" << endl;
-		cout << "최종 과정에 필요한 튜터 전용 장비가 부족하다." << endl;
+		cout << "아직 모든 챕터를 완료하지 못했다." << endl;
 
 		Print_Tutor_Equipment_Status (equipment_Inventory, equipped_Equipments);
 
@@ -1123,7 +1099,7 @@ void Dungeon_Manager::Run_Final_Boss_Room(Player* player,Inventory<Item>& invent
 	cout << "==================================================" << endl;
 	cout << "[ 최종 코드 검증실 ]" << endl;
 	cout << "==================================================" << endl;
-	cout << "튜터님들에게 받은 장비가 동시에 반응하기 시작했다." << endl;
+	cout << "튜터님들에게 받은 선물들이 동시에 반응하기 시작했다." << endl;
 	cout << "입구를 막고 있던 코드들이 흩어졌다." << endl;
 	cout << "스포트라이트가 켜졌다." << endl;
 	cout << endl;
