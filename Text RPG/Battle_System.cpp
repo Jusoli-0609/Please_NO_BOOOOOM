@@ -466,7 +466,7 @@ void Final_Boss_Monster_Turn(Player* player, Monster& monster, int turnCount, ve
     }
 }
 
-void Boss_Battle(Player* player, Monster& monster, Inventory<Item>& inventory)
+void Boss_Battle(Player* player, Monster& monster, Inventory<Item>& inventory, Console_Manager& console)
 {
     Show_Battle_Start(player, monster);
 
@@ -518,5 +518,5 @@ void Boss_Battle(Player* player, Monster& monster, Inventory<Item>& inventory)
         turnCount++;
     }
 
-    Show_Battle_End(player, monster);
+    Show_Battle_End(player, monster, console);   // console 전달
 }

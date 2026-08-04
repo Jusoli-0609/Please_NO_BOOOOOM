@@ -3,6 +3,7 @@
 #include <thread>
 #include <chrono>
 #include <iostream>
+#include <conio.h>
 
 using namespace std;
 
@@ -109,4 +110,10 @@ void Console_Manager::Print_At(int x, int y, const std::string& text)
 {
     Set_Cursor_Position(x, y);
     std::cout << text << std::flush;
+}
+
+void Console_Manager::Wait_For_Key(const std::string& Message)
+{
+    std::cout << "\n" << Message << std::flush;
+    _getch();
 }
