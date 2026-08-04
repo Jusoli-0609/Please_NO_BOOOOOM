@@ -401,7 +401,7 @@ bool Craft_Work_Shop::Enhance_Item(
 		cout << "텅 비었다냥!" << endl;
 		return false;
 	}
-	if (inventory.Get_Money()<=0)
+	if (inventory.Get_Money()<=-1)
 	{
 		cout << "돈 없으면 꺼져라냥!" << endl;
 		return false;
@@ -431,11 +431,9 @@ bool Craft_Work_Shop::Enhance_Item(
 		cout << "이미 최대 강화 수치다냥!" << endl;
 		return false;
 	}
-	inventory.Set_Money(inventory.Get_Money() - 1);
-	int randomValue = rand() % 5;
-
-
-	if (randomValue == 1)
+	inventory.Set_Money(inventory.Get_Money());
+	int randomValue = rand() % 1;
+	if (randomValue == 0)
 	{
 		selected_Equipment.Set_Enhance_Level(currentEnhance + 1);
 
