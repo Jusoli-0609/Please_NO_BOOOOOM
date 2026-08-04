@@ -68,7 +68,7 @@ void Game_Manager::Show_Main_Menu()
         switch (choice)
         {
         case 1:
-            _Dungeon.Open_Dungeon(_Player, _Inventory);
+            _Dungeon.Open_Dungeon(_Player, _Inventory, _Equipment_Inventory, _Currently_Equipped_Equipments);
             break;
 
         case 2:

@@ -30,6 +30,12 @@
 #include "Level_5_Keyboard.h"
 #include "Level_5_Headset.h"
 
+#include "Tutor_Mouse.h"
+#include "Tutor_Engine.h"
+#include "Tutor_Glasses.h"
+#include "Tutor_Keyboard.h"
+#include "Tutor_Headset.h"
+
 using namespace std;
 
 Items_Equipments_Repository::
@@ -42,7 +48,7 @@ void Items_Equipments_Repository::
 Initial_Items()
 {
 	_equipments.clear();
-	_equipments.reserve(25);
+	_equipments.reserve(30);
 
 	_equipments.push_back(Level_1_Mouse());
 	_equipments.push_back(Level_1_Engine());
@@ -73,6 +79,12 @@ Initial_Items()
 	_equipments.push_back(Level_5_Glasses());
 	_equipments.push_back(Level_5_Keyboard());
 	_equipments.push_back(Level_5_Headset());
+
+	_equipments.push_back(Tutor_Mouse());
+	_equipments.push_back(Tutor_Engine());
+	_equipments.push_back(Tutor_Glasses());
+	_equipments.push_back(Tutor_Keyboard());
+	_equipments.push_back(Tutor_Headset());
 }
 
 const vector<Equipment>&

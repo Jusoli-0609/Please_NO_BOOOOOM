@@ -1,5 +1,4 @@
-﻿// Equipment.h
-#pragma once
+﻿#pragma once
 #include <string>
 #include <vector>
 
@@ -12,7 +11,8 @@ enum class Equipment_Grade
     Low, 
     Middle, 
     High, 
-    Best 
+    Best,
+    Tutor
 };
 
 enum class Equipment_Type
@@ -71,8 +71,8 @@ public:
     void Set_Equipment_Price(int price);//21.아이템 가격 설정
 };
 
-//현재 장비창
 class Inventory_For_Equipments_Only;
+//현재 장비창
 class Currently_Equipped_Equipments
 {
     private:
@@ -81,7 +81,6 @@ class Currently_Equipped_Equipments
         Equipment _Mouse;
         Equipment _BlueLight_Glasses;
         Equipment _Headset;
-        //장비들
 
         bool Unequip_One_Equipment(Equipment& equipped_item, Inventory_For_Equipments_Only& equipment_inventory, const string& slot_name);
 
@@ -93,6 +92,7 @@ class Currently_Equipped_Equipments
         int Get_All_Equipments_Grade_Score() const;//5.전체 등급 점수
         Equipment_Stats Get_All_Equipments_Stats() const;//6.전체 장비 스텟 가져오기
         bool Is_Equipment_Equipped(Equipment_Type type) const;// 7.장착 여부 확인
+		bool Has_Equipment_By_Name(const string& equipment_Name) const;//8.장비 이름으로 장착 여부 확인
 
 };
 
@@ -111,6 +111,7 @@ class Inventory_For_Equipments_Only
         int Get_Equipment_Current_Count() const; //5. 현재 보관 중인 장비 개수 조회
         int Get_Equipment_Max_Count() const; //6. 최대 보관 가능한 장비 개수 조회
         Equipment Get_Equipment_By_Index(int index) const; //7. 인덱스 번호로 특정 장비 조회
+		bool Has_Equipment_By_Name(const string& equipment_Name) const;//장비 이름으로 장착 여부 확인
         void Throw_Away_Equipment(); //8. 장비 인벤토리에서 선택한 장비 버리기
         void Increase_Equipment_Max_Count(int increase_count); //9. 장비 인벤토리 최대 보관 칸 증가
         void Sort_Equipment_Inventory();//10.정렬 

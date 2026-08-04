@@ -25,7 +25,7 @@ private:
     Intro              _Intro;
     Dungeon_Manager    _Dungeon;
     Inventory<Item>    _Inventory;
-    Currently_Equipped_Equipments _Currently_Equipped_Equipments;
     Inventory_For_Equipments_Only _Equipment_Inventory;
+    Currently_Equipped_Equipments _Currently_Equipped_Equipments;
     Player* _Player;
 };

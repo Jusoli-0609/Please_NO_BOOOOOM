@@ -1,9 +1,10 @@
 ﻿#pragma once
+#include "Equipment.h"
 #include "Inventory.h"
 #include "Monster.h"
 #include "Player.h"
-#include <string>
 #include <map>
+#include <string>
 
 // 1. 몬스터 처치 기록 데이터 파트
 struct Monster_Kill_Record
@@ -24,7 +25,15 @@ class Dungeon_Manager
 public:
 	// 3. 던전 생성 및 메뉴 실행 파트
 	Dungeon_Manager();
-	void Open_Dungeon(Player* player, Inventory<Item>& inventory);
+	void Open_Dungeon
+	(
+		Player* player,
+		Inventory<Item>& inventory,
+		Inventory_For_Equipments_Only&
+		equipment_Inventory,
+		const Currently_Equipped_Equipments&
+		equipped_Equipments
+	);
 
 	// 4. 던전 상태 조회 및 기록 출력 파트
 	bool Check_All_Chapter_Cleared() const;
@@ -33,10 +42,9 @@ public:
 	void Print_Total_Monster_Kill_Log() const;
 	int Monster_Kill_Count = 0;
 
-	// 5. 외부 참조 public 유틸리티
-	Item Create_Tutor_Clear_Item(Chapter_Type chapter_Type) const;
-	bool Check_Final_Boss_Room_Available(Inventory<Item>& inventory) const;
-	void Print_Tutor_Item_Status(Inventory<Item>& inventory) const;
+	// 5. 최종보스방 입장 가능 여부 및 튜터 장비 상태 출력 파트
+	bool Check_Final_Boss_Room_Available(const Inventory_For_Equipments_Only&equipment_Inventory, const Currently_Equipped_Equipments&equipped_Equipments) const;
+	void Print_Tutor_Equipment_Status(const Inventory_For_Equipments_Only&equipment_Inventory, const Currently_Equipped_Equipments&equipped_Equipments) const;
 
 private:
 	// 6. 현재 챕터 실행 파트
@@ -55,7 +63,7 @@ private:
 	bool Run_Elite_Quiz(Player* player,Monster& elite_Monster);
 
 	// 9. 튜터 문제 및 대사 파트
-	void Run_Tutor_Challenge(Player* player, Inventory<Item>& inventory);
+	void Run_Tutor_Challenge(Player* player, Inventory_For_Equipments_Only&equipment_Inventory, const Currently_Equipped_Equipments&equipped_Equipments);
 	bool Run_Tutor_Code_Challenge(Player* player,Monster& tutor_Monster);
 
 	// 10. 기믹 실패 패널티
@@ -74,9 +82,10 @@ private:
 	void Move_Next_Chapter();
 
 	// 13. 튜터 고유 아이템 및 최종보스방
-	bool Has_Item_In_Inventory(Inventory<Item>& inventory, const std::string& item_Name) const;
-	bool Give_Tutor_Clear_Item(Chapter_Type chapter_Type, Inventory<Item>& inventory);
-	void Run_Final_Boss_Room(Player* player,Inventory<Item>& inventory);
+	Equipment Create_Tutor_Clear_Equipment(Chapter_Type chapter_Type) const;
+	bool Has_Tutor_Equipment(const Inventory_For_Equipments_Only&equipment_Inventory, const Currently_Equipped_Equipments&equipped_Equipments, const std::string& equipment_Name) const;
+	bool Give_Tutor_Clear_Equipment(Chapter_Type chapter_Type, Inventory_For_Equipments_Only&equipment_Inventory, const Currently_Equipped_Equipments&equipped_Equipments);
+	void Run_Final_Boss_Room(Player* player, Inventory<Item>&inventory, const Inventory_For_Equipments_Only&equipment_Inventory, const Currently_Equipped_Equipments&equipped_Equipments);
 	void Run_Ending(const Player* player) const;
 	// 14. 던전 진행 상태 데이터 파트
 	Chapter_Type _current_Chapter;
