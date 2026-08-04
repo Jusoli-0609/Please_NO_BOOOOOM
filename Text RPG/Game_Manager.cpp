@@ -7,7 +7,7 @@
 using namespace std;
 
 Game_Manager::Game_Manager()
-    : _Console(120, 40)
+    : _Console(120, 50)
     , _Inventory(20, 100) 
     , _Player(nullptr)
 {
