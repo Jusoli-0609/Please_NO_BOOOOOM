@@ -29,7 +29,6 @@ private:
     void Open_General_Store_Menu();
     void Open_Loot_Shop_Menu();
     void Open_Cookie_Blacksmith_Menu();
-    void Give_Basic_Training_Item();
 
 	Craft_Work_Shop craft_work_shop;
     Player& player;
@@ -39,4 +38,3 @@ private:
 };
 
     // TODO: 골드 데이터에 접근하기 위한 멤버 변수 또는 참조 선언
-};

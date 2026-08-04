@@ -90,9 +90,7 @@ void Camp_Manager::Open_Camp_Menu()
 }
 }
 
-void Camp_Manager::Give_Basic_Training_Item(Player& player,Currently_Equipped_Equipments& currently_equipped_equipments)
-
-
+void Camp_Manager::Give_Basic_Training_Item(Player& player, Currently_Equipped_Equipments& currently_equipped_equipments);
 
 void Camp_Manager::Give_Basic_Training_Item()
 {
