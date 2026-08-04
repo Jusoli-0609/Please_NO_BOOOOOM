@@ -1,5 +1,6 @@
 ﻿#include "Battle_System.h"
 #include "Battle_Elite_Skill.h"
+#include "Quiz_Bank.h"
 #include "Stat_Modifier.h"
 #include "Ascii_Art_Manager.h"
 
@@ -15,8 +16,125 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <algorithm>
+#include <cctype>
+#include <random>
+#include <vector>
 
 using namespace std;
+
+namespace
+{
+    std::string Pad_Right(const std::string& text, size_t width)
+    {
+        if (text.size() >= width)
+        {
+            return text;
+        }
+
+        return text + std::string(width - text.size(), ' ');
+    }
+
+    std::vector<std::string> Make_Final_Boss_Status_Block(const Monster& boss,const std::string& manager_Code)
+    {
+        const size_t box_Width = 42;
+
+        std::string hp_Line =
+            std::string("HP : ") +
+            std::to_string(
+                boss.getHP()
+            );
+
+        std::string name_Line =
+            std::string("NAME : ") +
+            boss.getName();
+
+        std::vector<std::string> block;
+
+        block.push_back(".--------------------------------------------.");
+        block.push_back(std::string("| ") +Pad_Right(manager_Code,box_Width) +std::string(" |"));
+        block.push_back(std::string("| ") +Pad_Right(name_Line,box_Width) +std::string(" |"));
+        block.push_back(std::string("| ") +Pad_Right(hp_Line,box_Width) +std::string(" |"));
+        block.push_back(std::string("| ") +Pad_Right("STATUS : ONLINE", box_Width) +std::string(" |"));
+        block.push_back("'--------------------------------------------'");
+
+        return block;
+    }
+
+    void Print_Side_By_Side_Battle_Blocks(const std::vector<std::string>& left_Block, const std::vector<std::string>& right_Block, int gap = 8)
+    {
+        size_t left_Width = 0;
+
+        for (const std::string& line : left_Block)
+        {
+            if (line.size() > left_Width)
+            {
+                left_Width = line.size();
+            }
+        }
+
+        size_t max_Lines = std::max(left_Block.size(), right_Block.size());
+
+        for (size_t index = 0;
+            index < max_Lines;
+            index++)
+        {
+            std::string left_Line = index < left_Block.size() ? left_Block[index] : "";
+            std::string right_Line = index < right_Block.size() ? right_Block[index] : "";
+
+            cout << left_Line;
+
+            size_t padding = left_Width - left_Line.size();
+
+            for (size_t i = 0;
+                i < padding + gap;
+                i++)
+            {
+                cout << ' ';
+            }
+
+            cout << right_Line << "\n";
+        }
+    }
+
+    void Print_Final_Boss_Duo_Status(Player* player, Monster& first_Boss, Monster& second_Boss, int turnCount)
+    {
+        cout << "\n";
+        cout << "==================================================" << "\n";
+        cout << "[ FINAL TURN " << turnCount << " ]" << "\n";
+        cout << "==================================================" << "\n";
+
+        if (player != nullptr)
+        {
+            cout << "PLAYER : " << player->Get_Name() << " / HP : " << player->Get_Hp() << "\n";
+        }
+
+        cout << "--------------------------------------------------" << "\n";
+
+        Print_Side_By_Side_Battle_Blocks(Make_Final_Boss_Status_Block(first_Boss, "FINAL_MANAGER_01 :: CODE REVIEW"), Make_Final_Boss_Status_Block(second_Boss, "FINAL_MANAGER_02 :: VALIDATION"), 8);
+
+        cout << "==================================================" << "\n";
+    }
+
+    void Print_Final_Boss_Duo_Status_For_Question(Player* player, Monster& first_Boss, Monster& second_Boss)
+    {
+        cout << "\n";
+        cout << "==================================================" << "\n";
+        cout << "[ BOSS STATUS - CODE VALIDATION ACTIVE ]" << "\n";
+        cout << "==================================================" << "\n";
+
+        if (player != nullptr)
+        {
+            cout << "PLAYER : " << player->Get_Name() << " / HP : " << player->Get_Hp() << "\n";
+        }
+
+        cout << "--------------------------------------------------" << "\n";
+
+        Print_Side_By_Side_Battle_Blocks(Make_Final_Boss_Status_Block(first_Boss, "FINAL_MANAGER_01 :: CODE REVIEW"), Make_Final_Boss_Status_Block(second_Boss, "FINAL_MANAGER_02 :: VALIDATION"), 8);
+
+        cout << "==================================================" << "\n";
+    }
+}
 
 //======================================================
 // 전투 시작 Main Loop
@@ -522,4 +640,379 @@ void Boss_Battle(Player* player, Monster& monster, Inventory<Item>& inventory, C
     }
 
     Show_Battle_End(player, monster, console);   // console 전달
+}
+
+namespace
+{
+    string Normalize_Final_Boss_Answer(string answer)
+    {
+        string normalized;
+
+        for (char character : answer)
+        {
+            unsigned char converted = static_cast<unsigned char>(character);
+
+            if (isspace(converted))
+            {
+                continue;
+            }
+
+            normalized += static_cast<char>(tolower(converted));
+        }
+
+        return normalized;
+    }
+
+    bool Ask_Final_Boss_Question(Player* player, Monster& first_Boss,  Monster& second_Boss, const Final_Boss_Question& question)
+    {
+        Print_Final_Boss_Duo_Status_For_Question(player, first_Boss, second_Boss);
+
+        cout << "\n";
+        cout << "==================================================" << "\n";
+        cout << "[ 최종 코드 검증 문제 ]" << "\n";
+        cout << "==================================================" << "\n";
+        cout << question.description << "\n";
+
+        if (!question.code.empty())
+        {
+            cout << "--------------------------------------------------" << "\n";
+            cout << question.code << "\n";
+        }
+
+        cout << "==================================================" << "\n";
+
+        if (question.type == Final_Boss_Question_Type::MULTIPLE_CHOICE)
+        {
+            for (int index = 0;
+                index < 4;
+                index++)
+            {
+                cout << index + 1 << ". " << question.choices[index] << "\n";
+            }
+
+            int input_Choice = 0;
+
+            cout << "선택 : ";
+            cin >> input_Choice;
+
+            if (input_Choice == question.correct_Choice)
+            {
+                cout << "정답입니다. 객관식 보상으로 광역 피해가 발생합니다." << "\n";
+                return true;
+            }
+
+            cout << "오답입니다. 정답: "  << question.correct_Choice << "번" << "\n";
+
+            return false;
+        }
+
+        string input_Answer;
+
+        cout << "답 입력 : ";
+        getline(cin >> ws, input_Answer);
+
+        bool is_Correct =   Normalize_Final_Boss_Answer(input_Answer) == Normalize_Final_Boss_Answer(question.correct_Answer);
+
+        if (is_Correct)
+        {
+            cout << "정답입니다. 주관식 보상으로 그로기 공격이 발동합니다." << "\n";
+            return true;
+        }
+
+        cout << "오답입니다. 정답: " << question.correct_Answer << "\n";
+
+        return false;
+    }
+
+    bool Check_Final_Boss_Gimmick_Trigger()
+    {
+        static random_device random_Device;
+        static mt19937 random_Engine(random_Device());
+
+        uniform_int_distribution<int> distribution(1, 100);
+
+        int random_Value = distribution(random_Engine);
+        const int GIMMICK_CHANCE = 35;
+
+        return random_Value <= GIMMICK_CHANCE;
+    }
+
+    void Print_Final_Boss_Gimmick_Start_Message()
+    {
+        cout << "\n";
+        cout << "==================================================\n";
+        cout << "[ 매니저님들이 문재를 냈다. ]\n";
+        cout << "==================================================\n";
+        cout << "두 매니저님의 코드 검증 패턴이 변화했다.\n";
+        cout << "문제를 해결하면 반격 기회를 얻을 수 있다.\n";
+        cout << "==================================================\n";
+    }
+
+
+    Monster* Select_Final_Boss_Target(Monster& first_Boss, Monster& second_Boss)
+    {
+        if (first_Boss.getHP() <= 0)
+        {
+            return &second_Boss;
+        }
+
+        if (second_Boss.getHP() <= 0)
+        {
+            return &first_Boss;
+        }
+
+        while (true)
+        {
+            int target_Choice = 0;
+
+            cout << "\n[ 공격 대상 선택 ]\n";
+            cout << "1. " << first_Boss.getName() << " / HP: " << first_Boss.getHP() << "\n";
+            cout << "2. " << second_Boss.getName() << " / HP: " << second_Boss.getHP() << "\n";
+            cout << "선택 : ";
+
+            cin >> target_Choice;
+
+            if (target_Choice == 1)
+            {
+                return &first_Boss;
+            }
+
+            if (target_Choice == 2)
+            {
+                return &second_Boss;
+            }
+
+            cout << "1번 또는 2번을 입력하세요.\n";
+        }
+    }
+
+    void Apply_Final_Boss_Objective_Area_Damage(Player* player, Monster& first_Boss, Monster& second_Boss
+    )
+    {
+        if (player == nullptr)
+        {
+            return;
+        }
+
+        cout << "\n";
+        cout << "==================================================\n";
+        cout << "[ 객관식 정답 - 광역 피해 ]\n";
+        cout << "==================================================\n";
+
+        Monster* bosses[2] =
+        {
+            &first_Boss, &second_Boss
+        };
+
+        for (Monster* boss : bosses)
+        {
+            if (boss->getHP() <= 0)
+            {
+                continue;
+            }
+
+            int damage = player->Get_ATK() * 2 - boss->getDefence();
+
+            if (damage < 1)
+            {
+                damage = 1;
+            }
+
+            int changed_HP =
+                boss->getHP() - damage;
+
+            if (changed_HP < 0)
+            {
+                changed_HP = 0;
+            }
+
+            boss->setHP(changed_HP);
+
+            cout << boss->getName() << "에게 " << damage << " 광역 피해!\n";
+        }
+    }
+
+    void Apply_Final_Boss_Subjective_Groggy_Attack(Player* player, Monster& first_Boss,Monster& second_Boss)
+    {
+        if (player == nullptr)
+        {
+            return;
+        }
+
+        cout << "\n";
+        cout << "==================================================\n";
+        cout << "[ 주관식 정답 - 그로기 공격 ]\n";
+        cout << "사용 기술: " << player->Get_Groggy_Attack_Name() << "\n";
+        cout << "그로기 공격을 사용할 대상을 선택하세요.\n";
+        cout << "==================================================\n";
+
+        Monster* selected_Target = Select_Final_Boss_Target(first_Boss, second_Boss);
+
+        player->Groggy_Attack(selected_Target);
+    }
+
+    void Apply_Final_Boss_Question_Reward(Player* player, Monster& first_Boss, Monster& second_Boss, const Final_Boss_Question& question)
+    {
+        if (question.type == Final_Boss_Question_Type::MULTIPLE_CHOICE)
+        {
+            Apply_Final_Boss_Objective_Area_Damage(player, first_Boss, second_Boss);
+
+            return;
+        }
+
+        Apply_Final_Boss_Subjective_Groggy_Attack(player, first_Boss, second_Boss);
+    }
+
+    void Final_Boss_Duo_Attack(Player* player, Monster& first_Boss, Monster& second_Boss)
+    {
+        cout << "\n";
+        cout << "==================================================\n";
+        cout << "[ 매니저님들이 잔소리를 하였습니다 ]\n";
+        cout << "==================================================\n";
+
+        if (first_Boss.getHP() > 0)
+        {
+            Monster_Attack(player, first_Boss);
+        }
+
+        if (player->Get_Hp() > 0 &&
+            second_Boss.getHP() > 0)
+        {
+            Monster_Attack(player, second_Boss);
+        }
+    }
+
+    void Final_Boss_Duo_Double_Damage_Attack(Player* player, Monster& first_Boss, Monster& second_Boss)
+    {
+        if (player == nullptr)
+        {
+            return;
+        }
+
+        cout << "\n";
+        cout << "==================================================\n";
+        cout << "[ 기믹 실패 - 2배 피해 ]\n";
+        cout << "==================================================\n";
+        cout << "코드 검증 실패로 보스들의 공격이 강화됩니다.\n";
+        cout << "살아 있는 보스가 일반 공격을 2회 사용합니다.\n";
+        cout << "==================================================\n";
+
+        if (first_Boss.getHP() > 0)
+        {
+            Monster_Attack(player, first_Boss);
+
+            if (player->Get_Hp() > 0)
+            {
+                Monster_Attack(player, first_Boss);
+            }
+        }
+
+        if (player->Get_Hp() > 0 &&
+            second_Boss.getHP() > 0)
+        {
+            Monster_Attack(player,second_Boss);
+
+            if (player->Get_Hp() > 0)
+            {
+                Monster_Attack(player, second_Boss);
+            }
+        }
+    }
+}
+
+bool Final_Boss_Duo_Battle(Player* player, Monster& first_Boss, Monster& second_Boss, Inventory<Item>& inventory)
+{
+    if (player == nullptr)
+    {
+        return false;
+    }
+
+    vector<Final_Boss_Question> question_Pool = Create_Final_Boss_Question_Pool();
+
+    if (question_Pool.empty())
+    {
+        cout << "최종보스 문제를 찾을 수 없습니다.\n";
+        return false;
+    }
+
+    static random_device random_Device;
+    static mt19937 random_Engine(random_Device());
+
+    shuffle(question_Pool.begin(), question_Pool.end(), random_Engine);
+
+    size_t question_Index = 0;
+    int turnCount = 1;
+
+    cout << "\n";
+    cout << "==================================================\n";
+    cout << "[ 최종 보스 2인 동시 전투 ]\n";
+    cout << "==================================================\n";
+    cout << "일반 공격과 스킬은 선택한 한 명에게 적용됩니다.\n";
+    cout << "객관식 정답: 두 보스에게 광역 피해를 줍니다.\n";
+    cout << "주관식 정답: 두 보스 중 하나를 선택해 그로기 공격을 사용합니다.\n";
+    cout << "오답: 매니저님이 GPT를 뺏어갔다.\n";
+    cout << "==================================================\n";
+
+    while (player->Get_Hp() > 0 && (first_Boss.getHP() > 0 || second_Boss.getHP() > 0))
+    {
+        Print_Final_Boss_Duo_Status(player, first_Boss, second_Boss, turnCount);
+
+        Monster* selected_Target =Select_Final_Boss_Target(first_Boss,second_Boss);
+
+        Player_Turn(player, *selected_Target, inventory);
+
+        if (first_Boss.getHP() <= 0 && second_Boss.getHP() <= 0)
+        {
+            break;
+        }
+
+        bool is_Gimmick_Triggered = Check_Final_Boss_Gimmick_Trigger();
+
+        if (!is_Gimmick_Triggered)
+        {
+            cout << "\n";
+            cout << "==================================================\n";
+            cout << "[ 최종보스 일반 공격 ]\n";
+            cout << "==================================================\n";
+
+            Final_Boss_Duo_Attack(player, first_Boss, second_Boss);
+        }
+        else
+        {
+            Print_Final_Boss_Gimmick_Start_Message();
+
+            if (question_Index >= question_Pool.size())
+            {
+                shuffle(question_Pool.begin(), question_Pool.end(), random_Engine);
+
+                question_Index = 0;
+            }
+
+            const Final_Boss_Question& current_Question = question_Pool[question_Index];
+
+            bool is_Correct = Ask_Final_Boss_Question(player, first_Boss, second_Boss, current_Question);
+
+            question_Index++;
+
+            if (is_Correct)
+            {
+                Apply_Final_Boss_Question_Reward(player, first_Boss, second_Boss, current_Question);
+            }
+            else
+            {
+                Final_Boss_Duo_Double_Damage_Attack(player, first_Boss, second_Boss);
+            }
+        }
+
+        player->Process_Stat_Modifier_Turn();
+        turnCount++;
+        player->Process_Stat_Modifier_Turn();
+        turnCount++;
+    }
+
+    player->Remove_Temporary_Modifiers();
+
+    return player->Get_Hp() > 0 &&
+        first_Boss.getHP() <= 0 &&
+        second_Boss.getHP() <= 0;
 }
