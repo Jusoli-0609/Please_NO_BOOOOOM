@@ -1017,6 +1017,35 @@ std::string Monster::Get_Code_Fragment_Name() const
 	}
 	}
 }
+
+int Monster::Get_Code_Fragment_Price() const
+{
+	switch (_chapter_Type)
+	{
+	case Chapter_Type::VARIABLE_CONDITION_FOREST:
+	case Chapter_Type::ARRAY_LOOP_OCEAN:
+	{
+		return 1;
+	}
+
+	case Chapter_Type::FUNCTION_RUINS:
+	case Chapter_Type::POINTER_MEMORY_GRAVEYARD:
+	{
+		return 3;
+	}
+
+	case Chapter_Type::OBJECT_STL_FACTORY:
+	{
+		return 5;
+	}
+
+	default:
+	{
+		return 1;
+	}
+	}
+}
+
 // 4-2. 챕터별 기본 경험치 계산
 int Monster::Calculate_Exp_Reward() const
 {
@@ -1081,8 +1110,7 @@ void Monster::Generate_Drop_Reward()
 	_drop_Item_Price = 0;
 	_drop_Item_Count = 0;
 
-	if
-		(_monster_Grade == Monster_Grade::FINAL_BOSS)
+	if(_monster_Grade == Monster_Grade::FINAL_BOSS)
 	{
 		_gold_Reward = 0;
 
@@ -1094,17 +1122,16 @@ void Monster::Generate_Drop_Reward()
 	int code_Fragment_Roll = rand() % 100;
 
 	if
-		(code_Fragment_Roll< CODE_FRAGMENT_DROP_CHANCE)
+		(code_Fragment_Roll < CODE_FRAGMENT_DROP_CHANCE)
 	{
 		Item code_Fragment;
-
 		code_Fragment._Item_Name = Get_Code_Fragment_Name();
 		code_Fragment._Item_Ascii_Art =
 			R"(+--------+
 |{CODE;} |
 |01010101|
 +--------+)";
-		code_Fragment._Item_Price = 0;
+		code_Fragment._Item_Price = Get_Code_Fragment_Price();
 		code_Fragment._Item_Count = 1;
 		code_Fragment._Item_Weight = CODE_FRAGMENT_WEIGHT;
 		code_Fragment._Item_Type_Usable = false;
@@ -1112,7 +1139,6 @@ void Monster::Generate_Drop_Reward()
 		code_Fragment._Item_Description =
 			"깨진 코드 몬스터에게서 떨어져 나온 코드 조각. "
 			"아이템 제작과 코드 연구에 사용할 수 있다.";
-
 		_drop_Items.push_back(code_Fragment);
 	}
 
@@ -1122,7 +1148,6 @@ void Monster::Generate_Drop_Reward()
 		(cup_Ramen_Roll < CUP_RAMEN_DROP_CHANCE)
 	{
 		Item cup_Ramen;
-
 		cup_Ramen._Item_Name = "컵라면";
 		cup_Ramen._Item_Ascii_Art =
 			R"( .------.
@@ -1137,17 +1162,14 @@ void Monster::Generate_Drop_Reward()
 		cup_Ramen._Item_Description =
 			"지친 체력을 채워 주는 컵라면. "
 			"사용하면 HP를 50 회복한다.";
-
-		_drop_Items.push_back(cup_Ramen);
+		_drop_Items.push_back (cup_Ramen);
 	}
-
 	int energy_Drink_Roll = rand() % 100;
 
 	if
 		(energy_Drink_Roll < ENERGY_DRINK_DROP_CHANCE)
 	{
 		Item energy_Drink;
-
 		energy_Drink._Item_Name = "에너지드링크";
 		energy_Drink._Item_Ascii_Art =
 			R"( .------.
@@ -1162,31 +1184,30 @@ void Monster::Generate_Drop_Reward()
 		energy_Drink._Item_Description =
 			"집중력을 끌어올리는 에너지드링크. "
 			"사용하면 MP를 50 회복한다.";
-
 		_drop_Items.push_back(energy_Drink);
 	}
 
 	if (_drop_Items.empty())
 	{
 		Item minimum_Reward;
-
 		minimum_Reward._Item_Name = Get_Code_Fragment_Name();
 		minimum_Reward._Item_Ascii_Art =
 			R"(+--------+
 | CODE{} |
 | 010101 |
 +--------+)";
-		minimum_Reward._Item_Price = 0;
+		minimum_Reward._Item_Price = Get_Code_Fragment_Price();
 		minimum_Reward._Item_Count = 1;
 		minimum_Reward._Item_Weight = CODE_FRAGMENT_WEIGHT;
 		minimum_Reward._Item_Type_Usable = false;
 		minimum_Reward._Item_Type_Wearable = false;
 		minimum_Reward._Item_Description =
 			"깨진 코드 몬스터에게서 떨어져 나온 코드 조각. "
-			"아이템 제작에 사용 할 수 있을거 같다.";
-
-		_drop_Items.push_back(minimum_Reward);
+			"아이템 제작에 사용할 수 있을 것 같다.";
+		_drop_Items.push_back
+		(minimum_Reward);
 	}
+
 	for
 		(
 			std::size_t item_Index = 0;
@@ -1209,10 +1230,6 @@ void Monster::Generate_Drop_Reward()
 		_drop_Item_Price += drop_Item._Item_Price * drop_Item._Item_Count;
 	}
 }
-
-//=============================================================================
-// 6. 몬스터 기본 정보 조회 파트
-//=============================================================================
 
 // 6-1. 몬스터 이름 조회
 string Monster::getName() const

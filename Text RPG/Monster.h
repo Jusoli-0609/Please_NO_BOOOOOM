@@ -139,10 +139,11 @@ private:
 
     // 12. 몬스터 보상 계산 파트
     std::string Get_Code_Fragment_Name() const; // 12-1. 챕터별 코드 조각 이름 결정
-    int Calculate_Exp_Reward() const; // 12-2. 챕터별 기본 경험치 계산
-    int Calculate_Level_Exp_Bonus() const; // 12-3. 랜덤 레벨 경험치 보너스 계산
-    int Calculate_Score_Reward() const; // 12-4. 챕터별 점수 계산
-    int Calculate_Gold_Reward() const; // 12-5. 훈련장려금 랜덤 계산
+	int Get_Code_Fragment_Price() const; // 12-1. 챕터별 코드 조각 가격 결정
+    int Calculate_Exp_Reward() const; // 12-3. 챕터별 기본 경험치 계산
+    int Calculate_Level_Exp_Bonus() const; // 12-4. 랜덤 레벨 경험치 보너스 계산
+    int Calculate_Score_Reward() const; // 12-5. 챕터별 점수 계산
+    int Calculate_Gold_Reward() const; // 12-6. 훈련장려금 랜덤 계산
 
     // 13. 몬스터 기본 데이터 파트
     Monster_Type _monster_Type;

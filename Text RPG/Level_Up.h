@@ -1,21 +1,21 @@
 ﻿#pragma once
 
-// [핵심] 순환 참조 방지 (전방 선언)
-// Level_Up.h와 Monster.h가 서로 include하는 꼬임 에러를 막기 위해
-// 자세한 내부 정보 없이 "Monster라는 클래스가 존재한다"는 이름만 미리 알려줍니다.
+// [핵심 디자인 패턴] 전방 선언 (Forward Declaration)
+// - 헤더 파일 간의 상호 #include로 인한 컴파일 에러(순환 참조)를 방지하기 위해,
+//   상세한 내부 정보 없이 "Monster와 Player라는 클래스가 존재한다"는 이름만 미리 알려줍니다.
 class Monster;
 class Player;
 
 class Level_Up
 {
 private:
-    int _current_level; // 현재 플레이어의 레벨
-    int _current_exp;   // 현재 축적된 경험치
-    int _max_exp;       // 레벨업에 필요한 목표 경험치
-    int _stat_points;   // 레벨업 시 얻는 스탯 포인트
+    int _current_level; // 현재 플레이어의 레벨 (기본값: 1)
+    int _current_exp;   // 현재 축적된 경험치 (기본값: 0)
+    int _max_exp;       // 레벨업에 필요한 목표 경험치 (기본값: 100)
+    int _stat_points;   // 레벨업 시 얻는 스탯 포인트 (기본값: 0)
 
 public:
-    Level_Up();  // 생성자
+    Level_Up();  // 생성자: 최초 레벨 및 경험치 초기화
     ~Level_Up(); // 소멸자
 
     // [핵심 기능 1] 레벨업 보상 및 스탯 상승 처리 함수
