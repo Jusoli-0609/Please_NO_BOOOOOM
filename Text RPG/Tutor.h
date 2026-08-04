@@ -3,10 +3,9 @@
 #include "Stat_Modifier.h"
 
 class Player;
-class Item;
+class Currently_Equipped_Equipments;
+class Inventory_For_Equipments_Only;
 
-template <typename T>
-class Inventory;
 
 class Tutor
 {
@@ -67,12 +66,14 @@ Tutor Create_Tutor_By_Number(
 );
 
 bool Has_Tutor_Item(
-    Inventory<Item>& inventory,
-    const std::string& item_name
+    const Inventory_For_Equipments_Only& equipment_inventory,
+    const Currently_Equipped_Equipments& equipped_equipments,
+    const std::string& equipment_name
 );
 
 void Print_Tutor_Menu(
-    Inventory<Item>& inventory,
+    const Inventory_For_Equipments_Only& equipment_inventory,
+    const Currently_Equipped_Equipments& equipped_equipments,
     Currently_Equipped_Tutor& currently_equipped_tutor,
     Player* player
 );

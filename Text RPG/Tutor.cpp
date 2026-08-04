@@ -2,7 +2,7 @@
 #include "Inventory.h"
 #include "Item.h"
 #include "Player.h"
-
+#include "Equipment.h"
 #include <iostream>
 
 using namespace std;
@@ -288,29 +288,26 @@ Tutor Create_Tutor_By_Number(int tutor_number)
 }
 
 bool Has_Tutor_Item(
-    Inventory<Item>& inventory,
-    const string& item_name)
+    const Inventory_For_Equipments_Only& equipment_inventory,
+    const Currently_Equipped_Equipments& equipped_equipments,
+    const string& equipment_name)
 {
-    for (int Item_Index = 0;
-        Item_Index < inventory.Get_Size();
-        Item_Index++)
+    if (equipment_inventory.Has_Equipment_By_Name(equipment_name))
     {
-        Item* Found_Item =
-            inventory.Get_Item_By_Index(Item_Index);
+        return true;
+    }
 
-        if (Found_Item != nullptr &&
-            Found_Item->_Item_Name == item_name &&
-            Found_Item->_Item_Count > 0)
-        {
-            return true;
-        }
+    if (equipped_equipments.Has_Equipment_By_Name(equipment_name))
+    {
+        return true;
     }
 
     return false;
 }
 
 void Print_Tutor_Menu(
-    Inventory<Item>& inventory,
+    const Inventory_For_Equipments_Only& equipment_inventory,
+    const Currently_Equipped_Equipments& equipped_equipments,
     Currently_Equipped_Tutor& currently_equipped_tutor,
     Player* player)
 {
@@ -339,7 +336,8 @@ void Print_Tutor_Menu(
 
             bool Has_Item =
                 Has_Tutor_Item(
-                    inventory,
+                    equipment_inventory,
+                    equipped_equipments,
                     Current_Tutor.Get_Required_Item_Name()
                 );
 
@@ -389,7 +387,8 @@ void Print_Tutor_Menu(
             );
 
         if (Has_Tutor_Item(
-            inventory,
+            equipment_inventory,
+            equipped_equipments,
             Selected_Tutor.Get_Required_Item_Name()
         ) == false)
         {
