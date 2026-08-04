@@ -19,7 +19,7 @@ using namespace std;
 //======================================================
 // 전투 시작 Main Loop
 //======================================================
-void Battle(Player* player, Monster& monster, Inventory<Item>& inventory)
+void Battle(Player* player, Monster& monster, Inventory<Item>& inventory, Console_Manager& console)
 {
     if (player == nullptr) return;
 
@@ -40,11 +40,10 @@ void Battle(Player* player, Monster& monster, Inventory<Item>& inventory)
 
         // 3. 턴 종료 시 지속 버프/디버프 처리
         player->Process_Stat_Modifier_Turn();
-
         turnCount++;
     }
 
-    Show_Battle_End(player, monster);
+    Show_Battle_End(player, monster, console);   // console 전달
 }
 
 //======================================================
@@ -95,9 +94,9 @@ void Show_Battle_Menu()
     cout << "선택 : ";
 }
 
-void Show_Battle_End(Player* player, Monster& monster)
+void Show_Battle_End(Player* player, Monster& monster, Console_Manager& console)
 {
-    // 전투 종료 후 필요한 출력 처리
+    console.Wait_For_Key("계속하려면 아무 키나 누르세요...");
 }
 
 //======================================================
@@ -249,8 +248,8 @@ bool Check_Battle_End(Player* player, Monster& monster, Inventory<Item>& invento
             cout << "║                 튜터 시험 통과!                    ║\n";
             cout << "╠════════════════════════════════════════════════════╣\n";
             cout << "║                                                    ║\n";
-            cout << "║   축하합니다!                                      ║\n";
-            cout << "║   다음 챕터가 해금되었습니다.                      ║\n";
+            cout << "║   축하한다!                                        ║\n";
+            cout << "║   다음 챕터 해금!                                  ║\n";
             cout << "║                                                    ║\n";
             cout << "╚════════════════════════════════════════════════════╝\n";
 
@@ -324,19 +323,19 @@ bool Ask_Single_Quiz(const Quiz& quiz)
     {
         cout << (j + 1) << ") " << quiz.choices[j] << "  ";
     }
-    cout << "\n답을 입력하세요 (1~4): ";
+    cout << "\n답을 입력하라. (1~4): ";
 
     int inputAnswer = 0;
     cin >> inputAnswer;
 
     if (inputAnswer == quiz.answer)
     {
-        cout << ">> 정답입니다!\n";
+        cout << ">> 정답!\n";
         return true;
     }
     else
     {
-        cout << ">> 오답입니다! (정답: " << quiz.answer << "번)\n";
+        cout << ">> 오답! (정답: " << quiz.answer << "번)\n";
         return false;
     }
 }
@@ -390,8 +389,8 @@ void First_Impression_Quiz_Phase(Player* player, Monster& monster, vector<Quiz>&
             cout << "╔════════════════════════════════════════════════════╗\n";
             cout << "║               기 선 제 압 실 패                    ║\n";
             cout << "╠════════════════════════════════════════════════════╣\n";
-            cout << "║ 기습 공격을 허용했습니다!                          ║\n";
-            cout << "  받은 피해 : " << bossDamage <<"\n";
+            cout << "║ 기습 공격을 허용!                                  ║\n";
+            cout << "║ 받은 피해 : " << bossDamage << "\n";
             cout << "╚════════════════════════════════════════════════════╝\n";
         }
 
@@ -412,8 +411,8 @@ void Final_Boss_Monster_Turn(Player* player, Monster& monster, int turnCount, ve
         cout << "║                                                    ║\n";
         cout << " " << monster.getName() << "의 특수 패턴이 발동!\n";
         cout << "║                                                    ║\n";
-        cout << "║ 질문에 정답하면 카운터 공격!                       ║\n";
-        cout << "║ 틀리면 강력한 특수 공격을 받습니다!                ║\n";
+        cout << "║ 질문에 알맞게 대답하면 카운터 공격!                ║\n";
+        cout << "║ 틀리면 강력한 특수 공격을 받는다!                  ║\n";
         cout << "║                                                    ║\n";
         cout << "╚════════════════════════════════════════════════════╝\n";
 
@@ -454,7 +453,7 @@ void Final_Boss_Monster_Turn(Player* player, Monster& monster, int turnCount, ve
             cout << "║                패 턴 실 패...                      ║\n";
             cout << "╠════════════════════════════════════════════════════╣\n";
             cout << "║                                                    ║\n";
-            cout << "║ 특수 공격을 허용했습니다!                          ║\n";
+            cout << "║ 특수 공격을 허용!                                  ║\n";
             cout << "  받은 피해 : " << bossDamage << "\n";
             cout << "║                                                    ║\n";
             cout << "╚════════════════════════════════════════════════════╝\n";
@@ -466,7 +465,7 @@ void Final_Boss_Monster_Turn(Player* player, Monster& monster, int turnCount, ve
     }
 }
 
-void Boss_Battle(Player* player, Monster& monster, Inventory<Item>& inventory)
+void Boss_Battle(Player* player, Monster& monster, Inventory<Item>& inventory, Console_Manager& console)
 {
     Show_Battle_Start(player, monster);
 
@@ -518,5 +517,5 @@ void Boss_Battle(Player* player, Monster& monster, Inventory<Item>& inventory)
         turnCount++;
     }
 
-    Show_Battle_End(player, monster);
+    Show_Battle_End(player, monster, console);   // console 전달
 }

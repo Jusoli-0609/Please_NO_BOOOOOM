@@ -14,6 +14,7 @@ using namespace std;
 
 Game_Manager::Game_Manager()
     : _Console(120, 40)
+    , _UI(_Console)
     , _Inventory(20, 100)
     , _Player(nullptr)
 {
@@ -32,6 +33,7 @@ void Game_Manager::Run()
     _Console.Clear();
 
     _Intro.Show(_Console, _Art);   // 멤버 함수 호출
+    _Console.Clear();
 
     Create_Player();
     Show_Main_Menu();
@@ -80,7 +82,7 @@ void Game_Manager::Create_Player()
 
     default:
     {
-        cout << "잘못된 직업 선택입니다. " << "기본 직업으로 시작합니다." << endl;
+        cout << "잘못된 직업 선택! " << "기본 직업으로 시작!" << endl;
         _Player = new JYJ("JYJ");
         break;
     }
@@ -98,15 +100,8 @@ void Game_Manager::Show_Main_Menu()
 
     while (is_Running)
     {
-        cout << endl;
-        cout << "========================================" << endl;
-        cout << "1. 던전 입장" << endl;
-        cout << "2. 인벤토리" << endl;
-        cout << "3. 캐릭터 정보" << endl;
-        cout << "4. 내일배움캠프 재정비소" << endl;
-		cout << "5. 튜터 선택" << endl;
-        cout << "0. 게임 종료" << endl;
-        cout << "선택: ";
+        // 이전 화면 삭제 + 메인 UI 재출력
+        _UI.Draw_Main_Menu(_Player);
 
         int choice = -1;
         cin >> choice;
@@ -114,61 +109,74 @@ void Game_Manager::Show_Main_Menu()
         switch (choice)
         {
         case 1:
-            _Dungeon.Open_Dungeon(_Player, _Inventory, _Equipment_Inventory, _Currently_Equipped_Equipments);
+            _Console.Clear();
+
+            _Dungeon.Open_Dungeon(
+                _Player,
+                _Inventory,
+                _Equipment_Inventory,
+                _Currently_Equipped_Equipments,
+                _Console
+            );
             break;
 
         case 2:
-        {
-            _Inventory.Print_Inventory_Menu(_Currently_Equipped_Equipments, _Equipment_Inventory,*_Player);
+            _Console.Clear();
+
+            _Inventory.Print_Inventory_Menu(
+                _Currently_Equipped_Equipments,
+                _Equipment_Inventory,
+                *_Player
+            );
             break;
-        }
 
         case 3:
-        {
-            if (_Player == nullptr)
+            _Console.Clear();
+
+            if (_Player != nullptr)
             {
-                cout << "캐릭터 정보를 찾을 수 없습니다." << endl;
-                break;
+                _Player->Print_Status();
             }
-            _Player->Print_Status();
+
+            _Console.Wait_For_Key();
             break;
-        }
 
         case 4:
         {
-            if (_Player == nullptr)
-            {
-                cout << "플레이어 정보를 찾을 수 없습니다." << endl;
-                break;
-            }
+            _Console.Clear();
 
-            Camp_Manager camp_Manager(*_Player, _Inventory, _Equipment_Inventory, _Currently_Equipped_Equipments);
+            Camp_Manager camp_Manager(
+                *_Player,
+                _Inventory,
+                _Equipment_Inventory,
+                _Currently_Equipped_Equipments
+            );
+
             camp_Manager.Open_Camp_Menu();
-
             break;
         }
 
-		case 5:
-		{
-			Print_Tutor_Menu(_Equipment_Inventory, _Currently_Equipped_Equipments, _Currently_Equipped_Tutor, _Player);
-			break;
-		}
+        case 5:
+            _Console.Clear();
+
+            Print_Tutor_Menu(
+                _Equipment_Inventory,
+                _Currently_Equipped_Equipments,
+                _Currently_Equipped_Tutor,
+                _Player
+            );
+            break;
 
         case 0:
-            cout << "게임 종료!" << endl;
+            _UI.Draw_Game_Over();
             is_Running = false;
             break;
 
         default:
-            cout << "잘못된 선택!" << endl;
+            _Console.Wait_For_Key(
+                "잘못된 입력!."
+            );
             break;
-        }
-
-        if (_Player != nullptr && _Player->Get_Hp() <= 0)
-        {
-            cout << endl;
-            cout << "실패! 다시 시작해보자!" << endl;
-            is_Running = false;
         }
     }
 }

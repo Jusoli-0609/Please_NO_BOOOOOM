@@ -44,4 +44,5 @@ public:
     // private 멤버 읽는용 함수입니다.
 
     void Print_At(int x, int y, const std::string& Text);
+    void Wait_For_Key(const std::string& Message = "계속하려면 아무 키나 누르세요...");
 };

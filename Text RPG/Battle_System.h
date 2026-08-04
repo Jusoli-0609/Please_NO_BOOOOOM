@@ -6,6 +6,7 @@
 #include "Inventory.h"
 #include "Item.h"
 #include "Quiz_Bank.h" // [추가] Quiz 및 vector<Quiz> 인식을 위해 필수
+#include "Console_Manager.h" 
 
 #include <vector>
 
@@ -17,12 +18,12 @@ enum Battle_Menu
     ITEM = 3
 };
 
-void Battle(Player* player, Monster& monster, Inventory<Item>& inventory);
+void Battle(Player* player, Monster& monster, Inventory<Item>& inventory, Console_Manager& console);
 
 void Show_Battle_Start(Player* player, Monster& monster);
 void Show_Battle_Status(Player* player, Monster& monster, int turnCount);
 void Show_Battle_Menu();
-void Show_Battle_End(Player* player, Monster& monster);
+void Show_Battle_End(Player* player, Monster& monster, Console_Manager& console);   // 수정
 
 void Player_Turn(Player* player, Monster& monster, Inventory<Item>& inventory);
 bool Use_Item(Player* player, Monster& monster, Inventory<Item>& inventory);
@@ -37,7 +38,8 @@ void Monster_Attack(Player* player, Monster& monster);
 bool Check_Battle_End(Player* player, Monster& monster, Inventory<Item>& inventory);
 void Give_Battle_Item_Reward(Player* player, Monster& monster, Inventory<Item>& inventory);
 
-void Boss_Battle(Player* player, Monster& monster, Inventory<Item>& inventory);
+void Boss_Battle(Player* player, Monster& monster, Inventory<Item>& inventory, Console_Manager& console);  // 수정
+
 
 // ===================================================
 // [최종 보스전 전용 함수 선언]

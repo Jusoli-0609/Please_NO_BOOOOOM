@@ -8,6 +8,7 @@
 #include "Tutor_Headset.h"
 #include "Tutor_Keyboard.h"
 #include "Tutor_Mouse.h"
+#include "Console_Manager.h"
 
 #include <algorithm>
 #include <cstdlib>
@@ -43,7 +44,7 @@ Dungeon_Manager::Dungeon_Manager()
 {
 }
 
-void Dungeon_Manager::Open_Dungeon(Player* player,Inventory<Item>& inventory, Inventory_For_Equipments_Only& equipment_Inventory, const Currently_Equipped_Equipments&equipped_Equipments)
+void Dungeon_Manager::Open_Dungeon(Player* player,Inventory<Item>& inventory, Inventory_For_Equipments_Only& equipment_Inventory, const Currently_Equipped_Equipments&equipped_Equipments, Console_Manager& console)
 {
 	if (player == nullptr)
 	{
@@ -122,7 +123,7 @@ void Dungeon_Manager::Open_Dungeon(Player* player,Inventory<Item>& inventory, In
 
 		case 3:
 		{
-			Select_Chapter_And_Enter(player, inventory);
+			Select_Chapter_And_Enter(player, inventory, console);
 
 			break;
 		}
@@ -170,7 +171,7 @@ void Dungeon_Manager::Open_Dungeon(Player* player,Inventory<Item>& inventory, In
 	switch (dungeon_Choice)
 	{
 	case 1:
-		Run_Current_Chapter(player, inventory);
+		Run_Current_Chapter(player, inventory, console);   // console 추가
 		break;
 	case 2:
 		Print_Total_Monster_Kill_Log();
@@ -215,7 +216,7 @@ void Dungeon_Manager::Print_Current_Chapter() const
 	cout << "========================================" << endl;
 }
 
-void Dungeon_Manager::Select_Chapter_And_Enter(Player* player, Inventory<Item>& inventory)
+void Dungeon_Manager::Select_Chapter_And_Enter(Player* player, Inventory<Item>& inventory, Console_Manager& console)
 {
 	if (player == nullptr)
 	{
@@ -307,7 +308,7 @@ void Dungeon_Manager::Select_Chapter_And_Enter(Player* player, Inventory<Item>& 
 	cout << Get_Chapter_Name(_current_Chapter) << "에 들어선다." << endl;
 	cout << "========================================" << endl;
 
-	Run_Current_Chapter(player, inventory);
+	Run_Current_Chapter(player, inventory, console);
 }
 
 string Dungeon_Manager::Get_Chapter_Name(Chapter_Type chapter_Type) const
@@ -333,7 +334,7 @@ string Dungeon_Manager::Get_Chapter_Name(Chapter_Type chapter_Type) const
 // 3. 현재 챕터 진행 파트
 //=============================================================================
 
-void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inventory)
+void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inventory, Console_Manager& console)
 {
 	if (player == nullptr) return;
 
@@ -387,7 +388,7 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inven
 	monster.Apply_Player_Level_Scaling(player->getLevel());
 	monster.Print_Ascii_Art();
 
-	Battle(player, monster, inventory);
+	Battle(player, monster, inventory, console);
 
 	if (monster.getHP() > 0)
 	{
