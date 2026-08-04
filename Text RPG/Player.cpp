@@ -175,6 +175,7 @@ void Player::Set_Status_References(
 
 void Player::Print_Status() const
 {
+	Update_Equipment_Buff();
     auto Print_Stat = [](const std::string& stat_name,
         int base_stat,
         int final_stat)
@@ -1250,9 +1251,9 @@ bool Player::Check_Hit(const Monster* monster) const
         );
 
     // 최소·최대 명중률
-    if (hitChance < 5)
+    if (hitChance < 30)
     {
-        hitChance = 5;
+        hitChance = 30;
     }
     else if (hitChance > 95)
     {
@@ -1262,4 +1263,69 @@ bool Player::Check_Hit(const Monster* monster) const
     int randomValue = rand() % 100 + 1;
 
     return randomValue <= hitChance;
+}
+
+void Player::Apply_Equipment_Stats(
+    const Currently_Equipped_Equipments& equipments
+)
+{
+    Equipment_Stats equipmentStats =
+        equipments.Get_All_Equipments_Stats();
+
+    Stat_Modifier modifier;
+
+    modifier.id = "EQUIPMENT_TOTAL_STATS";
+    modifier.name = "장착 장비 효과";
+    modifier.type = Stat_Modifier_Type::Equipment;
+    modifier.remainingTurns = -1;
+
+    modifier.flat.atk = equipmentStats.Attack;
+    modifier.flat.def = equipmentStats.Defence;
+
+    Add_Stat_Modifier(modifier);
+}
+
+// 장비 효과를 적용하는 함수, 장비의 공격력과 방어력을 받아서 Stat_Modifier를 생성하고 Add_Stat_Modifier()를 호출
+void Player::Apply_Equipment_Buff(
+    int equipmentAtk,
+    int equipmentDef
+)
+{
+    Stat_Modifier modifier;
+
+    modifier.id = "EQUIPMENT_BUFF";
+    modifier.name = "장비 효과";
+    modifier.type = Stat_Modifier_Type::Equipment;
+    modifier.remainingTurns = -1;
+
+    modifier.flat.atk = equipmentAtk;
+    modifier.flat.def = equipmentDef;
+
+    Add_Stat_Modifier(modifier);
+}
+
+void Player::Update_Equipment_Buff() const
+{
+    Player* player = const_cast<Player*>(this);
+
+    if (currentlyEquippedEquipments == nullptr)
+    {
+        player->Remove_Stat_Modifier("EQUIPMENT_BUFF");
+        return;
+    }
+
+    Equipment_Stats equipmentStats =
+        currentlyEquippedEquipments->Get_All_Equipments_Stats();
+
+    Stat_Modifier modifier;
+
+    modifier.id = "EQUIPMENT_BUFF";
+    modifier.name = "장비 효과";
+    modifier.type = Stat_Modifier_Type::Equipment;
+    modifier.remainingTurns = -1;
+
+    modifier.flat.atk = equipmentStats.Attack;
+    modifier.flat.def = equipmentStats.Defence;
+
+    player->Add_Stat_Modifier(modifier);
 }
