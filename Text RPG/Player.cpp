@@ -87,6 +87,19 @@ int Player::Calculate_Damage(
     int targetDef
 ) const
 {
+    bool isDefenceDecreaseOn =
+        Has_Stat_Modifier("DEFENCE_DECREASE_BUFF");
+
+    if (isDefenceDecreaseOn)
+    {
+        float defenceDecreaseValue =
+            Get_Defence_Decrease_Value();
+
+        targetDef = static_cast<int>(
+            targetDef * (1.0f - defenceDecreaseValue)
+            );
+    }
+
     if (targetDef < 0)
     {
         targetDef = 0;

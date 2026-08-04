@@ -31,6 +31,10 @@ protected:
     int maxhp;
     int maxmp;
 
+    virtual float Get_Defence_Decrease_Value() const
+    {
+        return 0.0f;
+    }
     // 실제 레벨업 처리는 Level_Up 클래스가 담당하고,
     // Player에는 상태창 표기용 레벨만 저장한다.
     int level;
