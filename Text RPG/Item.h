@@ -21,7 +21,8 @@ public:
     bool Item_Effect(Player& player, Monster& monster);//2.아이템 효과 적용
     bool Item_Effect_Reverse(Player& player, Monster& monster);//3.아이템 효과 해제
     void Print_Ascii_Art() const;//4.아스키 아트 뭔말알?
- 
+    int Get_Item_Count();//5.아이템 카운트 조회
+    std::string Get_Item_Name();//6.아이템 이름 조회
    
 };
 

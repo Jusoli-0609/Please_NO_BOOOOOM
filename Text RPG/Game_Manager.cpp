@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Job_Selection.h"
 #include "JYJ.h"  
+#include "Camp_Manager.h"
 #include <iostream>
 
 using namespace std;
@@ -58,6 +59,7 @@ void Game_Manager::Show_Main_Menu()
         cout << "========================================" << endl;
         cout << "1. 던전 입장" << endl;
         cout << "2. 인벤토리" << endl;
+        cout << "3. 내일배움캠프 재정비소" << endl;
         cout << "0. 게임 종료" << endl;
         cout << "선택: ";
 
@@ -73,6 +75,20 @@ void Game_Manager::Show_Main_Menu()
         case 2:
         {
             _Inventory.Print_Inventory_Menu(_Currently_Equipped_Equipments, _Equipment_Inventory);
+            break;
+        }
+
+        case 3:
+        {
+            if (_Player == nullptr)
+            {
+                cout << "플레이어 정보를 찾을 수 없습니다." << endl;
+                break;
+            }
+
+            Camp_Manager camp_Manager(*_Player, _Inventory,  _Equipment_Inventory, _Currently_Equipped_Equipments);
+            camp_Manager.Open_Camp_Menu();
+
             break;
         }
 

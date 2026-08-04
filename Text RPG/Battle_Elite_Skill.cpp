@@ -1,4 +1,4 @@
-#include "Battle_Elite_Skill.h"
+﻿#include "Battle_Elite_Skill.h"
 
 #include <iostream>
 #include <algorithm>
@@ -50,31 +50,42 @@ bool Check_Elite_Skill(Monster& monster, int turnCount)
 
 bool Ask_Quiz(Player* player, Monster& monster, const Quiz& quiz)
 {
-    cout << endl;
-    cout << "==============================" << endl;
-    cout << "[" << monster.getName() << "] 이(가) 문제를 출제합니다!" << endl;
-    cout << "문제를 맞혀라!" << endl;
-    cout << "==============================" << endl;
-    cout << quiz.question << endl << endl;
+    cout << "\n";
+    cout << "──────────────────────────────────────────────────────\n";
+    cout << quiz.question << "\n";
+    cout << "──────────────────────────────────────────────────────\n\n";
 
     for (size_t i = 0; i < quiz.choices.size(); i++)
     {
-        cout << i + 1 << ". " << quiz.choices[i] << endl;
+        cout << " [" << i + 1 << "] " << quiz.choices[i] << '\n';
     }
- 
-    cout << endl;
+
+    cout << "\n";
+    cout << "══════════════════════════════════════════════════════\n";
+
     int answer;
     cout << "선택 : ";
     cin >> answer;
 
     if (answer == quiz.answer)
     {
-        cout << endl << "정답!" << endl;
+        cout << "\n";
+        cout << "╔════════════════════════════════════════════════════╗\n";
+        cout << "║                     정 답 !                        ║\n";
+        cout << "╠════════════════════════════════════════════════════╣\n";
+        cout << "║ 문제를 정확히 맞혔습니다!                          ║\n";
+        cout << "╚════════════════════════════════════════════════════╝\n";
+
         return true;
     }
 
-    cout << endl << "오답!" << endl;
-   
+    cout << "\n";
+    cout << "╔════════════════════════════════════════════════════╗\n";
+    cout << "║                     오 답 !                        ║\n";
+    cout << "╠════════════════════════════════════════════════════╣\n";
+    cout << "║ 아쉽습니다. 다음 기회에 다시 도전하세요.           ║\n";
+    cout << "╚════════════════════════════════════════════════════╝\n";
+
     return false;
 }
 
@@ -113,7 +124,8 @@ vector<Quiz>* Get_Tutor_Quiz(Monster_Type type)
 bool Tutor_Test(Player* player, Monster& monster)
 {
     vector<Quiz>* quizList = Get_Tutor_Quiz(monster.getMonsterType());
-    if (quizList == nullptr || quizList->empty()) return false;
+    if (quizList == nullptr || quizList->empty())
+        return false;
 
     vector<int> order;
     for (size_t i = 0; i < quizList->size(); i++)
@@ -126,37 +138,55 @@ bool Tutor_Test(Player* player, Monster& monster)
     shuffle(order.begin(), order.end(), g);
 
     int score = 0;
-    cout << endl;
-    cout << "======================================" << endl;
-    cout << monster.getName() << "의 시험이 시작됩니다!" << endl;
-    cout << "3문제 중 2문제 이상 맞히면 통과!" << endl;
-    cout << "======================================" << endl;
+
+    cout << "\n";
+    cout << "╔════════════════════════════════════════════════════╗\n";
+    cout << "║                  튜 터 시 험                       ║\n";
+    cout << "╠════════════════════════════════════════════════════╣\n";
+    cout << "║                                                    ║\n";
+    cout << "  시험관 : " << monster.getName() << "\n";
+    cout << "║                                                    ║\n";
+    cout << "║ 총 3문제 중 2문제 이상 정답 시 합격!               ║\n";
+    cout << "║                                                    ║\n";
+    cout << "╚════════════════════════════════════════════════════╝\n";
 
     int questionCount = min(3, (int)quizList->size());
 
     for (int i = 0; i < questionCount; i++)
     {
-        cout << endl << "[ 문제 " << i + 1 << " ]" << endl;
+        cout << "\n";
+        cout << "══════════════════════════════════════════════════════\n";
+        cout << "                 [ 문제 " << i + 1 << " / " << questionCount << " ]\n";
+        cout << "══════════════════════════════════════════════════════\n";
+
         if (Ask_Quiz(player, monster, (*quizList)[order[i]]))
         {
             score++;
         }
     }
 
-    cout << endl;
-    cout << "======================================" << endl;
-    cout << "결과 : " << score << " / " << questionCount << endl;
+    cout << "\n";
+    cout << "╔════════════════════════════════════════════════════╗\n";
+    cout << "║                  시 험 결 과                       ║\n";
+    cout << "╠════════════════════════════════════════════════════╣\n";
+    cout << "║                                                    ║\n";
+    cout << "  정답 : " << score << " / " << questionCount << "\n";
+    cout << "║                                                    ║\n";
 
     if (score >= 2)
     {
-        cout << "시험 통과!" << endl;
+        cout << "                ★ 시험 통과! ★\n";
+        cout << "║                                                    ║\n";
+        cout << "╚════════════════════════════════════════════════════╝\n";
         return true;
     }
 
-    cout << "시험 실패..." << endl;
+    cout << "                시험 실패...\n";
+    cout << "║                                                    ║\n";
+    cout << "╚════════════════════════════════════════════════════╝\n";
+
     return false;
 }
-
 //======================================================
 // 스킬 실행 분기
 //======================================================

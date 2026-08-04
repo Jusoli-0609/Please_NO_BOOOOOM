@@ -127,10 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Basic_Engine.cpp" />
-    <ClCompile Include="Basic_Mouse.cpp" />
     <ClCompile Include="Ascii_Art_Manager.cpp" />
-    <ClCompile Include="Basic_Sword.cpp" />
     <ClCompile Include="Battle_Elite_Skill.cpp" />
     <ClCompile Include="Camp_Manager.cpp" />
     <ClCompile Include="Character_Creator.cpp">
@@ -165,6 +162,31 @@
     <ClCompile Include="JYJ.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Level_1_Engine.cpp" />
+    <ClCompile Include="Level_1_Glasses.cpp" />
+    <ClCompile Include="Level_1_Headset.cpp" />
+    <ClCompile Include="Level_1_Keyboard.cpp" />
+    <ClCompile Include="Level_1_Mouse.cpp" />
+    <ClCompile Include="Level_2_Engine.cpp" />
+    <ClCompile Include="Level_2_Glasses.cpp" />
+    <ClCompile Include="Level_2_Headset.cpp" />
+    <ClCompile Include="Level_2_Keyboard.cpp" />
+    <ClCompile Include="Level_2_Mouse.cpp" />
+    <ClCompile Include="Level_3_Engine.cpp" />
+    <ClCompile Include="Level_3_Glasses.cpp" />
+    <ClCompile Include="Level_3_Headset.cpp" />
+    <ClCompile Include="Level_3_Keyboard.cpp" />
+    <ClCompile Include="Level_3_Mouse.cpp" />
+    <ClCompile Include="Level_4_Engine.cpp" />
+    <ClCompile Include="Level_4_Glasses.cpp" />
+    <ClCompile Include="Level_4_Headset.cpp" />
+    <ClCompile Include="Level_4_Keyboard.cpp" />
+    <ClCompile Include="Level_4_Mouse.cpp" />
+    <ClCompile Include="Level_5_Engine.cpp" />
+    <ClCompile Include="Level_5_Glasses.cpp" />
+    <ClCompile Include="Level_5_Headset.cpp" />
+    <ClCompile Include="Level_5_Keyboard.cpp" />
+    <ClCompile Include="Level_5_Mouse.cpp" />
     <ClCompile Include="Level_Up.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
@@ -188,9 +210,6 @@
     <ClCompile Include="UI_Manager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Basic_Engine.h" />
-    <ClInclude Include="Basic_Mouse.h" />
-    <ClInclude Include="Basic_Sword.h" />
     <ClInclude Include="Ascii_Art_Manager.h" />
     <ClInclude Include="Battle_Elite_Skill.h" />
     <ClInclude Include="Camp_Manager.h" />
@@ -227,6 +246,31 @@
     <ClInclude Include="JYJ.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="Level_1_Engine.h" />
+    <ClInclude Include="Level_1_Glasses.h" />
+    <ClInclude Include="Level_1_Headset.h" />
+    <ClInclude Include="Level_1_Keyboard.h" />
+    <ClInclude Include="Level_1_Mouse.h" />
+    <ClInclude Include="Level_2_Engine.h" />
+    <ClInclude Include="Level_2_Glasses.h" />
+    <ClInclude Include="Level_2_Headset.h" />
+    <ClInclude Include="Level_2_Keyboard.h" />
+    <ClInclude Include="Level_2_Mouse.h" />
+    <ClInclude Include="Level_3_Engine.h" />
+    <ClInclude Include="Level_3_Glasses.h" />
+    <ClInclude Include="Level_3_Headset.h" />
+    <ClInclude Include="Level_3_Keyboard.h" />
+    <ClInclude Include="Level_3_Mouse.h" />
+    <ClInclude Include="Level_4_Engine.h" />
+    <ClInclude Include="Level_4_Glasses.h" />
+    <ClInclude Include="Level_4_Headset.h" />
+    <ClInclude Include="Level_4_Keyboard.h" />
+    <ClInclude Include="Level_4_Mouse.h" />
+    <ClInclude Include="Level_5_Engine.h" />
+    <ClInclude Include="Level_5_Glasses.h" />
+    <ClInclude Include="Level_5_Headset.h" />
+    <ClInclude Include="Level_5_Keyboard.h" />
+    <ClInclude Include="Level_5_Mouse.h" />
     <ClInclude Include="Level_Up.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>

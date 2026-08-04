@@ -76,3 +76,13 @@ void Item::Print_Ascii_Art() const
 {
     cout << _Item_Ascii_Art << endl;
 }
+
+int Item::Get_Item_Count()
+{
+    return _Item_Count;
+}
+
+string Item::Get_Item_Name()
+{
+    return _Item_Name;
+}
