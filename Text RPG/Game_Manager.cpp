@@ -118,7 +118,7 @@ void Game_Manager::Show_Main_Menu()
 
         case 2:
         {
-            _Inventory.Print_Inventory_Menu(_Currently_Equipped_Equipments, _Equipment_Inventory);
+            _Inventory.Print_Inventory_Menu(_Currently_Equipped_Equipments, _Equipment_Inventory,*_Player);
             break;
         }
 

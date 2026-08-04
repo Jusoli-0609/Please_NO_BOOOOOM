@@ -139,7 +139,7 @@ template <typename T>//4-2 인벤토리 메뉴 출력
 void Inventory<T>::Print_Inventory_Menu(
     Currently_Equipped_Equipments& currently_equipped_equipments,
     Inventory_For_Equipments_Only& inventory_for_equipments_only,
-    Player& player,Monster monster
+    Player& player
 )
 {
     int Choose_Inventory_Menu;
@@ -332,7 +332,7 @@ void Inventory<T>::Print_Inventory_Menu(
 
             case 5:
             {
-                 Use_Item(player, monster);
+                 Use_Item(player);
                 cout << "전투 중 아이템 사용은 전투 시스템에서 호출해야 한다!" << endl;
                 break;
             }
@@ -475,7 +475,7 @@ void Inventory<T>::Print_Inventory_Menu(
     }
 
     template <typename T>//5-3 전투 중 아이템 사용
-    void Inventory<T>::Use_Item(Player & player, Monster & monster)
+    void Inventory<T>::Use_Item(Player & player)
     {
         if (_Current_Quantity_Of_Items == 0)
         {
@@ -496,7 +496,7 @@ void Inventory<T>::Print_Inventory_Menu(
         string selected_item_name = selected_item->_Item_Name; // 선택한 아이템 이름을 저장할 string 변수 선언
         if (selected_item->_Item_Type_Usable == true)
         {
-            selected_item->Item_Effect(player, monster);
+           
             Use_Item_By_Name(selected_item_name);
             return;
         }
