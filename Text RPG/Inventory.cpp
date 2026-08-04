@@ -236,6 +236,7 @@ void Inventory<T>::Print_Inventory_Menu(
             {
             case 1:
             {
+                cout << "===== 현재 장착 중인 장비 =====" << endl;
                 inventory_for_equipments_only.Print_Equipment_Inventory();
                 break;
             }

@@ -160,6 +160,7 @@
         cout << _Equipment__Ascii_Art << endl;
     }
 
+
     //장비이름 조회
     string Equipment::Get_Equipment_Name()const
     {
@@ -357,11 +358,21 @@
 
         return false;
     }
+
+    //장비 출력 함수 for 20콩
+    void Currently_Equipped_Equipments::Print_Equipment_Info_For_Player() const
+    {
+        cout << "1. 마우스 : " << _Mouse.Get_Equipment_Name() << "      ";
+        cout << "2. 엔진 : " << _Unreal_Engine_Version.Get_Equipment_Name() << endl;
+        cout << "3. 키보드 : " << _Keyboard.Get_Equipment_Name() << "      ";
+        cout << "4. 안경 : " << _BlueLight_Glasses.Get_Equipment_Name() << endl;
+        cout << "5. 헤드셋 : " << _Headset.Get_Equipment_Name() << endl;
+    }
+
+
     //장비창 출력
     void Currently_Equipped_Equipments::Print_Currently_Equipped_Equipments() const
     {
-        cout << "===== 현재 장착 중인 장비 =====" << endl;
-
         cout << "[Engine]" << endl;
         _Unreal_Engine_Version.Print_Equipment_Info(); 
 
@@ -741,6 +752,19 @@
         cout << "장비 전용 인벤토리가 " << increase_count << "만큼 증가했다!" << endl;
     }
 
+    //장비 분해용/판매용 함수
+    bool Inventory_For_Equipments_Only::Remove_Equipment_By_index(int index)
+    {
+        // TODO: index 범위 검사 조건문
+        if (index < 0 || _Equipment_Current_Count <= index)
+        {
+            cout << "잘못된 입력이다!" << endl;
+            return false;
+        }
+        _Equipments.erase(_Equipments.begin() + index);
+        _Equipment_Current_Count--;
+        return true;
+    }
     //장비 정렬
     void Inventory_For_Equipments_Only::Sort_Equipment_Inventory()
     {
@@ -905,4 +929,20 @@
         }
 
         return Total_Weight;
+    }
+
+    //업데이트 하기
+    bool Inventory_For_Equipments_Only::Update_Equipment_By_Index(
+        int index,
+        const Equipment& equipment
+    )
+    {
+        if (index<0 || index>_Equipments.size())
+        {
+            return false;
+        }
+
+        // TODO: _Equipments[index]에 equipment 대입
+
+        return true;
     }

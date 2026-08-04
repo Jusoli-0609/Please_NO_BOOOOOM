@@ -210,6 +210,9 @@
     <ClCompile Include="Tutor_Mouse.cpp">
       <Filter>소스 파일\Item\Mouse</Filter>
     </ClCompile>
+    <ClCompile Include="Tutor.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h">
@@ -376,6 +379,9 @@
     </ClInclude>
     <ClInclude Include="Tutor_Mouse.h">
       <Filter>헤더 파일\Item\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="Tutor.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
