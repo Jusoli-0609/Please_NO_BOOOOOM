@@ -1,11 +1,10 @@
 ﻿#include <iostream>
-#include "JYJ.h"
+#include "LYB.h"
 #include "Monster.h"
-//대사 groggyAttackName
-//JYJ 윤재님꺼 같은경우엔 미리 영빈님이 만들어놨었어서 따로 건들진 않았고 스킬계수쪽만 수정했습니다!
+//그로기 이름 따로 안적혀있어서 일단 특수능력중에 음침하게 염탐하기(약점찾기) 를 그로기쪽에 적어놨습니다!
 //나머진 똑같이 내용만 바꿔서 적어놨습니다
 //특화 스탯이 따로 정해진게 없어서 이 스탯기준으로 그냥 지피티한테 물어봐서 나온걸 주석으로 한번 적어놓겠습니다!보시고 특화스탯 한번 수정해주세요!
-//특화 스탯(SNE) 의미:"말빨의 깊이 / 주둥아리술의 연륜"
+//특화 스탯(SNE) 의미: "동물 조련 능력 / 집사만의 교감 수치"
 namespace
 {
     void Apply_Damage(Monster* monster, int damage)
@@ -14,15 +13,15 @@ namespace
     }
 }
 
-JYJ::JYJ(const std::string& name)
+LYB::LYB(const std::string& name)
     : Player(name)
 {
-    job = "풍둔 주둥아리술 마스터";
+    job = "고양이 집사(동물테이머)";
 
-    skill1Name = "블루투스식 말하기";
-    skill2Name = "전방에 힘찬 기지개 발사";
-    skill3Name = "숨쉬듯 무례하기";
-    groggyAttackName = "그로기 공격 이름";
+    skill1Name = "랜선 물어뜯기(상대 1턴 강제 넘기기)";
+    skill2Name = "고양이 애교(버프 : 상대 공격 1회 회피)";
+    skill3Name = "츄르 바르기(강공격)";
+    groggyAttackName = "자동차 고장(이동 능력 감소시키기)";
 
 
     Set_Start_Stat(
@@ -38,7 +37,7 @@ JYJ::JYJ(const std::string& name)
     );
 }
 
-void JYJ::Attack(Monster* monster)
+void LYB::Attack(Monster* monster)
 {
     if (monster == nullptr)
     {
@@ -46,7 +45,7 @@ void JYJ::Attack(Monster* monster)
         return;
     }
 
-    // [기본 공격]: 공격력 90% + 민첩성(AGI) 10% (주둥아리술을 시전하며 가볍게 툭 치는 평타 컨셉)
+    // [기본 공격]: 공격력 90% + 민첩성(AGI) 10% (고양이를 쫓아 날렵하게 움직이는 평타 컨셉)
     int damage = Calculate_Damage(
         0.9f, // ATK 90%
         0.0f, // DEF 0%
@@ -60,11 +59,11 @@ void JYJ::Attack(Monster* monster)
     Apply_Damage(monster, damage);
 
     std::cout << name << "의 기본 공격!\n";
-    std::cout << "평타 대사 입력\n";
+    std::cout << "오 잠시만요 고양이가...\n";
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }
 
-void JYJ::Skill1(Monster* monster)
+void LYB::Skill1(Monster* monster)
 {
     const int mpCost = 10;
 
@@ -82,7 +81,7 @@ void JYJ::Skill1(Monster* monster)
 
     mp -= mpCost;
 
-    // [스킬 1 - 블루투스식 말하기]: 소리가 보이지 않게 날렵하게 파고드는 컨셉 (공격력 100% + 민첩성 AGI 30%)
+    // [스킬 1 - 랜선 물어뜯기]: 재빠르게 뛰어들어 방해하는 민첩한 컨셉 (AGI 30% 가미)
     int damage = Calculate_Damage(
         1.0f, 0.0f, 0.0f, // ATK 100%
         0.0f, 0.0f, 0.3f, // AGI 30%
@@ -92,11 +91,11 @@ void JYJ::Skill1(Monster* monster)
     Apply_Damage(monster, damage);
 
     std::cout << name << "의" << skill1Name << "!\n";
-    std::cout << name << " : " << "뭔말알?\n";
+    std::cout << name << " : " << "메에\n";
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }
 
-void JYJ::Skill2(Monster* monster)
+void LYB::Skill2(Monster* monster)
 {
     const int mpCost = 20;
 
@@ -114,7 +113,7 @@ void JYJ::Skill2(Monster* monster)
 
     mp -= mpCost;
 
-    // [스킬 2 - 전방에 힘찬 기지개 발사]: 기지개를 켜며 온몸의 생명력을 뿜어내는 컨셉 (공격력 120% + 체력 HP 20%)
+    // [스킬 2 - 고양이 애교]: 집사의 고양이한테서 우러나오는 치명적 애교 컨셉 (HP 20% 가미)
     int damage = Calculate_Damage(
         1.2f, 0.0f, 0.2f, // ATK 120%, HP 20%
         0.0f, 0.0f, 0.0f,
@@ -124,11 +123,11 @@ void JYJ::Skill2(Monster* monster)
     Apply_Damage(monster, damage);
 
     std::cout << name << "의 " << skill2Name << "!\n";
-    std::cout << "메챠쿠챠 카멜레온!\n";
+    std::cout << "냐옹이다옹\n";
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }
 
-void JYJ::Skill3(Monster* monster)
+void LYB::Skill3(Monster* monster)
 {
     const int mpCost = 30;
 
@@ -146,7 +145,7 @@ void JYJ::Skill3(Monster* monster)
 
     mp -= mpCost;
 
-    // [스킬 3 - 숨쉬듯 무례하기]: 참을 수 없는 무례함으로 마나를 폭발시키는 주력기 컨셉 (공격력 150% + 마나 MP 30%)
+    // [스킬 3 - 츄르 바르기]: 마나를 집중해 강력한 한 방을 터뜨리는 주력 강공격 (MP 30% 가미)
     int damage = Calculate_Damage(
         1.5f, 0.0f, 0.0f, // ATK 150%
         0.3f, 0.0f, 0.0f, // MP 30%
@@ -156,11 +155,11 @@ void JYJ::Skill3(Monster* monster)
     Apply_Damage(monster, damage);
 
     std::cout << name << "의 " << skill3Name << "!\n";
-    std::cout << "커피 타오십시오.\n";
+    std::cout << "제가 원인을 찾은 것 같습니다.\n";
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }
 
-void JYJ::Groggy_Attack(Monster* monster)
+void LYB::Groggy_Attack(Monster* monster)
 {
     if (monster == nullptr)
     {
@@ -168,7 +167,7 @@ void JYJ::Groggy_Attack(Monster* monster)
         return;
     }
 
-    // [그로기 공격 - 그로기 공격 이름]: 묵직한 방어력으로 상대를 짓누르는 치명타 컨셉 (공격력 180% + 방어력 DEF 40%)
+    // [그로기 공격 - 자동차 고장]: 묵직한 방어력을 실어 상대를 완전히 멈춰 세우는 치명타 (DEF 40% 가미)
     int damage = Calculate_Damage(
         1.8f, 0.4f, 0.0f, // ATK 180%, DEF 40%
         0.0f, 0.0f, 0.0f,
@@ -178,6 +177,6 @@ void JYJ::Groggy_Attack(Monster* monster)
     Apply_Damage(monster, damage);
 
     std::cout << name << "의 " << groggyAttackName << "!\n";
-    std::cout << "그로기 공격 대사 입력\n";
+    std::cout << "자동차 고장(이동 능력 감소시키기)\n";
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }

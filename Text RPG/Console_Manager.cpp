@@ -1,4 +1,4 @@
-#include "Console_Manager.h"
+﻿#include "Console_Manager.h"
 #include <string>
 #include <thread>
 #include <chrono>
@@ -9,7 +9,7 @@ using namespace std;
 Console_Manager::Console_Manager()
 {
     _Width = 120;
-    _Height = 40;
+    _Height = 50;
 }
 //임시값입니다. 추후 수정.
 
@@ -21,14 +21,21 @@ Console_Manager::Console_Manager(int Width, int Height)
 
 void Console_Manager::Set_Console_Size()
 {
-    std::string Width_Text = std::to_string(_Width);
-    std::string Height_Text = std::to_string(_Height);
-    //system에서 int를 못 받아서 문자열로 변경
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
-    std::string command =
-        "mode con cols=" + Width_Text + " lines=" + Height_Text;
+    COORD bufferSize;
+    bufferSize.X = static_cast<SHORT>(_Width);
+    bufferSize.Y = static_cast<SHORT>(_Height);
 
-    system(command.c_str());
+    SetConsoleScreenBufferSize(hConsole, bufferSize);
+
+    SMALL_RECT rect;
+    rect.Left = 0;
+    rect.Top = 0;
+    rect.Right = _Width - 1;
+    rect.Bottom = _Height - 1;
+
+    SetConsoleWindowInfo(hConsole, TRUE, &rect);
 }
 
 void Console_Manager::Set_Cursor_Position(int x, int y)
@@ -49,9 +56,39 @@ void Console_Manager::Set_Cursor_Position(int x, int y)
 }
 //windows에서 꺼내온 함수라 네이밍 수정 불가!
 
+
 void Console_Manager::Clear()
 {
-    system("cls");
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    GetConsoleScreenBufferInfo(hConsole, &csbi);
+
+    DWORD consoleSize = csbi.dwSize.X * csbi.dwSize.Y;
+    DWORD written;
+
+    COORD home = { 0, 0 };
+
+    // 화면의 모든 문자를 공백으로 채움
+    FillConsoleOutputCharacter(
+        hConsole,
+        ' ',
+        consoleSize,
+        home,
+        &written
+    );
+
+    // 글자 색상도 초기화
+    FillConsoleOutputAttribute(
+        hConsole,
+        csbi.wAttributes,
+        consoleSize,
+        home,
+        &written
+    );
+
+    // 커서를 (0,0)으로 이동
+    SetConsoleCursorPosition(hConsole, home);
 }
 
 void Console_Manager::Slow_Print(const std::string& Text, int DelayMs)
@@ -68,8 +105,8 @@ void Console_Manager::Slow_Print(const std::string& Text, int DelayMs)
 //Console.Slow_Print("당신은 8시 55분에 눈을 떴다!", 50);
 //이런식으로 써주시면 됩니다.
 
-void Console_Manager::Print_At(int x, int y, const std::string& Text)
+void Console_Manager::Print_At(int x, int y, const std::string& text)
 {
     Set_Cursor_Position(x, y);
-    std::cout << Text;
+    std::cout << text << std::flush;
 }

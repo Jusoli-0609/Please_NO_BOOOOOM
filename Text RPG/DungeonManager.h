@@ -85,7 +85,7 @@ private:
 	Equipment Create_Tutor_Clear_Equipment(Chapter_Type chapter_Type) const;
 	bool Has_Tutor_Equipment(const Inventory_For_Equipments_Only&equipment_Inventory, const Currently_Equipped_Equipments&equipped_Equipments, const std::string& equipment_Name) const;
 	bool Give_Tutor_Clear_Equipment(Chapter_Type chapter_Type, Inventory_For_Equipments_Only&equipment_Inventory, const Currently_Equipped_Equipments&equipped_Equipments);
-	void Run_Final_Boss_Room(Player* player, Inventory<Item>&inventory, const Inventory_For_Equipments_Only&equipment_Inventory, const Currently_Equipped_Equipments&equipped_Equipments);
+	void Run_Final_Boss_Room(Player* player, Inventory<Item>& inventory, const Inventory_For_Equipments_Only&equipment_Inventory, const Currently_Equipped_Equipments&equipped_Equipments);
 	void Run_Ending(const Player* player) const;
 	// 14. 던전 진행 상태 데이터 파트
 	Chapter_Type _current_Chapter;
