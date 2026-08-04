@@ -24,6 +24,7 @@ void Camp_Manager::Open_Camp_Menu()
 {
     while (true)
     {
+        cout << R"()";
         //음침한 주소리님 여깁니당(TommorowLearnCamp)
         cout << "\n===== 내일배움캠프 재정비소 =====\n";
         cout << "1. 내배캠 119 기본 보급 받기\n";
@@ -96,6 +97,7 @@ void Camp_Manager::Open_Camp_Menu()
 
 void Camp_Manager::Give_Basic_Training_Item()
 {
+    
     cout << "\n===== 내배캠 119 =====\n";
     cout << "기본 장비를 지급받았다!\n";
     Level_1_Engine level_1_engine;
@@ -112,6 +114,9 @@ void Camp_Manager::Give_Basic_Training_Item()
 
 void Camp_Manager::Open_Pep_Store_Menu()
 {
+    cout << R"()";
+    //음침한 주소리님 여깁니당(FepStore)
+
     while (true)
     {
         cout << "\n===== 펩 스토어 =====\n";
@@ -245,6 +250,8 @@ void Camp_Manager::Open_Pep_Store_Menu()
 
 void Camp_Manager::Open_General_Store_Menu()
 {
+    cout << R"()";
+    //음침한 주소리님 여깁니당(MrMoonStore)
     while (true)
     {
         cout << "\n===== 문승호 매니저님의 만물 잡화점 =====\n";
@@ -318,95 +325,103 @@ void Camp_Manager::Open_General_Store_Menu()
 
 void Camp_Manager::Open_Loot_Shop_Menu()
 {
-    cout << "\n===== 김동현 매니저님의 전리품 매입소 =====\n";
-    cout << "1. 전리품 판매\n";
-    cout << "0. 뒤로가기\n";
-    cout << "선택: ";
-
-    int choice = -1;
-    cin >> choice;
-    
-    switch (choice)
-    {
-    case 1:
-    {
-      
-        if (inventory.Get__Current_Quantity_Of_Items() <= 0)
-        {
-            cout << "판매할 아이템이 없다!" << endl;
-            break;
-        }
-        inventory.Print_Inventory();
-
+    cout << R"()";
+    //음침한 주소리님 여깁니당(MrKimStore)
+    while (true)
+    {        
+        cout << "\n===== 김동현 매니저님의 전리품 매입소 =====\n";
+        cout << "1. 전리품 판매\n";
         cout << "0. 뒤로가기\n";
-        cout << "판매할 전리품의 번호와 갯수를 차례대로 누르세요.";
+        cout << "선택: ";
 
-        int sellChoice = -1;
-        cin >> sellChoice;
-    
-        if (sellChoice == 0)
+        int choice = -1;
+        cin >> choice;
+
+        switch (choice)
         {
+        case 1:
+        {
+
+            if (inventory.Get__Current_Quantity_Of_Items() <= 0)
+            {
+                cout << "판매할 아이템이 없다!" << endl;
+                break;
+            }
+            inventory.Print_Inventory();
+
+            cout << "0. 뒤로가기\n";
+            cout << "판매할 전리품의 번호와 갯수를 차례대로 누르세요.";
+
+            int sellChoice = -1;
+            cin >> sellChoice;
+
+            if (sellChoice == 0)
+            {
+                break;
+            }
+
+            if (sellChoice < 0 || inventory.Get__Current_Quantity_Of_Items() < sellChoice)
+            {
+                cout << "잘못된 선택이다." << endl;
+                break;
+            }
+            int sellcount = 0;
+            cin >> sellcount;
+            int sellIndex = sellChoice - 1;
+            Item* selectedItem = inventory.Get_Item_By_Index(sellIndex);
+            if (selectedItem == nullptr)
+            {
+                cout << "아이템 정보를 찾을 수 없다." << endl;
+                break;
+            }
+            if (sellcount <= 0)
+            {
+                cout << "판매 개수가 잘못됐다." << endl;
+                break;
+            }
+            int Total_Money_Earn = selectedItem->_Item_Price * sellcount;
+
+
+            bool isRemoved = inventory.Remove_Item_By_Index_And_Count(sellIndex, sellcount);
+
+            if (isRemoved == false)
+            {
+                cout << "전리품 판매에 실패했다." << endl;
+                break;
+            }
+
+            inventory.Set_Money(inventory.Get_Money() + Total_Money_Earn);
+            cout << selectedItem->_Item_Name << "을(를) 판매했다!" << endl;
+            cout << Total_Money_Earn << " 골드를 얻었다!" << endl;
+
             break;
         }
 
-        if (sellChoice < 0 || inventory.Get__Current_Quantity_Of_Items() < sellChoice)
+        case 0:
         {
-           cout<< "잘못된 선택이다." << endl;
-           break;
+            return;
         }
-        int sellcount = 0;
-        cin>>sellcount;
-        int sellIndex = sellChoice - 1;
-        Item* selectedItem = inventory.Get_Item_By_Index(sellIndex);
-        if (selectedItem == nullptr)
+
+        default:
         {
-            cout << "아이템 정보를 찾을 수 없다." << endl;
+            cout << "잘못된 입력이다." << endl;
             break;
         }
-        if (sellcount <= 0)
-        {
-            cout << "판매 개수가 잘못됐다." << endl;
-            break;
         }
-        int Total_Money_Earn = selectedItem->_Item_Price * sellcount;
-
-      
-       bool isRemoved = inventory.Remove_Item_By_Index_And_Count(sellIndex,sellcount);
-
-        if (isRemoved==false)
-        {
-            cout << "전리품 판매에 실패했다." << endl;
-            break;
-        }
-
-        inventory.Set_Money(inventory.Get_Money() + Total_Money_Earn);
-         cout<<selectedItem ->_Item_Name << "을(를) 판매했다!" << endl;
-         cout << Total_Money_Earn << " 골드를 얻었다!" << endl;
-
-        break;
-    }
-
-    case 0:
-    {
-        return;
-    }
-
-    default:
-    {
-        cout << "잘못된 입력이다." << endl;
-        break;
-    }
     }
 }
 
 
 void Camp_Manager::Open_Cookie_Blacksmith_Menu()
 {
+    cout << R"()";
+    //음침한 주소리님 여깁니당(Cookietheblacksmith)
     while (true)
     {
+
         cout << endl;
         cout << "========================================" << endl;
-        cout << "[ 쿠키의 코드 대장간 ]" << endl;//음침한 주소리님 여깁니당
+        cout << "[ 쿠키의 코드 대장간 ]" << endl;
         cout << "========================================" << endl;
         cout << "1. 장비 강화" << endl;
         cout << "2. 코드 조각으로 장비 제작" << endl;
