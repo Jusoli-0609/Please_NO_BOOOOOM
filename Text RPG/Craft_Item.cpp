@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <ctime>
 #include "Monster.h"
+#include "Ascii_Art_Manager.h"
 using namespace std;
 
 Craft_Work_Shop::Craft_Work_Shop()
@@ -291,7 +292,8 @@ bool Craft_Work_Shop::Craft_Item
 	{
 		item_inventory.Remove_Item_Count(ingredient.first, ingredient.second);
 	}
-
+	Ascii_Art_Manager art;
+	art.Print("Art/Craft_Item/craft.txt");
 	cout << endl;
 	cout << "========================================" << endl;
 	cout << "[ 장비 제작 완료 ]" << endl;
@@ -384,6 +386,8 @@ bool Craft_Work_Shop::Decomposition_Item(Inventory_For_Equipments_Only& equipmen
 
 		item_inventory.Add_Or_Increase_Item(NewItem);
 	}
+	Ascii_Art_Manager art;
+	art.Print("Art/Craft_Item/resolve.txt");
 	cout << Bye_Equipment << "를 분해했다냥!" << endl;
 	return true;
 }
@@ -448,12 +452,15 @@ bool Craft_Work_Shop::Enhance_Item(
 			cout << "강화 결과를 저장하지 못했다냥!" << endl;
 			return false;
 		}
-
+		Ascii_Art_Manager art;
+		art.Print("Art/Craft_Item/enhancesuccess.txt");
 		cout << "강화에 성공했다냥!" << endl;
 		return true;
 	}
 	else
 	{
+		Ascii_Art_Manager art;
+		art.Print("Art/Craft_Item/enhancefail.txt");
 		cout << "강화에 실패했다냥..." << endl;
 		return false;
 	}
