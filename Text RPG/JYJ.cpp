@@ -1,7 +1,11 @@
 ﻿#include <iostream>
 #include "JYJ.h"
 #include "Monster.h"
-
+//대사 groggyAttackName
+//JYJ 윤재님꺼 같은경우엔 미리 영빈님이 만들어놨었어서 따로 건들진 않았고 스킬계수쪽만 수정했습니다!
+//나머진 똑같이 내용만 바꿔서 적어놨습니다
+//특화 스탯이 따로 정해진게 없어서 이 스탯기준으로 그냥 지피티한테 물어봐서 나온걸 주석으로 한번 적어놓겠습니다!보시고 특화스탯 한번 수정해주세요!
+//특화 스탯(SNE) 의미:"말빨의 깊이 / 주둥아리술의 연륜"
 namespace
 {
     void Apply_Damage(Monster* monster, int damage)
@@ -28,9 +32,9 @@ JYJ::JYJ(const std::string& name)
         10,  // DEF
         100, // AP
         5,   // SNE
-        10,   // AGI
-        200, //MAXHP
-        100 //MAXMP
+        10,  // AGI
+        200, // MAXHP
+        100  // MAXMP
     );
 }
 
@@ -42,13 +46,14 @@ void JYJ::Attack(Monster* monster)
         return;
     }
 
+    // [기본 공격]: 공격력 90% + 민첩성(AGI) 10% (주둥아리술을 시전하며 가볍게 툭 치는 평타 컨셉)
     int damage = Calculate_Damage(
-        1.0f, // ATK 100%
+        0.9f, // ATK 90%
         0.0f, // DEF 0%
         0.0f, // HP 0%
         0.0f, // MP 0%
         0.0f, // SNE 0%
-        0.0f, // AGI 0%
+        0.1f, // AGI 10%
         monster->getDefence()
     );
 
@@ -77,9 +82,10 @@ void JYJ::Skill1(Monster* monster)
 
     mp -= mpCost;
 
+    // [스킬 1 - 블루투스식 말하기]: 소리가 보이지 않게 날렵하게 파고드는 컨셉 (공격력 100% + 민첩성 AGI 30%)
     int damage = Calculate_Damage(
-        1.0f, 0.0f, 0.0f,
-        0.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f, // ATK 100%
+        0.0f, 0.0f, 0.3f, // AGI 30%
         monster->getDefence()
     );
 
@@ -108,8 +114,9 @@ void JYJ::Skill2(Monster* monster)
 
     mp -= mpCost;
 
+    // [스킬 2 - 전방에 힘찬 기지개 발사]: 기지개를 켜며 온몸의 생명력을 뿜어내는 컨셉 (공격력 120% + 체력 HP 20%)
     int damage = Calculate_Damage(
-        1.0f, 0.0f, 0.0f,
+        1.2f, 0.0f, 0.2f, // ATK 120%, HP 20%
         0.0f, 0.0f, 0.0f,
         monster->getDefence()
     );
@@ -139,9 +146,10 @@ void JYJ::Skill3(Monster* monster)
 
     mp -= mpCost;
 
+    // [스킬 3 - 숨쉬듯 무례하기]: 참을 수 없는 무례함으로 마나를 폭발시키는 주력기 컨셉 (공격력 150% + 마나 MP 30%)
     int damage = Calculate_Damage(
-        1.0f, 0.0f, 0.0f,
-        0.0f, 0.0f, 0.0f,
+        1.5f, 0.0f, 0.0f, // ATK 150%
+        0.3f, 0.0f, 0.0f, // MP 30%
         monster->getDefence()
     );
 
@@ -160,8 +168,9 @@ void JYJ::Groggy_Attack(Monster* monster)
         return;
     }
 
+    // [그로기 공격 - 그로기 공격 이름]: 묵직한 방어력으로 상대를 짓누르는 치명타 컨셉 (공격력 180% + 방어력 DEF 40%)
     int damage = Calculate_Damage(
-        1.0f, 0.0f, 0.0f,
+        1.8f, 0.4f, 0.0f, // ATK 180%, DEF 40%
         0.0f, 0.0f, 0.0f,
         monster->getDefence()
     );
