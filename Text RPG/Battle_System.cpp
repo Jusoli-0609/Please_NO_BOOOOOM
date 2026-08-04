@@ -1065,51 +1065,27 @@ void Moon_Seung_Ho_Manager_Skill(
     }
 }
 
-void Print_Final_Boss_Duo_Introduction(
-    Monster& kim,
-    Monster& moon
-)
+void Print_Final_Boss_Duo_Introduction(Monster& kim, Monster& moon)
 {
     cout << endl;
     cout << "==================================================" << endl;
-    cout << "[ 최종 검증 관리자 등장 ]" << endl;
+    cout << "              FINAL CODE VERIFICATION              " << endl;
     cout << "==================================================" << endl;
-
 
     cout << endl;
 
     cout << kim.getName()
-        << " : "
+        << " : \"여기까지 온 것을 인정하지.\""
         << endl;
-
-    cout << "\"마지막 단계까지 도달했군요.\""
-        << endl;
-
-    cout << "\"작성한 코드가 진짜 동작하는지 검증하겠습니다.\""
-        << endl;
-
-
-    cout << endl;
 
     cout << moon.getName()
-        << " : "
+        << " : \"하지만 마지막 검증은 쉽지 않을 것이다.\""
         << endl;
-
-    cout << "\"지식만으로는 부족합니다.\""
-        << endl;
-
-    cout << "\"직접 해결하는 모습을 보여주세요.\""
-        << endl;
-
 
     cout << endl;
 
-    cout << "두 매니저가 동시에 코드를 실행하기 시작했다."
-        << endl;
-
-    cout << "최종 검증 프로세스가 시작된다."
-        << endl;
-
+    cout << "두 명의 매니저가 동시에 코드를 분석하기 시작했다." << endl;
+    cout << "플레이어는 두 명의 보스를 상대해야 한다." << endl;
 
     cout << "==================================================" << endl;
 }
