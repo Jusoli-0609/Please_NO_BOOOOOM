@@ -127,7 +127,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Ascii_Art_Manager.cpp" />
+    <ClCompile Include="Ascii_Art_Manager.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Battle_Elite_Skill.cpp" />
     <ClCompile Include="Camp_Manager.cpp" />
     <ClCompile Include="Character_Creator.cpp">
@@ -148,6 +153,9 @@
     </ClCompile>
     <ClCompile Include="Intro.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Inventory.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -218,9 +226,15 @@
     <ClCompile Include="Tutor_Headset.cpp" />
     <ClCompile Include="Tutor_Keyboard.cpp" />
     <ClCompile Include="Tutor_Mouse.cpp" />
+    <ClCompile Include="UI_Manager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Ascii_Art_Manager.h" />
+    <ClInclude Include="Ascii_Art_Manager.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Battle_Elite_Skill.h" />
     <ClInclude Include="Camp_Manager.h" />
     <ClInclude Include="Character_Creator.h">
@@ -242,7 +256,12 @@
     <ClInclude Include="Game_Manager.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="Intro.h" />
+    <ClInclude Include="Intro.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Inventory.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
@@ -313,6 +332,7 @@
     <ClInclude Include="Tutor_Headset.h" />
     <ClInclude Include="Tutor_Keyboard.h" />
     <ClInclude Include="Tutor_Mouse.h" />
+    <ClInclude Include="UI_Manager.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\..\Cookietheblacksmith.txt" />

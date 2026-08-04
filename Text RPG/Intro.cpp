@@ -1,14 +1,15 @@
 ﻿#include "Intro.h"
 #include "Console_Manager.h"
 #include "Ascii_Art_Manager.h"
-#include <iostream>
-#include <limits>
 
-void Intro::Show(Console_Manager& console, Ascii_Art_Manager& art)
+void Intro::Show(
+    Console_Manager& console,
+    Ascii_Art_Manager& art
+)
 {
+    console.Clear();
     art.Print("Title.txt");
+    console.Print_At(40,console.Get_Height() - 3,"Press Any Key To Start...");
 
-    console.Print_At(0, 45, "아무 키나 누르면 계속됩니다...");
-
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    console.Wait_For_Key("");
 }

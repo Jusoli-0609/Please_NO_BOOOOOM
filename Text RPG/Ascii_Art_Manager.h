@@ -1,9 +1,12 @@
 ﻿#pragma once
+
 #include <string>
 
-class Ascii_Art_Manager	//txt 파일만 열고 화면 출력하는 매니저 입니다.
+class Console_Manager;
+
+class Ascii_Art_Manager
 {
 public:
-    void Print(const std::string& File_Name) const;
+    void Print(const std::string& file_Name) const;
+    void Print_At(Console_Manager& console, const std::string& file_Name,int x,int y) const;
 };
-
