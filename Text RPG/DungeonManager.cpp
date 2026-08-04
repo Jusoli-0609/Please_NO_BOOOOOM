@@ -8,6 +8,7 @@
 #include "Tutor_Headset.h"
 #include "Tutor_Keyboard.h"
 #include "Tutor_Mouse.h"
+#include "Console_Manager.h"
 
 #include <algorithm>
 #include <cstdlib>
