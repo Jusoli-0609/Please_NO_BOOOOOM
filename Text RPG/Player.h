@@ -5,6 +5,8 @@
 #include "Level_Up.h"
 
 class Monster;
+class Currently_Equipped_Equipments;
+class Currently_Equipped_Tutor;
 
 class Player
 {
@@ -60,6 +62,8 @@ protected:
         int maxhp,
         int maxmp
     );
+    const Currently_Equipped_Equipments* currentlyEquippedEquipments;
+    const Currently_Equipped_Tutor* currentlyEquippedTutor;
 
 public:
     Player(const std::string& name);
@@ -77,10 +81,19 @@ public:
     std::string Get_Skill3_Name() const;
     std::string Get_Groggy_Attack_Name() const;
 
+	// 장비와 튜터의 상태창 출력을 위해 Player 클래스에 참조를 설정
+    void Set_Status_References(
+        const Currently_Equipped_Equipments* equipments,
+        const Currently_Equipped_Tutor* tutor
+    );
+
     void Gain_Exp(int amount);
 
     // 상태 출력
+// 플레이어 정보만 출력하는 기존 호환용 상태창
     void Print_Status() const;
+
+
 
     // 공통 데미지 계산
     int Calculate_Damage(

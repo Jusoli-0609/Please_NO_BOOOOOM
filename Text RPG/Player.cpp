@@ -1,6 +1,10 @@
 ﻿#include <iostream>
 #include <algorithm>
+#include <string>
+
 #include "Player.h"
+#include "Equipment.h"
+#include "Tutor.h"
 // 이름을 전달받아 플레이어를 생성하고 나머지 멤버를 기본값으로 초기화한다.
 Player::Player(const std::string& name)
     : name(name),
@@ -14,7 +18,9 @@ Player::Player(const std::string& name)
     agi(0),
     maxhp(200),
     maxmp(100),
-    level(1)
+    level(1),
+    currentlyEquippedEquipments(nullptr),
+    currentlyEquippedTutor(nullptr)
 {
 }
 
@@ -59,6 +65,16 @@ void Player::Set_Start_Stat(
 
     this->maxhp = maxhp;
     this->maxmp = maxmp;
+
+    baseStat.maxHp = maxhp;
+    baseStat.maxMp = maxmp;
+    baseStat.atk = atk;
+    baseStat.def = def;
+    baseStat.ap = ap;
+    baseStat.sne = sne;
+    baseStat.agi = agi;
+
+    statModifierInitialized = true;
 }
 // 데미지 계산 공식, 공격력, 방어력, HP, MP, 은신, 민첩 비율을 조합하여 계산
 int Player::Calculate_Damage(
@@ -96,24 +112,166 @@ int Player::Calculate_Damage(
     return static_cast<int>(damage);
 }
 
+// 장비와 튜터의 상태창 출력을 위해 Player 클래스에 참조를 설정
+void Player::Set_Status_References(
+    const Currently_Equipped_Equipments* equipments,
+    const Currently_Equipped_Tutor* tutor)
+{
+    currentlyEquippedEquipments = equipments;
+    currentlyEquippedTutor = tutor;
+}
+
 void Player::Print_Status() const
 {
-    std::cout << "===========================================\n";
-    std::cout << name << "의 현재 능력치\n";
+    auto Print_Stat = [](const std::string& stat_name,
+        int base_stat,
+        int final_stat)
+        {
+            int additional_stat = final_stat - base_stat;
 
-    std::cout << "\n직업: " << job;
-    std::cout << "\nLevel: " << level;
+            std::cout
+                << stat_name
+                << ": "
+                << final_stat
+                << "  (기본 "
+                << base_stat;
 
-    std::cout << "\nHP:  " << hp << "/" << maxhp;
-    std::cout << "\nMP:  " << mp << "/" << maxmp;
+            if (additional_stat > 0)
+            {
+                std::cout << " + 추가 " << additional_stat;
+            }
+            else if (additional_stat < 0)
+            {
+                std::cout << " - 감소 " << -additional_stat;
+            }
+            else
+            {
+                std::cout << " + 추가 0";
+            }
 
-    std::cout << "\nATK: " << atk;
-    std::cout << "\nAP:  " << ap;
-    std::cout << "\nDEF: " << def;
-    std::cout << "\nSNE: " << sne;
-    std::cout << "\nAGI: " << agi;
+            std::cout << ")";
+        };
 
-    std::cout << "\n\n===========================================\n";
+    std::cout << "\n";
+    std::cout << "================================================================================\n";
+    std::cout << "                               캐릭터 정보\n";
+    std::cout << "================================================================================\n";
+
+    std::cout
+        << "이름: " << name
+        << "    직업: " << job
+        << "    레벨: " << level
+        << "    경험치: " << Get_Exp()
+        << " / " << Get_Max_Exp()
+        << '\n';
+
+    std::cout
+        << "HP: " << hp << " / " << maxhp
+        << "    MP: " << mp << " / " << maxmp
+        << '\n';
+
+    std::cout << "--------------------------------------------------------------------------------\n";
+    std::cout << "[능력치]\n";
+
+    Print_Stat("MAX HP", baseStat.maxHp, maxhp);
+    std::cout << "    ";
+    Print_Stat("MAX MP", baseStat.maxMp, maxmp);
+    std::cout << '\n';
+
+    Print_Stat("ATK", baseStat.atk, atk);
+    std::cout << "    ";
+    Print_Stat("DEF", baseStat.def, def);
+    std::cout << "    ";
+    Print_Stat("AP", baseStat.ap, ap);
+    std::cout << '\n';
+
+    Print_Stat("SNE", baseStat.sne, sne);
+    std::cout << "    ";
+    Print_Stat("AGI", baseStat.agi, agi);
+    std::cout << '\n';
+
+    std::cout << "--------------------------------------------------------------------------------\n";
+    std::cout << "[스킬]\n";
+
+    std::cout
+        << "1. " << skill1Name
+        << "    2. " << skill2Name
+        << '\n';
+
+    std::cout
+        << "3. " << skill3Name
+        << "    그로기: " << groggyAttackName
+        << '\n';
+
+    std::cout << "--------------------------------------------------------------------------------\n";
+    std::cout << "[장착 장비]\n";
+
+    if (currentlyEquippedEquipments != nullptr)
+    {
+        currentlyEquippedEquipments
+            ->Print_Currently_Equipped_Equipments();
+    }
+    else
+    {
+        std::cout << "장비 정보 없음\n";
+    }
+
+    std::cout << "--------------------------------------------------------------------------------\n";
+    std::cout << "[튜터]\n";
+
+    if (currentlyEquippedTutor != nullptr)
+    {
+        currentlyEquippedTutor
+            ->Print_Currently_Equipped_Tutor();
+    }
+    else
+    {
+        std::cout << "튜터 정보 없음\n";
+    }
+
+    std::cout << "--------------------------------------------------------------------------------\n";
+    std::cout << "[적용 효과]\n";
+
+    if (statModifiers.empty())
+    {
+        std::cout << "없음\n";
+    }
+    else
+    {
+        int effect_count = 0;
+
+        for (const Stat_Modifier& modifier : statModifiers)
+        {
+            std::cout << modifier.name;
+
+            if (modifier.remainingTurns < 0)
+            {
+                std::cout << " [영구]";
+            }
+            else
+            {
+                std::cout << " [" << modifier.remainingTurns << "턴]";
+            }
+
+            effect_count++;
+
+            if (effect_count % 2 == 0)
+            {
+                std::cout << '\n';
+            }
+            else
+            {
+                std::cout << "    |    ";
+            }
+        }
+
+        if (effect_count % 2 != 0)
+        {
+            std::cout << '\n';
+        }
+    }
+
+    std::cout << "================================================================================\n";
 }
 
 // 플레이어의 기본 스탯을 baseStat에 저장, 저장이 되었다면 이후에는 호출하지 않음
