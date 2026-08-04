@@ -21,7 +21,7 @@ void Item::Print_Info() const
 }
 
 //2.아이템 효과 적용
-bool Item::Item_Effect(Player& player, Monster& monster)
+bool Item::Item_Effect(Player& player)
 {
     if (_Item_Name == "컵라면")
     {
@@ -57,7 +57,7 @@ bool Item::Item_Effect(Player& player, Monster& monster)
 }
 
 //3.아이템 효과 해제
-bool Item::Item_Effect_Reverse(Player& player, Monster& monster)
+bool Item::Item_Effect_Reverse(Player& player)
 {
     if (_Need_Item_Reverse_Effect == true)
     {
