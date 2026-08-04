@@ -279,7 +279,7 @@ void Inventory<T>::Print_Inventory_Menu(
 
             default:
             {
-                cout << "잘못된 입력이다!" << endl;
+                cout << "�߸��� �Է��̴�!" << endl;
                 break;
             }
             }
@@ -448,7 +448,7 @@ void Inventory<T>::Print_Inventory_Menu(
     }
 
     template<typename T>//5-2 이름으로 아이템 사용 성공 및 갯수 감소(폐기한 기능)
-    bool Inventory<T>::Use_Item_By_Name(const string & item_name)
+    bool Inventory<T>::Use_Item_By_Name(const string& item_name)
     {
         for (int i = 0; i < _Current_Quantity_Of_Items; i++)
         {
@@ -474,7 +474,7 @@ void Inventory<T>::Print_Inventory_Menu(
     }
 
     template <typename T>//5-3 전투 중 아이템 사용
-    void Inventory<T>::Use_Item(Player & player, Monster & monster)
+    void Inventory<T>::Use_Item(Player& player, Monster& monster)
     {
         if (_Current_Quantity_Of_Items == 0)
         {

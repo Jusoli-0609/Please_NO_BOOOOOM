@@ -86,21 +86,26 @@ void Camp_Manager::Open_Camp_Menu()
             cout << "잘못된 선택입니다." << endl;
             break;
         }
-        }
     }
 }
+}
 
+void Camp_Manager::Give_Basic_Training_Item(Player& player,Currently_Equipped_Equipments& currently_equipped_equipments)
 
 
 
 void Camp_Manager::Give_Basic_Training_Item()
 {
+    if (Received_Basic_Items == true)
     cout << "\n===== 내배캠 119 =====\n";
     cout << "기본 보급품을 지급받았습니다!\n";
 }
 
 void Camp_Manager::Open_Pep_Store_Menu()
-{
+    {
+        cout << "기본 보급은 한번 밖에 받을 수 없다!\n";
+        cout << "쿠키가 당신을 할큅니다!\n";
+        player.SetHP(player.getHP() - 1);
     while (true)
     {
         cout << "\n===== 펩 스토어 =====\n";
@@ -108,7 +113,7 @@ void Camp_Manager::Open_Pep_Store_Menu()
         cout << "2. 장비 판매\n";
         cout << "0. 뒤로가기\n";
         cout << "선택 : ";
-
+        
         int choice;
         cin >> choice;
 
@@ -123,19 +128,26 @@ void Camp_Manager::Open_Pep_Store_Menu()
             }
             cout << "기본 CPU를 구매했습니다.\n";
             break;
-        }
+    }
 
         case 2:
         {
             // TODO : 판매
             break;
-        }
+    // TODO: 기본 지급 아이템 생성
+    // invnetory.Add_Item(...);
+}
 
+void Camp_Manager::Open_Pep_Store_Menu()
         case 0:
-        {
+{
+    cout << "\n===== 펩 스토어 =====\n";
             return;
         }
 
+    // TODO: 장비 목록 출력
+    // TODO: 구매
+    // TODO: 판매
         default:
         {
             cout << "잘못된 입력입니다.\n";
@@ -176,6 +188,7 @@ void Camp_Manager::Open_Cookie_Blacksmith_Menu()
 
         int choice = -1;
 
+        int choice;
         cin >> choice;
 
         switch (choice)
@@ -183,18 +196,21 @@ void Camp_Manager::Open_Cookie_Blacksmith_Menu()
         case 1:
         {
             cout << "윤재님 얼른 장비강화기능 만들어 주세요" << endl;
+            // TODO: 강화
             break;
         }
 
         case 2:
         {
             craft_work_shop.Craft_Item(inventory, inventory_for_equipments);
+            // TODO: 제작
             break;
         }
 
         case 3:
         {
             craft_work_shop.Decomposition_Item(inventory_for_equipments, inventory);
+            // TODO: 분해
             break;
         }
 
@@ -208,6 +224,6 @@ void Camp_Manager::Open_Cookie_Blacksmith_Menu()
             cout << "잘못된 입력이다." << endl;
             break;
         }
-        }
     }
+}
 }
