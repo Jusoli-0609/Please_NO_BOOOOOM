@@ -331,7 +331,7 @@ void Inventory<T>::Print_Inventory_Menu(
 
             case 5:
             {
-                Use_Item(Player& player);
+                Use_Item();
                 break;
             }
 
@@ -364,6 +364,7 @@ void Inventory<T>::Print_Inventory_Menu(
         }
     }
 }
+
     template<typename T>//5-1 아이템 추가 및 갯수 증가
     bool Inventory<T>::Add_Or_Increase_Item(const T & new_item)
     {
@@ -473,7 +474,7 @@ void Inventory<T>::Print_Inventory_Menu(
     }
 
     template <typename T>//5-3 아이템 사용
-    void Inventory<T>::Use_Item(Player& player)
+    void Inventory<T>::Use_Item()
     {
         if (_Current_Quantity_Of_Items == 0)
         {
@@ -491,7 +492,7 @@ void Inventory<T>::Print_Inventory_Menu(
             cout << "잘못된 아이템 번호다!" << endl;
             return;
         }
-        string selected_item_name = selected_item->_Item_Name; // 선택한 아이템 이름을 저장할 string 변수 선언
+         string selected_item_name = selected_item->_Item_Name; // 선택한 아이템 이름을 저장할 string 변수 선언
         if (selected_item_name=="컵라면")
         {
             player.Set_Hp(min(player.Get_Hp() + 50, player.GetMaxHP()));

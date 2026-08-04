@@ -143,7 +143,7 @@ void Use_Item(Player* player, Monster& monster, Inventory<Item>& inventory)
         return;
     }
 
-    inventory.Use_Item(player);
+    inventory.Use_Item();
 }
 
 void Attack(Player* player, Monster& monster)
