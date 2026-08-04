@@ -332,8 +332,7 @@ void Inventory<T>::Print_Inventory_Menu(
 
             case 5:
             {
-                 Use_Item(player);
-                cout << "전투 중 아이템 사용은 전투 시스템에서 호출해야 한다!" << endl;
+                Use_Item(player);
                 break;
             }
 
