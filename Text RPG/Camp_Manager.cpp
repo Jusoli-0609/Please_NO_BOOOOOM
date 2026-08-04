@@ -28,7 +28,7 @@ void Camp_Manager::Open_Camp_Menu()
     while (true)
     {
         Ascii_Art_Manager art;
-        art.Print("TommorowLearnCamp");
+        art.Print("Art/Camp_Manager/TommorowLearnCamp.txt");
 
         cout << "\n===== 내일배움캠프 재정비소 =====\n";
         cout << "1. 내배캠 119 기본 보급 받기\n";
@@ -118,9 +118,8 @@ void Camp_Manager::Give_Basic_Training_Item()
 
 void Camp_Manager::Open_Pep_Store_Menu()
 {
-    cout << R"()";
     Ascii_Art_Manager art;
-    art.Print("Art/Camp_Manager/TommorowLearnCamp.txt");
+    art.Print("Art/Camp_Manager/FepStore.txt");
 
     while (true)
     {
@@ -265,8 +264,8 @@ void Camp_Manager::Open_Pep_Store_Menu()
 
 void Camp_Manager::Open_General_Store_Menu()
 {
-    cout << R"()";
-    //음침한 주소리님 여깁니당(MrMoonStore)
+    Ascii_Art_Manager art;
+    art.Print("Art/Camp_Manager/MrMoonStore.txt");
     while (true)
     {
         cout << "\n===== 문승호 매니저님의 만물 잡화점 =====\n";
@@ -340,8 +339,8 @@ void Camp_Manager::Open_General_Store_Menu()
 
 void Camp_Manager::Open_Loot_Shop_Menu()
 {
-    cout << R"()";
-    //음침한 주소리님 여깁니당(MrKimStore)
+    Ascii_Art_Manager art;
+    art.Print("Art/Camp_Manager/MrKimStore.txt");
     while (true)
     {        
         cout << "\n===== 김동현 매니저님의 전리품 매입소 =====\n";
@@ -430,8 +429,8 @@ void Camp_Manager::Open_Loot_Shop_Menu()
 void Camp_Manager::Open_Cookie_Blacksmith_Menu()
 {
   
-    cout << R"()";
-    //음침한 주소리님 여깁니당(Cookietheblacksmith)
+    Ascii_Art_Manager art;
+    art.Print("Art/Camp_Manager/Cookietheblacksmith.txt");
     while (true)
     {
 
