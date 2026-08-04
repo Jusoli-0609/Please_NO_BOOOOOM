@@ -68,10 +68,10 @@ void Level_Up::ProcessLevelUp(Player* player)
     player->Set_Level(_current_level);
     _stat_points += 5;
 
-    cout << "\n====================================\n";
+    cout << "╔════════════════════════════════════════════════════╗\n";
     string levelUpMsg = "  ★  LEVEL UP! (Lv." + to_string(_current_level - 1) + " -> Lv." + to_string(_current_level) + ") ★\n";
     console.Slow_Print(levelUpMsg, 50);
-    cout << "====================================\n";
+    cout << "╚════════════════════════════════════════════════════╝\n";
 
     int addedHp = _current_level * 20;
     int addedPower = _current_level * 5;
@@ -94,7 +94,7 @@ void Level_Up::ProcessLevelUp(Player* player)
         _current_exp = 0;
         console.Slow_Print("  ★  축하합니다! 최고 레벨(Lv.10)에 도달했습니다! ★\n", 50);
     }
-    cout << "====================================\n\n";
+    cout << "╠════════════════════════════════════════════════════╣\n";
 
     int messageIndex = _current_level % 3;
     string job = player->Get_Job();

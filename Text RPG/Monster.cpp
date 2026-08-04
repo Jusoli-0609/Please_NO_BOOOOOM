@@ -1381,9 +1381,9 @@ void Monster::Print_Ascii_Art() const
 // 9-3. 몬스터 전체 정보 출력
 void Monster::Print_Monster_Info() const
 {
-	cout << "========================================" << endl;
+	cout << "╔════════════════════════════════════════════════════╗\n";
 	cout << "[ 몬스터 데이터 ]" << endl;
-	cout << "========================================" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
 	cout << "몬스터 이름: " << _monster_Name << endl;
 	cout << "레벨: " << _monster_Level << endl;
 	cout << "HP: " << _stat[MONSTER_HP] << endl;
@@ -1394,7 +1394,7 @@ void Monster::Print_Monster_Info() const
 	cout << "명중률: " << _accuracy << "%" << endl;
 	cout << "경험치: " << _exp_Reward << endl;
 	cout << "점수: " << _score_Reward << endl;
-	cout << "========================================" << endl;
+	cout << "╚════════════════════════════════════════════════════╝\n";
 
 	if
 		(
@@ -1410,9 +1410,9 @@ void Monster::Print_Monster_Info() const
 void Monster::Print_Drop_Reward() const
 {
 	cout << endl;
-	cout << "----------------------------------------" << endl;
+	cout << "╔════════════════════════════════════════════════════╗\n";
 	cout << "[ 코드 전리품 ]" << endl;
-	cout << "----------------------------------------" << endl;
+	cout << "╚════════════════════════════════════════════════════╝\n";
 
 	if (_drop_Items.empty())
 	{
@@ -1436,7 +1436,7 @@ void Monster::Print_Drop_Reward() const
 			<< endl;
 	}
 
-	cout << "----------------------------------------" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
 }
 // 9-5. 드롭 아이템 아스키 아트 출력
 void Monster::Print_Drop_Item_Ascii_Art() const

@@ -67,7 +67,7 @@ void Dungeon_Manager::Open_Dungeon(Player* player,Inventory<Item>& inventory, In
 	{
 		cout << endl;
 		cout << "========================================" << endl;
-		cout << "[ 최종 과정 선택 ]" << endl;
+		cout << "	[ 최종 과정 선택 ]" << endl;
 		cout << "========================================" << endl;
 
 		cout << "모든 튜터님에게 인정받았다." << endl;
@@ -212,10 +212,10 @@ int Dungeon_Manager::Get_Current_Chapter_Score() const
 void Dungeon_Manager::Print_Current_Chapter() const
 {
 	cout << endl;
-	cout << "========================================" << endl;
-	cout << "현재 입장 가능한 챕터" << endl;
-	cout << Get_Chapter_Name(_current_Chapter) << endl;
-	cout << "========================================" << endl;
+	cout << "╔════════════════════════════════════════════════════╗\n";
+	cout << "		현재 입장 가능한 챕터" << endl;
+	cout <<		Get_Chapter_Name(_current_Chapter) << endl;
+	cout << "╚════════════════════════════════════════════════════╝\n";
 }
 
 void Dungeon_Manager::Select_Chapter_And_Enter(Player* player, Inventory<Item>& inventory, Console_Manager& console)
@@ -230,18 +230,18 @@ void Dungeon_Manager::Select_Chapter_And_Enter(Player* player, Inventory<Item>& 
 	int chapter_Choice = -1;
 
 	cout << endl;
-	cout << "========================================" << endl;
-	cout << "[ 챕터 선택 ]" << endl;
-	cout << "========================================" << endl;
+	cout << "╔════════════════════════════════════════════════════╗\n";
+	cout << "		[ 챕터 선택 ]" << endl;
+	cout << "╚════════════════════════════════════════════════════╝\n";
 
-	cout << "1. 챕터 1 - 변수·조건문 숲" << endl;
-	cout << "2. 챕터 2 - 배열·반복문 바다" << endl;
-	cout << "3. 챕터 3 - 함수 유적" << endl;
-	cout << "4. 챕터 4 - 포인터·메모리 묘지" << endl;
-	cout << "5. 챕터 5 - 객체지향·STL 공장" << endl;
-	cout << "0. 이전 메뉴로 돌아가기" << endl;
-	cout << "========================================" << endl;
-	cout << "선택: ";
+	cout << "	1. 챕터 1 - 변수·조건문 숲" << endl;
+	cout << "	2. 챕터 2 - 배열·반복문 바다" << endl;
+	cout << "	3. 챕터 3 - 함수 유적" << endl;
+	cout << "	4. 챕터 4 - 포인터·메모리 묘지" << endl;
+	cout << "	5. 챕터 5 - 객체지향·STL 공장" << endl;
+	cout << "	0. 이전 메뉴로 돌아가기" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
+	cout << "	선택: ";
 
 	cin >> chapter_Choice;
 
@@ -304,11 +304,11 @@ void Dungeon_Manager::Select_Chapter_And_Enter(Player* player, Inventory<Item>& 
 	_has_Elite_Appeared_In_Current_Chapter = false;
 
 	cout << endl;
-	cout << "========================================" << endl;
-	cout << "[ 선택한 챕터로 이동 ]" << endl;
-	cout << "========================================" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
+	cout << "		[ 선택한 챕터로 이동 ]" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
 	cout << Get_Chapter_Name(_current_Chapter) << "에 들어선다." << endl;
-	cout << "========================================" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
 
 	Run_Current_Chapter(player, inventory, console);
 }
@@ -360,16 +360,16 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inven
 			player->Gain_Exp(elite_Monster.getExpReward());
 
 			cout << endl;
-			cout << "========================================" << endl;
-			cout << "[ 코드 스니펫을 복사했습니다. ]" << endl;
-			cout << "========================================" << endl;
+			cout << "╠════════════════════════════════════════════════════╣\n";
+			cout << "		[ 코드 스니펫을 복사했습니다. ]" << endl;
+			cout << "╠════════════════════════════════════════════════════╣\n";
 			cout << "획득 경험치: " << elite_Monster.getExpReward() << endl;
 			cout << "획득 점수: " << elite_Monster.getScoreReward() << endl;
 
 			Give_Drop_Items_To_Inventory(elite_Monster, inventory);
 
 			cout << "획득 훈련장려금: " << elite_Monster.getGoldReward() << "원" << endl;
-			cout << "========================================" << endl;
+			cout << "╠════════════════════════════════════════════════════╣\n";
 
 			Record_Monster_Kill(elite_Monster);
 		}
@@ -410,7 +410,7 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory<Item>& inven
 		cout << "튜터님 시험까지 " << Get_Required_Tutor_Score() - _current_Chapter_Score << "점 남았다." << endl;
 	}
 
-	cout << "========================================" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
 }
 
 //=============================================================================
@@ -513,11 +513,11 @@ void Dungeon_Manager::Run_Tutor_Challenge(Player* player, Inventory_For_Equipmen
 		int remaining_Score = required_Score - _current_Chapter_Score;
 
 		cout << endl;
-		cout << "========================================" << endl;
-		cout << "튜터님의 시험 조건을 충족하지 못했다." << endl;
-		cout << "현재 점수: " << _current_Chapter_Score << " / " << required_Score << endl;
-		cout << "필요한 추가 점수: " << remaining_Score<< endl;
-		cout << "========================================" << endl;
+		cout << "╔════════════════════════════════════════════════════╗\n";
+		cout << "	튜터님의 시험 조건을 충족하지 못했다." << endl;
+		cout << "	현재 점수: " << _current_Chapter_Score << " / " << required_Score << endl;
+		cout << "	필요한 추가 점수: " << remaining_Score<< endl;
+		cout << "╚════════════════════════════════════════════════════╝\n";
 
 		return;
 	}
@@ -552,11 +552,11 @@ void Dungeon_Manager::Run_Tutor_Challenge(Player* player, Inventory_For_Equipmen
 	player->Gain_Exp(tutor_Monster.getExpReward());
 
 	cout << endl;
-	cout << "========================================" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
 	cout << "[ " << tutor_Monster.getName() << " 클리어 보상 ]" << endl;
-	cout << "========================================" << endl;
-	cout << "획득 경험치: " << tutor_Monster.getExpReward() << endl;
-	cout << "========================================" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
+	cout << "	획득 경험치: " << tutor_Monster.getExpReward() << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
 
 	Record_Monster_Kill(tutor_Monster);
 
@@ -598,12 +598,12 @@ void Dungeon_Manager::Apply_Elite_Gimmick_Failure_Penalty(Player* player)
 	int decreased_HP = previous_HP - player->Get_Hp();
 
 	cout << endl;
-	cout << "========================================" << endl;
-	cout << "[ 코드 스니펫을 복사하지 못했습니다. ]" << endl;
-	cout << "========================================" << endl;
-	cout << "플레이어의 HP가 " << decreased_HP << " 감소했습니다." << endl;
-	cout << "현재 HP: " << previous_HP << " -> " << player->Get_Hp() << endl;
-	cout << "========================================" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
+	cout << "	[ 코드 스니펫을 복사하지 못했습니다. ]" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
+	cout << "	플레이어의 HP가 " << decreased_HP << " 감소했습니다." << endl;
+	cout << "	현재 HP: " << previous_HP << " -> " << player->Get_Hp() << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
 }
 // 7-2 튜터 기믹 실패 시 챕터 점수 감소
 void Dungeon_Manager::Apply_Tutor_Gimmick_Failure_Penalty()
@@ -620,12 +620,12 @@ void Dungeon_Manager::Apply_Tutor_Gimmick_Failure_Penalty()
 	int decreased_Score = previous_Score - _current_Chapter_Score;
 
 	cout << endl;
-	cout << "========================================" << endl;
-	cout << "[ 튜터님의 잔소리 ]" << endl;
-	cout << "========================================" << endl;
-	cout << "현재 챕터 점수가 " << decreased_Score << " 감소했습니다." << endl;
-	cout << "현재 챕터 점수: " << previous_Score << " -> " << _current_Chapter_Score << endl;
-	cout << "========================================" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
+	cout << "	[ 튜터님의 잔소리 ]" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
+	cout << "	현재 챕터 점수가 " << decreased_Score << " 감소했습니다." << endl;
+	cout << "	현재 챕터 점수: " << previous_Score << " -> " << _current_Chapter_Score << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
 }
 
 //=============================================================================
@@ -704,12 +704,12 @@ void Dungeon_Manager::Print_Total_Monster_Kill_Log() const
 	int tutor_Total_Count = 0;
 
 	cout << endl;
-	cout << "========================================" << endl;
-	cout << "[ 전체 코드 해결 기록 ]" << endl;
-	cout << "========================================" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
+	cout << "	[ 전체 코드 해결 기록 ]" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
 	cout << endl;
-	cout << "1. 코드 및 코드 스니펫" << endl;
-	cout << "----------------------------------------" << endl;
+	cout << "	1. 코드 및 코드 스니펫" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
 
 	if (normal_Elite_Kill_Log.empty())
 	{
@@ -737,7 +737,7 @@ void Dungeon_Manager::Print_Total_Monster_Kill_Log() const
 			cout << "[" << monster_Grade_Name << "] " << kill_Record.monster_Name << endl;
 			cout << "해결 횟수: " << kill_Record.kill_Count << "회" << endl;
 			cout << "획득 점수: " << kill_Record.earned_Score << endl;
-			cout << "----------------------------------------" << endl;
+			cout << "╠════════════════════════════════════════════════════╣\n";
 
 			normal_Elite_Total_Count += kill_Record.kill_Count;
 			normal_Elite_Total_Score += kill_Record.earned_Score;
@@ -748,8 +748,8 @@ void Dungeon_Manager::Print_Total_Monster_Kill_Log() const
 	}
 
 	cout << endl;
-	cout << "2. 튜터" << endl;
-	cout << "----------------------------------------" << endl;
+	cout << "	2. 튜터" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
 
 	if (tutor_Kill_Log.empty())
 	{
@@ -762,15 +762,15 @@ void Dungeon_Manager::Print_Total_Monster_Kill_Log() const
 			const Monster_Kill_Record& kill_Record = monster_Record.second;
 
 			cout << kill_Record.monster_Name << endl;
-			cout << "인정받은 횟수: " << kill_Record.kill_Count << "회" << endl;
-            cout << "----------------------------------------" << endl;
+			cout << "	인정받은 횟수: " << kill_Record.kill_Count << "회" << endl;
+			cout << "╠════════════════════════════════════════════════════╣\n";
 
 			tutor_Total_Count += kill_Record.kill_Count;
 		}
 
-		cout << "튜터께 인정받은 횟수: " << tutor_Total_Count << "회" << endl;
+		cout << "	튜터께 인정받은 횟수: " << tutor_Total_Count << "회" << endl;
 	}
-	cout << "========================================" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
 }
 
 void Dungeon_Manager::Give_Drop_Items_To_Inventory(const Monster& monster, Inventory<Item>& inventory)
@@ -975,9 +975,9 @@ bool Dungeon_Manager::Give_Tutor_Clear_Equipment(Chapter_Type chapter_Type, Inve
 	}
 
 	cout << endl;
-	cout << "========================================" << endl;
-	cout << "[ 튜터님이 선물을 주셨다. ]" << endl;
-	cout << "========================================" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
+	cout << "	[ 튜터님이 선물을 주셨다. ]" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
 
 	bool is_Added = equipment_Inventory.Add_Equipment(tutor_Equipment);
 
@@ -990,7 +990,7 @@ bool Dungeon_Manager::Give_Tutor_Clear_Equipment(Chapter_Type chapter_Type, Inve
 
 	tutor_Equipment.Print_Equipment_Info();
 
-	cout << "========================================" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
 
 	return true;
 }
@@ -1015,9 +1015,9 @@ void Dungeon_Manager::Print_Tutor_Equipment_Status(const Inventory_For_Equipment
 	};
 
 	cout << endl;
-	cout << "========================================" << endl;
-	cout << "[ 튜터님께 받은 선물 현황 ]" << endl;
-	cout << "========================================" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
+	cout << "	[ 튜터님께 받은 선물 현황 ]" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
 
 	int obtained_Count = 0;
 
@@ -1037,19 +1037,19 @@ void Dungeon_Manager::Print_Tutor_Equipment_Status(const Inventory_For_Equipment
 		}
 	}
 
-	cout << "----------------------------------------" << endl;
-	cout << "튜터님께 받은 선물 : " << obtained_Count << " / 5" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
+	cout << "	튜터님께 받은 선물 : " << obtained_Count << " / 5" << endl;
 
 	if (Check_Final_Boss_Room_Available(equipment_Inventory, equipped_Equipments))
 	{
-		cout << "모든 챕터를 수료해 " << "최종 과정에 입장할 수 있다." << endl;
+		cout << "	모든 챕터를 수료해 " << "최종 과정에 입장할 수 있다." << endl;
 	}
 	else
 	{
-		cout << "아직 모든 챕터를 수료하지 못했다." << endl;
+		cout << "	아직 모든 챕터를 수료하지 못했다." << endl;
 	}
 
-	cout << "========================================" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
 }
 
 //=============================================================================
@@ -1082,14 +1082,14 @@ void Dungeon_Manager::Run_Final_Boss_Room(Player* player,Inventory<Item>& invent
 	if(!Check_Final_Boss_Room_Available(equipment_Inventory, equipped_Equipments))
 	{
 		cout << endl;
-		cout << "==================================================" << endl;
-		cout << "[ 최종 코드 검증실 입장 실패 ]" << endl;
-		cout << "==================================================" << endl;
+		cout << "╠════════════════════════════════════════════════════╣\n";
+		cout << "		[ 최종 코드 검증실 입장 실패 ]" << endl;
+		cout << "╠════════════════════════════════════════════════════╣\n";
 		cout << "아직 모든 챕터를 완료하지 못했다." << endl;
 
 		Print_Tutor_Equipment_Status (equipment_Inventory, equipped_Equipments);
 
-		cout << "==================================================" << endl;
+		cout << "╠════════════════════════════════════════════════════╣\n";
 
 		return;
 	}
@@ -1100,23 +1100,23 @@ void Dungeon_Manager::Run_Final_Boss_Room(Player* player,Inventory<Item>& invent
 	moon_Seung_Ho_Manager.Initialize_Final_Boss(Monster_Type::MOON_SEUNG_HO_MANAGER);
 
 	cout << endl;
-	cout << "==================================================" << endl;
-	cout << "[ 최종 코드 검증실 ]" << endl;
-	cout << "==================================================" << endl;
-	cout << "튜터님들에게 받은 선물들이 동시에 반응하기 시작했다." << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
+	cout << "		[ 최종 코드 검증실 ]" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
+	cout << "  튜터님들에게 받은 선물들이 동시에 반응하기 시작했다." << endl;
 	cout << "입구를 막고 있던 코드들이 흩어졌다." << endl;
 	cout << "스포트라이트가 켜졌다." << endl;
 	cout << endl;
 	cout << kim_Dong_Hyun_Manager.getName() << "와 " << moon_Seung_Ho_Manager.getName() << "가 동시에 모습을 드러냈다." << endl;
-	cout << "==================================================" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
 	cout << endl;
-	cout << "==================== FINAL BOSS ====================" << endl;
+	cout << "╠═══════════════════ FINAL BOSS ═════════════════════╣\n";
 
 	kim_Dong_Hyun_Manager.Print_Ascii_Art();
 
 	moon_Seung_Ho_Manager.Print_Ascii_Art();
 
-	cout << "====================================================" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
 
 	/*Print_Final_Boss_Duo_Introduction(kim_Dong_Hyun_Manager, moon_Seung_Ho_Manager);
 
@@ -1153,15 +1153,15 @@ void Dungeon_Manager::Run_Final_Boss_Room(Player* player,Inventory<Item>& invent
 	_is_Game_Cleared = true;
 
 	cout << endl;
-	cout << "==================================================" << endl;
-	cout << "[ 최종 코드 검증 완료 ]" << endl;
-	cout << "==================================================" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
+	cout << "		[ 최종 코드 검증 완료 ]" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
 	cout << kim_Dong_Hyun_Manager.getName() << "와 " << moon_Seung_Ho_Manager.getName() << "의 검증을 모두 통과했다." << endl;
 	cout << "검증실을 뒤덮고 있던 오류 메시지가 사라지기 시작했다." << endl;
 	cout << "마지막 모니터에 새로운 문장이 출력됐다." << endl;
 	cout << endl;
 	cout << "\"최종 코드 검증 완료\"" << endl;
-	cout << "==================================================" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
 
 	Run_Ending
 	(player);
@@ -1170,9 +1170,9 @@ void Dungeon_Manager::Run_Final_Boss_Room(Player* player,Inventory<Item>& invent
 void Dungeon_Manager::Run_Ending(const Player* player) const
 {
 	cout << endl;
-	cout << "==================================================" << endl;
-	cout << "[ 최종 보스 클리어 ]" << endl;
-	cout << "==================================================" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
+	cout << "		[ 최종 보스 클리어 ]" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
 	cout << "김동현 매니저님과 문승호 매니저님의 " << "최종 시험을 모두 통과했습니다." << endl;
 	cout << endl;
 
@@ -1182,10 +1182,10 @@ void Dungeon_Manager::Run_Ending(const Player* player) const
 	}
 
 	cout << endl;
-	cout << "==================================================" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
 	cout << "              눈떠보니 코드마스터" << endl;
 	cout << "                   GAME CLEAR" << endl;
-	cout << "==================================================" << endl;
+	cout << "╠════════════════════════════════════════════════════╣\n";
 	cout << endl;
 	cout << "게임을 플레이해 주셔서 감사합니다." << endl;
 }
