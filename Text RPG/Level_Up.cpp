@@ -113,4 +113,9 @@ void Level_Up::ProcessLevelUp(Player* player)
         console.Slow_Print("  ★ 축하합니다! 최고 레벨(Lv.10)에 도달했습니다! ★\n", 50);
     }
     cout << "====================================\n\n";
+
+    // [추가된 부분] C++ 표준 입력을 활용한 깔끔한 일시정지 처리
+    cout << "\n계속하려면 Enter를 누르세요...";
+    cin.ignore();
+    cin.get();
 }
