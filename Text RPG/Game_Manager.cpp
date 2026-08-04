@@ -45,6 +45,16 @@ void Game_Manager::Create_Player()
         _Player = new JYJ("JYJ");
         break;
     }
+        // 플레이어에게 장비와 튜터 정보를 연결
+        if (_Player != nullptr)
+        {
+            _Player->Set_Status_References
+            (
+                &_Currently_Equipped_Equipments,
+                &_Currently_Equipped_Tutor
+            );
+    }
+
 }
 
 void Game_Manager::Show_Main_Menu()
@@ -57,6 +67,7 @@ void Game_Manager::Show_Main_Menu()
         cout << "========================================" << endl;
         cout << "1. 던전 입장" << endl;
         cout << "2. 인벤토리" << endl;
+		cout << "3. 상태창" << endl;
         cout << "0. 게임 종료" << endl;
         cout << "선택: ";
 
@@ -74,6 +85,17 @@ void Game_Manager::Show_Main_Menu()
             _Inventory.Print_Inventory_Menu(_Currently_Equipped_Equipments, _Equipment_Inventory);
             break;
         }
+
+		case 3:
+			if (_Player != nullptr)
+			{
+				_Player->Print_Status();
+			}
+			else
+			{
+				cout << "플레이어 정보가 없습니다." << endl;
+			}
+			break;
 
         case 0:
             cout << "게임 종료!" << endl;

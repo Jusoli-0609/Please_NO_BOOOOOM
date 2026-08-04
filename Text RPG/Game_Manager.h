@@ -6,7 +6,7 @@
 #include "Equipment.h"
 #include "Inventory.h"
 #include "Item.h"
-
+#include "Tutor.h"
 class Player;
 
 class Game_Manager
@@ -26,6 +26,7 @@ private:
     Dungeon_Manager    _Dungeon;
     Inventory<Item>    _Inventory;
     Currently_Equipped_Equipments _Currently_Equipped_Equipments;
+	Currently_Equipped_Tutor _Currently_Equipped_Tutor;
     Inventory_For_Equipments_Only _Equipment_Inventory;
     Player* _Player;
 };
