@@ -1,8 +1,11 @@
 ﻿#include "Camp_Manager.h"
 #include <iostream>
 #include "Items_Equipments_Repository.h"
+#include "Ascii_Art_Manager.h"
+#include <iomanip>
 
 using namespace std;
+
 
 Camp_Manager::Camp_Manager
 (
@@ -24,8 +27,9 @@ void Camp_Manager::Open_Camp_Menu()
 {
     while (true)
     {
-        cout << R"()";
-        //음침한 주소리님 여깁니당(TommorowLearnCamp)
+        Ascii_Art_Manager art;
+        art.Print("TommorowLearnCamp.txt");
+
         cout << "\n===== 내일배움캠프 재정비소 =====\n";
         cout << "1. 내배캠 119 기본 보급 받기\n";
         cout << "2. 펩 스토어\n";
@@ -145,14 +149,24 @@ void Camp_Manager::Open_Pep_Store_Menu()
             const vector<Equipment>& equipments =
                 equipmentRepository.Get_All_Equipments();
 
-            for (int i = 0; i < equipments.size(); i++)
+            for (int i = 0; i < equipments.size(); i += 2)
             {
-                cout << i + 1 << ". "
-                    << equipments[i].Get_Equipment_Name()
-                    << endl;
-                cout << equipments[i].Get_Equipment_Price()*2
-                    << " 젬"
-                    << endl;
+                cout << left
+                    << setw(3) << i + 1
+                    << setw(22) << equipments[i].Get_Equipment_Name()
+                    << setw(8) << (to_string(equipments[i].Get_Equipment_Price() * 2) + " 젬");
+
+                if (i + 1 < equipments.size())
+                {
+                    cout << "   ";
+
+                    cout << left
+                        << setw(3) << i + 2
+                        << setw(22) << equipments[i + 1].Get_Equipment_Name()
+                        << setw(8) << (to_string(equipments[i + 1].Get_Equipment_Price() * 2) + " 젬");
+                }
+
+                cout << '\n';
             }
 
             cout << "0. 뒤로가기\n";
@@ -414,6 +428,7 @@ void Camp_Manager::Open_Loot_Shop_Menu()
 
 void Camp_Manager::Open_Cookie_Blacksmith_Menu()
 {
+  
     cout << R"()";
     //음침한 주소리님 여깁니당(Cookietheblacksmith)
     while (true)

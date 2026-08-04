@@ -316,6 +316,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\..\..\Downloads\FepStore.txt" />
+    <Text Include="..\..\..\..\Downloads\MrKimStore.txt" />
     <Text Include="..\..\..\..\Downloads\MrMoonStore.txt" />
     <Text Include="..\..\..\..\Downloads\TommorowLearnCamp.txt" />
     <Text Include="..\..\..\Cookietheblacksmith.txt" />
