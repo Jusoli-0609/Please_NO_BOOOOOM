@@ -19,7 +19,7 @@ using namespace std;
 //======================================================
 // 전투 시작 Main Loop
 //======================================================
-void Battle(Player* player, Monster& monster, Inventory<Item>& inventory)
+void Battle(Player* player, Monster& monster, Inventory<Item>& inventory, Console_Manager& console)
 {
     if (player == nullptr) return;
 
@@ -40,11 +40,10 @@ void Battle(Player* player, Monster& monster, Inventory<Item>& inventory)
 
         // 3. 턴 종료 시 지속 버프/디버프 처리
         player->Process_Stat_Modifier_Turn();
-
         turnCount++;
     }
 
-    Show_Battle_End(player, monster);
+    Show_Battle_End(player, monster, console);   // console 전달
 }
 
 //======================================================
@@ -95,9 +94,9 @@ void Show_Battle_Menu()
     cout << "선택 : ";
 }
 
-void Show_Battle_End(Player* player, Monster& monster)
+void Show_Battle_End(Player* player, Monster& monster, Console_Manager& console)
 {
-    // 전투 종료 후 필요한 출력 처리
+    console.Wait_For_Key("계속하려면 아무 키나 누르세요...");
 }
 
 //======================================================
