@@ -1,6 +1,9 @@
 ﻿#include <iostream>
 #include "JYJ.h"
 #include "Monster.h"
+#include "Battle_UI.h"
+#include <Windows.h>
+#include "Console_Manager.h"
 //대사 groggyAttackName
 //JYJ 윤재님꺼 같은경우엔 미리 영빈님이 만들어놨었어서 따로 건들진 않았고 스킬계수쪽만 수정했습니다!
 //나머진 똑같이 내용만 바꿔서 적어놨습니다
@@ -72,8 +75,32 @@ void JYJ::Attack(Monster* monster)
     // 명중한 공격에 치명타 판정 적용
     Apply_Critical_Damage(damage);
 
+    bool isCritical = Check_Critical();
+
+    Show_Damage_Effect(
+        damage,
+        isCritical
+	);
+    if (isCritical)
+    {
+        damage = static_cast<int>( damage * 1.5f);
+        Console_Manager::Print_Colored(std::to_string(damage) +"의 피해를 입혔습니다.\n",
+                FOREGROUND_RED |
+                FOREGROUND_GREEN |
+                FOREGROUND_INTENSITY
+            );
+    }
+	else
+	{
+        Console_Manager::Print_Colored(std::to_string(damage) + "의 피해를 입혔습니다.\n",
+            FOREGROUND_RED |
+            FOREGROUND_INTENSITY
+        );
+	}
+
     Apply_Damage(monster, damage);
-    std::cout << damage << "의 피해를 입혔습니다.\n";
+
+	Sleep(1000);
 }
 
 void JYJ::Skill1(Monster* monster)

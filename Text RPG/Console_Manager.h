@@ -45,4 +45,8 @@ public:
 
     void Print_At(int x, int y, const std::string& Text);
     void Wait_For_Key(const std::string& Message = "계속하려면 아무 키나 누르세요...");
+
+    static void Print_Colored(
+        const std::string& text,
+        WORD color);
 };

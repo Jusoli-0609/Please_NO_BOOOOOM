@@ -228,6 +228,7 @@
     <ClCompile Include="Tutor_Keyboard.cpp" />
     <ClCompile Include="Tutor_Mouse.cpp" />
     <ClCompile Include="UI_Manager.cpp" />
+    <ClCompile Include="Battle_UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ascii_Art_Manager.h">
@@ -335,6 +336,7 @@
     <ClInclude Include="Tutor_Keyboard.h" />
     <ClInclude Include="Tutor_Mouse.h" />
     <ClInclude Include="UI_Manager.h" />
+    <ClInclude Include="Battle_UI.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\..\..\Downloads\FepStore.txt" />

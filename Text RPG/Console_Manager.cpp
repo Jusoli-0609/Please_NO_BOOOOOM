@@ -11,6 +11,7 @@ Console_Manager::Console_Manager()
 {
     _Width = 120;
     _Height = 50;
+
 }
 //임시값입니다. 추후 수정.
 
@@ -116,4 +117,34 @@ void Console_Manager::Wait_For_Key(const std::string& Message)
 {
     std::cout << "\n" << Message << std::flush;
     _getch();
+}
+
+void Console_Manager::Print_Colored(
+    const std::string& text,
+    WORD color)
+{
+    HANDLE consoleHandle =
+        GetStdHandle(STD_OUTPUT_HANDLE);
+
+    CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+
+    GetConsoleScreenBufferInfo(
+        consoleHandle,
+        &consoleInfo
+    );
+
+    WORD originalColor =
+        consoleInfo.wAttributes;
+
+    SetConsoleTextAttribute(
+        consoleHandle,
+        color
+    );
+
+    std::cout << text;
+
+    SetConsoleTextAttribute(
+        consoleHandle,
+        originalColor
+    );
 }
