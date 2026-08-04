@@ -39,17 +39,56 @@ void Game_Manager::Run()
 
 void Game_Manager::Create_Player()
 {
-    int job = Job_Selection();  
+    int job = Job_Selection();
     switch (job)
     {
     case 1:
+    {
         _Player = new JYJ("JYJ");
         break;
+    }
+
+    case 2:
+    {
+        _Player = new JSR("JSR");
+        break;
+    }
+
+    case 3:
+    {
+        _Player = new JWH("JWH");
+        break;
+    }
+
+    case 4:
+    {
+        _Player = new LYB("LYB");
+        break;
+    }
+
+    case 5:
+    {
+        _Player = new LMR("LMR");
+        break;
+    }
+
+    case 6:
+    {
+        _Player = new PSB("PSB");
+        break;
+    }
 
     default:
-        cout << "잘못된 선택! 기본 직업으로 시작!" << endl;
+    {
+        cout << "잘못된 직업 선택입니다. " << "기본 직업으로 시작합니다." << endl;
         _Player = new JYJ("JYJ");
         break;
+    }
+    }
+
+    if (_Player != nullptr)
+    {
+        _Player->Set_Status_References(&_Currently_Equipped_Equipments, &_Currently_Equipped_Tutor);
     }
 }
 
