@@ -6,6 +6,8 @@
 #include <map>
 #include <string>
 
+class Console_Manager;
+
 // 1. 몬스터 처치 기록 데이터 파트
 struct Monster_Kill_Record
 {
@@ -26,13 +28,12 @@ public:
 	// 3. 던전 생성 및 메뉴 실행 파트
 	Dungeon_Manager();
 	void Open_Dungeon
-	(
+	(	
 		Player* player,
 		Inventory<Item>& inventory,
-		Inventory_For_Equipments_Only&
-		equipment_Inventory,
-		const Currently_Equipped_Equipments&
-		equipped_Equipments
+		Inventory_For_Equipments_Only& equipment_Inventory,
+		const Currently_Equipped_Equipments& equipped_Equipments,
+		Console_Manager& console
 	);
 	// 4. 던전 상태 조회 및 기록 출력 파트
 	bool Check_All_Chapter_Cleared() const;
@@ -47,8 +48,8 @@ public:
 private:
 	// 6. 현재 챕터 실행 파트
 	void Print_Current_Chapter() const;
-	void Run_Current_Chapter(Player* player, Inventory<Item>& inventory);
-	void Select_Chapter_And_Enter(Player* player,Inventory<Item>& inventory);
+	void Run_Current_Chapter(Player* player, Inventory<Item>& inventory, Console_Manager& console);
+	void Select_Chapter_And_Enter(Player* player,Inventory<Item>& inventory, Console_Manager& console);
 	std::string Get_Chapter_Name(Chapter_Type chapter_Type) const;
 	// 7. 일반 몬스터 선택 파트
 	void Get_Current_Chapter_Monsters(Monster_Type monster_Types[]) const;
