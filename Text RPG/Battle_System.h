@@ -1,4 +1,4 @@
-#ifndef BATTLE_SYSTEM_H
+﻿#ifndef BATTLE_SYSTEM_H
 #define BATTLE_SYSTEM_H
 
 #include "Player.h"
@@ -45,5 +45,20 @@ void Boss_Battle(Player* player, Monster& monster, Inventory<Item>& inventory);
 bool Ask_Single_Quiz(const Quiz& quiz);
 void First_Impression_Quiz_Phase(Player* player, Monster& monster, std::vector<Quiz>& quizPool);
 void Final_Boss_Monster_Turn(Player* player, Monster& monster, int turnCount, std::vector<Quiz>& quizPool);
+
+bool Final_Boss_Duo_Battle(Player* player, Monster& kim, Monster& moon, Inventory<Item>& inventory);
+
+void Print_Final_Boss_Duo_Introduction(Monster& kim, Monster& moon);
+
+void Duo_Player_Turn(Player* player, Monster& kim, Monster& moon, Inventory<Item>& inventory);
+
+void Duo_Monster_Turn(Player* player, Monster& monster);
+
+bool Duo_Skill_Process(Player* player, Monster& kim, Monster& moon);
+
+void Kim_Dong_Hyun_Manager_Skill(Player* player, Monster& monster);
+
+
+void Moon_Seung_Ho_Manager_Skill(Player* player, Monster& monster);
 
 #endif // BATTLE_SYSTEM_H
