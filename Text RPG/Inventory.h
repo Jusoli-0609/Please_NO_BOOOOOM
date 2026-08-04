@@ -50,24 +50,6 @@
 		~Inventory();//8.소멸자
 		//9. 인벤토리 내 골드
 
-			Inventory_For_Equipments_Only& inventory_for_equipments_only);//4-2 �κ��丮 �޴�(������) ���
-		//5.�κ��丮 ��� �Լ� ��Ʈ
-		bool Add_Or_Increase_Item(const T& new_item);// 5-1 ������ �߰� �� ���� ����
-		bool Use_Item_By_Name(const std::string& item_name);// 5-2 5-2 �̸����� ������ ��� ���� �� ���� ����
-		void Use_Item(Player& player, Monster& monster);//5-3 ���� �� ������ ���
-		void Throw_Away_Item();// 5-4 ������ ������
-		void Remove_Last_Item();// 5-5 ������ ������ ����
-		void Use_Random_Item_In_Battle(Player& player, Monster& monster);//5-6 ĳ���Ͱ� �ڵ����� ������ ���� ���
-		// 6. �κ��丮 ���� / ���� ����
-	    void Sort_Inventory();// 6-1 ������ ����
-	    void Change_Inventory_Order();//6-2 ������ ���� ��� �ٲٱ�
-	    // 7. �κ��丮 �뷮 Ȯ��
-		void Increase_Slot_Capacity(int increase_slot);//7-1 ������ �뷮 �þ��
-		void Increase_Max_Capacity(int increase_capacity);  //7-2 �ִ� ���� Ȯ��
-	    // 8. �κ��丮 �Ҹ���	
-		~Inventory();//8.�Ҹ���
-		//9. �κ��丮 �� ���
-
 		int Get_Money()const;
 		void Set_Money(int money);
 		//10.아이템 제작용 숫자 다운
