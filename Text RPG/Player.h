@@ -32,10 +32,12 @@ protected:
     int maxmp;
 
     float defenceDecreaseValue = 0.0f;
-
+    float criticalBuffValue = 0.0f;
     //명중 판정용
     bool Check_Hit(const Monster* monster) const;
 
+    //크리티컬 판정용
+    bool Check_Critical() const;
     // 실제 레벨업 처리는 Level_Up 클래스가 담당하고,
     // Player에는 상태창 표기용 레벨만 저장한다.
     int level;

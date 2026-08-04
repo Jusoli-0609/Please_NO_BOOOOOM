@@ -66,10 +66,22 @@ void JYJ::Attack(Monster* monster)
         monster->getDefence()
     );
 
-    Apply_Damage(monster, damage);
 
     std::cout << name << "의 기본 공격!\n";
     std::cout << "평타 대사 입력\n";
+    if (Check_Critical())
+    {
+        damage *= 1.5f;
+
+        std::cout << "★ 크리티컬! ★\n";
+    }
+
+    if (damage < 1.0f)
+    {
+        damage = 1.0f;
+    }
+
+    Apply_Damage(monster, damage);
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }
 
@@ -247,3 +259,33 @@ void JYJ::Groggy_Attack(Monster* monster)
 //std::cout << name << " : 스킬 대사\n";
 //std::cout << "n턴 동안 방어력 관통 n% 효과를 획득했다!.\n";
 //
+
+//치명타 버프 예시
+//void JYJ::Skill2(Monster* monster)
+//{
+//    const int mpCost = 20;
+//
+//    if (mp < mpCost)
+//    {
+//        std::cout << "MP가 부족합니다.\n";
+//        return;
+//    }
+//
+//    mp -= mpCost;
+//
+//    // 현재 적용할 치명타 확률 증가량
+//    criticalBuffValue = 20.0f;
+//
+//    Stat_Modifier modifier;
+//
+//    modifier.id = "CRITICAL_CHANCE_BUFF";
+//    modifier.name = "치명타 확률 20% 증가";
+//    modifier.type = Stat_Modifier_Type::Buff;
+//    modifier.remainingTurns = 3;
+//
+//    Remove_Stat_Modifier("CRITICAL_CHANCE_BUFF");
+//    Add_Stat_Modifier(modifier);
+//
+//    std::cout << name << "의 " << skill2Name << "!\n";
+//    std::cout << "3턴 동안 치명타 확률이 20% 증가합니다.\n";
+//}

@@ -77,6 +77,34 @@ void Player::Set_Start_Stat(
     statModifierInitialized = true;
 }
 
+//치명타 계산
+bool Player::Check_Critical() const
+{
+    const float baseCriticalChance = 5.0f;
+    const float sneConstant = 2.5f;
+    const float agiConstant = 1.0f;
+
+    float criticalChance =
+        baseCriticalChance
+        + sne * sneConstant
+        + agi * agiConstant;
+
+    // 치명타 확률 증가 버프가 있을 때만 추가 수치 적용
+    if (Has_Stat_Modifier("CRITICAL_CHANCE_BUFF"))
+    {
+        criticalChance += criticalBuffValue;
+    }
+
+    // 확률 제한
+    if (criticalChance < 0.0f)
+    {
+        criticalChance = 0.0f;
+    }
+    int randomValue = rand() % 100 + 1;
+
+    return randomValue <= criticalChance;
+}
+
 // 데미지 계산 공식, 공격력, 방어력, HP, MP, 은신, 민첩 비율을 조합하여 계산
 int Player::Calculate_Damage(
     float atkRatio,
@@ -115,10 +143,6 @@ int Player::Calculate_Damage(
         * ap
         / (100.0f + targetDef);
 
-    if (damage < 1.0f)
-    {
-        damage = 1.0f;
-    }
 
     return static_cast<int>(damage);
 }
