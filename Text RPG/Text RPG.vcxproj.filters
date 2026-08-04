@@ -63,6 +63,7 @@
     <ClCompile Include="UI_Manager.cpp" />
     <ClCompile Include="Sound_Manager.cpp" />
     <ClCompile Include="Battle_UI.cpp" />
+    <ClCompile Include="Ending.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ascii_Art_Manager.h" />
@@ -129,6 +130,7 @@
     <ClInclude Include="UI_Manager.h" />
     <ClInclude Include="Sound_Manager.h" />
     <ClInclude Include="Battle_UI.h" />
+    <ClInclude Include="Ending.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Title.txt" />
