@@ -4,7 +4,7 @@
 Level_2_Engine::Level_2_Engine()
 	: Equipment
 	(
-		"2언리얼 엔진",
+		"하급 언리얼 엔진",
 		2,
 		2,
 		Equipment_Grade::Low,
@@ -13,7 +13,7 @@ Level_2_Engine::Level_2_Engine()
 | UE 4.5 |
 | [STBL] |
 +--------+)",
-        "설명",
+        "일단 돌아가긴 합니다.",
         8,
         1
     )

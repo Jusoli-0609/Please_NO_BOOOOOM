@@ -4,7 +4,7 @@
 Level_4_Headset::Level_4_Headset()
 	: Equipment
 	(
-		"4헤드셋",
+		"상급 헤드셋",
 		0,
 		11,
 		Equipment_Grade::High,
@@ -13,7 +13,7 @@ Level_4_Headset::Level_4_Headset()
 |  ANC   |
 | <MUTE> |
  \_||||_/)",
-		"설명",
+		"오 이것이 사플이라는 것이군요",
 		4,
 		1
 	)

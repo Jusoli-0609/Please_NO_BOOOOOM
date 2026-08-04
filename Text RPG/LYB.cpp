@@ -1,6 +1,9 @@
 ﻿#include <iostream>
 #include "LYB.h"
 #include "Monster.h"
+#include "Battle_UI.h"
+#include <Windows.h>
+#include "Console_Manager.h"
 //그로기 이름 따로 안적혀있어서 일단 특수능력중에 음침하게 염탐하기(약점찾기) 를 그로기쪽에 적어놨습니다!
 //나머진 똑같이 내용만 바꿔서 적어놨습니다
 //특화 스탯이 따로 정해진게 없어서 이 스탯기준으로 그냥 지피티한테 물어봐서 나온걸 주석으로 한번 적어놓겠습니다!보시고 특화스탯 한번 수정해주세요!
@@ -10,6 +13,125 @@ namespace
     void Apply_Damage(Monster* monster, int damage)
     {
         monster->setHP(monster->getHP() - damage);
+    }
+
+    void Print_Typed_Colored(
+        const std::string& text,
+        WORD color,
+        int delayMs = 20)
+    {
+        HANDLE consoleHandle =
+            GetStdHandle(STD_OUTPUT_HANDLE);
+
+        CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+        WORD originalColor =
+            FOREGROUND_RED |
+            FOREGROUND_GREEN |
+            FOREGROUND_BLUE;
+
+        if (GetConsoleScreenBufferInfo(
+            consoleHandle,
+            &consoleInfo))
+        {
+            originalColor =
+                consoleInfo.wAttributes;
+        }
+
+        SetConsoleTextAttribute(
+            consoleHandle,
+            color
+        );
+
+        for (std::size_t i = 0;
+             i < text.size();)
+        {
+            unsigned char firstByte =
+                static_cast<unsigned char>(text[i]);
+
+            std::size_t characterSize = 1;
+
+            if ((firstByte & 0xF0) == 0xF0)
+            {
+                characterSize = 4;
+            }
+            else if ((firstByte & 0xE0) == 0xE0)
+            {
+                characterSize = 3;
+            }
+            else if ((firstByte & 0xC0) == 0xC0)
+            {
+                characterSize = 2;
+            }
+
+            if (i + characterSize > text.size())
+            {
+                characterSize = 1;
+            }
+
+            std::cout.write(
+                text.data() + i,
+                static_cast<std::streamsize>(
+                    characterSize
+                )
+            );
+
+            std::cout.flush();
+            Sleep(delayMs);
+
+            i += characterSize;
+        }
+
+        SetConsoleTextAttribute(
+            consoleHandle,
+            originalColor
+        );
+    }
+
+    void Print_Bright_Dialogue(
+        const std::string& text)
+    {
+        Print_Typed_Colored(
+            text,
+            FOREGROUND_GREEN |
+            FOREGROUND_BLUE |
+            FOREGROUND_INTENSITY,
+            20
+        );
+    }
+
+    void Print_Miss_Message()
+    {
+        Print_Typed_Colored(
+            "공격이 빗나갔습니다!\n",
+            FOREGROUND_RED |
+            FOREGROUND_BLUE |
+            FOREGROUND_INTENSITY,
+            20
+        );
+
+        Sleep(1000);
+    }
+
+    void Print_Damage_Message(int damage, bool isCritical)
+    {
+        const WORD color = isCritical
+            ? FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY
+            : FOREGROUND_RED | FOREGROUND_INTENSITY;
+
+        if (isCritical)
+        {
+            Console_Manager::Print_Colored(
+                "CRITICAL!\n",
+                FOREGROUND_RED |
+                FOREGROUND_GREEN |
+                FOREGROUND_INTENSITY
+            );
+        }
+
+        Console_Manager::Print_Colored(
+            std::to_string(damage) + "의 피해를 입혔습니다.\n",
+            color
+        );
     }
 }
 
@@ -49,7 +171,7 @@ void LYB::Attack(Monster* monster)
     // 명중 판정: 실패하면 데미지를 적용하지 않고 공격 종료
     if (!Check_Hit(monster))
     {
-        std::cout << "공격이 빗나갔습니다!\n";
+        Print_Miss_Message();
         return;
     }
 
@@ -64,13 +186,27 @@ void LYB::Attack(Monster* monster)
     );
 
     std::cout << name << "의 기본 공격!\n";
-    std::cout << "오 잠시만요 고양이가...\n";
+    Print_Bright_Dialogue("오 잠시만요 고양이가...\n");
     // 명중한 공격에 치명타 판정 적용
     Apply_Critical_Damage(damage);
 
+    bool isCritical = Check_Critical();
+
+    Show_Damage_Effect(
+        damage,
+        isCritical
+    );
+
+    if (isCritical)
+    {
+        damage = static_cast<int>(damage * 1.5f);
+    }
+
+    Print_Damage_Message(damage, isCritical);
     Apply_Damage(monster, damage);
 
-    std::cout << damage << "의 피해를 입혔습니다.\n";
+    // 피해 결과를 확인할 수 있도록 다음 화면 전환 전 1초 대기
+    Sleep(1000);
 }
 
 void LYB::Skill1(Monster* monster)
@@ -95,7 +231,7 @@ void LYB::Skill1(Monster* monster)
     // 명중 판정: 실패하면 데미지를 적용하지 않고 공격 종료
     if (!Check_Hit(monster))
     {
-        std::cout << "공격이 빗나갔습니다!\n";
+        Print_Miss_Message();
         return;
     }
 
@@ -106,13 +242,27 @@ void LYB::Skill1(Monster* monster)
     );
 
     std::cout << name << "의" << skill1Name << "!\n";
-    std::cout << name << " : " << "메에\n";
+    Print_Bright_Dialogue(name + " : 메에\n");
     // 명중한 공격에 치명타 판정 적용
     Apply_Critical_Damage(damage);
 
+    bool isCritical = Check_Critical();
+
+    Show_Damage_Effect(
+        damage,
+        isCritical
+    );
+
+    if (isCritical)
+    {
+        damage = static_cast<int>(damage * 1.5f);
+    }
+
+    Print_Damage_Message(damage, isCritical);
     Apply_Damage(monster, damage);
 
-    std::cout << damage << "의 피해를 입혔습니다.\n";
+    // 피해 결과를 확인할 수 있도록 다음 화면 전환 전 1초 대기
+    Sleep(1000);
 }
 
 void LYB::Skill2(Monster* monster)
@@ -137,7 +287,7 @@ void LYB::Skill2(Monster* monster)
     // 명중 판정: 실패하면 데미지를 적용하지 않고 공격 종료
     if (!Check_Hit(monster))
     {
-        std::cout << "공격이 빗나갔습니다!\n";
+        Print_Miss_Message();
         return;
     }
 
@@ -148,13 +298,27 @@ void LYB::Skill2(Monster* monster)
     );
 
     std::cout << name << "의 " << skill2Name << "!\n";
-    std::cout << "냐옹이다옹\n";
+    Print_Bright_Dialogue("냐옹이다옹\n");
     // 명중한 공격에 치명타 판정 적용
     Apply_Critical_Damage(damage);
 
+    bool isCritical = Check_Critical();
+
+    Show_Damage_Effect(
+        damage,
+        isCritical
+    );
+
+    if (isCritical)
+    {
+        damage = static_cast<int>(damage * 1.5f);
+    }
+
+    Print_Damage_Message(damage, isCritical);
     Apply_Damage(monster, damage);
 
-    std::cout << damage << "의 피해를 입혔습니다.\n";
+    // 피해 결과를 확인할 수 있도록 다음 화면 전환 전 1초 대기
+    Sleep(1000);
 }
 
 void LYB::Skill3(Monster* monster)
@@ -179,7 +343,7 @@ void LYB::Skill3(Monster* monster)
     // 명중 판정: 실패하면 데미지를 적용하지 않고 공격 종료
     if (!Check_Hit(monster))
     {
-        std::cout << "공격이 빗나갔습니다!\n";
+        Print_Miss_Message();
         return;
     }
 
@@ -190,13 +354,27 @@ void LYB::Skill3(Monster* monster)
     );
 
     std::cout << name << "의 " << skill3Name << "!\n";
-    std::cout << "제가 원인을 찾은 것 같습니다.\n";
+    Print_Bright_Dialogue("제가 원인을 찾은 것 같습니다.\n");
     // 명중한 공격에 치명타 판정 적용
     Apply_Critical_Damage(damage);
 
+    bool isCritical = Check_Critical();
+
+    Show_Damage_Effect(
+        damage,
+        isCritical
+    );
+
+    if (isCritical)
+    {
+        damage = static_cast<int>(damage * 1.5f);
+    }
+
+    Print_Damage_Message(damage, isCritical);
     Apply_Damage(monster, damage);
 
-    std::cout << damage << "의 피해를 입혔습니다.\n";
+    // 피해 결과를 확인할 수 있도록 다음 화면 전환 전 1초 대기
+    Sleep(1000);
 }
 
 void LYB::Groggy_Attack(Monster* monster)
@@ -211,7 +389,7 @@ void LYB::Groggy_Attack(Monster* monster)
     // 명중 판정: 실패하면 데미지를 적용하지 않고 공격 종료
     if (!Check_Hit(monster))
     {
-        std::cout << "공격이 빗나갔습니다!\n";
+        Print_Miss_Message();
         return;
     }
 
@@ -222,11 +400,25 @@ void LYB::Groggy_Attack(Monster* monster)
     );
 
     std::cout << name << "의 " << groggyAttackName << "!\n";
-    std::cout << "자동차 고장(이동 능력 감소시키기)\n";
+    Print_Bright_Dialogue("자동차 고장(이동 능력 감소시키기)\n");
     // 명중한 공격에 치명타 판정 적용
     Apply_Critical_Damage(damage);
 
+    bool isCritical = Check_Critical();
+
+    Show_Damage_Effect(
+        damage,
+        isCritical
+    );
+
+    if (isCritical)
+    {
+        damage = static_cast<int>(damage * 1.5f);
+    }
+
+    Print_Damage_Message(damage, isCritical);
     Apply_Damage(monster, damage);
 
-    std::cout << damage << "의 피해를 입혔습니다.\n";
+    // 피해 결과를 확인할 수 있도록 다음 화면 전환 전 1초 대기
+    Sleep(1000);
 }

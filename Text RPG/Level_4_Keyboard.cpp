@@ -4,7 +4,7 @@
 Level_4_Keyboard::Level_4_Keyboard()
 	: Equipment
 	(
-		"4키보드",
+		"상급 키보드",
 		11,
 		0,
 		Equipment_Grade::High,
@@ -13,7 +13,7 @@ Level_4_Keyboard::Level_4_Keyboard()
 |CUSTOM<>|
 |[______]|
 +--------+)",
-        "설명",
+        "300타 그 이상이 가능해집니다.",
         6,
         1
     )

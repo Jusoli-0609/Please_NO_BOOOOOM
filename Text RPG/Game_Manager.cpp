@@ -143,7 +143,7 @@ void Game_Manager::Show_Main_Menu()
 
             if (_Player != nullptr)
             {
-                _Player->Print_Status();
+                _Player->Print_Status(_Console);
             }
 
             _Console.Wait_For_Key();

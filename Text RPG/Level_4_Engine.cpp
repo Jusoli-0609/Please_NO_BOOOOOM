@@ -4,7 +4,7 @@
 Level_4_Engine::Level_4_Engine()
 	: Equipment
 	(
-		"4언리얼 엔진",
+		"상급 언리얼 엔진",
 		7,
 		7,
 		Equipment_Grade::High,
@@ -13,7 +13,7 @@ Level_4_Engine::Level_4_Engine()
 | UE 5.4 |
 | [HIGH] |
 +--------+)",
-        "설명",
+        "렉 없이 돌아가기 시작합니다.",
         8,
         1
     )

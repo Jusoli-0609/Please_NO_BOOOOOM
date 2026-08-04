@@ -4,7 +4,7 @@
 Level_5_Mouse::Level_5_Mouse()
 	: Equipment
 	(
-		"5마우스",
+		"최상급 마우스",
 		16,
 		0,
 		Equipment_Grade::Best,
@@ -13,7 +13,7 @@ Level_5_Mouse::Level_5_Mouse()
  /[MASTER]\
 | <CODE> |
  \______/)",
-        "설명",
+        "살아 숨쉬는 마우스 그 자체입니다",
 		5,
 		1
 	)

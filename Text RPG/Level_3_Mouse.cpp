@@ -4,7 +4,7 @@
 Level_3_Mouse::Level_3_Mouse()
 	: Equipment
 	(
-		"3마우스",
+		"중급 마우스",
 		7,
 		0,
 		Equipment_Grade::Middle,
@@ -13,7 +13,7 @@ Level_3_Mouse::Level_3_Mouse()
  / [RGB]\
 |  DPI+ |
  \______/)",
-"설명",
+"여러번 눌러도 씹히지 않기 시작합니다",
 		5,
 		1
 	)

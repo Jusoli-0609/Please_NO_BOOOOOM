@@ -4,7 +4,7 @@
 Level_5_Engine::Level_5_Engine()
 	: Equipment
 	(
-		"5언리얼 엔진",
+		"최상급 언리얼 엔진",
 		10,
 		10,
 		Equipment_Grade::Best,
@@ -13,7 +13,7 @@ Level_5_Engine::Level_5_Engine()
 | UE 5.X |
 | MASTER |
 +--------+)",
-        "설명",
+        "렉이 뭐죠?",
         8,
         1
     )

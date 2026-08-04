@@ -1,12 +1,31 @@
 ﻿#include "Battle_Elite_Skill.h"
 
-#include <iostream>
 #include <algorithm>
+#include <cctype>
+#include <iostream>
 #include <random>
-#include <ctime>
+#include <string>
 
 using namespace std;
 
+namespace
+{
+    string Normalize_Answer(string answer)
+    {
+        string normalized;
+
+        for (char character : answer){unsigned char converted = static_cast<unsigned char>(character);
+
+            if (isspace(converted))
+            {
+                continue;
+            }
+            normalized += static_cast<char>(tolower(converted));
+        }
+
+        return normalized;
+    }
+}
 //======================================================
 // 엘리트 / 튜터 스킬 발동 조건 체크
 //======================================================
@@ -42,7 +61,6 @@ bool Check_Elite_Skill(Monster& monster, int turnCount)
     }
     return false;
 }
-
 //======================================================
 // 단일 퀴즈 출제 함수 (4지선다)
 //======================================================
@@ -88,20 +106,33 @@ bool Ask_Quiz(Player* player, Monster& monster, const Quiz& quiz)
 
     return false;
 }
-
 //======================================================
 // 엘리트 몬스터용 랜덤 1문제 출제
 //======================================================
 bool Ask_Random_Elite_Question(Player* player, Monster& monster)
 {
-    if (EliteQuiz.empty()) return false;
+    if (player == nullptr)
+    {
+        return false;
+    }
 
-    srand((unsigned int)time(nullptr));
-    int index = rand() % EliteQuiz.size();
+    const vector<Quiz>* question_Bank = Get_Elite_Question_Bank(monster.getChapterType());
 
-    return Ask_Quiz(player, monster, EliteQuiz[index]);
+    if (question_Bank == nullptr ||
+        question_Bank->empty())
+    {
+        cout << "현재 챕터의 정예 문제를 찾을 수 없습니다.\n";
+        return false;
+    }
+
+    static random_device random_Device;
+    static mt19937 random_Engine(random_Device());
+
+    uniform_int_distribution<size_t> distribution(0,question_Bank->size() - 1);
+    size_t random_Index = distribution(random_Engine);
+
+    return Ask_Quiz(player, monster,(*question_Bank)[random_Index]);
 }
-
 //======================================================
 // 튜터 타입별 문제 은행 포인터 반환
 //======================================================
@@ -117,51 +148,74 @@ vector<Quiz>* Get_Tutor_Quiz(Monster_Type type)
     default:                                     return nullptr;
     }
 }
+// 튜터 문제 출제
+bool Ask_Tutor_Question(const Tutor_Question& question)
+{
+    cout << "\n";
+    cout << "──────────────────────────────────────────────────────\n";
+    cout << question.description << "\n";
+    cout << "──────────────────────────────────────────────────────\n";
+    cout << question.code << "\n";
+    cout << "──────────────────────────────────────────────────────\n";
 
+    string input_Answer;
+
+    cout << "답 입력 : ";
+    getline(cin >> ws, input_Answer);
+
+    bool is_Correct = Normalize_Answer(input_Answer) == Normalize_Answer(question.correct_Answer);
+
+    if (is_Correct)
+    {
+        cout << "정답입니다.\n";
+        return true;
+    }
+
+    cout << "오답입니다. 정답: " << question.correct_Answer << "\n";
+
+    return false;
+}
 //======================================================
 // 튜터 보스용 시험 시스템 (3문제 중 2문제 이상 통과)
 //======================================================
 bool Tutor_Test(Player* player, Monster& monster)
 {
-    vector<Quiz>* quizList = Get_Tutor_Quiz(monster.getMonsterType());
-    if (quizList == nullptr || quizList->empty())
-        return false;
-
-    vector<int> order;
-    for (size_t i = 0; i < quizList->size(); i++)
+    if (player == nullptr)
     {
-        order.push_back((int)i);
+        return false;
     }
 
-    random_device rd;
-    mt19937 g(rd());
-    shuffle(order.begin(), order.end(), g);
+    const vector<Tutor_Question>* question_Bank = Get_Tutor_Question_Bank(monster.getChapterType());
 
-    int score = 0;
+    if (question_Bank == nullptr || question_Bank->empty())
+    {
+        cout << "현재 챕터의 튜터 문제를 찾을 수 없습니다.\n";
+        return false;
+    }
+
+    int question_Count = min(3, static_cast<int>(question_Bank->size()));
+    int correct_Count = 0;
 
     cout << "\n";
     cout << "╔════════════════════════════════════════════════════╗\n";
     cout << "║                  튜 터 시 험                       ║\n";
     cout << "╠════════════════════════════════════════════════════╣\n";
-    cout << "║                                                    ║\n";
     cout << "  시험관 : " << monster.getName() << "\n";
-    cout << "║                                                    ║\n";
     cout << "║ 총 3문제 중 2문제 이상 정답 시 합격!               ║\n";
-    cout << "║                                                    ║\n";
     cout << "╚════════════════════════════════════════════════════╝\n";
 
-    int questionCount = min(3, (int)quizList->size());
-
-    for (int i = 0; i < questionCount; i++)
+    for (int index = 0;
+        index < question_Count;
+        index++)
     {
         cout << "\n";
         cout << "══════════════════════════════════════════════════════\n";
-        cout << "                 [ 문제 " << i + 1 << " / " << questionCount << " ]\n";
+        cout << "[ 문제 " << index + 1 << " / " << question_Count << " ]\n";
         cout << "══════════════════════════════════════════════════════\n";
 
-        if (Ask_Quiz(player, monster, (*quizList)[order[i]]))
+        if (Ask_Tutor_Question((*question_Bank)[index]))
         {
-            score++;
+            correct_Count++;
         }
     }
 
@@ -169,20 +223,16 @@ bool Tutor_Test(Player* player, Monster& monster)
     cout << "╔════════════════════════════════════════════════════╗\n";
     cout << "║                  시 험 결 과                       ║\n";
     cout << "╠════════════════════════════════════════════════════╣\n";
-    cout << "║                                                    ║\n";
-    cout << "  정답 : " << score << " / " << questionCount << "\n";
-    cout << "║                                                    ║\n";
+    cout << "  정답 : " << correct_Count << " / "<< question_Count << "\n";
 
-    if (score >= 2)
+    if (correct_Count >= 2)
     {
         cout << "                ★ 시험 통과! ★\n";
-        cout << "║                                                    ║\n";
         cout << "╚════════════════════════════════════════════════════╝\n";
         return true;
     }
 
     cout << "                시험 실패...\n";
-    cout << "║                                                    ║\n";
     cout << "╚════════════════════════════════════════════════════╝\n";
 
     return false;
@@ -225,7 +275,6 @@ void Execute_Elite_Skill(Player* player, Monster& monster)
         break;
     }
 }
-
 //======================================================
 // 레거시 래퍼 함수들
 //======================================================
@@ -235,7 +284,6 @@ void Array_Loop_Question(Player* player, Monster& monster) { Tutor_Test(player, 
 void Function_Question(Player* player, Monster& monster) { Tutor_Test(player, monster); }
 void Pointer_Memory_Question(Player* player, Monster& monster) { Tutor_Test(player, monster); }
 void Object_Stl_Question(Player* player, Monster& monster) { Tutor_Test(player, monster); }
-
 //======================================================
 // 튜터 판별 함수
 //======================================================

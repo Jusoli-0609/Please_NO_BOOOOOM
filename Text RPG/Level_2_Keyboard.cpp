@@ -4,7 +4,7 @@
 Level_2_Keyboard::Level_2_Keyboard()
 	: Equipment
 	(
-		"2키보드",
+		"하급 키보드",
 		4,
 		0,
 		Equipment_Grade::Low,
@@ -13,7 +13,7 @@ Level_2_Keyboard::Level_2_Keyboard()
 |MEMBRANE|
 |[______]|
 +--------+)",
-        "설명",
+        "드디어 키가 올라오긴 합니다.",
         6,
         1
     )

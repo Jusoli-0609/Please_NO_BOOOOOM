@@ -47,5 +47,6 @@ void Boss_Battle(Player* player, Monster& monster, Inventory<Item>& inventory, C
 bool Ask_Single_Quiz(const Quiz& quiz);
 void First_Impression_Quiz_Phase(Player* player, Monster& monster, std::vector<Quiz>& quizPool);
 void Final_Boss_Monster_Turn(Player* player, Monster& monster, int turnCount, std::vector<Quiz>& quizPool);
+bool Final_Boss_Duo_Battle(Player* player, Monster& first_Boss, Monster& second_Boss, Inventory<Item>& inventory);
 
 #endif // BATTLE_SYSTEM_H

@@ -7,6 +7,7 @@
 class Monster;
 class Currently_Equipped_Equipments;
 class Currently_Equipped_Tutor;
+class Console_Manager;
 
 class Player
 {
@@ -107,7 +108,7 @@ public:
 
     // 상태 출력
 // 플레이어 정보만 출력하는 기존 호환용 상태창
-    void Print_Status() const;
+    void Print_Status(Console_Manager& console) const;
     // 장비 스탯 가져오기
     void Apply_Equipment_Stats(
         const Currently_Equipped_Equipments& equipments

@@ -4,7 +4,7 @@
 Level_1_Glasses::Level_1_Glasses()
 	: Equipment
 	(
-		"1안경",
+		"최하급 안경",
 		0,
 		2,
 		Equipment_Grade::Worst,
@@ -12,7 +12,7 @@ Level_1_Glasses::Level_1_Glasses()
 		R"( .--..--.
 (  )(  )
  '--''--')",
-        "설명",
+        "기스가 하도 나 앞이 보이지 않는 안경",
 		2,
 		1
 	)

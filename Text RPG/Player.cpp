@@ -5,6 +5,10 @@
 #include "Equipment.h"
 #include "Tutor.h"
 #include "Monster.h"
+#include "Console_Manager.h"
+#include <sstream>
+#include <limits>
+
 // 이름을 전달받아 플레이어를 생성하고 나머지 멤버를 기본값으로 초기화한다.
 Player::Player(const std::string& name)
     : name(name),
@@ -120,7 +124,7 @@ void Player::Apply_Critical_Damage(int& damage) const
     }
 
     damage = static_cast<int>(damage * 1.5f);
-    std::cout << "★ 크리티컬! ★\n";
+    std::cout << "★ 약점공격! ★\n";
 }
 
 // 데미지 계산 공식, 공격력, 방어력, HP, MP, 은신, 민첩 비율을 조합하여 계산
@@ -179,106 +183,208 @@ void Add_statpoints(Player* player, int points)
 	player->Add_Stat_Points(points);
 }
 
-void Player::Print_Status() const
+void Player::Print_Status(Console_Manager& console) const
 {
     Update_Equipment_Buff();
-    auto Print_Stat = [](const std::string& stat_name,
-        int base_stat,
-        int final_stat)
+
+    const std::string LINE(120, '=');
+    const std::string SUB_LINE(120, '-');
+
+    auto Add_Stat = [](
+        std::ostringstream& out,
+        const std::string& name,
+        int base,
+        int final)
         {
-            int additional_stat = final_stat - base_stat;
+            int additional = final - base;
 
-            std::cout
-                << stat_name
-                << ": "
-                << final_stat
-                << "  (기본 "
-                << base_stat;
+            out << name << ": " << final
+                << "  (기본 " << base;
 
-            if (additional_stat > 0)
+            if (additional > 0)
             {
-                std::cout << " + 추가 " << additional_stat;
+                out << " + 추가 " << additional;
             }
-            else if (additional_stat < 0)
+            else if (additional < 0)
             {
-                std::cout << " - 감소 " << -additional_stat;
+                out << " - 감소 " << -additional;
             }
             else
             {
-                std::cout << " + 추가 0";
+                out << " + 추가 0";
             }
 
-            std::cout << ")";
+            out << ")";
         };
 
-    std::cout << "\n";
-    std::cout << "================================================================================\n";
-    std::cout << "                               캐릭터 정보\n";
-    std::cout << "================================================================================\n";
+    int page = 1;
 
-    std::cout
-        << "이름: " << name
-        << "    직업: " << job
-        << "    레벨: " << level
-        << "    경험치: " << Get_Exp()
-        << " / " << Get_Max_Exp()
-        << '\n';
-
-    std::cout
-        << "HP: " << hp << " / " << maxhp
-        << "    MP: " << mp << " / " << maxmp
-        << '\n';
-
-    std::cout << "--------------------------------------------------------------------------------\n";
-    std::cout << "[능력치]\n";
-
-    Print_Stat("MAX HP", baseStat.maxHp, maxhp);
-    std::cout << "    ";
-    Print_Stat("MAX MP", baseStat.maxMp, maxmp);
-    std::cout << '\n';
-
-    Print_Stat("ATK", baseStat.atk, atk);
-    std::cout << "    ";
-    Print_Stat("DEF", baseStat.def, def);
-    std::cout << "    ";
-    Print_Stat("AP", baseStat.ap, ap);
-    std::cout << '\n';
-
-    Print_Stat("SNE", baseStat.sne, sne);
-    std::cout << "    ";
-    Print_Stat("AGI", baseStat.agi, agi);
-    std::cout << '\n';
-
-    std::cout << "남은 분배 가능 스탯포인트: " << statpoints << '\n';
-
-    std::cout << "--------------------------------------------------------------------------------\n";
-    std::cout << "[스킬]\n";
-
-    std::cout
-        << "1. " << skill1Name
-        << "    2. " << skill2Name
-        << '\n';
-
-    std::cout
-        << "3. " << skill3Name
-        << "    그로기: " << groggyAttackName
-        << '\n';
-
-    std::cout << "--------------------------------------------------------------------------------\n";
-    std::cout << "[장착 장비]\n";
-
-    if (currentlyEquippedEquipments != nullptr)
+    while (true)
     {
-        currentlyEquippedEquipments
-            ->Print_Currently_Equipped_Equipments();
-    }
-    else
-    {
-        std::cout << "장비 정보 없음\n";
-    }
+        console.Clear();
 
-    std::cout << "--------------------------------------------------------------------------------\n";
-    std::cout << "[튜터]\n";
+        // =====================================================
+        // 1페이지: 기본 정보, 능력치, 스킬
+        // =====================================================
+        if (page == 1)
+        {
+            std::ostringstream output;
+
+            output
+                << LINE << '\n'
+                << "                                                   캐릭터 정보\n"
+                << "                                                     1 / 3\n"
+                << LINE << '\n'
+
+                << "이름: " << name
+                << "    직업: " << job
+                << "    레벨: " << level
+                << "    경험치: " << Get_Exp()
+                << " / " << Get_Max_Exp()
+                << '\n'
+
+                << "HP: " << hp << " / " << maxhp
+                << "    MP: " << mp << " / " << maxmp
+                << '\n'
+
+                << SUB_LINE << '\n'
+                << "[능력치]\n";
+
+            Add_Stat(
+                output,
+                "MAX HP",
+                baseStat.maxHp,
+                maxhp
+            );
+
+            output << "    ";
+
+            Add_Stat(
+                output,
+                "MAX MP",
+                baseStat.maxMp,
+                maxmp
+            );
+
+            output << '\n';
+
+            Add_Stat(
+                output,
+                "ATK",
+                baseStat.atk,
+                atk
+            );
+
+            output << "    ";
+
+            Add_Stat(
+                output,
+                "DEF",
+                baseStat.def,
+                def
+            );
+
+            output << "    ";
+
+            Add_Stat(
+                output,
+                "AP",
+                baseStat.ap,
+                ap
+            );
+
+            output << '\n';
+
+            Add_Stat(
+                output,
+                "SNE",
+                baseStat.sne,
+                sne
+            );
+
+            output << "    ";
+
+            Add_Stat(
+                output,
+                "AGI",
+                baseStat.agi,
+                agi
+            );
+
+            output
+                << '\n'
+                << "남은 분배 가능 스탯포인트: "
+                << statpoints
+                << '\n'
+
+                << SUB_LINE << '\n'
+                << "[스킬]\n"
+
+                << "1. " << skill1Name
+                << "    2. " << skill2Name
+                << '\n'
+
+                << "3. " << skill3Name
+                << "    그로기: " << groggyAttackName
+                << '\n'
+
+                << LINE << '\n';
+
+            // 정보는 즉시 출력
+            console.Slow_Print(
+                output.str(),
+                0
+            );
+        }
+
+        // =====================================================
+        // 2페이지: 장착 장비
+        // =====================================================
+        else if (page == 2)
+        {
+            std::ostringstream output;
+
+            output
+                << LINE << '\n'
+                << "                                                캐릭터 추가 정보\n"
+                << "                                                     2 / 3\n"
+                << LINE << '\n'
+                << "[장착 장비]\n";
+
+            console.Slow_Print(
+                output.str(),
+                0
+            );
+
+            if (currentlyEquippedEquipments != nullptr)
+            {
+                currentlyEquippedEquipments
+                    ->Print_Currently_Equipped_Equipments();
+            }
+            else
+            {
+                std::cout << "장비 정보 없음\n";
+            }
+
+            std::cout
+                << LINE << '\n';
+        }
+
+        // =====================================================
+        // 3페이지: 적용 효과
+        // =====================================================
+else if (page == 3)
+{
+    std::ostringstream output;
+
+    output
+        << LINE << '\n'
+        << "튜터 및 적용 효과\n"
+        << "3 / 3\n"
+        << LINE << '\n'
+        << "[튜터]\n";
+
+    console.Slow_Print(output.str(), 0);
 
     if (currentlyEquippedTutor != nullptr)
     {
@@ -290,67 +396,114 @@ void Player::Print_Status() const
         std::cout << "튜터 정보 없음\n";
     }
 
-    std::cout << "--------------------------------------------------------------------------------\n";
-    std::cout << "[적용 효과]\n";
+    std::ostringstream effects;
+
+    effects
+        << SUB_LINE << '\n'
+        << "[적용 효과]\n";
 
     if (statModifiers.empty())
     {
-        std::cout << "없음\n";
+        effects << "없음\n";
     }
     else
     {
-        int effect_count = 0;
+        int effectCount = 0;
 
         for (const Stat_Modifier& modifier : statModifiers)
         {
-            std::cout << modifier.name;
+            effects << modifier.name;
 
             if (modifier.remainingTurns < 0)
             {
-                std::cout << " [영구]";
+                effects << " [영구]";
             }
             else
             {
-                std::cout << " [" << modifier.remainingTurns << "턴]";
+                effects
+                    << " ["
+                    << modifier.remainingTurns
+                    << "턴]";
             }
 
-            effect_count++;
+            effectCount++;
 
-            if (effect_count % 2 == 0)
+            if (effectCount % 2 == 0)
             {
-                std::cout << '\n';
+                effects << '\n';
             }
             else
             {
-                std::cout << "    |    ";
+                effects << "    |    ";
             }
         }
 
-        if (effect_count % 2 != 0)
+        if (effectCount % 2 != 0)
         {
-            std::cout << '\n';
+            effects << '\n';
         }
     }
 
-    std::cout << "================================================================================\n";
-   
-    if (statpoints > 0)
-    {
-        std::cout << "스탯포인트를 분배하시겠습니까?\n";
-        std::cout << "1. 분배하기\n";
-        std::cout << "0. 돌아가기\n";
-        std::cout << "선택: ";
+    effects << LINE << '\n';
+
+    console.Slow_Print(effects.str(), 0);
+}
+
+        // =====================================================
+        // 선택지
+        // =====================================================
+        std::ostringstream menu;
+
+        if (page > 1)
+        {
+            menu << "1. 이전 페이지\n";
+        }
+
+        if (page < 3)
+        {
+            menu << "2. 다음 페이지\n";
+        }
+
+        if (statpoints > 0)
+        {
+            menu << "3. 스탯포인트 분배\n";
+        }
+
+        menu
+            << "0. 돌아가기\n"
+            << "선택: ";
+
+        // 선택지만 타이핑 효과
+        console.Slow_Print(
+            menu.str(),
+            20
+        );
 
         int choice;
         std::cin >> choice;
 
-        if (choice == 1)
+        if (choice == 0)
         {
-            const_cast<Player*>(this)->Distribute_Stat_Points();
+            return;
+        }
+
+        if (choice == 1 && page > 1)
+        {
+            page--;
+        }
+        else if (choice == 2 && page < 3)
+        {
+            page++;
+        }
+        else if (choice == 3 && statpoints > 0)
+        {
+            const_cast<Player*>(this)
+                ->Distribute_Stat_Points();
+
+            return;
         }
     }
 }
-
 // 스탯포인트를 분배하는 함수
 void Player::Distribute_Stat_Points()
 {

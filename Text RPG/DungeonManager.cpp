@@ -31,6 +31,120 @@ namespace
 	constexpr int TUTOR_GIMMICK_SCORE_PENALTY =50;
 	constexpr int MINIMUM_BATTLE_HP =1;
 }
+namespace
+{
+	void Print_Side_By_Side_Blocks(const std::vector<std::string>& left_Block, const std::vector<std::string>& right_Block,int gap = 8)
+	{
+		size_t left_Width = 0;
+
+		for (const std::string& line : left_Block)
+		{
+			if (line.size() > left_Width)
+			{
+				left_Width = line.size();
+			}
+		}
+
+		size_t max_Lines =std::max(left_Block.size(), right_Block.size());
+
+		for (size_t index = 0;
+			index < max_Lines;
+			index++)
+		{
+			std::string left_Line = index < left_Block.size() ? left_Block[index] : "";
+			std::string right_Line = index < right_Block.size() ? right_Block[index] : "";
+
+			cout << left_Line;
+
+			size_t padding = left_Width - left_Line.size();
+
+			for (size_t i = 0;
+				i < padding + gap;
+				i++)
+			{
+				cout << ' ';
+			}
+
+			cout << right_Line << endl;
+		}
+	}
+
+	std::vector<std::string> Get_Final_Manager_01_Intro_Block()
+	{
+		return
+		{
+			".-------------------------------------------.",
+			"| FINAL_MANAGER_01 :: CODE REVIEW MODE      |",
+			"| SYSTEM STATUS : STRICT / ONLINE           |",
+			"'-------------------------------------------'",
+			"              .-----------.",
+			"             /|  o   o   |\\",
+			"            / |    ^     | \\",
+			"           |  |  [OK?]   |  |",
+			"           |  |          |  |",
+			"            \\ |__________| /",
+			"             \\____||_____/ ",
+			"                  ||       ",
+			"             ____/||\\____  ",
+			"            / [ CODE REVIEW ] \\",
+			"           /__ERR__WARN__PASS_\\"
+		};
+	}
+
+	std::vector<std::string> Get_Final_Manager_02_Intro_Block()
+	{
+		return
+		{
+			".-------------------------------------------.",
+			"| FINAL_MANAGER_02 :: LAST VALIDATION MODE  |",
+			"| DEPLOYMENT GATE : LOCKED                  |",
+			"'-------------------------------------------'",
+			"              .-----------.",
+			"             /|  o   o   |\\",
+			"            / |    ^     | \\",
+			"           |  |  FINAL   |  |",
+			"           |  |          |  |",
+			"            \\ |__________| /",
+			"             \\____||_____/ ",
+			"                  ||       ",
+			"             ____/||\\____  ",
+			"            / [ BUILD ][ TEST ][ RUN ] \\",
+			"           /__FAIL__WARN__PASS_________\\"
+		};
+	}
+
+	void Print_Final_Boss_Duo_Intro_Art()
+	{
+		Print_Side_By_Side_Blocks( Get_Final_Manager_01_Intro_Block(), Get_Final_Manager_02_Intro_Block(), 10);
+	}
+
+	void Print_Final_Boss_Duo_Intro_Dialogue(const Monster& first_Boss, const Monster& second_Boss)
+	{
+		cout << endl;
+		cout << "==================================================" << endl;
+		cout << "[ 최종 코드 검증실 ]" << endl;
+		cout << "==================================================" << endl;
+		cout << "모든 튜터님의 시험 기록이 동시에 반응하기 시작했다." << endl;
+		cout << "입구를 막고 있던 코드들이 흩어졌다." << endl;
+		cout << "스포트라이트가 켜졌다." << endl;
+		cout << endl;
+		cout << first_Boss.getName() << "와 " << second_Boss.getName() << "가 동시에 모습을 드러냈다." << endl;
+		cout << "==================================================" << endl;
+
+		Print_Final_Boss_Duo_Intro_Art();
+
+		cout << endl;
+		cout << "==================================================" << endl;
+		cout << "[ 최종 코드 검증 시작 ]" << endl;
+		cout << "==================================================" << endl;
+		cout << "최종보스는 기본적으로 일반 공격을 사용한다." << endl;
+		cout << "일정 확률로 코드 검증 기믹이 발동한다." << endl;
+		cout << "객관식 정답 시 두 보스에게 광역 피해가 들어간다." << endl;
+		cout << "주관식 정답 시 두 보스 중 하나를 선택해 그로기 공격을 사용한다." << endl;
+		cout << "문제 오답 시 살아 있는 보스들의 공격이 2배로 강화된다." << endl;
+		cout << "==================================================" << endl;
+	}
+}
 
 
 //=============================================================================
@@ -563,13 +677,12 @@ void Dungeon_Manager::Run_Tutor_Challenge(Player* player, Inventory_For_Equipmen
 	Clear_Current_Chapter();
 }
 
-bool Dungeon_Manager::Run_Tutor_Code_Challenge(Player* player,Monster& tutor_Monster)
+bool Dungeon_Manager::Run_Tutor_Code_Challenge(Player* player, Monster& tutor_Monster)
 {
 	if (player == nullptr)
 	{
 		return false;
 	}
-
 	return Tutor_Test(player,tutor_Monster);
 }
 
@@ -1056,30 +1169,27 @@ void Dungeon_Manager::Print_Tutor_Equipment_Status(const Inventory_For_Equipment
 // 10. 최종보스방 파트
 //=============================================================================
 
-void Dungeon_Manager::Run_Final_Boss_Room(Player* player,Inventory<Item>& inventory, const Inventory_For_Equipments_Only&equipment_Inventory, const Currently_Equipped_Equipments&equipped_Equipments)
+void Dungeon_Manager::Run_Final_Boss_Room(Player* player, Inventory<Item>& inventory, const Inventory_For_Equipments_Only& equipment_Inventory, const Currently_Equipped_Equipments& equipped_Equipments)
 {
 	if (player == nullptr)
 	{
 		cout << "조원의 정보를 찾을 수 없다." << endl;
-
 		return;
 	}
 
 	if (_is_Game_Cleared)
 	{
 		cout << "이미 매니저님들의 최종 시험을 통과했다." << endl;
-
 		return;
 	}
 
 	if (!_is_All_Chapter_Cleared)
 	{
 		cout << "모든 내일배움캠프 과정을 수료하지 못했다." << endl;
-
 		return;
 	}
 
-	if(!Check_Final_Boss_Room_Available(equipment_Inventory, equipped_Equipments))
+	if (!Check_Final_Boss_Room_Available(equipment_Inventory, equipped_Equipments))
 	{
 		cout << endl;
 		cout << "╠════════════════════════════════════════════════════╣\n";
@@ -1087,7 +1197,7 @@ void Dungeon_Manager::Run_Final_Boss_Room(Player* player,Inventory<Item>& invent
 		cout << "╠════════════════════════════════════════════════════╣\n";
 		cout << "아직 모든 챕터를 완료하지 못했다." << endl;
 
-		Print_Tutor_Equipment_Status (equipment_Inventory, equipped_Equipments);
+		Print_Tutor_Equipment_Status(equipment_Inventory, equipped_Equipments);
 
 		cout << "╠════════════════════════════════════════════════════╣\n";
 
@@ -1096,43 +1206,18 @@ void Dungeon_Manager::Run_Final_Boss_Room(Player* player,Inventory<Item>& invent
 
 	Monster kim_Dong_Hyun_Manager;
 	kim_Dong_Hyun_Manager.Initialize_Final_Boss(Monster_Type::KIM_DONG_HYUN_MANAGER);
+
 	Monster moon_Seung_Ho_Manager;
 	moon_Seung_Ho_Manager.Initialize_Final_Boss(Monster_Type::MOON_SEUNG_HO_MANAGER);
 
-	cout << endl;
-	cout << "╠════════════════════════════════════════════════════╣\n";
-	cout << "		[ 최종 코드 검증실 ]" << endl;
-	cout << "╠════════════════════════════════════════════════════╣\n";
-	cout << "  튜터님들에게 받은 선물들이 동시에 반응하기 시작했다." << endl;
-	cout << "입구를 막고 있던 코드들이 흩어졌다." << endl;
-	cout << "스포트라이트가 켜졌다." << endl;
-	cout << endl;
-	cout << kim_Dong_Hyun_Manager.getName() << "와 " << moon_Seung_Ho_Manager.getName() << "가 동시에 모습을 드러냈다." << endl;
-	cout << "╠════════════════════════════════════════════════════╣\n";
-	cout << endl;
-	cout << "╠═══════════════════ FINAL BOSS ═════════════════════╣\n";
+	Print_Final_Boss_Duo_Intro_Dialogue(kim_Dong_Hyun_Manager, moon_Seung_Ho_Manager);
 
-	kim_Dong_Hyun_Manager.Print_Ascii_Art();
-
-	moon_Seung_Ho_Manager.Print_Ascii_Art();
-
-	cout << "╠════════════════════════════════════════════════════╣\n";
-
-	/*Print_Final_Boss_Duo_Introduction(kim_Dong_Hyun_Manager, moon_Seung_Ho_Manager);
-
-	cout << endl;
 	cout << "==================================================" << endl;
-	cout << "[ 최종 코드 검증 시작 ]" << endl;
-	cout << "==================================================" << endl;
-
-	kim_Dong_Hyun_Manager.Print_Attack_Message();
-
-	moon_Seung_Ho_Manager.Print_Attack_Message();
-
-	cout << endl;
-	cout << "두 매니저님이 동시에 최종 코드 검증을 시작했다." << endl;
-	cout << "플레이어는 공격할 대상을 직접 선택해야 한다." << endl;
-	cout << "두 매니저님은 모두 자신의 턴에 공격한다." << endl;
+	cout << "최종보스는 기본적으로 일반 공격을 사용한다." << endl;
+	cout << "일정 확률로 코드 검증 기믹이 발동한다." << endl;
+	cout << "객관식 정답 시 두 보스에게 광역 피해가 들어간다." << endl;
+	cout << "주관식 정답 시 두 보스 중 하나를 선택해 그로기 공격을 사용한다." << endl;
+	cout << "문제 오답 시 매니저님들이 GPT를 뺏어갑니다." << endl;
 	cout << "==================================================" << endl;
 
 	bool is_Final_Boss_Cleared = Final_Boss_Duo_Battle(player, kim_Dong_Hyun_Manager, moon_Seung_Ho_Manager, inventory);
@@ -1143,12 +1228,11 @@ void Dungeon_Manager::Run_Final_Boss_Room(Player* player,Inventory<Item>& invent
 		cout << "==================================================" << endl;
 		cout << "[ 최종 코드 검증 실패 ]" << endl;
 		cout << "==================================================" << endl;
-		cout << "두 매니저님의 최종 코드 검증을 통과하지 못했다." << endl;
+		cout << "매니저님의 최종 코드 검증을 통과하지 못했다." << endl;
 		cout << "재정비소에서 상태를 정비한 뒤 다시 도전할 수 있다." << endl;
 		cout << "==================================================" << endl;
-
 		return;
-	}*/
+	}
 
 	_is_Game_Cleared = true;
 
@@ -1163,8 +1247,7 @@ void Dungeon_Manager::Run_Final_Boss_Room(Player* player,Inventory<Item>& invent
 	cout << "\"최종 코드 검증 완료\"" << endl;
 	cout << "╠════════════════════════════════════════════════════╣\n";
 
-	Run_Ending
-	(player);
+	Run_Ending(player);
 }
 
 void Dungeon_Manager::Run_Ending(const Player* player) const

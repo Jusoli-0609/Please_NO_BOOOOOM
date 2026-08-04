@@ -4,7 +4,7 @@
 Level_3_Engine::Level_3_Engine()
 	: Equipment
 	(
-		"3언리얼 엔진",
+		"중급 언리얼 엔진",
 		4,
 		4,
 		Equipment_Grade::Middle,
@@ -13,7 +13,7 @@ Level_3_Engine::Level_3_Engine()
 | UE 5.0 |
 | [FAST] |
 +--------+)",
-        "설명",
+        "그럭저럭 쓸만한 엔진",
         8,
         1
     )

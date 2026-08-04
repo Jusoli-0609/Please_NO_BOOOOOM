@@ -6,7 +6,7 @@
 Level_1_Keyboard::Level_1_Keyboard()
 	: Equipment
 	(
-		"1키보드",
+		"최하급 키보드",
 		2,
 		0,
 		Equipment_Grade::Worst,
@@ -15,7 +15,7 @@ Level_1_Keyboard::Level_1_Keyboard()
 |[][][][]|
 |[______]|
 +--------+)",
-       "설명",
+       "키가 누른 뒤로 안 올라옵니다.",
         6,
         1
     )

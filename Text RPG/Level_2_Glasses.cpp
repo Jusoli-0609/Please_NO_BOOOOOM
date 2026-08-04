@@ -4,7 +4,7 @@
 Level_2_Glasses::Level_2_Glasses()
 	: Equipment
 	(
-		"2안경",
+		"하급 안경",
 		0,
 		4,
 		Equipment_Grade::Low,
@@ -12,7 +12,7 @@ Level_2_Glasses::Level_2_Glasses()
 		R"( .==..==.
 (  )(  )
  '==''==')",
-        "설명",
+        "이제 앞이 뿌옇게 보이지는 않습니다.",
 		2,
 		1
 	)

@@ -4,20 +4,18 @@
 #include "Monster.h"
 #include "Quiz_Bank.h"
 
-#include <vector>
-
-//======================================================
-// 스킬 및 퀴즈 관련 함수 선언
-//======================================================
+// 엘리트 / 튜터 스킬 발동 조건
 bool Check_Elite_Skill(Monster& monster, int turnCount);
-bool Ask_Quiz(Player* player, Monster& monster, const Quiz& quiz);
+// 정예 몬스터 객관식 문제
+bool Ask_Quiz(Player* player, Monster&monster, const Quiz& quiz);
 bool Ask_Random_Elite_Question(Player* player, Monster& monster);
-
-std::vector<Quiz>* Get_Tutor_Quiz(Monster_Type type);
+// 튜터 보스 주관식 문제
+bool Ask_Tutor_Question(const Tutor_Question& question);
 bool Tutor_Test(Player* player, Monster& monster);
+
 void Execute_Elite_Skill(Player* player, Monster& monster);
 
-// 문제 출제 래퍼 함수들
+// 기존 코드 호환용 래퍼 함수
 void Code_Snippet_Question(Player* player, Monster& monster);
 void Variable_Condition_Question(Player* player, Monster& monster);
 void Array_Loop_Question(Player* player, Monster& monster);
