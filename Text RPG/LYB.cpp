@@ -46,6 +46,13 @@ void LYB::Attack(Monster* monster)
     }
 
     // [기본 공격]: 공격력 90% + 민첩성(AGI) 10% (고양이를 쫓아 날렵하게 움직이는 평타 컨셉)
+    // 명중 판정: 실패하면 데미지를 적용하지 않고 공격 종료
+    if (!Check_Hit(monster))
+    {
+        std::cout << "공격이 빗나갔습니다!\n";
+        return;
+    }
+
     int damage = Calculate_Damage(
         0.9f, // ATK 90%
         0.0f, // DEF 0%
@@ -56,10 +63,13 @@ void LYB::Attack(Monster* monster)
         monster->getDefence()
     );
 
-    Apply_Damage(monster, damage);
-
     std::cout << name << "의 기본 공격!\n";
     std::cout << "오 잠시만요 고양이가...\n";
+    // 명중한 공격에 치명타 판정 적용
+    Apply_Critical_Damage(damage);
+
+    Apply_Damage(monster, damage);
+
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }
 
@@ -82,16 +92,26 @@ void LYB::Skill1(Monster* monster)
     mp -= mpCost;
 
     // [스킬 1 - 랜선 물어뜯기]: 재빠르게 뛰어들어 방해하는 민첩한 컨셉 (AGI 30% 가미)
+    // 명중 판정: 실패하면 데미지를 적용하지 않고 공격 종료
+    if (!Check_Hit(monster))
+    {
+        std::cout << "공격이 빗나갔습니다!\n";
+        return;
+    }
+
     int damage = Calculate_Damage(
         1.0f, 0.0f, 0.0f, // ATK 100%
         0.0f, 0.0f, 0.3f, // AGI 30%
         monster->getDefence()
     );
 
-    Apply_Damage(monster, damage);
-
     std::cout << name << "의" << skill1Name << "!\n";
     std::cout << name << " : " << "메에\n";
+    // 명중한 공격에 치명타 판정 적용
+    Apply_Critical_Damage(damage);
+
+    Apply_Damage(monster, damage);
+
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }
 
@@ -114,16 +134,26 @@ void LYB::Skill2(Monster* monster)
     mp -= mpCost;
 
     // [스킬 2 - 고양이 애교]: 집사의 고양이한테서 우러나오는 치명적 애교 컨셉 (HP 20% 가미)
+    // 명중 판정: 실패하면 데미지를 적용하지 않고 공격 종료
+    if (!Check_Hit(monster))
+    {
+        std::cout << "공격이 빗나갔습니다!\n";
+        return;
+    }
+
     int damage = Calculate_Damage(
         1.2f, 0.0f, 0.2f, // ATK 120%, HP 20%
         0.0f, 0.0f, 0.0f,
         monster->getDefence()
     );
 
-    Apply_Damage(monster, damage);
-
     std::cout << name << "의 " << skill2Name << "!\n";
     std::cout << "냐옹이다옹\n";
+    // 명중한 공격에 치명타 판정 적용
+    Apply_Critical_Damage(damage);
+
+    Apply_Damage(monster, damage);
+
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }
 
@@ -146,16 +176,26 @@ void LYB::Skill3(Monster* monster)
     mp -= mpCost;
 
     // [스킬 3 - 츄르 바르기]: 마나를 집중해 강력한 한 방을 터뜨리는 주력 강공격 (MP 30% 가미)
+    // 명중 판정: 실패하면 데미지를 적용하지 않고 공격 종료
+    if (!Check_Hit(monster))
+    {
+        std::cout << "공격이 빗나갔습니다!\n";
+        return;
+    }
+
     int damage = Calculate_Damage(
         1.5f, 0.0f, 0.0f, // ATK 150%
         0.3f, 0.0f, 0.0f, // MP 30%
         monster->getDefence()
     );
 
-    Apply_Damage(monster, damage);
-
     std::cout << name << "의 " << skill3Name << "!\n";
     std::cout << "제가 원인을 찾은 것 같습니다.\n";
+    // 명중한 공격에 치명타 판정 적용
+    Apply_Critical_Damage(damage);
+
+    Apply_Damage(monster, damage);
+
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }
 
@@ -168,15 +208,25 @@ void LYB::Groggy_Attack(Monster* monster)
     }
 
     // [그로기 공격 - 자동차 고장]: 묵직한 방어력을 실어 상대를 완전히 멈춰 세우는 치명타 (DEF 40% 가미)
+    // 명중 판정: 실패하면 데미지를 적용하지 않고 공격 종료
+    if (!Check_Hit(monster))
+    {
+        std::cout << "공격이 빗나갔습니다!\n";
+        return;
+    }
+
     int damage = Calculate_Damage(
         1.8f, 0.4f, 0.0f, // ATK 180%, DEF 40%
         0.0f, 0.0f, 0.0f,
         monster->getDefence()
     );
 
-    Apply_Damage(monster, damage);
-
     std::cout << name << "의 " << groggyAttackName << "!\n";
     std::cout << "자동차 고장(이동 능력 감소시키기)\n";
+    // 명중한 공격에 치명타 판정 적용
+    Apply_Critical_Damage(damage);
+
+    Apply_Damage(monster, damage);
+
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }

@@ -100,9 +100,26 @@ bool Player::Check_Critical() const
     {
         criticalChance = 0.0f;
     }
+    else if (criticalChance > 70.0f)
+    {
+        criticalChance = 70.0f;
+    }
+
     int randomValue = rand() % 100 + 1;
 
     return randomValue <= criticalChance;
+}
+
+// 치명타가 발생하면 전달받은 데미지를 1.5배로 변경한다.
+void Player::Apply_Critical_Damage(int& damage) const
+{
+    if (!Check_Critical())
+    {
+        return;
+    }
+
+    damage = static_cast<int>(damage * 1.5f);
+    std::cout << "★ 크리티컬! ★\n";
 }
 
 // 데미지 계산 공식, 공격력, 방어력, HP, MP, 은신, 민첩 비율을 조합하여 계산
