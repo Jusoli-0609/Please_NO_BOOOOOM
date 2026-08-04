@@ -146,7 +146,7 @@ void Camp_Manager::Open_Pep_Store_Menu()
                     << equipments[i].Get_Equipment_Name()
                     << endl;
                 cout << equipments[i].Get_Equipment_Price()*2
-                    << " Gold"
+                    << " 젬"
                     << endl;
             }
 
