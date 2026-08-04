@@ -4,7 +4,7 @@
 Level_4_Glasses::Level_4_Glasses()
 	: Equipment
 	(
-		"4안경",
+		"상급 안경",
 		0,
 		11,
 		Equipment_Grade::High,
@@ -12,7 +12,7 @@ Level_4_Glasses::Level_4_Glasses()
 		R"( .<>..<>.
 (  )(  )
  '<>''<>')",
-        "설명",
+        "드디어 1.0의 시력을 갖추게 됩니다.",
 		2,
 		1
 	)

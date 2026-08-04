@@ -4,7 +4,7 @@
 Level_2_Mouse::Level_2_Mouse()
 	: Equipment
 	(
-		"2마우스",
+		"하급 마우스",
 		4,
 		0,
 		Equipment_Grade::Low,
@@ -13,7 +13,7 @@ Level_2_Mouse::Level_2_Mouse()
  / [DPI]\
 |   ||   |
  \______/)",
-        "설명",
+        "클릭이 드디어 되기 시작합니다.",
 		5,
 		1
 	)

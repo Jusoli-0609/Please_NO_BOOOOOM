@@ -6,7 +6,7 @@
 Level_1_Headset::Level_1_Headset()
 	: Equipment
 	(
-		"1헤드셋",
+		"최하급 헤드셋",
 		0,
 		2,
 		Equipment_Grade::Worst,
@@ -15,7 +15,7 @@ Level_1_Headset::Level_1_Headset()
 |  L  R  |
 |  MIC   |
  \_||||_/)",
-        "설명",
+        "사플이 뭔가요?",
 		4,
 		1
 	)

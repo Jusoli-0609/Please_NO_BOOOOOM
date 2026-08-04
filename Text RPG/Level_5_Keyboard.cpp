@@ -4,7 +4,7 @@
 Level_5_Keyboard::Level_5_Keyboard()
 	: Equipment
 	(
-		"5키보드",
+		"최상급 키보드",
 		16,
 		0,
 		Equipment_Grade::Best,
@@ -13,7 +13,7 @@ Level_5_Keyboard::Level_5_Keyboard()
 |MASTER{}|
 |[______]|
 +--------+)",
-        "설명",
+        "아무리 샷건을 내려쳐도 부서지지 않습니다.",
         6,
         1
     )

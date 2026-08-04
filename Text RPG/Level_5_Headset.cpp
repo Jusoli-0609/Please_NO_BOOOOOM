@@ -4,7 +4,7 @@
 Level_5_Headset::Level_5_Headset()
 	: Equipment
 	(
-		"5헤드셋",
+		"최상급 헤드셋",
 		0,
 		16,
 		Equipment_Grade::Best,
@@ -13,7 +13,7 @@ Level_5_Headset::Level_5_Headset()
 | MASTER |
 | <7.1>  |
  \_||||_/)",
-		"설명",
+		"평소에 듣지 못하는 소리도 듣게 됩니다.",
 		4,
 		1
 	)

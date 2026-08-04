@@ -4,7 +4,7 @@
 Level_5_Glasses::Level_5_Glasses()
 	: Equipment
 	(
-		"5안경",
+		"최상급 안경",
 		0,
 		16,
 		Equipment_Grade::Best,

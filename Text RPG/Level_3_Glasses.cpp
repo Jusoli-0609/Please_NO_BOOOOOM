@@ -4,7 +4,7 @@
 Level_3_Glasses::Level_3_Glasses()
 	: Equipment
 	(
-		"3안경",
+		"중급 안경",
 		0,
 		7,
 		Equipment_Grade::Middle,
@@ -12,7 +12,7 @@ Level_3_Glasses::Level_3_Glasses()
 		R"( .##..##.
 ( @)(@ )
  '##''##')",
-        "설명",
+        "드디어 눈에 뭔가 보이기 시작합니다.",
 		2,
 		1
 	)

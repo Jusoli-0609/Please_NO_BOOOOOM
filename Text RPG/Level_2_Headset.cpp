@@ -4,7 +4,7 @@
 Level_2_Headset::Level_2_Headset()
 	: Equipment
 	(
-		"2헤드셋",
+		"하급 헤드셋",
 		0,
 		4,
 		Equipment_Grade::Low,
@@ -13,7 +13,7 @@ Level_2_Headset::Level_2_Headset()
 | STUDY  |
 |  MIC   |
  \_||||_/)",
-        "설명",
+        "주변 소음이라는 것이 무엇인지 깨닫게 됩니다.",
 		4,
 		1
 	)

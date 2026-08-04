@@ -4,7 +4,7 @@
 Level_1_Mouse::Level_1_Mouse()
 	: Equipment
 	(
-		"1마우스",
+		"최하급 마우스",
 		2,
 		0,
 		Equipment_Grade::Worst,
@@ -13,7 +13,7 @@ Level_1_Mouse::Level_1_Mouse()
  /  ||  \
 |   ||   |
  \______/)",
-        "설명",
+        "생쥐가 더 일을 잘합니다.",
 		5,
 		1
 	)

@@ -4,7 +4,7 @@
 Level_4_Mouse::Level_4_Mouse()
 	: Equipment
 	(
-		"4마우스",
+		"상급 마우스",
 		11,
 		0,
 		Equipment_Grade::High,
@@ -13,7 +13,7 @@ Level_4_Mouse::Level_4_Mouse()
  /[MACRO]\
 | <CODE> |
  \______/)",
-        "설명",
+        "아무리 많이 클릭해도 고장이 나지 않습니다.",
 		5,
 		1
 	)

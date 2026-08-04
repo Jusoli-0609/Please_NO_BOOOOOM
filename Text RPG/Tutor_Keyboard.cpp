@@ -12,7 +12,7 @@ Tutor_Keyboard::Tutor_Keyboard()
 | [BROWN]  |
 | <TUTOR>  |
 +----------+)",
-        "설명",
+        "키보드가 저절로 코드를 알잘딱하게 써줍니다.",
         6,
         1
     )

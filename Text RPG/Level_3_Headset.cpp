@@ -4,7 +4,7 @@
 Level_3_Headset::Level_3_Headset()
 	: Equipment
 	(
-		"3헤드셋",
+		"중급 헤드셋",
 		0,
 		7,
 		Equipment_Grade::Middle,
@@ -13,7 +13,7 @@ Level_3_Headset::Level_3_Headset()
 |  7.1   |
 | <MIC>  |
  \_||||_/)",
-        "설명",
+        "오 이게 소리란 것이군요",
 		4,
 		1
 	)
