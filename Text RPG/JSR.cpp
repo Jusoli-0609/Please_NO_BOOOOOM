@@ -46,6 +46,13 @@ void JSR::Attack(Monster* monster)
         return;
     }
     // 공격력 90으로 낮추고 컨셉에 맞게 음침함(SNE) 10% 설정했습니다.
+    // 명중 판정: 실패하면 데미지를 적용하지 않고 공격 종료
+    if (!Check_Hit(monster))
+    {
+        std::cout << "공격이 빗나갔습니다!\n";
+        return;
+    }
+
     int damage = Calculate_Damage(
         0.9f, // ATK 90%
         0.0f, // DEF 0%
@@ -56,10 +63,13 @@ void JSR::Attack(Monster* monster)
         monster->getDefence()
     );
 
-    Apply_Damage(monster, damage);
-
     std::cout << name << "의 기본 공격!\n";
     std::cout << "안타까운 일입니다.\n";
+    // 명중한 공격에 치명타 판정 적용
+    Apply_Critical_Damage(damage);
+
+    Apply_Damage(monster, damage);
+
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }
 
@@ -81,16 +91,26 @@ void JSR::Skill1(Monster* monster)
 
     mp -= mpCost;
     // 스킬 1 찬양단 동원: 공격력 100% + 민첩성(AGI) 20% (찬양단이 날렵하게 움직이는 컨셉)
+    // 명중 판정: 실패하면 데미지를 적용하지 않고 공격 종료
+    if (!Check_Hit(monster))
+    {
+        std::cout << "공격이 빗나갔습니다!\n";
+        return;
+    }
+
     int damage = Calculate_Damage(
         1.0f, 0.0f, 0.0f, // ATK 100%
         0.0f, 0.0f, 0.2f, // AGI 20%
         monster->getDefence()
     );
 
-    Apply_Damage(monster, damage);
-
     std::cout << name << "의" << skill1Name << "!\n";
     std::cout << name << " : " << "제가 말입니까?\n";
+    // 명중한 공격에 치명타 판정 적용
+    Apply_Critical_Damage(damage);
+
+    Apply_Damage(monster, damage);
+
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }
 
@@ -112,16 +132,26 @@ void JSR::Skill2(Monster* monster)
 
     mp -= mpCost;
     // 스킬 2 그림으로 정신공격하기: 공격력 120% + 체력(HP) 20% (정신공격으로 자신의 생명력을 실어보내는 컨셉)
+    // 명중 판정: 실패하면 데미지를 적용하지 않고 공격 종료
+    if (!Check_Hit(monster))
+    {
+        std::cout << "공격이 빗나갔습니다!\n";
+        return;
+    }
+
     int damage = Calculate_Damage(
         1.2f, 0.0f, 0.2f, // ATK 120%, HP 20%
         0.0f, 0.0f, 0.0f,
         monster->getDefence()
     );
 
-    Apply_Damage(monster, damage);
-
     std::cout << name << "의 " << skill2Name << "!\n";
     std::cout << "(꺽꺽꺽) 웃기\n";
+    // 명중한 공격에 치명타 판정 적용
+    Apply_Critical_Damage(damage);
+
+    Apply_Damage(monster, damage);
+
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }
 
@@ -143,16 +173,26 @@ void JSR::Skill3(Monster* monster)
 
     mp -= mpCost;
     // 스킬 3 - 복음 전파하기: 공격력 150% + 마나(MP) 30% (폭발적인 마나로 복음을 쏟아내는 주력기)
+    // 명중 판정: 실패하면 데미지를 적용하지 않고 공격 종료
+    if (!Check_Hit(monster))
+    {
+        std::cout << "공격이 빗나갔습니다!\n";
+        return;
+    }
+
     int damage = Calculate_Damage(
         1.5f, 0.0f, 0.0f, // ATK 150%
         0.3f, 0.0f, 0.0f, // MP 30%
         monster->getDefence()
     );
 
-    Apply_Damage(monster, damage);
-
     std::cout << name << "의 " << skill3Name << "!\n";
     std::cout << "저는 진실만 말합니다.\n";
+    // 명중한 공격에 치명타 판정 적용
+    Apply_Critical_Damage(damage);
+
+    Apply_Damage(monster, damage);
+
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }
 
@@ -164,15 +204,25 @@ void JSR::Groggy_Attack(Monster* monster)
         return;
     }
     // 그로기 공격 음침하게 염탐하기: 공격력 180% + 방어력(DEF) 40% (상대의 약점을 파고들어 묵직하게 짓누르는 치명타)
+    // 명중 판정: 실패하면 데미지를 적용하지 않고 공격 종료
+    if (!Check_Hit(monster))
+    {
+        std::cout << "공격이 빗나갔습니다!\n";
+        return;
+    }
+
     int damage = Calculate_Damage(
         1.8f, 0.4f, 0.0f, // ATK 180%, DEF 40%
         0.0f, 0.0f, 0.0f,
         monster->getDefence()
     );
 
-    Apply_Damage(monster, damage);
-
     std::cout << name << "의 " << groggyAttackName << "!\n";
     std::cout << "음침하게 염탐하기(약점 찾기)\n";
+    // 명중한 공격에 치명타 판정 적용
+    Apply_Critical_Damage(damage);
+
+    Apply_Damage(monster, damage);
+
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }

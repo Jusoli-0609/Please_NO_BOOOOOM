@@ -66,10 +66,13 @@ void JYJ::Attack(Monster* monster)
         monster->getDefence()
     );
 
-    Apply_Damage(monster, damage);
 
     std::cout << name << "의 기본 공격!\n";
     std::cout << "평타 대사 입력\n";
+    // 명중한 공격에 치명타 판정 적용
+    Apply_Critical_Damage(damage);
+
+    Apply_Damage(monster, damage);
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }
 
@@ -92,16 +95,26 @@ void JYJ::Skill1(Monster* monster)
     mp -= mpCost;
 
     // [스킬 1 - 블루투스식 말하기]: 소리가 보이지 않게 날렵하게 파고드는 컨셉 (공격력 100% + 민첩성 AGI 30%)
+    // 명중 판정: 실패하면 데미지를 적용하지 않고 공격 종료
+    if (!Check_Hit(monster))
+    {
+        std::cout << "공격이 빗나갔습니다!\n";
+        return;
+    }
+
     int damage = Calculate_Damage(
         1.0f, 0.0f, 0.0f, // ATK 100%
         0.0f, 0.0f, 0.3f, // AGI 30%
         monster->getDefence()
     );
 
-    Apply_Damage(monster, damage);
-
     std::cout << name << "의" << skill1Name << "!\n";
     std::cout << name << " : " << "뭔말알?\n";
+    // 명중한 공격에 치명타 판정 적용
+    Apply_Critical_Damage(damage);
+
+    Apply_Damage(monster, damage);
+
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }
 
@@ -124,16 +137,26 @@ void JYJ::Skill2(Monster* monster)
     mp -= mpCost;
 
     // [스킬 2 - 전방에 힘찬 기지개 발사]: 기지개를 켜며 온몸의 생명력을 뿜어내는 컨셉 (공격력 120% + 체력 HP 20%)
+    // 명중 판정: 실패하면 데미지를 적용하지 않고 공격 종료
+    if (!Check_Hit(monster))
+    {
+        std::cout << "공격이 빗나갔습니다!\n";
+        return;
+    }
+
     int damage = Calculate_Damage(
         1.2f, 0.0f, 0.2f, // ATK 120%, HP 20%
         0.0f, 0.0f, 0.0f,
         monster->getDefence()
     );
 
-    Apply_Damage(monster, damage);
-
     std::cout << name << "의 " << skill2Name << "!\n";
     std::cout << "메챠쿠챠 카멜레온!\n";
+    // 명중한 공격에 치명타 판정 적용
+    Apply_Critical_Damage(damage);
+
+    Apply_Damage(monster, damage);
+
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }
 
@@ -215,16 +238,26 @@ void JYJ::Groggy_Attack(Monster* monster)
     }
 
     // [그로기 공격 - 그로기 공격 이름]: 묵직한 방어력으로 상대를 짓누르는 치명타 컨셉 (공격력 180% + 방어력 DEF 40%)
+    // 명중 판정: 실패하면 데미지를 적용하지 않고 공격 종료
+    if (!Check_Hit(monster))
+    {
+        std::cout << "공격이 빗나갔습니다!\n";
+        return;
+    }
+
     int damage = Calculate_Damage(
         1.8f, 0.4f, 0.0f, // ATK 180%, DEF 40%
         0.0f, 0.0f, 0.0f,
         monster->getDefence()
     );
 
-    Apply_Damage(monster, damage);
-
     std::cout << name << "의 " << groggyAttackName << "!\n";
     std::cout << "그로기 공격 대사 입력\n";
+    // 명중한 공격에 치명타 판정 적용
+    Apply_Critical_Damage(damage);
+
+    Apply_Damage(monster, damage);
+
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }
 
@@ -247,3 +280,33 @@ void JYJ::Groggy_Attack(Monster* monster)
 //std::cout << name << " : 스킬 대사\n";
 //std::cout << "n턴 동안 방어력 관통 n% 효과를 획득했다!.\n";
 //
+
+//치명타 버프 예시
+//void JYJ::Skill2(Monster* monster)
+//{
+//    const int mpCost = 20;
+//
+//    if (mp < mpCost)
+//    {
+//        std::cout << "MP가 부족합니다.\n";
+//        return;
+//    }
+//
+//    mp -= mpCost;
+//
+//    // 현재 적용할 치명타 확률 증가량
+//    criticalBuffValue = 20.0f;
+//
+//    Stat_Modifier modifier;
+//
+//    modifier.id = "CRITICAL_CHANCE_BUFF";
+//    modifier.name = "치명타 확률 20% 증가";
+//    modifier.type = Stat_Modifier_Type::Buff;
+//    modifier.remainingTurns = 3;
+//
+//    Remove_Stat_Modifier("CRITICAL_CHANCE_BUFF");
+//    Add_Stat_Modifier(modifier);
+//
+//    std::cout << name << "의 " << skill2Name << "!\n";
+//    std::cout << "3턴 동안 치명타 확률이 20% 증가합니다.\n";
+//}

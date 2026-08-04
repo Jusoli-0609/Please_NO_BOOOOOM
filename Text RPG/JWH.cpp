@@ -47,6 +47,13 @@ void JWH::Attack(Monster* monster)
     }
 
     // [기본 공격]: 공격력 90% + 특화스탯(SNE) 10% 은밀하게 툭 치기 컨셉
+    // 명중 판정: 실패하면 데미지를 적용하지 않고 공격 종료
+    if (!Check_Hit(monster))
+    {
+        std::cout << "공격이 빗나갔습니다!\n";
+        return;
+    }
+
     int damage = Calculate_Damage(
         0.9f, // ATK 90%
         0.0f, // DEF 0%
@@ -57,10 +64,13 @@ void JWH::Attack(Monster* monster)
         monster->getDefence()
     );
 
-    Apply_Damage(monster, damage);
-
     std::cout << name << "의 기본 공격!\n";
     std::cout << "...제가 그랬나?\n";
+    // 명중한 공격에 치명타 판정 적용
+    Apply_Critical_Damage(damage);
+
+    Apply_Damage(monster, damage);
+
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }
 
@@ -83,16 +93,26 @@ void JWH::Skill1(Monster* monster)
     mp -= mpCost;
 
     // [스킬 1 - 도적이 되기엔 정직한 양심]: 공격력 100% + 민첩성(AGI) 20% (날렵한 움직임)
+    // 명중 판정: 실패하면 데미지를 적용하지 않고 공격 종료
+    if (!Check_Hit(monster))
+    {
+        std::cout << "공격이 빗나갔습니다!\n";
+        return;
+    }
+
     int damage = Calculate_Damage(
         1.0f, 0.0f, 0.0f, // ATK 100%
         0.0f, 0.0f, 0.2f, // AGI 20%
         monster->getDefence()
     );
 
-    Apply_Damage(monster, damage);
-
     std::cout << name << "의" << skill1Name << "!\n";
     std::cout << name << " : " << "해보겠습니다.\n";
+    // 명중한 공격에 치명타 판정 적용
+    Apply_Critical_Damage(damage);
+
+    Apply_Damage(monster, damage);
+
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }
 
@@ -115,16 +135,26 @@ void JWH::Skill2(Monster* monster)
     mp -= mpCost;
 
     // [스킬 2 - 낚아채기]: 공격력 120% + 특화스탯(SNE) 30% (재빠르게 채가는 도둑질 컨셉)
+    // 명중 판정: 실패하면 데미지를 적용하지 않고 공격 종료
+    if (!Check_Hit(monster))
+    {
+        std::cout << "공격이 빗나갔습니다!\n";
+        return;
+    }
+
     int damage = Calculate_Damage(
         1.2f, 0.0f, 0.0f, // ATK 120%
         0.0f, 0.3f, 0.0f, // SNE 30%
         monster->getDefence()
     );
 
-    Apply_Damage(monster, damage);
-
     std::cout << name << "의 " << skill2Name << "!\n";
     std::cout << "어디까지 하셨나요?\n";
+    // 명중한 공격에 치명타 판정 적용
+    Apply_Critical_Damage(damage);
+
+    Apply_Damage(monster, damage);
+
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }
 
@@ -147,16 +177,26 @@ void JWH::Skill3(Monster* monster)
     mp -= mpCost;
 
     // [스킬 3 - 소리없이 다니기]: 공격력 150% + 마나(MP) 비례 30% (은밀함을 극대화하는 주력기)
+    // 명중 판정: 실패하면 데미지를 적용하지 않고 공격 종료
+    if (!Check_Hit(monster))
+    {
+        std::cout << "공격이 빗나갔습니다!\n";
+        return;
+    }
+
     int damage = Calculate_Damage(
         1.5f, 0.0f, 0.0f, // ATK 150%
         0.3f, 0.0f, 0.0f, // MP 30%
         monster->getDefence()
     );
 
-    Apply_Damage(monster, damage);
-
     std::cout << name << "의 " << skill3Name << "!\n";
     std::cout << "크크크(웃기)\n";
+    // 명중한 공격에 치명타 판정 적용
+    Apply_Critical_Damage(damage);
+
+    Apply_Damage(monster, damage);
+
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }
 
@@ -169,15 +209,25 @@ void JWH::Groggy_Attack(Monster* monster)
     }
 
     // [그로기 공격 - 베어가르기]: 공격력 180% + 민첩성(AGI) 40% (방심한 틈을 타 날렵하게 단숨에 베어버리는 치명타)
+    // 명중 판정: 실패하면 데미지를 적용하지 않고 공격 종료
+    if (!Check_Hit(monster))
+    {
+        std::cout << "공격이 빗나갔습니다!\n";
+        return;
+    }
+
     int damage = Calculate_Damage(
         1.8f, 0.0f, 0.0f, // ATK 180%
         0.0f, 0.0f, 0.4f, // AGI 40% 
         monster->getDefence()
     );
 
-    Apply_Damage(monster, damage);
-
     std::cout << name << "의 " << groggyAttackName << "!\n";
     std::cout << "베어가르기\n";
+    // 명중한 공격에 치명타 판정 적용
+    Apply_Critical_Damage(damage);
+
+    Apply_Damage(monster, damage);
+
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }
