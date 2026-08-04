@@ -138,7 +138,8 @@ void Inventory<T>::Print_Inventory() const
 template <typename T>//4-2 인벤토리 메뉴 출력
 void Inventory<T>::Print_Inventory_Menu(
     Currently_Equipped_Equipments& currently_equipped_equipments,
-    Inventory_For_Equipments_Only& inventory_for_equipments_only
+    Inventory_For_Equipments_Only& inventory_for_equipments_only,
+    Player& player,Monster monster
 )
 {
     int Choose_Inventory_Menu;
@@ -331,8 +332,7 @@ void Inventory<T>::Print_Inventory_Menu(
 
             case 5:
             {
-                // TODO: Player, Monster 객체 참조 전달 구조
-                // Use_Item(player, monster);
+                 Use_Item(player, monster);
                 cout << "전투 중 아이템 사용은 전투 시스템에서 호출해야 한다!" << endl;
                 break;
             }

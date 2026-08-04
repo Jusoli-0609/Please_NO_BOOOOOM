@@ -31,11 +31,11 @@
 		//4.인벤토리 출력 관련 함수 파트
 		void Print_Inventory() const;//4-1 인벤토리 및 내용물 출력
 		void Print_Inventory_Menu(Currently_Equipped_Equipments& currently_equipped_equipments,
-			Inventory_For_Equipments_Only& inventory_for_equipments_only);//4-2 인벤토리 메뉴(선택지) 출력
+			Inventory_For_Equipments_Only& inventory_for_equipments_only, Player player, Monster monster);//4-2 인벤토리 메뉴(선택지) 출력
 		//5.인벤토리 기능 함수 파트
 		bool Add_Or_Increase_Item(const T& new_item);// 5-1 아이템 추가 및 갯수 증가
 		bool Use_Item_By_Name(const std::string& item_name);// 5-2 5-2 이름으로 아이템 사용 성공 및 갯수 감소
-		void Use_Item(Player& player, Monster& monster);//5-3 전투 중 아이템 사용
+		void Use_Item(Player& player, Monster& monster);//5-3 아이템 사용
 		void Throw_Away_Item();// 5-4 아이템 버리기
 		void Remove_Last_Item();// 5-5 마지막 아이템 제거
 		void Use_Random_Item_In_Battle(Player& player, Monster& monster);//5-6 캐릭터가 자동으로 아이템 랜덤 사용
