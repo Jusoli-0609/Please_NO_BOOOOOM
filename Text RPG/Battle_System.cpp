@@ -20,6 +20,7 @@ using namespace std;
 //======================================================
 void Battle(Player* player, Monster& monster, Inventory<Item>& inventory)
 {
+
     if (player == nullptr) return;
 
     int turnCount = 1;
@@ -94,6 +95,67 @@ void Show_Battle_Menu()
     cout << "선택 : ";
 }
 
+
+void Show_Duo_Battle_Status(
+    Player* player,
+    Monster& kim,
+    Monster& moon,
+    int turnCount)
+{
+    cout << "\n";
+    cout << "=====================================================\n";
+    cout << "                    FINAL RAID\n";
+    cout << "=====================================================\n";
+
+    cout << "Turn : " << turnCount << "\n\n";
+
+    cout << player->Get_Name()
+        << "\n";
+
+    cout << "HP : "
+        << player->Get_Hp()
+        << "\n";
+
+    cout << "-----------------------------------------------------\n";
+
+    cout << "[1] "
+        << kim.getName()
+        << "\n";
+
+    cout << "HP : "
+        << kim.getHP()
+        << "\n\n";
+
+    cout << "[2] "
+        << moon.getName()
+        << "\n";
+
+    cout << "HP : "
+        << moon.getHP()
+        << "\n";
+
+    cout << "=====================================================\n";
+}
+
+bool Check_Duo_Battle_End(
+    Player* player,
+    Monster& kim,
+    Monster& moon,
+    Inventory<Item>& inventory)
+{
+    if (player->Get_Hp() <= 0)
+    {
+        return true;
+    }
+
+    if (kim.getHP() <= 0 &&
+        moon.getHP() <= 0)
+    {
+        return true;
+    }
+
+    return false;
+}
 void Show_Battle_End(Player* player, Monster& monster)
 {
     // 전투 종료 후 필요한 출력 처리
@@ -133,6 +195,132 @@ void Player_Turn(Player* player, Monster& monster, Inventory<Item>& inventory)
             break;
         }
     }
+}
+
+void Duo_Player_Turn(
+    Player* player,
+    Monster& kim,
+    Monster& moon,
+    Inventory<Item>& inventory)
+{
+    bool actionCompleted = false;
+
+    while (!actionCompleted)
+    {
+        int menu;
+
+        Show_Battle_Menu();
+        cin >> menu;
+
+        switch (menu)
+        {
+        case ATTACK:
+        {
+            int target;
+
+            cout << "\n공격 대상을 선택하세요.\n";
+            cout << "1. " << kim.getName()
+                << " (HP : " << kim.getHP() << ")\n";
+            cout << "2. " << moon.getName()
+                << " (HP : " << moon.getHP() << ")\n";
+
+            cin >> target;
+
+            if (target == 1)
+            {
+                Attack(player, kim);
+                actionCompleted = true;
+            }
+            else if (target == 2)
+            {
+                Attack(player, moon);
+                actionCompleted = true;
+            }
+            else
+            {
+                cout << "잘못된 입력입니다.\n";
+            }
+
+            break;
+        }
+
+        case SKILL:
+        {
+            int target;
+
+            cout << "\n스킬 대상을 선택하세요.\n";
+            cout << "1. " << kim.getName() << endl;
+            cout << "2. " << moon.getName() << endl;
+
+            cin >> target;
+
+            if (target == 1)
+            {
+                actionCompleted =
+                    Skill_Menu_Process(player, kim);
+            }
+            else if (target == 2)
+            {
+                actionCompleted =
+                    Skill_Menu_Process(player, moon);
+            }
+
+            break;
+        }
+
+        case ITEM:
+        {
+            int target;
+
+            cout << "\n아이템 사용 대상을 선택하세요.\n";
+            cout << "1. " << kim.getName() << endl;
+            cout << "2. " << moon.getName() << endl;
+
+            cin >> target;
+
+            if (target == 1)
+            {
+                Use_Item(player, kim, inventory);
+            }
+            else if (target == 2)
+            {
+                Use_Item(player, moon, inventory);
+            }
+
+            actionCompleted = true;
+            break;
+        }
+
+        default:
+
+            cout << "잘못된 입력입니다.\n";
+            break;
+        }
+    }
+}
+
+bool Check_Duo_Battle_End(
+    Player* player,
+    Monster& kim,
+    Monster& moon)
+{
+
+    // 플레이어 사망
+    if (player->getHP() <= 0)
+    {
+        return true;
+    }
+
+
+    // 두 보스 모두 처치
+    if (kim.getHP() <= 0 &&
+        moon.getHP() <= 0)
+    {
+        return true;
+    }
+
+
+    return false;
 }
 
 void Use_Item(Player* player, Monster& monster, Inventory<Item>& inventory)
