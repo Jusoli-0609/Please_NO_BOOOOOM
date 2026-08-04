@@ -21,6 +21,14 @@ private:
     void Draw_Box(int x,int y,int width,int height);
 
     // 제목 출력
+    void Draw_Titled_Box(
+        int x,
+        int y,
+        int width,
+        int height,
+        const std::string& title
+    );
+
     void Draw_Title_Box();
 
     // 플레이어 정보 박스
@@ -30,4 +38,11 @@ private:
     void Draw_Menu_Box();
 
     void Draw_Horizontal_Line(int x,int y,int length,char character = '-');
+
+
+    void Draw_Separator(
+        int x,
+        int y,
+        int width
+    );
 };

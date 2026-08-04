@@ -67,6 +67,23 @@ void UI_Manager::Draw_Box(int x,int y,int width,int height)
     _Console.Print_At(x,y + height - 1,"└" + horizontal + "┘");
 }
 
+void UI_Manager::Draw_Titled_Box(
+    int x,
+    int y,
+    int width,
+    int height,
+    const std::string& title
+)
+{
+    Draw_Box(x, y, width, height);
+
+    _Console.Print_At(
+        x + 2,
+        y,
+        "[ " + title + " ]"
+    );
+}
+
 void UI_Manager::Draw_Title_Box()
 {
     const int x = 1;
@@ -74,12 +91,12 @@ void UI_Manager::Draw_Title_Box()
     const int width = _Console.Get_Width() - 3;
     const int height = 5;
 
-    Draw_Box(x, y, width, height);
-
-    _Console.Print_At(
-        x + 3,
-        y + 2,
-        "[ 눈 떠보니 코드 마스터 ]"
+    Draw_Titled_Box(
+        x,
+        y,
+        width,
+        height,
+        "눈 떠보니 코드 마스터"
     );
 }
 
@@ -88,65 +105,86 @@ void UI_Manager::Draw_Player_Box(const Player* player)
     const int x = 1;
     const int y = 7;
     const int width = _Console.Get_Width() - 3;
-    const int height = 7;
+    const int height = 5;
 
-    Draw_Box(x, y, width, height);
+    Draw_Titled_Box(
+        x,
+        y,
+        width,
+        height,
+        "PLAYER STATUS"
+    );
 
-    if (player != nullptr)
+    if (player == nullptr)
     {
         _Console.Print_At(
-            x + 3,
+            x + 4,
             y + 2,
-            "플레이어 : " + player->Get_Name()
-        );
-
-        _Console.Print_At(
-            x + 3,
-            y + 3,
-            "HP       : " + std::to_string(player->Get_Hp())
-        );
-
-        _Console.Print_At(
-            x + 3,
-            y + 4,
-            "LEVEL    : " + std::to_string(player->getLevel())
-        );
-    }
-    else
-    {
-        _Console.Print_At(
-            x + 3,
-            y + 3,
             "플레이어 정보를 찾을 수 없습니다."
         );
-    }
-}
 
+        return;
+    }
+
+    _Console.Print_At(
+        x + 4,
+        y + 2,
+        "NAME  " + player->Get_Name()
+    );
+
+    _Console.Print_At(
+        x + 35,
+        y + 2,
+        "LEVEL  " + std::to_string(player->getLevel())
+    );
+
+    _Console.Print_At(
+        x + 60,
+        y + 2,
+        "HP  " + std::to_string(player->Get_Hp())
+    );
+}
 void UI_Manager::Draw_Menu_Box()
 {
     const int x = 1;
     const int y = 15;
     const int width = _Console.Get_Width() - 3;
-    const int height = 18;
+    const int height = 20;
 
-    Draw_Box(x, y, width, height);
+    Draw_Titled_Box(
+        x,
+        y,
+        width,
+        height,
+        "MAIN MENU"
+    );
 
     const int menuX = x + 9;
 
-    _Console.Print_At(menuX, y + 4, "[1] 던전 입장");
-    _Console.Print_At(menuX, y + 5, "[2] 인벤토리");
-    _Console.Print_At(menuX, y + 6, "[3] 캐릭터 정보");
-    _Console.Print_At(menuX, y + 7, "[4] 내일배움캠프 재정비소");
-    _Console.Print_At(menuX, y + 8, "[5] 튜터 선택");
-    _Console.Print_At(menuX, y + 9, "[0] 게임 종료");
+    _Console.Print_At(menuX, y + 4, "> [1] 던전 입장");
+    _Console.Print_At(menuX, y + 5, "  [2] 인벤토리");
+    _Console.Print_At(menuX, y + 6, "  [3] 캐릭터 정보");
+    _Console.Print_At(menuX, y + 7, "  [4] 내일배움캠프 재정비소");
+    _Console.Print_At(menuX, y + 8, "  [5] 튜터 선택");
+    _Console.Print_At(menuX, y + 9, "  [0] 게임 종료");
 
-    // 게임 종료 바로 아래 줄
-    const int inputY = y + 11;
+    // 메뉴와 입력란 사이의 구분선
+    Draw_Separator(
+        x,
+        y + 11,
+        width
+    );
 
-    _Console.Print_At(menuX, inputY, "선택 : ");
+    const int inputY = y + 12;
+
+    _Console.Print_At(
+        x + 4,
+        inputY,
+        "선택 : "
+    );
 
     _Console.Set_Cursor_Position(
-        menuX + 7,
+        x + 11,
         inputY
     );
 }
@@ -177,4 +215,25 @@ void UI_Manager::Draw_Game_Over()
     _Console.Print_At(52,18,"GAME OVER");
 
     _Console.Print_At(47,21,"게임을 종료합니다.");
+}
+
+void UI_Manager::Draw_Separator(
+    int x,
+    int y,
+    int width
+)
+{
+    if (width < 2)
+    {
+        return;
+    }
+
+    const std::string line =
+        Repeat_Text("─", width - 2);
+
+    _Console.Print_At(
+        x,
+        y,
+        "├" + line + "┤"
+    );
 }
