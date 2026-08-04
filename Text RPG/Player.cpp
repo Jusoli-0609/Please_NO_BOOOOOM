@@ -124,7 +124,7 @@ void Player::Apply_Critical_Damage(int& damage) const
     }
 
     damage = static_cast<int>(damage * 1.5f);
-    std::cout << "★ 크리티컬! ★\n";
+    std::cout << "★ 약점공격! ★\n";
 }
 
 // 데미지 계산 공식, 공격력, 방어력, HP, MP, 은신, 민첩 비율을 조합하여 계산
@@ -373,81 +373,81 @@ void Player::Print_Status(Console_Manager& console) const
         // =====================================================
         // 3페이지: 적용 효과
         // =====================================================
-        else if (page == 3)
+else if (page == 3)
+{
+    std::ostringstream output;
+
+    output
+        << LINE << '\n'
+        << "튜터 및 적용 효과\n"
+        << "3 / 3\n"
+        << LINE << '\n'
+        << "[튜터]\n";
+
+    console.Slow_Print(output.str(), 0);
+
+    if (currentlyEquippedTutor != nullptr)
+    {
+        currentlyEquippedTutor
+            ->Print_Currently_Equipped_Tutor();
+    }
+    else
+    {
+        std::cout << "튜터 정보 없음\n";
+    }
+
+    std::ostringstream effects;
+
+    effects
+        << SUB_LINE << '\n'
+        << "[적용 효과]\n";
+
+    if (statModifiers.empty())
+    {
+        effects << "없음\n";
+    }
+    else
+    {
+        int effectCount = 0;
+
+        for (const Stat_Modifier& modifier : statModifiers)
         {
-            std::ostringstream output;
+            effects << modifier.name;
 
-            output
-                << LINE << '\n'
-                << "튜터 및 적용 효과\n"
-                << "3 / 3\n"
-                << LINE << '\n'
-                << "[튜터]\n";
-
-            console.Slow_Print(output.str(), 0);
-
-            if (currentlyEquippedTutor != nullptr)
+            if (modifier.remainingTurns < 0)
             {
-                currentlyEquippedTutor
-                    ->Print_Currently_Equipped_Tutor();
+                effects << " [영구]";
             }
             else
             {
-                std::cout << "튜터 정보 없음\n";
+                effects
+                    << " ["
+                    << modifier.remainingTurns
+                    << "턴]";
             }
 
-            std::ostringstream effects;
+            effectCount++;
 
-            effects
-                << SUB_LINE << '\n'
-                << "[적용 효과]\n";
-
-            if (statModifiers.empty())
+            if (effectCount % 2 == 0)
             {
-                effects << "없음\n";
+                effects << '\n';
             }
             else
             {
-                int effectCount = 0;
-
-                for (const Stat_Modifier& modifier : statModifiers)
-                {
-                    effects << modifier.name;
-
-                    if (modifier.remainingTurns < 0)
-                    {
-                        effects << " [영구]";
-                    }
-                    else
-                    {
-                        effects
-                            << " ["
-                            << modifier.remainingTurns
-                            << "턴]";
-                    }
-
-                    effectCount++;
-
-                    if (effectCount % 2 == 0)
-                    {
-                        effects << '\n';
-                    }
-                    else
-                    {
-                        effects << "    |    ";
-                    }
-                }
-
-                if (effectCount % 2 != 0)
-                {
-                    effects << '\n';
-                }
+                effects << "    |    ";
             }
+        }
 
-            effects << LINE << '\n';
+        if (effectCount % 2 != 0)
+        {
+            effects << '\n';
+        }
+    }
 
-            console.Slow_Print(effects.str(), 0);
-            }
+    effects << LINE << '\n';
+
+    console.Slow_Print(effects.str(), 0);
+}
 
         // =====================================================
         // 선택지
