@@ -1,11 +1,11 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include "JSR.h"
 #include "Monster.h"
-//´ë»ç groggyAttackName
-//±×·Î±â ÀÌ¸§ µû·Î ¾ÈÀûÇôÀÖ¾î¼­ ÀÏ´Ü Æ¯¼ö´É·ÂÁß¿¡ À½Ä§ÇÏ°Ô ¿°Å½ÇÏ±â(¾àÁ¡Ã£±â) ¸¦ ±×·Î±âÂÊ¿¡ Àû¾î³ù½À´Ï´Ù!
-//³ª¸ÓÁø ¶È°°ÀÌ ³»¿ë¸¸ ¹Ù²ã¼­ Àû¾î³ù½À´Ï´Ù
-//Æ¯È­ ½ºÅÈÀÌ µû·Î Á¤ÇØÁø°Ô ¾ø¾î¼­ ÀÌ ½ºÅÈ±âÁØÀ¸·Î ±×³É ÁöÇÇÆ¼ÇÑÅ× ¹°¾îºÁ¼­ ³ª¿Â°É ÁÖ¼®À¸·Î ÇÑ¹ø Àû¾î³õ°Ú½À´Ï´Ù!º¸½Ã°í Æ¯È­½ºÅÈ ÇÑ¹ø ¼öÁ¤ÇØÁÖ¼¼¿ä!
-//Æ¯È­ ½ºÅÈ(SNE) ÀÇ¹Ì: "±³ÁÖ·Î¼­ÀÇ À½Ä§ÇÔ / ½ÅµµµéÀ» È¦¸®´Â ±â¿î"
+//ëŒ€ì‚¬ groggyAttackName
+//ê·¸ë¡œê¸° ì´ë¦„ ë”°ë¡œ ì•ˆì í˜€ìžˆì–´ì„œ ì¼ë‹¨ íŠ¹ìˆ˜ëŠ¥ë ¥ì¤‘ì— ìŒì¹¨í•˜ê²Œ ì—¼íƒí•˜ê¸°(ì•½ì ì°¾ê¸°) ë¥¼ ê·¸ë¡œê¸°ìª½ì— ì ì–´ë†¨ìŠµë‹ˆë‹¤!
+//ë‚˜ë¨¸ì§„ ë˜‘ê°™ì´ ë‚´ìš©ë§Œ ë°”ê¿”ì„œ ì ì–´ë†¨ìŠµë‹ˆë‹¤
+//íŠ¹í™” ìŠ¤íƒ¯ì´ ë”°ë¡œ ì •í•´ì§„ê²Œ ì—†ì–´ì„œ ì´ ìŠ¤íƒ¯ê¸°ì¤€ìœ¼ë¡œ ê·¸ëƒ¥ ì§€í”¼í‹°í•œí…Œ ë¬¼ì–´ë´ì„œ ë‚˜ì˜¨ê±¸ ì£¼ì„ìœ¼ë¡œ í•œë²ˆ ì ì–´ë†“ê² ìŠµë‹ˆë‹¤!ë³´ì‹œê³  íŠ¹í™”ìŠ¤íƒ¯ í•œë²ˆ ìˆ˜ì •í•´ì£¼ì„¸ìš”!
+//íŠ¹í™” ìŠ¤íƒ¯(SNE) ì˜ë¯¸: "êµì£¼ë¡œì„œì˜ ìŒì¹¨í•¨ / ì‹ ë„ë“¤ì„ í™€ë¦¬ëŠ” ê¸°ìš´"
 namespace
 {
     void Apply_Damage(Monster* monster, int damage)
@@ -17,12 +17,12 @@ namespace
 JSR::JSR(const std::string& name)
     : Player(name)
 {
-    job = "¼Ò¸®±³ ±³ÁÖ";
+    job = "ì†Œë¦¬êµ êµì£¼";
 
-    skill1Name = "Âù¾ç´Ü µ¿¿ø(ÁÖ»çÀ§ ±¼¸®±â)";
-    skill2Name = "±×¸²À¸·Î Á¤½Å°ø°ÝÇÏ±â";
-    skill3Name = "º¹À½ ÀüÆÄÇÏ±â";
-    groggyAttackName = "À½Ä§ÇÏ°Ô ¿°Å½ÇÏ±â(¾àÁ¡ Ã£±â)";
+    skill1Name = "ì°¬ì–‘ë‹¨ ë™ì›(ì£¼ì‚¬ìœ„ êµ´ë¦¬ê¸°)";
+    skill2Name = "ê·¸ë¦¼ìœ¼ë¡œ ì •ì‹ ê³µê²©í•˜ê¸°";
+    skill3Name = "ë³µìŒ ì „íŒŒí•˜ê¸°";
+    groggyAttackName = "ìŒì¹¨í•˜ê²Œ ì—¼íƒí•˜ê¸°(ì•½ì  ì°¾ê¸°)";
 
 
     Set_Start_Stat(
@@ -42,10 +42,10 @@ void JSR::Attack(Monster* monster)
 {
     if (monster == nullptr)
     {
-        std::cout << "°ø°ÝÇÒ ´ë»óÀÌ ¾ø½À´Ï´Ù.\n";
+        std::cout << "ê³µê²©í•  ëŒ€ìƒì´ ì—†ìŠµë‹ˆë‹¤.\n";
         return;
     }
-    // °ø°Ý·Â 90À¸·Î ³·Ãß°í ÄÁ¼Á¿¡ ¸Â°Ô À½Ä§ÇÔ(SNE) 10% ¼³Á¤Çß½À´Ï´Ù.
+    // ê³µê²©ë ¥ 90ìœ¼ë¡œ ë‚®ì¶”ê³  ì»¨ì…‰ì— ë§žê²Œ ìŒì¹¨í•¨(SNE) 10% ì„¤ì •í–ˆìŠµë‹ˆë‹¤.
     int damage = Calculate_Damage(
         0.9f, // ATK 90%
         0.0f, // DEF 0%
@@ -58,9 +58,9 @@ void JSR::Attack(Monster* monster)
 
     Apply_Damage(monster, damage);
 
-    std::cout << name << "ÀÇ ±âº» °ø°Ý!\n";
-    std::cout << "¾ÈÅ¸±î¿î ÀÏÀÔ´Ï´Ù.\n";
-    std::cout << damage << "ÀÇ ÇÇÇØ¸¦ ÀÔÇû½À´Ï´Ù.\n";
+    std::cout << name << "ì˜ ê¸°ë³¸ ê³µê²©!\n";
+    std::cout << "ì•ˆíƒ€ê¹Œìš´ ì¼ìž…ë‹ˆë‹¤.\n";
+    std::cout << damage << "ì˜ í”¼í•´ë¥¼ ìž…í˜”ìŠµë‹ˆë‹¤.\n";
 }
 
 void JSR::Skill1(Monster* monster)
@@ -69,18 +69,18 @@ void JSR::Skill1(Monster* monster)
 
     if (monster == nullptr)
     {
-        std::cout << "½ºÅ³À» »ç¿ëÇÒ ´ë»óÀÌ ¾ø½À´Ï´Ù.\n";
+        std::cout << "ìŠ¤í‚¬ì„ ì‚¬ìš©í•  ëŒ€ìƒì´ ì—†ìŠµë‹ˆë‹¤.\n";
         return;
     }
 
     if (mp < mpCost)
     {
-        std::cout << "MP°¡ ºÎÁ·ÇÕ´Ï´Ù.\n";
+        std::cout << "MPê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.\n";
         return;
     }
 
     mp -= mpCost;
-    // ½ºÅ³ 1 Âù¾ç´Ü µ¿¿ø: °ø°Ý·Â 100% + ¹ÎÃ¸¼º(AGI) 20% (Âù¾ç´ÜÀÌ ³¯·ÆÇÏ°Ô ¿òÁ÷ÀÌ´Â ÄÁ¼Á)
+    // ìŠ¤í‚¬ 1 ì°¬ì–‘ë‹¨ ë™ì›: ê³µê²©ë ¥ 100% + ë¯¼ì²©ì„±(AGI) 20% (ì°¬ì–‘ë‹¨ì´ ë‚ ë µí•˜ê²Œ ì›€ì§ì´ëŠ” ì»¨ì…‰)
     int damage = Calculate_Damage(
         1.0f, 0.0f, 0.0f, // ATK 100%
         0.0f, 0.0f, 0.2f, // AGI 20%
@@ -89,9 +89,9 @@ void JSR::Skill1(Monster* monster)
 
     Apply_Damage(monster, damage);
 
-    std::cout << name << "ÀÇ" << skill1Name << "!\n";
-    std::cout << name << " : " << "Á¦°¡ ¸»ÀÔ´Ï±î?\n";
-    std::cout << damage << "ÀÇ ÇÇÇØ¸¦ ÀÔÇû½À´Ï´Ù.\n";
+    std::cout << name << "ì˜" << skill1Name << "!\n";
+    std::cout << name << " : " << "ì œê°€ ë§ìž…ë‹ˆê¹Œ?\n";
+    std::cout << damage << "ì˜ í”¼í•´ë¥¼ ìž…í˜”ìŠµë‹ˆë‹¤.\n";
 }
 
 void JSR::Skill2(Monster* monster)
@@ -100,18 +100,18 @@ void JSR::Skill2(Monster* monster)
 
     if (monster == nullptr)
     {
-        std::cout << "½ºÅ³À» »ç¿ëÇÒ ´ë»óÀÌ ¾ø½À´Ï´Ù.\n";
+        std::cout << "ìŠ¤í‚¬ì„ ì‚¬ìš©í•  ëŒ€ìƒì´ ì—†ìŠµë‹ˆë‹¤.\n";
         return;
     }
 
     if (mp < mpCost)
     {
-        std::cout << "MP°¡ ºÎÁ·ÇÕ´Ï´Ù.\n";
+        std::cout << "MPê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.\n";
         return;
     }
 
     mp -= mpCost;
-    // ½ºÅ³ 2 ±×¸²À¸·Î Á¤½Å°ø°ÝÇÏ±â: °ø°Ý·Â 120% + Ã¼·Â(HP) 20% (Á¤½Å°ø°ÝÀ¸·Î ÀÚ½ÅÀÇ »ý¸í·ÂÀ» ½Ç¾îº¸³»´Â ÄÁ¼Á)
+    // ìŠ¤í‚¬ 2 ê·¸ë¦¼ìœ¼ë¡œ ì •ì‹ ê³µê²©í•˜ê¸°: ê³µê²©ë ¥ 120% + ì²´ë ¥(HP) 20% (ì •ì‹ ê³µê²©ìœ¼ë¡œ ìžì‹ ì˜ ìƒëª…ë ¥ì„ ì‹¤ì–´ë³´ë‚´ëŠ” ì»¨ì…‰)
     int damage = Calculate_Damage(
         1.2f, 0.0f, 0.2f, // ATK 120%, HP 20%
         0.0f, 0.0f, 0.0f,
@@ -120,9 +120,9 @@ void JSR::Skill2(Monster* monster)
 
     Apply_Damage(monster, damage);
 
-    std::cout << name << "ÀÇ " << skill2Name << "!\n";
-    std::cout << "(²©²©²©) ¿ô±â\n";
-    std::cout << damage << "ÀÇ ÇÇÇØ¸¦ ÀÔÇû½À´Ï´Ù.\n";
+    std::cout << name << "ì˜ " << skill2Name << "!\n";
+    std::cout << "(êº½êº½êº½) ì›ƒê¸°\n";
+    std::cout << damage << "ì˜ í”¼í•´ë¥¼ ìž…í˜”ìŠµë‹ˆë‹¤.\n";
 }
 
 void JSR::Skill3(Monster* monster)
@@ -131,18 +131,18 @@ void JSR::Skill3(Monster* monster)
 
     if (monster == nullptr)
     {
-        std::cout << "½ºÅ³À» »ç¿ëÇÒ ´ë»óÀÌ ¾ø½À´Ï´Ù.\n";
+        std::cout << "ìŠ¤í‚¬ì„ ì‚¬ìš©í•  ëŒ€ìƒì´ ì—†ìŠµë‹ˆë‹¤.\n";
         return;
     }
 
     if (mp < mpCost)
     {
-        std::cout << "MP°¡ ºÎÁ·ÇÕ´Ï´Ù.\n";
+        std::cout << "MPê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.\n";
         return;
     }
 
     mp -= mpCost;
-    // ½ºÅ³ 3 - º¹À½ ÀüÆÄÇÏ±â: °ø°Ý·Â 150% + ¸¶³ª(MP) 30% (Æø¹ßÀûÀÎ ¸¶³ª·Î º¹À½À» ½ñ¾Æ³»´Â ÁÖ·Â±â)
+    // ìŠ¤í‚¬ 3 - ë³µìŒ ì „íŒŒí•˜ê¸°: ê³µê²©ë ¥ 150% + ë§ˆë‚˜(MP) 30% (í­ë°œì ì¸ ë§ˆë‚˜ë¡œ ë³µìŒì„ ìŸì•„ë‚´ëŠ” ì£¼ë ¥ê¸°)
     int damage = Calculate_Damage(
         1.5f, 0.0f, 0.0f, // ATK 150%
         0.3f, 0.0f, 0.0f, // MP 30%
@@ -151,19 +151,19 @@ void JSR::Skill3(Monster* monster)
 
     Apply_Damage(monster, damage);
 
-    std::cout << name << "ÀÇ " << skill3Name << "!\n";
-    std::cout << "Àú´Â Áø½Ç¸¸ ¸»ÇÕ´Ï´Ù.\n";
-    std::cout << damage << "ÀÇ ÇÇÇØ¸¦ ÀÔÇû½À´Ï´Ù.\n";
+    std::cout << name << "ì˜ " << skill3Name << "!\n";
+    std::cout << "ì €ëŠ” ì§„ì‹¤ë§Œ ë§í•©ë‹ˆë‹¤.\n";
+    std::cout << damage << "ì˜ í”¼í•´ë¥¼ ìž…í˜”ìŠµë‹ˆë‹¤.\n";
 }
 
 void JSR::Groggy_Attack(Monster* monster)
 {
     if (monster == nullptr)
     {
-        std::cout << "°ø°ÝÇÒ ´ë»óÀÌ ¾ø½À´Ï´Ù.\n";
+        std::cout << "ê³µê²©í•  ëŒ€ìƒì´ ì—†ìŠµë‹ˆë‹¤.\n";
         return;
     }
-    // ±×·Î±â °ø°Ý À½Ä§ÇÏ°Ô ¿°Å½ÇÏ±â: °ø°Ý·Â 180% + ¹æ¾î·Â(DEF) 40% (»ó´ëÀÇ ¾àÁ¡À» ÆÄ°íµé¾î ¹¬Á÷ÇÏ°Ô Áþ´©¸£´Â Ä¡¸íÅ¸)
+    // ê·¸ë¡œê¸° ê³µê²© ìŒì¹¨í•˜ê²Œ ì—¼íƒí•˜ê¸°: ê³µê²©ë ¥ 180% + ë°©ì–´ë ¥(DEF) 40% (ìƒëŒ€ì˜ ì•½ì ì„ íŒŒê³ ë“¤ì–´ ë¬µì§í•˜ê²Œ ì§“ëˆ„ë¥´ëŠ” ì¹˜ëª…íƒ€)
     int damage = Calculate_Damage(
         1.8f, 0.4f, 0.0f, // ATK 180%, DEF 40%
         0.0f, 0.0f, 0.0f,
@@ -172,7 +172,7 @@ void JSR::Groggy_Attack(Monster* monster)
 
     Apply_Damage(monster, damage);
 
-    std::cout << name << "ÀÇ " << groggyAttackName << "!\n";
-    std::cout << "À½Ä§ÇÏ°Ô ¿°Å½ÇÏ±â(¾àÁ¡ Ã£±â)\n";
-    std::cout << damage << "ÀÇ ÇÇÇØ¸¦ ÀÔÇû½À´Ï´Ù.\n";
+    std::cout << name << "ì˜ " << groggyAttackName << "!\n";
+    std::cout << "ìŒì¹¨í•˜ê²Œ ì—¼íƒí•˜ê¸°(ì•½ì  ì°¾ê¸°)\n";
+    std::cout << damage << "ì˜ í”¼í•´ë¥¼ ìž…í˜”ìŠµë‹ˆë‹¤.\n";
 }

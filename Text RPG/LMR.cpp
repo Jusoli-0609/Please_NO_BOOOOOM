@@ -1,11 +1,11 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include "LMR.h"
 #include "Monster.h"
-//´ë»ç groggyAttackName
-//±×·Î±â ÀÌ¸§ µû·Î ¾ÈÀûÇôÀÖ¾î¼­ ¶È°°ÀÌ Æ¯¼ö´É·Â¿¡ ÀÖ´Â°Å ÇÏ³ª Àû¾î³ù½À´Ï´Ù!±×¸®°í ¹Ì¸£´Ô ´ë»ç°¡ 2°³ ¹Û¿¡ ¾ø¾î¼­ ¿©Âåº¸°í Ãß°¡ÇØ¾ßµÉ°Å°°¾Æ¿ä!
-//³ª¸ÓÁø ¶È°°ÀÌ ³»¿ë¸¸ ¹Ù²ã¼­ Àû¾î³ù½À´Ï´Ù
-//Æ¯È­ ½ºÅÈÀÌ µû·Î Á¤ÇØÁø°Ô ¾ø¾î¼­ ÀÌ ½ºÅÈ±âÁØÀ¸·Î ±×³É ÁöÇÇÆ¼ÇÑÅ× ¹°¾îºÁ¼­ ³ª¿Â°É ÁÖ¼®À¸·Î ÇÑ¹ø Àû¾î³õ°Ú½À´Ï´Ù!º¸½Ã°í Æ¯È­½ºÅÈ ÇÑ¹ø ¼öÁ¤ÇØÁÖ¼¼¿ä!
-//Æ¯È­ ½ºÅÈ(SNE) ÀÇ¹Ì:"½Ä¹° Æ¯À¯ÀÇ »ý¸í·Â / ¹¦ÇÑ ¸Å·Â"
+//ëŒ€ì‚¬ groggyAttackName
+//ê·¸ë¡œê¸° ì´ë¦„ ë”°ë¡œ ì•ˆì í˜€ìžˆì–´ì„œ ë˜‘ê°™ì´ íŠ¹ìˆ˜ëŠ¥ë ¥ì— ìžˆëŠ”ê±° í•˜ë‚˜ ì ì–´ë†¨ìŠµë‹ˆë‹¤!ê·¸ë¦¬ê³  ë¯¸ë¥´ë‹˜ ëŒ€ì‚¬ê°€ 2ê°œ ë°–ì— ì—†ì–´ì„œ ì—¬ì­¤ë³´ê³  ì¶”ê°€í•´ì•¼ë ê±°ê°™ì•„ìš”!
+//ë‚˜ë¨¸ì§„ ë˜‘ê°™ì´ ë‚´ìš©ë§Œ ë°”ê¿”ì„œ ì ì–´ë†¨ìŠµë‹ˆë‹¤
+//íŠ¹í™” ìŠ¤íƒ¯ì´ ë”°ë¡œ ì •í•´ì§„ê²Œ ì—†ì–´ì„œ ì´ ìŠ¤íƒ¯ê¸°ì¤€ìœ¼ë¡œ ê·¸ëƒ¥ ì§€í”¼í‹°í•œí…Œ ë¬¼ì–´ë´ì„œ ë‚˜ì˜¨ê±¸ ì£¼ì„ìœ¼ë¡œ í•œë²ˆ ì ì–´ë†“ê² ìŠµë‹ˆë‹¤!ë³´ì‹œê³  íŠ¹í™”ìŠ¤íƒ¯ í•œë²ˆ ìˆ˜ì •í•´ì£¼ì„¸ìš”!
+//íŠ¹í™” ìŠ¤íƒ¯(SNE) ì˜ë¯¸:"ì‹ë¬¼ íŠ¹ìœ ì˜ ìƒëª…ë ¥ / ë¬˜í•œ ë§¤ë ¥"
 namespace
 {
     void Apply_Damage(Monster* monster, int damage)
@@ -17,12 +17,12 @@ namespace
 LMR::LMR(const std::string& name)
     : Player(name)
 {
-    job = "Ä¡ÄÚ¸®Å¸(¹Ý·Á½Ä¹°)";
+    job = "ì¹˜ì½”ë¦¬íƒ€(ë°˜ë ¤ì‹ë¬¼)";
 
-    skill1Name = "½Ä¹°ÀÎ Ã´ÇÏ±â";
-    skill2Name = "¿ïºÎÂ¢±â";
-    skill3Name = "¸öÅë¹ÚÄ¡±â";
-    groggyAttackName = "¾ÆÀç°³±×ÇÏ±â";
+    skill1Name = "ì‹ë¬¼ì¸ ì²™í•˜ê¸°";
+    skill2Name = "ìš¸ë¶€ì§–ê¸°";
+    skill3Name = "ëª¸í†µë°•ì¹˜ê¸°";
+    groggyAttackName = "ì•„ìž¬ê°œê·¸í•˜ê¸°";
 
 
     Set_Start_Stat(
@@ -42,11 +42,11 @@ void LMR::Attack(Monster* monster)
 {
     if (monster == nullptr)
     {
-        std::cout << "°ø°ÝÇÒ ´ë»óÀÌ ¾ø½À´Ï´Ù.\n";
+        std::cout << "ê³µê²©í•  ëŒ€ìƒì´ ì—†ìŠµë‹ˆë‹¤.\n";
         return;
     }
 
-    // [±âº» °ø°Ý]: °ø°Ý·Â 90% + ¹ÎÃ¸¼º(AGI) 10% (½Ä¹°ÀÇ ³¯·ÆÇÑ ÆòÅ¸ ÄÁ¼Á)
+    // [ê¸°ë³¸ ê³µê²©]: ê³µê²©ë ¥ 90% + ë¯¼ì²©ì„±(AGI) 10% (ì‹ë¬¼ì˜ ë‚ ë µí•œ í‰íƒ€ ì»¨ì…‰)
     int damage = Calculate_Damage(
         0.9f, // ATK 90%
         0.0f, // DEF 0%
@@ -59,9 +59,9 @@ void LMR::Attack(Monster* monster)
 
     Apply_Damage(monster, damage);
 
-    std::cout << name << "ÀÇ ±âº» °ø°Ý!\n";
-    std::cout << "Å©¿Í¿À¾Æ¾Ó\n";
-    std::cout << damage << "ÀÇ ÇÇÇØ¸¦ ÀÔÇû½À´Ï´Ù.\n";
+    std::cout << name << "ì˜ ê¸°ë³¸ ê³µê²©!\n";
+    std::cout << "í¬ì™€ì˜¤ì•„ì•™\n";
+    std::cout << damage << "ì˜ í”¼í•´ë¥¼ ìž…í˜”ìŠµë‹ˆë‹¤.\n";
 }
 
 void LMR::Skill1(Monster* monster)
@@ -70,19 +70,19 @@ void LMR::Skill1(Monster* monster)
 
     if (monster == nullptr)
     {
-        std::cout << "½ºÅ³À» »ç¿ëÇÒ ´ë»óÀÌ ¾ø½À´Ï´Ù.\n";
+        std::cout << "ìŠ¤í‚¬ì„ ì‚¬ìš©í•  ëŒ€ìƒì´ ì—†ìŠµë‹ˆë‹¤.\n";
         return;
     }
 
     if (mp < mpCost)
     {
-        std::cout << "MP°¡ ºÎÁ·ÇÕ´Ï´Ù.\n";
+        std::cout << "MPê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.\n";
         return;
     }
 
     mp -= mpCost;
 
-    // [½ºÅ³ 1 - ½Ä¹°ÀÎ Ã´ÇÏ±â]: ¼ø½Ä°£¿¡ ¼û¾ú´Ù°¡ ³¯·ÆÇÏ°Ô Æ´À» ÆÄ°íµå´Â ÄÁ¼Á (°ø°Ý·Â 100% + ¹ÎÃ¸¼º AGI 30%)
+    // [ìŠ¤í‚¬ 1 - ì‹ë¬¼ì¸ ì²™í•˜ê¸°]: ìˆœì‹ê°„ì— ìˆ¨ì—ˆë‹¤ê°€ ë‚ ë µí•˜ê²Œ í‹ˆì„ íŒŒê³ ë“œëŠ” ì»¨ì…‰ (ê³µê²©ë ¥ 100% + ë¯¼ì²©ì„± AGI 30%)
     int damage = Calculate_Damage(
         1.0f, 0.0f, 0.0f, // ATK 100%
         0.0f, 0.0f, 0.3f, // AGI 30%
@@ -91,9 +91,9 @@ void LMR::Skill1(Monster* monster)
 
     Apply_Damage(monster, damage);
 
-    std::cout << name << "ÀÇ" << skill1Name << "!\n";
-    std::cout << name << " : " << "Å©¾Æ¾Æ\n";
-    std::cout << damage << "ÀÇ ÇÇÇØ¸¦ ÀÔÇû½À´Ï´Ù.\n";
+    std::cout << name << "ì˜" << skill1Name << "!\n";
+    std::cout << name << " : " << "í¬ì•„ì•„\n";
+    std::cout << damage << "ì˜ í”¼í•´ë¥¼ ìž…í˜”ìŠµë‹ˆë‹¤.\n";
 }
 
 void LMR::Skill2(Monster* monster)
@@ -102,19 +102,19 @@ void LMR::Skill2(Monster* monster)
 
     if (monster == nullptr)
     {
-        std::cout << "½ºÅ³À» »ç¿ëÇÒ ´ë»óÀÌ ¾ø½À´Ï´Ù.\n";
+        std::cout << "ìŠ¤í‚¬ì„ ì‚¬ìš©í•  ëŒ€ìƒì´ ì—†ìŠµë‹ˆë‹¤.\n";
         return;
     }
 
     if (mp < mpCost)
     {
-        std::cout << "MP°¡ ºÎÁ·ÇÕ´Ï´Ù.\n";
+        std::cout << "MPê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.\n";
         return;
     }
 
     mp -= mpCost;
 
-    // [½ºÅ³ 2 - ¿ïºÎÂ¢±â]: ¹Ý·Á½Ä¹°ÀÌ »Õ¾î³»´Â »ý¸í·ÂÀÇ ¿ïºÎÂ¢À½ ÄÁ¼Á (°ø°Ý·Â 120% + Ã¼·Â HP 20%)
+    // [ìŠ¤í‚¬ 2 - ìš¸ë¶€ì§–ê¸°]: ë°˜ë ¤ì‹ë¬¼ì´ ë¿œì–´ë‚´ëŠ” ìƒëª…ë ¥ì˜ ìš¸ë¶€ì§–ìŒ ì»¨ì…‰ (ê³µê²©ë ¥ 120% + ì²´ë ¥ HP 20%)
     int damage = Calculate_Damage(
         1.2f, 0.0f, 0.2f, // ATK 120%, HP 20%
         0.0f, 0.0f, 0.0f,
@@ -123,9 +123,9 @@ void LMR::Skill2(Monster* monster)
 
     Apply_Damage(monster, damage);
 
-    std::cout << name << "ÀÇ " << skill2Name << "!\n";
-    std::cout << "¾îµð±îÁö ÇÏ¼Ì³ª¿ä?\n"; // ¿©±â ´ë»ç Ãß°¡ÇØ¾ßµÊ
-    std::cout << damage << "ÀÇ ÇÇÇØ¸¦ ÀÔÇû½À´Ï´Ù.\n";
+    std::cout << name << "ì˜ " << skill2Name << "!\n";
+    std::cout << "ì–´ë””ê¹Œì§€ í•˜ì…¨ë‚˜ìš”?\n"; // ì—¬ê¸° ëŒ€ì‚¬ ì¶”ê°€í•´ì•¼ë¨
+    std::cout << damage << "ì˜ í”¼í•´ë¥¼ ìž…í˜”ìŠµë‹ˆë‹¤.\n";
 }
 
 void LMR::Skill3(Monster* monster)
@@ -134,19 +134,19 @@ void LMR::Skill3(Monster* monster)
 
     if (monster == nullptr)
     {
-        std::cout << "½ºÅ³À» »ç¿ëÇÒ ´ë»óÀÌ ¾ø½À´Ï´Ù.\n";
+        std::cout << "ìŠ¤í‚¬ì„ ì‚¬ìš©í•  ëŒ€ìƒì´ ì—†ìŠµë‹ˆë‹¤.\n";
         return;
     }
 
     if (mp < mpCost)
     {
-        std::cout << "MP°¡ ºÎÁ·ÇÕ´Ï´Ù.\n";
+        std::cout << "MPê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.\n";
         return;
     }
 
     mp -= mpCost;
 
-    // [½ºÅ³ 3 - ¸öÅë¹ÚÄ¡±â]: ¿Â Èû°ú ¸¶³ª¸¦ ÁýÁßÇØ °­ÇÏ°Ô ºÎµúÄ¡´Â ÁÖ·Â±â ÄÁ¼Á (°ø°Ý·Â 150% + ¸¶³ª MP 30%)
+    // [ìŠ¤í‚¬ 3 - ëª¸í†µë°•ì¹˜ê¸°]: ì˜¨ íž˜ê³¼ ë§ˆë‚˜ë¥¼ ì§‘ì¤‘í•´ ê°•í•˜ê²Œ ë¶€ë”ªì¹˜ëŠ” ì£¼ë ¥ê¸° ì»¨ì…‰ (ê³µê²©ë ¥ 150% + ë§ˆë‚˜ MP 30%)
     int damage = Calculate_Damage(
         1.5f, 0.0f, 0.0f, // ATK 150%
         0.3f, 0.0f, 0.0f, // MP 30%
@@ -155,20 +155,20 @@ void LMR::Skill3(Monster* monster)
 
     Apply_Damage(monster, damage);
 
-    std::cout << name << "ÀÇ " << skill3Name << "!\n";
-    std::cout << "Å©Å©Å©(¿ô±â)\n"; //¿©±â ´ë»ç Ãß°¡ÇØ¾ßµÊ
-    std::cout << damage << "ÀÇ ÇÇÇØ¸¦ ÀÔÇû½À´Ï´Ù.\n";
+    std::cout << name << "ì˜ " << skill3Name << "!\n";
+    std::cout << "í¬í¬í¬(ì›ƒê¸°)\n"; //ì—¬ê¸° ëŒ€ì‚¬ ì¶”ê°€í•´ì•¼ë¨
+    std::cout << damage << "ì˜ í”¼í•´ë¥¼ ìž…í˜”ìŠµë‹ˆë‹¤.\n";
 }
 
 void LMR::Groggy_Attack(Monster* monster)
 {
     if (monster == nullptr)
     {
-        std::cout << "°ø°ÝÇÒ ´ë»óÀÌ ¾ø½À´Ï´Ù.\n";
+        std::cout << "ê³µê²©í•  ëŒ€ìƒì´ ì—†ìŠµë‹ˆë‹¤.\n";
         return;
     }
 
-    // [±×·Î±â °ø°Ý - ¾ÆÀç°³±×ÇÏ±â]: ¹¬Á÷ÇÑ ¹æ¾î·ÂÀ» ½Ç¾î »ó´ëÀÇ ¸àÅ»À» Áþ´©¸£´Â ÀÏ°Ý ÄÁ¼Á (°ø°Ý·Â 180% + ¹æ¾î·Â DEF 40%)
+    // [ê·¸ë¡œê¸° ê³µê²© - ì•„ìž¬ê°œê·¸í•˜ê¸°]: ë¬µì§í•œ ë°©ì–´ë ¥ì„ ì‹¤ì–´ ìƒëŒ€ì˜ ë©˜íƒˆì„ ì§“ëˆ„ë¥´ëŠ” ì¼ê²© ì»¨ì…‰ (ê³µê²©ë ¥ 180% + ë°©ì–´ë ¥ DEF 40%)
     int damage = Calculate_Damage(
         1.8f, 0.4f, 0.0f, // ATK 180%, DEF 40%
         0.0f, 0.0f, 0.0f,
@@ -177,7 +177,7 @@ void LMR::Groggy_Attack(Monster* monster)
 
     Apply_Damage(monster, damage);
 
-    std::cout << name << "ÀÇ " << groggyAttackName << "!\n";
-    std::cout << "¾ÆÀç°³±×ÇÏ±â\n"; 
-    std::cout << damage << "ÀÇ ÇÇÇØ¸¦ ÀÔÇû½À´Ï´Ù.\n";
+    std::cout << name << "ì˜ " << groggyAttackName << "!\n";
+    std::cout << "ì•„ìž¬ê°œê·¸í•˜ê¸°\n"; 
+    std::cout << damage << "ì˜ í”¼í•´ë¥¼ ìž…í˜”ìŠµë‹ˆë‹¤.\n";
 }

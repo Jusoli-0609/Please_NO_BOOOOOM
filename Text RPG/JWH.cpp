@@ -1,11 +1,11 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include "JWH.h"
 #include "Monster.h"
-//´ë»ç groggyAttackName
-//±×·Î±â ÀÌ¸§ µû·Î ¾ÈÀûÇôÀÖ¾î¼­ ¶È°°ÀÌ Æ¯¼ö´É·Â¿¡ ÀÖ´Â°Å ÇÏ³ª Àû¾î³ù½À´Ï´Ù!
-//³ª¸ÓÁø ¶È°°ÀÌ ³»¿ë¸¸ ¹Ù²ã¼­ Àû¾î³ù½À´Ï´Ù
-//Æ¯È­ ½ºÅÈÀÌ µû·Î Á¤ÇØÁø°Ô ¾ø¾î¼­ ÀÌ ½ºÅÈ±âÁØÀ¸·Î ±×³É ÁöÇÇÆ¼ÇÑÅ× ¹°¾îºÁ¼­ ³ª¿Â°É ÁÖ¼®À¸·Î ÇÑ¹ø Àû¾î³õ°Ú½À´Ï´Ù!º¸½Ã°í Æ¯È­½ºÅÈ ÇÑ¹ø ¼öÁ¤ÇØÁÖ¼¼¿ä!
-//Æ¯È­ ½ºÅÈ(SNE) ÀÇ¹Ì:"Àº¹ÐÇÔ / µµµÏÁú ¼öÄ¡"
+//ëŒ€ì‚¬ groggyAttackName
+//ê·¸ë¡œê¸° ì´ë¦„ ë”°ë¡œ ì•ˆì í˜€ìžˆì–´ì„œ ë˜‘ê°™ì´ íŠ¹ìˆ˜ëŠ¥ë ¥ì— ìžˆëŠ”ê±° í•˜ë‚˜ ì ì–´ë†¨ìŠµë‹ˆë‹¤!
+//ë‚˜ë¨¸ì§„ ë˜‘ê°™ì´ ë‚´ìš©ë§Œ ë°”ê¿”ì„œ ì ì–´ë†¨ìŠµë‹ˆë‹¤
+//íŠ¹í™” ìŠ¤íƒ¯ì´ ë”°ë¡œ ì •í•´ì§„ê²Œ ì—†ì–´ì„œ ì´ ìŠ¤íƒ¯ê¸°ì¤€ìœ¼ë¡œ ê·¸ëƒ¥ ì§€í”¼í‹°í•œí…Œ ë¬¼ì–´ë´ì„œ ë‚˜ì˜¨ê±¸ ì£¼ì„ìœ¼ë¡œ í•œë²ˆ ì ì–´ë†“ê² ìŠµë‹ˆë‹¤!ë³´ì‹œê³  íŠ¹í™”ìŠ¤íƒ¯ í•œë²ˆ ìˆ˜ì •í•´ì£¼ì„¸ìš”!
+//íŠ¹í™” ìŠ¤íƒ¯(SNE) ì˜ë¯¸:"ì€ë°€í•¨ / ë„ë‘‘ì§ˆ ìˆ˜ì¹˜"
 namespace
 {
     void Apply_Damage(Monster* monster, int damage)
@@ -17,12 +17,12 @@ namespace
 JWH::JWH(const std::string& name)
     : Player(name)
 {
-    job = "Grand Theif Academy(µµµÏ)";
+    job = "Grand Theif Academy(ë„ë‘‘)";
 
-    skill1Name = "µµÀûÀÌ µÇ±â¿£ Á¤Á÷ÇÑ ¾ç½É";
-    skill2Name = "³¬¾ÆÃ¤±â";
-    skill3Name = "¼Ò¸®¾øÀÌ ´Ù´Ï±â";
-    groggyAttackName = "º£¾î°¡¸£±â";
+    skill1Name = "ë„ì ì´ ë˜ê¸°ì—” ì •ì§í•œ ì–‘ì‹¬";
+    skill2Name = "ë‚šì•„ì±„ê¸°";
+    skill3Name = "ì†Œë¦¬ì—†ì´ ë‹¤ë‹ˆê¸°";
+    groggyAttackName = "ë² ì–´ê°€ë¥´ê¸°";
 
 
     Set_Start_Stat(
@@ -42,11 +42,11 @@ void JWH::Attack(Monster* monster)
 {
     if (monster == nullptr)
     {
-        std::cout << "°ø°ÝÇÒ ´ë»óÀÌ ¾ø½À´Ï´Ù.\n";
+        std::cout << "ê³µê²©í•  ëŒ€ìƒì´ ì—†ìŠµë‹ˆë‹¤.\n";
         return;
     }
 
-    // [±âº» °ø°Ý]: °ø°Ý·Â 90% + Æ¯È­½ºÅÈ(SNE) 10% Àº¹ÐÇÏ°Ô Åö Ä¡±â ÄÁ¼Á
+    // [ê¸°ë³¸ ê³µê²©]: ê³µê²©ë ¥ 90% + íŠ¹í™”ìŠ¤íƒ¯(SNE) 10% ì€ë°€í•˜ê²Œ íˆ­ ì¹˜ê¸° ì»¨ì…‰
     int damage = Calculate_Damage(
         0.9f, // ATK 90%
         0.0f, // DEF 0%
@@ -59,9 +59,9 @@ void JWH::Attack(Monster* monster)
 
     Apply_Damage(monster, damage);
 
-    std::cout << name << "ÀÇ ±âº» °ø°Ý!\n";
-    std::cout << "...Á¦°¡ ±×·¨³ª?\n";
-    std::cout << damage << "ÀÇ ÇÇÇØ¸¦ ÀÔÇû½À´Ï´Ù.\n";
+    std::cout << name << "ì˜ ê¸°ë³¸ ê³µê²©!\n";
+    std::cout << "...ì œê°€ ê·¸ëž¬ë‚˜?\n";
+    std::cout << damage << "ì˜ í”¼í•´ë¥¼ ìž…í˜”ìŠµë‹ˆë‹¤.\n";
 }
 
 void JWH::Skill1(Monster* monster)
@@ -70,19 +70,19 @@ void JWH::Skill1(Monster* monster)
 
     if (monster == nullptr)
     {
-        std::cout << "½ºÅ³À» »ç¿ëÇÒ ´ë»óÀÌ ¾ø½À´Ï´Ù.\n";
+        std::cout << "ìŠ¤í‚¬ì„ ì‚¬ìš©í•  ëŒ€ìƒì´ ì—†ìŠµë‹ˆë‹¤.\n";
         return;
     }
 
     if (mp < mpCost)
     {
-        std::cout << "MP°¡ ºÎÁ·ÇÕ´Ï´Ù.\n";
+        std::cout << "MPê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.\n";
         return;
     }
 
     mp -= mpCost;
 
-    // [½ºÅ³ 1 - µµÀûÀÌ µÇ±â¿£ Á¤Á÷ÇÑ ¾ç½É]: °ø°Ý·Â 100% + ¹ÎÃ¸¼º(AGI) 20% (³¯·ÆÇÑ ¿òÁ÷ÀÓ)
+    // [ìŠ¤í‚¬ 1 - ë„ì ì´ ë˜ê¸°ì—” ì •ì§í•œ ì–‘ì‹¬]: ê³µê²©ë ¥ 100% + ë¯¼ì²©ì„±(AGI) 20% (ë‚ ë µí•œ ì›€ì§ìž„)
     int damage = Calculate_Damage(
         1.0f, 0.0f, 0.0f, // ATK 100%
         0.0f, 0.0f, 0.2f, // AGI 20%
@@ -91,9 +91,9 @@ void JWH::Skill1(Monster* monster)
 
     Apply_Damage(monster, damage);
 
-    std::cout << name << "ÀÇ" << skill1Name << "!\n";
-    std::cout << name << " : " << "ÇØº¸°Ú½À´Ï´Ù.\n";
-    std::cout << damage << "ÀÇ ÇÇÇØ¸¦ ÀÔÇû½À´Ï´Ù.\n";
+    std::cout << name << "ì˜" << skill1Name << "!\n";
+    std::cout << name << " : " << "í•´ë³´ê² ìŠµë‹ˆë‹¤.\n";
+    std::cout << damage << "ì˜ í”¼í•´ë¥¼ ìž…í˜”ìŠµë‹ˆë‹¤.\n";
 }
 
 void JWH::Skill2(Monster* monster)
@@ -102,19 +102,19 @@ void JWH::Skill2(Monster* monster)
 
     if (monster == nullptr)
     {
-        std::cout << "½ºÅ³À» »ç¿ëÇÒ ´ë»óÀÌ ¾ø½À´Ï´Ù.\n";
+        std::cout << "ìŠ¤í‚¬ì„ ì‚¬ìš©í•  ëŒ€ìƒì´ ì—†ìŠµë‹ˆë‹¤.\n";
         return;
     }
 
     if (mp < mpCost)
     {
-        std::cout << "MP°¡ ºÎÁ·ÇÕ´Ï´Ù.\n";
+        std::cout << "MPê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.\n";
         return;
     }
 
     mp -= mpCost;
 
-    // [½ºÅ³ 2 - ³¬¾ÆÃ¤±â]: °ø°Ý·Â 120% + Æ¯È­½ºÅÈ(SNE) 30% (Àçºü¸£°Ô Ã¤°¡´Â µµµÏÁú ÄÁ¼Á)
+    // [ìŠ¤í‚¬ 2 - ë‚šì•„ì±„ê¸°]: ê³µê²©ë ¥ 120% + íŠ¹í™”ìŠ¤íƒ¯(SNE) 30% (ìž¬ë¹ ë¥´ê²Œ ì±„ê°€ëŠ” ë„ë‘‘ì§ˆ ì»¨ì…‰)
     int damage = Calculate_Damage(
         1.2f, 0.0f, 0.0f, // ATK 120%
         0.0f, 0.3f, 0.0f, // SNE 30%
@@ -123,9 +123,9 @@ void JWH::Skill2(Monster* monster)
 
     Apply_Damage(monster, damage);
 
-    std::cout << name << "ÀÇ " << skill2Name << "!\n";
-    std::cout << "¾îµð±îÁö ÇÏ¼Ì³ª¿ä?\n";
-    std::cout << damage << "ÀÇ ÇÇÇØ¸¦ ÀÔÇû½À´Ï´Ù.\n";
+    std::cout << name << "ì˜ " << skill2Name << "!\n";
+    std::cout << "ì–´ë””ê¹Œì§€ í•˜ì…¨ë‚˜ìš”?\n";
+    std::cout << damage << "ì˜ í”¼í•´ë¥¼ ìž…í˜”ìŠµë‹ˆë‹¤.\n";
 }
 
 void JWH::Skill3(Monster* monster)
@@ -134,19 +134,19 @@ void JWH::Skill3(Monster* monster)
 
     if (monster == nullptr)
     {
-        std::cout << "½ºÅ³À» »ç¿ëÇÒ ´ë»óÀÌ ¾ø½À´Ï´Ù.\n";
+        std::cout << "ìŠ¤í‚¬ì„ ì‚¬ìš©í•  ëŒ€ìƒì´ ì—†ìŠµë‹ˆë‹¤.\n";
         return;
     }
 
     if (mp < mpCost)
     {
-        std::cout << "MP°¡ ºÎÁ·ÇÕ´Ï´Ù.\n";
+        std::cout << "MPê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.\n";
         return;
     }
 
     mp -= mpCost;
 
-    // [½ºÅ³ 3 - ¼Ò¸®¾øÀÌ ´Ù´Ï±â]: °ø°Ý·Â 150% + ¸¶³ª(MP) ºñ·Ê 30% (Àº¹ÐÇÔÀ» ±Ø´ëÈ­ÇÏ´Â ÁÖ·Â±â)
+    // [ìŠ¤í‚¬ 3 - ì†Œë¦¬ì—†ì´ ë‹¤ë‹ˆê¸°]: ê³µê²©ë ¥ 150% + ë§ˆë‚˜(MP) ë¹„ë¡€ 30% (ì€ë°€í•¨ì„ ê·¹ëŒ€í™”í•˜ëŠ” ì£¼ë ¥ê¸°)
     int damage = Calculate_Damage(
         1.5f, 0.0f, 0.0f, // ATK 150%
         0.3f, 0.0f, 0.0f, // MP 30%
@@ -155,20 +155,20 @@ void JWH::Skill3(Monster* monster)
 
     Apply_Damage(monster, damage);
 
-    std::cout << name << "ÀÇ " << skill3Name << "!\n";
-    std::cout << "Å©Å©Å©(¿ô±â)\n";
-    std::cout << damage << "ÀÇ ÇÇÇØ¸¦ ÀÔÇû½À´Ï´Ù.\n";
+    std::cout << name << "ì˜ " << skill3Name << "!\n";
+    std::cout << "í¬í¬í¬(ì›ƒê¸°)\n";
+    std::cout << damage << "ì˜ í”¼í•´ë¥¼ ìž…í˜”ìŠµë‹ˆë‹¤.\n";
 }
 
 void JWH::Groggy_Attack(Monster* monster)
 {
     if (monster == nullptr)
     {
-        std::cout << "°ø°ÝÇÒ ´ë»óÀÌ ¾ø½À´Ï´Ù.\n";
+        std::cout << "ê³µê²©í•  ëŒ€ìƒì´ ì—†ìŠµë‹ˆë‹¤.\n";
         return;
     }
 
-    // [±×·Î±â °ø°Ý - º£¾î°¡¸£±â]: °ø°Ý·Â 180% + ¹ÎÃ¸¼º(AGI) 40% (¹æ½ÉÇÑ Æ´À» Å¸ ³¯·ÆÇÏ°Ô ´Ü¼û¿¡ º£¾î¹ö¸®´Â Ä¡¸íÅ¸)
+    // [ê·¸ë¡œê¸° ê³µê²© - ë² ì–´ê°€ë¥´ê¸°]: ê³µê²©ë ¥ 180% + ë¯¼ì²©ì„±(AGI) 40% (ë°©ì‹¬í•œ í‹ˆì„ íƒ€ ë‚ ë µí•˜ê²Œ ë‹¨ìˆ¨ì— ë² ì–´ë²„ë¦¬ëŠ” ì¹˜ëª…íƒ€)
     int damage = Calculate_Damage(
         1.8f, 0.0f, 0.0f, // ATK 180%
         0.0f, 0.0f, 0.4f, // AGI 40% 
@@ -177,7 +177,7 @@ void JWH::Groggy_Attack(Monster* monster)
 
     Apply_Damage(monster, damage);
 
-    std::cout << name << "ÀÇ " << groggyAttackName << "!\n";
-    std::cout << "º£¾î°¡¸£±â\n";
-    std::cout << damage << "ÀÇ ÇÇÇØ¸¦ ÀÔÇû½À´Ï´Ù.\n";
+    std::cout << name << "ì˜ " << groggyAttackName << "!\n";
+    std::cout << "ë² ì–´ê°€ë¥´ê¸°\n";
+    std::cout << damage << "ì˜ í”¼í•´ë¥¼ ìž…í˜”ìŠµë‹ˆë‹¤.\n";
 }

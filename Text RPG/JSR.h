@@ -1,6 +1,6 @@
-#pragma once
+ï»¿#pragma once
 #include "Player.h"
-// JSR·Î ÀÌ¸§ ¹Ù²ã³ù½À´Ï´Ù!
+// JSRë¡œ ì´ë¦„ ë°”ê¿”ë†¨ìŠµë‹ˆë‹¤!
 class JSR : public Player
 {
 public:

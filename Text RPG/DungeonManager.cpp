@@ -1137,7 +1137,7 @@ void Dungeon_Manager::Run_Final_Boss_Room(Player* player,Inventory<Item>& invent
 
 	cout << "====================================================" << endl;
 
-	Print_Final_Boss_Duo_Introduction(kim_Dong_Hyun_Manager, moon_Seung_Ho_Manager);
+	/*Print_Final_Boss_Duo_Introduction(kim_Dong_Hyun_Manager, moon_Seung_Ho_Manager);
 
 	cout << endl;
 	cout << "==================================================" << endl;
@@ -1167,7 +1167,7 @@ void Dungeon_Manager::Run_Final_Boss_Room(Player* player,Inventory<Item>& invent
 		cout << "==================================================" << endl;
 
 		return;
-	}
+	}*/
 
 	_is_Game_Cleared = true;
 

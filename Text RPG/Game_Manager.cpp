@@ -2,6 +2,11 @@
 #include "Player.h"
 #include "Job_Selection.h"
 #include "JYJ.h"  
+#include "JSR.h"
+#include "JWH.h"
+#include "LYB.h"
+#include "LMR.h"
+#include "PSB.h"
 #include "Camp_Manager.h"
 #include <iostream>
 
@@ -42,6 +47,36 @@ void Game_Manager::Create_Player()
         _Player = new JYJ("JYJ");
         break;
     }
+
+	case 2:
+	{
+		_Player = new JSR("JSR");
+		break;
+	}
+
+	case 3:
+	{
+		_Player = new JWH("JWH");
+		break;
+	}
+
+	case 4:
+	{
+		_Player = new LYB("LYB");
+		break;
+	}
+
+	case 5:
+	{
+		_Player = new LMR("LMR");
+		break;
+	}
+
+	case 6:
+	{
+		_Player = new PSB("PSB");
+		break;
+	}
 
     default:
     {

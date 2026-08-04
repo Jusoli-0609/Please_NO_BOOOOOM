@@ -1,6 +1,6 @@
-#pragma once
+ï»¿#pragma once
 #include "Player.h"
-//ÀÌ°Íµµ ÀÌ¸§ºÎºĞ ¹Ù²ã³ù½À´Ï´Ù.
+//ì´ê²ƒë„ ì´ë¦„ë¶€ë¶„ ë°”ê¿”ë†¨ìŠµë‹ˆë‹¤.
 class JWH : public Player
 {
 public:
