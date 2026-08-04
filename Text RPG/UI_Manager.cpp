@@ -37,10 +37,7 @@ void UI_Manager::Draw_Horizontal_Line(int x,int y,int length,char character)
     }
     //길이가 0 이하이면 선X
 
-    std::string line(
-        static_cast<std::size_t>(length),
-        character
-    );
+    std::string line(static_cast<std::size_t>(length),character);
     //character 문자를 length만큼 반복한 문자열을 만들기
 
     _Console.Print_At(x, y, line);
@@ -72,48 +69,54 @@ void UI_Manager::Draw_Box(int x,int y,int width,int height)
 
 void UI_Manager::Draw_Title_Box()
 {
-    int width = _Console.Get_Width();
+    const int x = 1;
+    const int y = 1;
+    const int width = _Console.Get_Width() - 3;
+    const int height = 5;
 
-    Draw_Box(0, 0, width, 5);
+    Draw_Box(x, y, width, height);
 
     _Console.Print_At(
-        4,
-        2,
+        x + 3,
+        y + 2,
         "[ 눈 떠보니 코드 마스터 ]"
     );
 }
 
 void UI_Manager::Draw_Player_Box(const Player* player)
 {
-    int width = _Console.Get_Width();
+    const int x = 1;
+    const int y = 7;
+    const int width = _Console.Get_Width() - 3;
+    const int height = 7;
 
-    Draw_Box(0, 5, width, 7);
+    Draw_Box(x, y, width, height);
 
     if (player != nullptr)
     {
         _Console.Print_At(
-            4,
-            7,
+            x + 3,
+            y + 2,
             "플레이어 : " + player->Get_Name()
         );
 
         _Console.Print_At(
-            4,
-            8,
+            x + 3,
+            y + 3,
             "HP       : " + std::to_string(player->Get_Hp())
         );
 
         _Console.Print_At(
-            4,
-            9,
+            x + 3,
+            y + 4,
             "LEVEL    : " + std::to_string(player->getLevel())
         );
     }
     else
     {
         _Console.Print_At(
-            4,
-            8,
+            x + 3,
+            y + 3,
             "플레이어 정보를 찾을 수 없습니다."
         );
     }
@@ -121,16 +124,67 @@ void UI_Manager::Draw_Player_Box(const Player* player)
 
 void UI_Manager::Draw_Menu_Box()
 {
-    int width = _Console.Get_Width();
+    const int x = 1;
+    const int y = 15;
+    const int width = _Console.Get_Width() - 3;
+    const int height = 20;
 
-    Draw_Box(0, 12, width, 19);
+    Draw_Box(
+        x,
+        y,
+        width,
+        height
+    );
 
-    _Console.Print_At(10, 15, "[1] 던전 입장");
-    _Console.Print_At(10, 17, "[2] 인벤토리");
-    _Console.Print_At(10, 19, "[3] 캐릭터 정보");
-    _Console.Print_At(10, 21, "[4] 내일배움캠프 재정비소");
-    _Console.Print_At(10, 23, "[5] 튜터 선택");
-    _Console.Print_At(10, 25, "[0] 게임 종료");
+    _Console.Print_At(
+        x + 9,
+        y + 3,
+        "[1] 던전 입장"
+    );
+
+    _Console.Print_At(
+        x + 9,
+        y + 5,
+        "[2] 인벤토리"
+    );
+
+    _Console.Print_At(
+        x + 9,
+        y + 7,
+        "[3] 캐릭터 정보"
+    );
+
+    _Console.Print_At(
+        x + 9,
+        y + 9,
+        "[4] 내일배움캠프 재정비소"
+    );
+
+    _Console.Print_At(
+        x + 9,
+        y + 11,
+        "[5] 튜터 선택"
+    );
+
+    _Console.Print_At(
+        x + 9,
+        y + 13,
+        "[0] 게임 종료"
+    );
+
+    // 입력 위치를 메뉴 박스 안쪽에 배치
+    const int inputY = y + 16;
+
+    _Console.Print_At(
+        x + 3,
+        inputY,
+        "선택 : "
+    );
+
+    _Console.Set_Cursor_Position(
+        x + 10,
+        inputY
+    );
 }
 
 void UI_Manager::Draw_Main_Menu(const Player* player)
@@ -140,25 +194,17 @@ void UI_Manager::Draw_Main_Menu(const Player* player)
     Draw_Title_Box();
     Draw_Player_Box(player);
     Draw_Menu_Box();
-    Draw_Input_Box();
-}
 
-void UI_Manager::Draw_Input_Box()
-{
-    int width = _Console.Get_Width();
-    int height = _Console.Get_Height();
-
-    Draw_Box(0, height - 4, width, 4);
-
+    // 마지막에 출력해야 cin 입력 위치가 유지됩니다.
     _Console.Print_At(
-        4,
-        height - 2,
+        5,
+        29,
         "선택 : "
     );
 
     _Console.Set_Cursor_Position(
-        11,
-        height - 2
+        12,
+        29
     );
 }
 
@@ -168,7 +214,12 @@ void UI_Manager::Draw_Game_Over()
     _Console.Clear();
 
     // 바깥 테두리
-    Draw_Box(0,0,_Console.Get_Width(),_Console.Get_Height());
+    Draw_Box(
+        1,
+        1,
+        _Console.Get_Width() - 3,
+        _Console.Get_Height() - 3
+    );
 
     // 종료 문구
     _Console.Print_At(52,18,"GAME OVER");

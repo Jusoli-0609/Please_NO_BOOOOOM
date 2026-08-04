@@ -29,8 +29,5 @@ private:
     // 메뉴 박스
     void Draw_Menu_Box();
 
-    // 입력 박스
-    void Draw_Input_Box();
-
     void Draw_Horizontal_Line(int x,int y,int length,char character = '-');
 };
