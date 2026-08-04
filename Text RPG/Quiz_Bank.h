@@ -66,6 +66,13 @@ Pointer_Tutor_Quiz;
 extern std::vector<Tutor_Question>
 Object_Tutor_Quiz;
 
+extern std::vector<Quiz> EliteQuiz;
+extern std::vector<Quiz> VariableTutorQuiz;
+extern std::vector<Quiz> ArrayTutorQuiz;
+extern std::vector<Quiz> FunctionTutorQuiz;
+extern std::vector<Quiz> PointerTutorQuiz;
+extern std::vector<Quiz> ObjectTutorQuiz;
+
 extern std::vector<Quiz>
 KimDongHyunManagerQuiz;
 
