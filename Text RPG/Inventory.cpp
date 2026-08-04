@@ -511,6 +511,8 @@ void Inventory<T>::Print_Inventory_Menu(
                 << player.Get_Mp()
                 << "이다."
                 << endl;
+            Use_Item_By_Name(selected_item_name);
+            return;
         }
         else
         {
