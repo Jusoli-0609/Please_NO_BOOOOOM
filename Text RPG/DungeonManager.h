@@ -3,6 +3,7 @@
 #include "Inventory.h"
 #include "Monster.h"
 #include "Player.h"
+#include "Console_Manager.h"
 #include <map>
 #include <string>
 
@@ -32,7 +33,8 @@ public:
 		Inventory_For_Equipments_Only&
 		equipment_Inventory,
 		const Currently_Equipped_Equipments&
-		equipped_Equipments
+		equipped_Equipments,
+		Console_Manager& consol
 	);
 
 	// 4. 던전 상태 조회 및 기록 출력 파트
@@ -49,9 +51,9 @@ public:
 private:
 	// 6. 현재 챕터 실행 파트
 	void Print_Current_Chapter() const;
-	void Run_Current_Chapter(Player* player, Inventory<Item>& inventory);
+	void Run_Current_Chapter(Player* player, Inventory<Item>& inventory, Console_Manager& console);
 	void Select_Chapter_And_Enter
-	(Player* player,Inventory<Item>& inventory);
+	(Player* player, Inventory<Item>& inventory, Console_Manager& console);
 	std::string Get_Chapter_Name(Chapter_Type chapter_Type) const;
 
 	// 7. 일반 몬스터 선택 파트
