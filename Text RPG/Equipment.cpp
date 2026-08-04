@@ -641,7 +641,7 @@
         _Equipments.push_back(equipment);
         _Equipment_Current_Count++;
 
-        cout << equipment.Get_Equipment_Name() << "을(를) 획득했다!" << endl;
+        cout << equipment.Get_Equipment_Name() << "을(를) 장비 전용 인벤토리에 넣었다!" << endl;
 
         return true;
     }
