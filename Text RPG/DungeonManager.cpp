@@ -1130,7 +1130,7 @@ void Dungeon_Manager::Run_Final_Boss_Room(Player* player, Inventory<Item>& inven
 	kim_Dong_Hyun_Manager.Print_Monster_Info();
 	kim_Dong_Hyun_Manager.Print_Attack_Message();
 
-	Battle(player, kim_Dong_Hyun_Manager,inventory);
+	Boss_Battle(player, kim_Dong_Hyun_Manager,inventory);
 
 	if(player->Get_Hp() <= 0 || kim_Dong_Hyun_Manager.getHP() > 0)
 	{
@@ -1161,7 +1161,7 @@ void Dungeon_Manager::Run_Final_Boss_Room(Player* player, Inventory<Item>& inven
 	moon_Seung_Ho_Manager.Print_Monster_Info();
 	moon_Seung_Ho_Manager.Print_Attack_Message();
 
-	Battle(player, moon_Seung_Ho_Manager,inventory);
+	Boss_Battle(player, moon_Seung_Ho_Manager,inventory);
 
 	if
 		(player->Get_Hp() <= 0 || moon_Seung_Ho_Manager.getHP() > 0)
