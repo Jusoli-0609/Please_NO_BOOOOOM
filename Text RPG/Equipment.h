@@ -69,6 +69,7 @@ public:
     string Equipment_Type_To_String(Equipment_Type type) const;//19.장비 타입 문자열로
     int Get_Equipment_Price() const;//20.아이템 가격 조회
     void Set_Equipment_Price(int price);//21.아이템 가격 설정
+
 };
 
 class Inventory_For_Equipments_Only;
@@ -93,7 +94,7 @@ class Currently_Equipped_Equipments
         Equipment_Stats Get_All_Equipments_Stats() const;//6.전체 장비 스텟 가져오기
         bool Is_Equipment_Equipped(Equipment_Type type) const;// 7.장착 여부 확인
 		bool Has_Equipment_By_Name(const string& equipment_Name) const;//8.장비 이름으로 장착 여부 확인
-
+        void Print_Equipment_Info_For_Player()const;//9.플레어전용 장비 출력
 };
 
 class Inventory_For_Equipments_Only
@@ -118,4 +119,5 @@ class Inventory_For_Equipments_Only
         void Change_Equipment_Inventory_Order();//11.순서 변경
         void Equip_Equipment_From_Inventory(Currently_Equipped_Equipments& equipped);//12.장비 착용시키기
         int Get_Total_Equipment_Weight() const;//13. 총무게 조회
+        void Resolve_Away_Equipment(); //14. 분해 전용  함수
 };

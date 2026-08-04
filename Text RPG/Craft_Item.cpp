@@ -24,7 +24,7 @@ void Craft_Work_Shop::Print_Recipes_By_Level
 	if
 		(equipment_Level < 1 || equipment_Level > 5)
 	{
-		cout << "잘못된 장비 단계다." << endl;
+		cout << "잘못된 장비 단계다냥." << endl;
 		return;
 	}
 
@@ -119,7 +119,7 @@ bool Craft_Work_Shop::Craft_Item
 	if (recipes.empty())
 	{
 		cout
-			<< "등록된 장비 제작법이 없다."
+			<< "등록된 장비 제작법이 없다냥."
 			<< endl;
 
 		return false;
@@ -171,13 +171,13 @@ bool Craft_Work_Shop::Craft_Item
 
 	case 0:
 	{
-		cout << "장비 제작 메뉴에서 나간다." << endl;
+		cout << "장비 제작 메뉴에서 나간다냥." << endl;
 		return false;
 	}
 
 	default:
 	{
-		cout << "잘못된 장비 단계를 선택했다." << endl;
+		cout << "잘못된 장비 단계를 선택했다냥." << endl;
 		return false;
 	}
 	}
@@ -195,14 +195,14 @@ bool Craft_Work_Shop::Craft_Item
 
 	if (equipment_Choice == 0)
 	{
-		cout << "대장간 메뉴로 돌아간다." << endl;
+		cout << "대장간 메뉴로 돌아간다냥." << endl;
 		return false;
 	}
 
 	if
 		(equipment_Choice < 1 || equipment_Choice > 5)
 	{
-		cout << "잘못된 장비 번호다." << endl;
+		cout << "잘못된 장비 번호다냥." << endl;
 		return false;
 	}
 
@@ -213,7 +213,7 @@ bool Craft_Work_Shop::Craft_Item
 	if
 		(selected_Recipe_Index < 0 || selected_Recipe_Index>= static_cast<int>(recipes.size()))
 	{
-		cout << "선택한 장비 제작법을 찾지 못했다." << endl;
+		cout << "선택한 장비 제작법을 찾지 못했다냥." << endl;
 		return false;
 	}
 
@@ -223,7 +223,7 @@ bool Craft_Work_Shop::Craft_Item
 
 	if (result_Equipment == nullptr)
 	{
-		cout << equipment_Name << " 장비 데이터를 찾지 못했다." << endl;
+		cout << equipment_Name << " 장비 데이터를 찾지 못했다냥." << endl;
 		return false;
 	}
 
@@ -253,13 +253,13 @@ bool Craft_Work_Shop::Craft_Item
 
 	if (!has_All_Ingredients)
 	{
-		cout << "코드 조각이 부족해 장비를 제작할 수 없다." << endl;
+		cout << "코드 조각이 부족해 장비를 제작할 수 없다냥." << endl;
 
 		return false;
 	}
 
 	cout << endl;
-	cout << equipment_Name << "을(를) 제작하시겠습니까?" << endl;
+	cout << equipment_Name << "을(를) 제작하겠냥?" << endl;
 	cout << "1. 제작" << endl;
 	cout << "0. 취소" << endl;
 	cout << "선택: ";
@@ -270,7 +270,7 @@ bool Craft_Work_Shop::Craft_Item
 
 	if (craft_Choice != 1)
 	{
-		cout << "장비 제작을 취소했다." << endl;
+		cout << "장비 제작을 취소했다냥." << endl;
 
 		return false;
 	}
@@ -279,7 +279,7 @@ bool Craft_Work_Shop::Craft_Item
 
 	if (!is_Added)
 	{
-		cout << "장비 인벤토리에 공간이 없어 " << "제작을 취소했다." << endl;
+		cout << "장비 인벤토리에 공간이 없어 " << "제작을 취소했다냥." << endl;
 
 		return false;
 	}
@@ -294,7 +294,7 @@ bool Craft_Work_Shop::Craft_Item
 	cout << "========================================" << endl;
 	cout << "[ 장비 제작 완료 ]" << endl;
 	cout << "========================================" << endl;
-	cout << "흩어진 코드 조각이 " << "하나의 장비로 결합됐다." << endl;
+	cout << "흩어진 코드 조각이 " << "하나의 장비로 결합됐다냥!" << endl;
 	cout << equipment_Name << " 제작 성공!" << endl;
 
 	result_Equipment->Print_Equipment_Info();
@@ -310,10 +310,66 @@ bool Craft_Work_Shop::Craft_Item
 
 bool Craft_Work_Shop::Decomposition_Item(Inventory_For_Equipments_Only& equipment_inventory, Inventory<Item>& item_inventory)
 {
-	(void)equipment_inventory;
-	(void)item_inventory;
+	cout << "장비 전용 인벤토리에 있는 장비만 분해할 수 있다냥." << endl;
+	
+	if (equipment_inventory.Get_Equipment_Current_Count() == 0)
+        {
+            cout << "텅 비어서 분해할 장비가 없다냥!" << endl;
+			return false;
+        }
 
-	cout << "장비 분해 기능은 아직 준비 중이다." << endl;
+        equipment_inventory.Print_Equipment_Inventory();
+
+        int choice = -1;
+        cout << "분해할 장비를 고르라냥: ";
+        cin >> choice;
+
+        while (choice < 1 ||equipment_inventory.Get_Equipment_Current_Count() < choice)
+        {
+            cout << "잘못된 입력이다냥! 다시 입력하라냥: ";
+            cin >> choice;
+        }
+        int Vector_Index = choice - 1;
+		Equipment selected_Equipment = equipment_inventory.Get_Equipment_By_Index(Vector_Index);
+		equipment_inventory.Remove_Equipment_By_index(Vector_Index);
+        _Equipment_Current_Count--;
+        cout << Bye_Equipment << "과 작별했다!" << endl;
+
+	Equipment selected_Equipment =
+		equipment_inventory.Get_Equipment_By_Index(equipment_Index);
+
+	string equipment_Name = selected_Equipment.Get_Equipment_Name();
+
+	const vector<All_Recipes>& recipes =
+		recipe_repository.Get_All_Recipes();
+
+	// TODO: 선택한 장비 이름과 같은 레시피를 저장할 포인터 변수 선언
+	const All_Recipes* found_recipe = nullptr;
+	for (const All_Recipes& recipe : recipes)
+	{
+		if (equipment_Name == recipe.Get_Recipe_Name())
+		{
+			found_recipe = &recipe;
+		}
+	}
+	if (found_recipe == nullptr)
+	{
+		cout << equipment_Name << "의 제작법을 찾지 못했다냥!" << endl;
+		return false;
+	}
+	map<string, int> ingredients = found_recipe->Get_Ingredients();
+	for (const auto& ingredient : ingredients)
+	{
+		string Resolving_Item = ingredient.first;
+		int Resovling_Item_Count = ingredient.second;
+		item_inventory.Add_Or_Increase_Item(ingredient);
+	}
+	
+
+	cout << equipment_Name << "을(를) 분해했다냥!" << endl;
+
+	return true;
+
 	return false;
 }
 
@@ -323,11 +379,16 @@ bool Craft_Work_Shop::Decomposition_Item(Inventory_For_Equipments_Only& equipmen
 
 bool Craft_Work_Shop::Enhance_Item
 (
-	Equipment& equipment
+	Inventory_For_Equipments_Only& equipment_inventory
 )
 {
-	(void)equipment;
-
-	cout << "장비 강화 기능은 아직 준비 중이다." << endl;
+	
+	//cout 안내 나오고 
+	//cin 선택
+	//이거 장비 전용창 현재 장비 중인 거로 장비창으로 해야되나, 그거 두개로 해야하면 장비 전용창에서 아니면 equipment로 둘 다 구할 수 있는 거면 그걸로 하고 너무 복잡해지면 그냥 장비 전용 인벤토리에서 강화하는 걸로 하자
+	// 장비 조회
+		//50퍼센트 확률로 강화도 enhance 1증가, 5가 최대니까 그거 이상 시도하면 if 문으로 못하게 막기
+		//성공 or 실패 출력
+	
 	return false;
 }
