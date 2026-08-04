@@ -393,8 +393,7 @@ bool Craft_Work_Shop::Decomposition_Item(Inventory_For_Equipments_Only& equipmen
 //=============================================================================
 
 bool Craft_Work_Shop::Enhance_Item(
-	Inventory_For_Equipments_Only& equipment_inventory
-)
+	Inventory_For_Equipments_Only& equipment_inventory, Inventory<Item>& inventory)
 {
 	cout << "장비 전용 인벤토리에 있는 장비만 강화할 수 있다냥." << endl;
 	if (equipment_inventory.Get_Equipment_Current_Count() == 0)
@@ -402,7 +401,11 @@ bool Craft_Work_Shop::Enhance_Item(
 		cout << "텅 비었다냥!" << endl;
 		return false;
 	}
-
+	if (inventory.Get_Money()<=-1)
+	{
+		cout << "돈 없으면 꺼져라냥!" << endl;
+		return false;
+	}
 	equipment_inventory.Print_Equipment_Inventory();
 
 	int choice = -1;
@@ -428,11 +431,9 @@ bool Craft_Work_Shop::Enhance_Item(
 		cout << "이미 최대 강화 수치다냥!" << endl;
 		return false;
 	}
-	
-	int randomValue = rand() % 2;
-
-
-	if (randomValue == 1)
+	inventory.Set_Money(inventory.Get_Money());
+	int randomValue = rand() % 1;
+	if (randomValue == 0)
 	{
 		selected_Equipment.Set_Enhance_Level(currentEnhance + 1);
 

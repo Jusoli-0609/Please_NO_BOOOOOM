@@ -422,7 +422,7 @@ void Camp_Manager::Open_Cookie_Blacksmith_Menu()
         {
         case 1:
         {
-            craft_work_shop.Enhance_Item(inventory_for_equipments);
+            craft_work_shop.Enhance_Item(inventory_for_equipments, inventory);
             break;
         }
 
