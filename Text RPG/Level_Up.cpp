@@ -101,7 +101,7 @@ void Level_Up::ProcessLevelUp(Player* player)
     // 4. [요구사항 3] 체력 풀회복 처리
     // - 레벨업 보상으로 플레이어의 현재 체력을 늘어난 최대 체력 크기만큼 가득 채워줍니다.
     player->SetHP(player->GetMaxHP());
-    cout << "  -> 체력이 최대치로 회복되었습니다! (현재 HP: " << player->GetHP() << ")\n";
+    cout << "  -> 체력이 최대치로 회복되었다! (현재 HP: " << player->GetHP() << ")\n";
 
     // 5. 게임성 요소: 다음 레벨업에 필요한 요구 경험치를 1.5배 상향하여 난이도 곡선 조절
     _max_exp = static_cast<int>(_max_exp * 1.5);
@@ -110,7 +110,7 @@ void Level_Up::ProcessLevelUp(Player* player)
     if (_current_level >= 10)
     {
         _current_exp = 0; // 만렙 도달 시 초과 경험치는 0으로 고정
-        console.Slow_Print("  ★ 축하합니다! 최고 레벨(Lv.10)에 도달했습니다! ★\n", 50);
+        console.Slow_Print("  ★ 축하한다! 최고 레벨(Lv.10)에 도달했다! ★\n", 50);
     }
     cout << "====================================\n\n";
 

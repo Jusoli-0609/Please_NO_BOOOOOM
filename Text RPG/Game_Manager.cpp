@@ -80,7 +80,7 @@ void Game_Manager::Create_Player()
 
     default:
     {
-        cout << "잘못된 직업 선택입니다. " << "기본 직업으로 시작합니다." << endl;
+        cout << "잘못된 직업 선택! " << "기본 직업으로 시작!" << endl;
         _Player = new JYJ("JYJ");
         break;
     }
@@ -127,7 +127,7 @@ void Game_Manager::Show_Main_Menu()
         {
             if (_Player == nullptr)
             {
-                cout << "캐릭터 정보를 찾을 수 없습니다." << endl;
+                cout << "캐릭터 정보를 찾을 수 없다." << endl;
                 break;
             }
             _Player->Print_Status();
@@ -138,7 +138,7 @@ void Game_Manager::Show_Main_Menu()
         {
             if (_Player == nullptr)
             {
-                cout << "플레이어 정보를 찾을 수 없습니다." << endl;
+                cout << "플레이어 정보를 찾을 수 없다." << endl;
                 break;
             }
 
@@ -148,10 +148,10 @@ void Game_Manager::Show_Main_Menu()
             break;
         }
 
-		case 5:
-		{
-			Print_Tutor_Menu(_Equipment_Inventory, _Currently_Equipped_Equipments, _Currently_Equipped_Tutor, _Player);
-			break;
+        case 5:
+        {
+            Print_Tutor_Menu(_Equipment_Inventory, _Currently_Equipped_Equipments, _Currently_Equipped_Tutor, _Player);
+            break;
 		}
 
         case 0:
