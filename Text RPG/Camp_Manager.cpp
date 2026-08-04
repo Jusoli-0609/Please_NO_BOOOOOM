@@ -24,8 +24,8 @@ void Camp_Manager::Open_Camp_Menu()
 {
     while (true)
     {
-        //
-        cout << "\n===== 내일배움캠프 재정비소 =====\n";//음침한 주소리님 여깁니당
+        //음침한 주소리님 여깁니당(TommorowLearnCamp)
+        cout << "\n===== 내일배움캠프 재정비소 =====\n";
         cout << "1. 내배캠 119 기본 보급 받기\n";
         cout << "2. 펩 스토어\n";
         cout << "3. 문승호 매니저님의 만물 잡화점\n";
@@ -146,7 +146,7 @@ void Camp_Manager::Open_Pep_Store_Menu()
                     << equipments[i].Get_Equipment_Name()
                     << endl;
                 cout << equipments[i].Get_Equipment_Price()*2
-                    << " Gold"
+                    << " 젬"
                     << endl;
             }
 
