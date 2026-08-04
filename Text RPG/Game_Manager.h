@@ -6,6 +6,7 @@
 #include "Equipment.h"
 #include "Inventory.h"
 #include "Item.h"
+#include "Tutor.h"
 
 class Player;
 
@@ -27,10 +28,7 @@ private:
     Inventory<Item>    _Inventory;
     Currently_Equipped_Equipments _Currently_Equipped_Equipments;
     Inventory_For_Equipments_Only _Equipment_Inventory;
-<<<<<<< HEAD
-    Currently_Equipped_Equipments _Currently_Equipped_Equipments;
     Currently_Equipped_Tutor _Currently_Equipped_Tutor;
-=======
->>>>>>> origin/고친-메리호-적재
+
     Player* _Player;
 };
