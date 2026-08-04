@@ -58,7 +58,7 @@ bool Duo_Skill_Process(Player* player, Monster& kim, Monster& moon);
 
 void Kim_Dong_Hyun_Manager_Skill(Player* player, Monster& monster);
 
-
 void Moon_Seung_Ho_Manager_Skill(Player* player, Monster& monster);
 
+void Print_Final_Boss_Duo_Introduction(Monster& kim, Monster& moon);
 #endif // BATTLE_SYSTEM_H

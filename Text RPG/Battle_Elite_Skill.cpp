@@ -21,6 +21,30 @@ bool Check_Elite_Skill(Monster& monster, int turnCount)
 
     switch (monster.getMonsterType())
     {
+    case Monster_Type::KIM_DONG_HYUN_MANAGER:
+    {
+        // 3턴마다 코드 분석 패턴 발동
+
+        if (turnCount % 3 == 0)
+        {
+            return true;
+        }
+
+        break;
+    }
+
+
+    case Monster_Type::MOON_SEUNG_HO_MANAGER:
+    {
+        // 체력이 절반 이하가 되면 메모리 검증 패턴 발동
+
+        if (monster.getHP() <= 50)
+        {
+            return true;
+        }
+
+        break;
+    }
     case Monster_Type::CODE_SNIPPET_WRAITH:
     case Monster_Type::VARIABLE_CONDITION_TUTOR:
     {
@@ -94,12 +118,67 @@ bool Ask_Quiz(Player* player, Monster& monster, const Quiz& quiz)
 //======================================================
 bool Ask_Random_Elite_Question(Player* player, Monster& monster)
 {
-    if (EliteQuiz.empty()) return false;
+    vector<Quiz>* quizPool = nullptr;
 
-    srand((unsigned int)time(nullptr));
-    int index = rand() % EliteQuiz.size();
 
-    return Ask_Quiz(player, monster, EliteQuiz[index]);
+    switch (monster.getMonsterType())
+    {
+    case Monster_Type::KIM_DONG_HYUN_MANAGER:
+    {
+        quizPool = &KimDongHyunManagerQuiz;
+        break;
+    }
+
+
+    case Monster_Type::MOON_SEUNG_HO_MANAGER:
+    {
+        quizPool = &MoonSeungHoManagerQuiz;
+        break;
+    }
+
+
+    case Monster_Type::CODE_SNIPPET_WRAITH:
+    {
+        quizPool = &EliteQuiz;
+        break;
+    }
+
+
+    default:
+    {
+        quizPool = &EliteQuiz;
+        break;
+    }
+    }
+
+
+
+    if (quizPool == nullptr ||
+        quizPool->empty())
+    {
+        return false;
+    }
+
+
+
+    random_device rd;
+    mt19937 gen(rd());
+
+    uniform_int_distribution<int> dist(
+        0,
+        static_cast<int>(quizPool->size()) - 1
+    );
+
+
+    int index = dist(gen);
+
+
+
+    return Ask_Quiz(
+        player,
+        monster,
+        (*quizPool)[index]
+    );
 }
 
 //======================================================
@@ -218,6 +297,72 @@ void Execute_Elite_Skill(Player* player, Monster& monster)
             cout << endl << "튜터 시험에 실패했습니다..." << endl;
             player->Set_Hp(0);
         }
+        break;
+    }
+
+    case Monster_Type::KIM_DONG_HYUN_MANAGER:
+    {
+        cout << endl;
+        cout << "==================================================" << endl;
+        cout << "[ 김동현 매니저의 코드 검증 패턴 ]" << endl;
+        cout << "==================================================" << endl;
+
+        cout << "숨겨진 코드 오류를 찾기 시작합니다." << endl;
+
+        if (Ask_Random_Elite_Question(player, monster))
+        {
+            cout << "코드 분석 실패!" << endl;
+            cout << "패턴이 해제되었습니다." << endl;
+        }
+        else
+        {
+            cout << "코드 오류를 발견했습니다." << endl;
+
+            int damage = 20;
+
+            cout << "추가 검증 피해 : "
+                << damage
+                << endl;
+
+            player->Set_Hp(
+                player->Get_Hp() - damage
+            );
+        }
+
+        break;
+    }
+
+
+    case Monster_Type::MOON_SEUNG_HO_MANAGER:
+    {
+        cout << endl;
+        cout << "==================================================" << endl;
+        cout << "[ 문승호 매니저의 메모리 검증 패턴 ]" << endl;
+        cout << "==================================================" << endl;
+
+        cout << "메모리 구조를 분석합니다." << endl;
+
+
+        if (Ask_Random_Elite_Question(player, monster))
+        {
+            cout << "포인터 검증 성공!" << endl;
+        }
+        else
+        {
+            cout << "메모리 접근 오류!" << endl;
+
+            int damage = 30;
+
+            cout << "추가 검증 피해 : "
+                << damage
+                << endl;
+
+
+            player->Set_Hp(
+                player->Get_Hp() - damage
+            );
+        }
+
         break;
     }
 

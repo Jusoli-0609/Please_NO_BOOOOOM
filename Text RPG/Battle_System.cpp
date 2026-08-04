@@ -320,16 +320,11 @@ void Give_Battle_Item_Reward(Player* player, Monster& monster, Inventory<Item>& 
 bool Ask_Single_Quiz(const Quiz& quiz)
 {
     cout << endl;
-    cout << "==================================================" << endl;
-    cout << "[ 최종 코드 검증 ]" << endl;
-    cout << "==================================================" << endl;
+    cout << "--------------------------------------------------" << endl;
 
-
-    cout << endl;
     cout << quiz.question << endl;
 
-
-    cout << endl;
+    cout << "--------------------------------------------------" << endl;
 
 
     for (size_t i = 0; i < quiz.choices.size(); i++)
@@ -343,9 +338,10 @@ bool Ask_Single_Quiz(const Quiz& quiz)
 
     cout << endl;
 
-    int answer;
+    cout << "선택 : ";
 
-    cout << "정답 입력 : ";
+
+    int answer;
     cin >> answer;
 
 
@@ -353,83 +349,110 @@ bool Ask_Single_Quiz(const Quiz& quiz)
     if (answer == quiz.answer)
     {
         cout << endl;
-        cout << "========================================" << endl;
-        cout << "정답입니다!" << endl;
-        cout << "코드 검증 성공!" << endl;
-        cout << "========================================" << endl;
+        cout << "정답입니다." << endl;
 
         return true;
     }
 
 
-
     cout << endl;
-    cout << "========================================" << endl;
     cout << "오답입니다." << endl;
-    cout << "코드 검증 실패..." << endl;
-    cout << "========================================" << endl;
 
 
     return false;
 }
 
-void First_Impression_Quiz_Phase(Player* player, Monster& monster, vector<Quiz>& quizPool)
+void First_Impression_Quiz_Phase(
+    Player* player,
+    Monster& monster,
+    vector<Quiz>& quizPool
+)
 {
-    cout << "\n";
-    cout << "╔════════════════════════════════════════════════════╗\n";
-    cout << "║                  기 선 제 압                       ║\n";
-    cout << "╠════════════════════════════════════════════════════╣\n";
-    cout << "║                                                    ║\n";
-    cout << " " << monster.getName() << "의 기습 심사가 시작됩니다!\n";
-    cout << "║                                                    ║\n";
-    cout << "║ 전투 시작 전 2개의 질문이 출제됩니다.              ║\n";
-    cout << "║ 정답을 맞히면 선제공격!                            ║\n";
-    cout << "║ 틀리면 기습 공격을 받습니다!                       ║\n";
-    cout << "║                                                    ║\n";
-    cout << "╚════════════════════════════════════════════════════╝\n";
-
-    for (int i = 0; i < 2 && !quizPool.empty(); ++i)
+    if (player == nullptr)
     {
-        cout << "\n";
-        cout << "══════════════════════════════════════════════════════\n";
-        cout << "                [ 기습 문제 " << i + 1 << " / 2 ]\n";
-        cout << "══════════════════════════════════════════════════════\n";
-
-        Quiz q = quizPool.back();
-        quizPool.pop_back();
-
-        bool isCorrect = Ask_Single_Quiz(q);
-
-        cout << "\n";
-
-        if (isCorrect)
-        {
-            int counterDamage = player->Get_ATK();
-            monster.setHP(monster.getHP() - counterDamage);
-
-            cout << "╔════════════════════════════════════════════════════╗\n";
-            cout << "║               기 선 제 압 성 공!                   ║\n";
-            cout << "╠════════════════════════════════════════════════════╣\n";
-            cout << "║ 선제공격 성공!                                     ║\n";
-            cout << "  데미지 : " << counterDamage << "\n";
-            cout << "╚════════════════════════════════════════════════════╝\n";
-        }
-        else
-        {
-            int bossDamage = static_cast<int>(monster.getPower() * 0.8);
-            player->Set_Hp(player->Get_Hp() - bossDamage);
-
-            cout << "╔════════════════════════════════════════════════════╗\n";
-            cout << "║               기 선 제 압 실 패                    ║\n";
-            cout << "╠════════════════════════════════════════════════════╣\n";
-            cout << "║ 기습 공격을 허용했습니다!                          ║\n";
-            cout << "  받은 피해 : " << bossDamage <<"\n";
-            cout << "╚════════════════════════════════════════════════════╝\n";
-        }
-
-        if (player->Get_Hp() <= 0 || monster.getHP() <= 0)
-            break;
+        return;
     }
+
+
+    if (quizPool.empty())
+    {
+        return;
+    }
+
+
+
+    cout << endl;
+    cout << "==================================================" << endl;
+    cout << "[ 최종 검증 시작 전 테스트 ]" << endl;
+    cout << "==================================================" << endl;
+
+    cout << monster.getName()
+        << " : "
+        << endl;
+
+    cout << "\"먼저 당신의 기본적인 코드 이해도를 확인하겠습니다.\""
+        << endl;
+
+
+    random_device rd;
+    mt19937 gen(rd());
+
+    uniform_int_distribution<int> dist(
+        0,
+        static_cast<int>(quizPool.size()) - 1
+    );
+
+
+    int index = dist(gen);
+
+
+
+    bool isCorrect = Ask_Single_Quiz(
+        quizPool[index]
+    );
+
+
+    cout << endl;
+
+
+    if (isCorrect)
+    {
+        cout << "==================================================" << endl;
+        cout << "검증 통과." << endl;
+        cout << "==================================================" << endl;
+
+        return;
+    }
+
+
+
+    cout << "==================================================" << endl;
+    cout << "검증 실패." << endl;
+    cout << "최종 시험의 난이도가 상승합니다." << endl;
+    cout << "==================================================" << endl;
+
+
+    int penaltyDamage = 20;
+
+
+    player->Set_Hp(
+        player->Get_Hp() - penaltyDamage
+    );
+
+
+    if (player->Get_Hp() < 0)
+    {
+        player->Set_Hp(0);
+    }
+
+
+    cout << "추가 피해 : "
+        << penaltyDamage
+        << endl;
+
+    cout << "현재 HP : "
+        << player->Get_Hp()
+        << endl;
 }
 
 void Final_Boss_Monster_Turn(Player* player, Monster& monster, int turnCount, vector<Quiz>& quizPool)
@@ -553,23 +576,6 @@ void Boss_Battle(Player* player, Monster& monster, Inventory<Item>& inventory)
     Show_Battle_End(player, monster);
 }
 
-void Print_Final_Boss_Duo_Introduction(Monster& kim, Monster& moon)
-{
-    cout << endl;
-    cout << "==================================================" << endl;
-    cout << "[ FINAL DUO BATTLE ]" << endl;
-    cout << "==================================================" << endl;
-
-    cout << kim.getName() << " 등장!" << endl;
-    cout << moon.getName() << " 등장!" << endl;
-
-    cout << endl;
-    cout << "두 명의 매니저가 동시에 최종 검증을 시작합니다." << endl;
-    cout << "공격할 대상을 선택해야 합니다." << endl;
-
-    cout << "==================================================" << endl;
-}
-
 bool Final_Boss_Duo_Battle(
     Player* player,
     Monster& kim,
@@ -580,20 +586,25 @@ bool Final_Boss_Duo_Battle(
     int turnCount = 1;
 
 
-    while (player->Get_Hp() > 0 &&
-        (kim.getHP() > 0 || moon.getHP() > 0))
+    while (
+        player->Get_Hp() > 0 &&
+        (kim.getHP() > 0 || moon.getHP() > 0)
+        )
     {
         cout << endl;
         cout << "==================================================" << endl;
-        cout << "DUO TURN : " << turnCount << endl;
+        cout << "FINAL DUO TURN : "
+            << turnCount
+            << endl;
         cout << "==================================================" << endl;
 
 
+
+        cout << endl;
         cout << kim.getName()
             << " HP : "
             << kim.getHP()
             << endl;
-
 
         cout << moon.getName()
             << " HP : "
@@ -602,10 +613,7 @@ bool Final_Boss_Duo_Battle(
 
 
 
-        //========================================
         // 플레이어 턴
-        //========================================
-
         Duo_Player_Turn(
             player,
             kim,
@@ -614,20 +622,18 @@ bool Final_Boss_Duo_Battle(
         );
 
 
-
-        // 플레이어 공격 후 두 보스 모두 쓰러졌는지 확인
-        if (kim.getHP() <= 0 &&
-            moon.getHP() <= 0)
+        // 둘 다 쓰러졌는지 확인
+        if (
+            kim.getHP() <= 0 &&
+            moon.getHP() <= 0
+            )
         {
             break;
         }
 
 
 
-        //========================================
         // 김동현 매니저 턴
-        //========================================
-
         if (kim.getHP() > 0)
         {
             Duo_Monster_Turn(
@@ -645,10 +651,7 @@ bool Final_Boss_Duo_Battle(
 
 
 
-        //========================================
         // 문승호 매니저 턴
-        //========================================
-
         if (moon.getHP() > 0)
         {
             Duo_Monster_Turn(
@@ -659,17 +662,7 @@ bool Final_Boss_Duo_Battle(
 
 
 
-        if (player->Get_Hp() <= 0)
-        {
-            break;
-        }
-
-
-
-        //========================================
-        // 플레이어 버프 턴 감소
-        //========================================
-
+        // 임시 버프 턴 감소
         player->Process_Stat_Modifier_Turn();
 
 
@@ -679,24 +672,13 @@ bool Final_Boss_Duo_Battle(
 
 
 
-    // 플레이어 패배
     if (player->Get_Hp() <= 0)
     {
         return false;
     }
 
 
-
-    // 보스 두 명 모두 처치
-    if (kim.getHP() <= 0 &&
-        moon.getHP() <= 0)
-    {
-        return true;
-    }
-
-
-
-    return false;
+    return true;
 }
 
 void Duo_Player_Turn(
@@ -708,91 +690,94 @@ void Duo_Player_Turn(
 {
     bool actionCompleted = false;
 
-
     while (!actionCompleted)
     {
+        cout << endl;
+        cout << "==================================================" << endl;
+        cout << "[ 플레이어 턴 ]" << endl;
+        cout << "==================================================" << endl;
+
+        cout << "1. 김동현 매니저 공격" << endl;
+        cout << "2. 문승호 매니저 공격" << endl;
+        cout << "3. 스킬 사용" << endl;
+        cout << "4. 아이템 사용" << endl;
+        cout << "선택 : ";
+
         int menu;
-
-
-        Show_Battle_Menu();
-
         cin >> menu;
-
 
 
         switch (menu)
         {
-        case ATTACK:
+        case 1:
         {
-            int target;
-
-
-            cout << endl;
-            cout << "==================================================" << endl;
-            cout << "공격 대상을 선택하세요." << endl;
-            cout << "==================================================" << endl;
-
-
-
-            if (kim.getHP() > 0)
+            if (kim.getHP() <= 0)
             {
-                cout << "1. "
-                    << kim.getName()
-                    << " HP : "
-                    << kim.getHP()
-                    << endl;
+                cout << "이미 검증을 완료한 대상입니다." << endl;
+                break;
             }
 
-
-            if (moon.getHP() > 0)
-            {
-                cout << "2. "
-                    << moon.getName()
-                    << " HP : "
-                    << moon.getHP()
-                    << endl;
-            }
-
-
-            cout << "선택 : ";
-            cin >> target;
-
-
-
-            if (target == 1 &&
-                kim.getHP() > 0)
-            {
-                Attack(player, kim);
-
-                actionCompleted = true;
-            }
-            else if (target == 2 &&
-                moon.getHP() > 0)
-            {
-                Attack(player, moon);
-
-                actionCompleted = true;
-            }
-            else
-            {
-                cout << endl;
-                cout << "공격할 수 없는 대상입니다." << endl;
-                cout << "다시 선택하세요." << endl;
-            }
-
+            Attack(player, kim);
+            actionCompleted = true;
 
             break;
         }
 
 
-
-        case SKILL:
+        case 2:
         {
-            bool usedSkill = Duo_Skill_Process(
-                player,
-                kim,
-                moon
-            );
+            if (moon.getHP() <= 0)
+            {
+                cout << "이미 검증을 완료한 대상입니다." << endl;
+                break;
+            }
+
+            Attack(player, moon);
+            actionCompleted = true;
+
+            break;
+        }
+
+
+        case 3:
+        {
+            cout << endl;
+            cout << "[ 스킬 사용 ]" << endl;
+
+            bool usedSkill = false;
+
+
+            // 기존 Skill은 Monster 1개 기준이라
+            // 대상 선택 후 실행
+            cout << "스킬 대상을 선택하세요." << endl;
+
+            cout << "1. "
+                << kim.getName()
+                << endl;
+
+            cout << "2. "
+                << moon.getName()
+                << endl;
+
+            cout << "선택 : ";
+
+
+            int target;
+            cin >> target;
+
+
+            if (target == 1)
+            {
+                usedSkill = Skill_Menu_Process(player, kim);
+            }
+            else if (target == 2)
+            {
+                usedSkill = Skill_Menu_Process(player, moon);
+            }
+            else
+            {
+                cout << "잘못된 선택입니다." << endl;
+            }
 
 
             if (usedSkill)
@@ -800,26 +785,18 @@ void Duo_Player_Turn(
                 actionCompleted = true;
             }
 
-
             break;
         }
 
 
-
-        case ITEM:
+        case 4:
         {
-            Use_Item(
-                player,
-                kim,
-                inventory
-            );
-
+            Use_Item(player, kim, inventory);
 
             actionCompleted = true;
 
             break;
         }
-
 
 
         default:
@@ -831,87 +808,86 @@ void Duo_Player_Turn(
     }
 }
 
-void Duo_Monster_Turn(
-    Player* player,
-    Monster& monster
-)
+void Duo_Monster_Turn(Player* player, Monster& monster)
 {
+    if (player == nullptr)
+    {
+        return;
+    }
+
     if (monster.getHP() <= 0)
     {
         return;
     }
 
 
-
     cout << endl;
     cout << "==================================================" << endl;
-    cout << monster.getName()
-        << "의 턴"
-        << endl;
+    cout << "[ " << monster.getName() << "의 턴 ]" << endl;
     cout << "==================================================" << endl;
 
 
+    // 최종보스 전용 공격 대사 출력
+    monster.Print_Attack_Message();
 
-    int skill_Roll = rand() % 100 + 1;
 
 
+    // 최종보스 기믹 스킬 체크
+    static int finalBossTurnCount = 1;
 
-    switch (monster.getMonsterType())
+
+    if (Check_Elite_Skill(monster, finalBossTurnCount))
     {
-    case Monster_Type::KIM_DONG_HYUN_MANAGER:
-    {
-        if (skill_Roll <= 30)
-        {
-            Kim_Dong_Hyun_Manager_Skill(
-                player,
-                monster
-            );
-        }
-        else
-        {
-            Monster_Attack(
-                player,
-                monster
-            );
-        }
+        cout << endl;
+        cout << "[ 최종 검증 패턴 발동 ]" << endl;
 
-        break;
+        Execute_Elite_Skill(player, monster);
+
+        finalBossTurnCount++;
+
+        return;
     }
 
 
 
-    case Monster_Type::MOON_SEUNG_HO_MANAGER:
+    // 기본 공격
+    int damage = monster.getPower() - player->Get_DEF();
+
+
+    if (damage <= 0)
     {
-        if (skill_Roll <= 30)
-        {
-            Moon_Seung_Ho_Manager_Skill(
-                player,
-                monster
-            );
-        }
-        else
-        {
-            Monster_Attack(
-                player,
-                monster
-            );
-        }
-
-        break;
+        damage = 1;
     }
 
 
+    cout << endl;
+    cout << monster.getName()
+        << "의 코드 검증 공격!"
+        << endl;
 
-    default:
+
+    cout << "받은 피해 : "
+        << damage
+        << endl;
+
+
+    int currentHP = player->Get_Hp();
+
+    player->Set_Hp(currentHP - damage);
+
+
+    if (player->Get_Hp() < 0)
     {
-        Monster_Attack(
-            player,
-            monster
-        );
+        player->Set_Hp(0);
+    }
 
-        break;
-    }
-    }
+
+    cout << "현재 HP : "
+        << player->Get_Hp()
+        << endl;
+
+
+    finalBossTurnCount++;
 }
 
 bool Duo_Skill_Process(
@@ -1089,4 +1065,51 @@ void Moon_Seung_Ho_Manager_Skill(
     }
 }
 
+void Print_Final_Boss_Duo_Introduction(
+    Monster& kim,
+    Monster& moon
+)
+{
+    cout << endl;
+    cout << "==================================================" << endl;
+    cout << "[ 최종 검증 관리자 등장 ]" << endl;
+    cout << "==================================================" << endl;
 
+
+    cout << endl;
+
+    cout << kim.getName()
+        << " : "
+        << endl;
+
+    cout << "\"마지막 단계까지 도달했군요.\""
+        << endl;
+
+    cout << "\"작성한 코드가 진짜 동작하는지 검증하겠습니다.\""
+        << endl;
+
+
+    cout << endl;
+
+    cout << moon.getName()
+        << " : "
+        << endl;
+
+    cout << "\"지식만으로는 부족합니다.\""
+        << endl;
+
+    cout << "\"직접 해결하는 모습을 보여주세요.\""
+        << endl;
+
+
+    cout << endl;
+
+    cout << "두 매니저가 동시에 코드를 실행하기 시작했다."
+        << endl;
+
+    cout << "최종 검증 프로세스가 시작된다."
+        << endl;
+
+
+    cout << "==================================================" << endl;
+}
