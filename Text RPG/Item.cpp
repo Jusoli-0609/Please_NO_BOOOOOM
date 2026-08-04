@@ -25,8 +25,7 @@ bool Item::Item_Effect(Player& player, Monster& monster)
 {
     if (_Item_Name == "컵라면")
     {
-        player.Set_Hp(
-                      min(player.Get_Hp() + 50, player.GetMaxHP()));
+        player.Set_Hp(min(player.Get_Hp() + 50, player.GetMaxHP()));
 
         cout << "체력을 회복해 현재 체력은 "
             << player.Get_Hp()
