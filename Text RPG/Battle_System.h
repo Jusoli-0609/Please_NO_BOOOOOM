@@ -1,4 +1,4 @@
-#ifndef BATTLE_SYSTEM_H
+﻿#ifndef BATTLE_SYSTEM_H
 #define BATTLE_SYSTEM_H
 
 #include "Player.h"
@@ -25,7 +25,7 @@ void Show_Battle_Menu();
 void Show_Battle_End(Player* player, Monster& monster);
 
 void Player_Turn(Player* player, Monster& monster, Inventory<Item>& inventory);
-void Use_Item(Player* player, Monster& monster, Inventory<Item>& inventory);
+bool Use_Item(Player* player, Monster& monster, Inventory<Item>& inventory);
 void Attack(Player* player, Monster& monster);
 
 bool Skill_Menu_Process(Player* player, Monster& monster);

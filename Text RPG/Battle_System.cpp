@@ -125,8 +125,7 @@ void Player_Turn(Player* player, Monster& monster, Inventory<Item>& inventory)
             break;
 
         case ITEM:
-            Use_Item(player, monster, inventory);
-            actionCompleted = true;
+            actionCompleted = Use_Item(player, monster, inventory);
             break;
 
         default:
@@ -136,14 +135,14 @@ void Player_Turn(Player* player, Monster& monster, Inventory<Item>& inventory)
     }
 }
 
-void Use_Item(Player* player, Monster& monster, Inventory<Item>& inventory)
+bool Use_Item(Player* player, Monster& monster, Inventory<Item>& inventory)
 {
     if (player == nullptr)
     {
-        return;
+        return false;
     }
 
-    inventory.Use_Item(*player);
+   return inventory.Use_Item(*player);
 }
 
 void Attack(Player* player, Monster& monster)
