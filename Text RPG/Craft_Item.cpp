@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <ctime>
 #include "Monster.h"
+#include "Inventory.h"
 using namespace std;
 
 Craft_Work_Shop::Craft_Work_Shop()
@@ -393,7 +394,7 @@ bool Craft_Work_Shop::Decomposition_Item(Inventory_For_Equipments_Only& equipmen
 //=============================================================================
 
 bool Craft_Work_Shop::Enhance_Item(
-	Inventory_For_Equipments_Only& equipment_inventory
+	Inventory_For_Equipments_Only& equipment_inventory, Inventory<Item>& inventory
 )
 {
 	cout << "장비 전용 인벤토리에 있는 장비만 강화할 수 있다냥." << endl;
@@ -403,11 +404,16 @@ bool Craft_Work_Shop::Enhance_Item(
 		return false;
 	}
 
+	if (inventory.Get_Money() <= 0)
+	{
+		cout << "돈 없는 집사는 필요없다냥" << endl;
+		cout << "꺼져라냥!" << endl;
+	}
 	equipment_inventory.Print_Equipment_Inventory();
 
 	int choice = -1;
 
-	cout << "강화할 장비를 고르라냥: ";
+	cout << "가격은 1젬이다냥! 강화할 장비를 고르라냥: ";
 	cin >> choice;
 
 	while (choice < 1 || equipment_inventory.Get_Equipment_Current_Count() < choice)
@@ -429,7 +435,9 @@ bool Craft_Work_Shop::Enhance_Item(
 		return false;
 	}
 	
-	int randomValue = rand() % 2;
+	inventory.Set_Money(inventory.Get_Money() - 1);
+	cout << "1젬 고맙다냥! 강화 시작한다냥!" << endl;
+	int randomValue = rand() % 5;
 
 
 	if (randomValue == 1)
