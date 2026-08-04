@@ -930,3 +930,19 @@
 
         return Total_Weight;
     }
+
+    //업데이트 하기
+    bool Inventory_For_Equipments_Only::Update_Equipment_By_Index(
+        int index,
+        const Equipment& equipment
+    )
+    {
+        if (index<0 || index>_Equipments.size())
+        {
+            return false;
+        }
+
+        // TODO: _Equipments[index]에 equipment 대입
+
+        return true;
+    }

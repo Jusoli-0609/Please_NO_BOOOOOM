@@ -120,4 +120,5 @@ class Inventory_For_Equipments_Only
         void Equip_Equipment_From_Inventory(Currently_Equipped_Equipments& equipped);//12.장비 착용시키기
         int Get_Total_Equipment_Weight() const;//13. 총무게 조회
         bool Remove_Equipment_By_index(int index); //14. 분해 전용  함수
+        bool Update_Equipment_By_Index(int index, const Equipment& equipment);//15.강화 업데이트용
 };

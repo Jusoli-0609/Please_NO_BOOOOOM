@@ -3,6 +3,8 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <cstdlib>
+#include <ctime>
 #include "Monster.h"
 using namespace std;
 
@@ -418,32 +420,36 @@ bool Craft_Work_Shop::Enhance_Item(
 
 	Equipment selected_Equipment = equipment_inventory.Get_Equipment_By_Index(Vector_Index);
 
-	int currentEnhance = selected_Equipment.Get_Enhance_Count();
-	// TODO: Equipment 클래스에 강화 수치를 가져오는 getter 함수 이름 확인
+	int currentEnhance = selected_Equipment.Get_Enhance_Level();
+
 
 	if (currentEnhance >= 5)
 	{
 		cout << "이미 최대 강화 수치다냥!" << endl;
 		return false;
 	}
+	
+	int randomValue = rand() % 2;
 
-	int randomValue = 0;
-	// TODO: 0 또는 1이 나오도록 랜덤 값 대입
 
 	if (randomValue == 1)
 	{
-		// TODO: selected_Equipment의 강화 수치 증가 함수 호출
-		// 예: selected_Equipment.Increase_Enhance_Count();
+		selected_Equipment.Set_Enhance_Level(currentEnhance + 1);
 
-		// TODO: 강화 수치가 오른 selected_Equipment를 장비 인벤토리에 다시 반영
-		// 예: equipment_inventory.Update_Equipment_By_Index(Vector_Index, selected_Equipment);
+		bool updateResult =
+			equipment_inventory.Update_Equipment_By_Index(
+				Vector_Index,
+				selected_Equipment
+			);
+
+		if (updateResult == false)
+		{
+			cout << "강화 결과를 저장하지 못했다냥!" << endl;
+			return false;
+		}
 
 		cout << "강화에 성공했다냥!" << endl;
 		return true;
 	}
-	else
-	{
-		cout << "강화에 실패했다냥..." << endl;
-		return false;
-	}
+	return false;
 }
