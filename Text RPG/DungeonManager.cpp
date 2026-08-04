@@ -10,6 +10,8 @@
 #include "Tutor_Mouse.h"
 #include "Console_Manager.h"
 
+#include "Sound_Manager.h"
+
 #include <algorithm>
 #include <cstdlib>
 #include <iostream>
@@ -514,6 +516,8 @@ void Dungeon_Manager::Run_Tutor_Challenge(Player* player, Inventory_For_Equipmen
 		cout << "========================================" << endl;
 		return;
 	}
+
+	Sound_Manager::Get_Instance().Play_BGM(BGM_Type::Boss);
 
 	Monster tutor_Monster;
 	tutor_Monster.Initialize_Tutor_Monster(_current_Chapter);
