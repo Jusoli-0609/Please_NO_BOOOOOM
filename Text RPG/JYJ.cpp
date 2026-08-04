@@ -24,6 +24,8 @@ JYJ::JYJ(const std::string& name)
     skill3Name = "숨쉬듯 무례하기";
     groggyAttackName = "그로기 공격 이름";
 
+    //방깎 수치, 버프 스킬로 조정됨
+    defenceDecreaseValue = 0.00f;
 
     Set_Start_Stat(
         200, // HP
@@ -43,6 +45,13 @@ void JYJ::Attack(Monster* monster)
     if (monster == nullptr)
     {
         std::cout << "공격할 대상이 없습니다.\n";
+        return;
+    }
+
+
+    if (!Check_Hit(monster))
+    {
+        std::cout << "공격이 빗나갔습니다!\n";
         return;
     }
 
@@ -128,9 +137,41 @@ void JYJ::Skill2(Monster* monster)
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }
 
+//void JYJ::Skill3(Monster* monster)
+//{
+//    const int mpCost = 30;
+//
+//    if (monster == nullptr)
+//    {
+//        std::cout << "스킬을 사용할 대상이 없습니다.\n";
+//        return;
+//    }
+//
+//    if (mp < mpCost)
+//    {
+//        std::cout << "MP가 부족합니다.\n";
+//        return;
+//    }
+//
+//    mp -= mpCost;
+//
+//    // [스킬 3 - 숨쉬듯 무례하기]: 참을 수 없는 무례함으로 마나를 폭발시키는 주력기 컨셉 (공격력 150% + 마나 MP 30%)
+//    int damage = Calculate_Damage(
+//        1.5f, 0.0f, 0.0f, // ATK 150%
+//        0.3f, 0.0f, 0.0f, // MP 30%
+//        monster->getDefence()
+//    );
+//
+//    Apply_Damage(monster, damage);
+//
+//    std::cout << name << "의 " << skill3Name << "!\n";
+//    std::cout << "커피 타오십시오.\n";
+//    std::cout << damage << "의 피해를 입혔습니다.\n";
+//}
+
 void JYJ::Skill3(Monster* monster)
 {
-    const int mpCost = 30;
+    const int mpCost = 10;
 
     if (monster == nullptr)
     {
@@ -146,18 +187,23 @@ void JYJ::Skill3(Monster* monster)
 
     mp -= mpCost;
 
-    // [스킬 3 - 숨쉬듯 무례하기]: 참을 수 없는 무례함으로 마나를 폭발시키는 주력기 컨셉 (공격력 150% + 마나 MP 30%)
-    int damage = Calculate_Damage(
-        1.5f, 0.0f, 0.0f, // ATK 150%
-        0.3f, 0.0f, 0.0f, // MP 30%
-        monster->getDefence()
-    );
+    // 현재 캐릭터의 방어력 감소 수치
+    defenceDecreaseValue = 0.2f;
 
-    Apply_Damage(monster, damage);
+    Stat_Modifier modifier;
+
+    modifier.id = "DEFENCE_DECREASE_BUFF";
+    modifier.name = "적 방어력 20% 감소";
+    modifier.type = Stat_Modifier_Type::Buff;
+    modifier.remainingTurns = 3;
+
+    // 같은 방깎 효과가 이미 있다면 제거 후 재등록
+    Remove_Stat_Modifier("DEFENCE_DECREASE_BUFF");
+    Add_Stat_Modifier(modifier);
 
     std::cout << name << "의 " << skill3Name << "!\n";
-    std::cout << "커피 타오십시오.\n";
-    std::cout << damage << "의 피해를 입혔습니다.\n";
+    std::cout << name << " : 커피 타오십시오.\n";
+    std::cout << "3턴 동안 적의 방어력을 20% 낮췄다!\n";
 }
 
 void JYJ::Groggy_Attack(Monster* monster)
@@ -181,3 +227,23 @@ void JYJ::Groggy_Attack(Monster* monster)
     std::cout << "그로기 공격 대사 입력\n";
     std::cout << damage << "의 피해를 입혔습니다.\n";
 }
+
+//방깎 스킬 사용 예시
+//// 현재 캐릭터의 방어력 감소 수치
+////defenceDecreaseValue = 0.nnf;
+//
+//Stat_Modifier modifier;
+//
+//modifier.id = "DEFENCE_DECREASE_BUFF";
+//modifier.name = "적 방어력 n% 관통";
+//modifier.type = Stat_Modifier_Type::Buff;
+//modifier.remainingTurns = 3;
+//
+//// 같은 방깎 효과가 이미 있다면 제거 후 재등록
+//Remove_Stat_Modifier("DEFENCE_DECREASE_BUFF");
+//Add_Stat_Modifier(modifier);
+//
+//std::cout << name << "의 " << skill1Name << "!\n";
+//std::cout << name << " : 스킬 대사\n";
+//std::cout << "n턴 동안 방어력 관통 n% 효과를 획득했다!.\n";
+//

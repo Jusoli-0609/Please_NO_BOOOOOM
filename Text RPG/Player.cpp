@@ -1,10 +1,10 @@
 ﻿#include <iostream>
 #include <algorithm>
 #include <string>
-
 #include "Player.h"
 #include "Equipment.h"
 #include "Tutor.h"
+#include "Monster.h"
 // 이름을 전달받아 플레이어를 생성하고 나머지 멤버를 기본값으로 초기화한다.
 Player::Player(const std::string& name)
     : name(name),
@@ -76,6 +76,7 @@ void Player::Set_Start_Stat(
 
     statModifierInitialized = true;
 }
+
 // 데미지 계산 공식, 공격력, 방어력, HP, MP, 은신, 민첩 비율을 조합하여 계산
 int Player::Calculate_Damage(
     float atkRatio,
@@ -87,14 +88,11 @@ int Player::Calculate_Damage(
     int targetDef
 ) const
 {
-    bool isDefenceDecreaseOn =
+    bool isDefenceDecreaseBuffOn =
         Has_Stat_Modifier("DEFENCE_DECREASE_BUFF");
 
-    if (isDefenceDecreaseOn)
+    if (isDefenceDecreaseBuffOn)
     {
-        float defenceDecreaseValue =
-            Get_Defence_Decrease_Value();
-
         targetDef = static_cast<int>(
             targetDef * (1.0f - defenceDecreaseValue)
             );
@@ -1188,4 +1186,39 @@ std::string Player::Get_Skill3_Name() const
 std::string Player::Get_Groggy_Attack_Name() const
 {
     return groggyAttackName;
+}
+
+// 명중 판정, 몬스터의 회피율과 플레이어의 민첩을 고려하여 명중 여부를 결정
+bool Player::Check_Hit(const Monster* monster) const
+{
+    if (monster == nullptr)
+    {
+        return false;
+    }
+
+    const int baseValue = 100;
+    const float hitConstant = 2.0f;
+
+    int hitChance = static_cast<int>(
+        (
+            baseValue
+            - monster->getEvasion()
+            + agi
+            )
+        * hitConstant
+        );
+
+    // 최소·최대 명중률
+    if (hitChance < 5)
+    {
+        hitChance = 5;
+    }
+    else if (hitChance > 95)
+    {
+        hitChance = 95;
+    }
+
+    int randomValue = rand() % 100 + 1;
+
+    return randomValue <= hitChance;
 }
