@@ -12,8 +12,11 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <random>
 
 using namespace std;
+
+
 
 //======================================================
 // 전투 시작 Main Loop
@@ -583,6 +586,42 @@ bool Final_Boss_Duo_Battle(
     Inventory<Item>& inventory
 )
 {
+    if (player == nullptr)
+    {
+        return false;
+    }
+
+
+    //==================================================
+    // 최종보스 시작 전 기선제압 테스트
+    //==================================================
+
+    vector<Quiz> firstQuizPool;
+
+
+    if (kim.getMonsterType() == Monster_Type::KIM_DONG_HYUN_MANAGER)
+    {
+        firstQuizPool = KimDongHyunManagerQuiz;
+    }
+
+
+    if (!firstQuizPool.empty())
+    {
+        First_Impression_Quiz_Phase(
+            player,
+            kim,
+            firstQuizPool
+        );
+    }
+
+
+    if (player->Get_Hp() <= 0)
+    {
+        return false;
+    }
+
+
+
     int turnCount = 1;
 
 
@@ -606,6 +645,7 @@ bool Final_Boss_Duo_Battle(
             << kim.getHP()
             << endl;
 
+
         cout << moon.getName()
             << " HP : "
             << moon.getHP()
@@ -613,13 +653,17 @@ bool Final_Boss_Duo_Battle(
 
 
 
+        //==================================================
         // 플레이어 턴
+        //==================================================
+
         Duo_Player_Turn(
             player,
             kim,
             moon,
             inventory
         );
+
 
 
         // 둘 다 쓰러졌는지 확인
@@ -633,7 +677,10 @@ bool Final_Boss_Duo_Battle(
 
 
 
+        //==================================================
         // 김동현 매니저 턴
+        //==================================================
+
         if (kim.getHP() > 0)
         {
             Duo_Monster_Turn(
@@ -651,7 +698,10 @@ bool Final_Boss_Duo_Battle(
 
 
 
+        //==================================================
         // 문승호 매니저 턴
+        //==================================================
+
         if (moon.getHP() > 0)
         {
             Duo_Monster_Turn(
@@ -662,7 +712,10 @@ bool Final_Boss_Duo_Battle(
 
 
 
-        // 임시 버프 턴 감소
+        //==================================================
+        // 버프/디버프 턴 감소
+        //==================================================
+
         player->Process_Stat_Modifier_Turn();
 
 
@@ -672,10 +725,18 @@ bool Final_Boss_Duo_Battle(
 
 
 
+    //==================================================
+    // 전투 종료 처리
+    //==================================================
+
     if (player->Get_Hp() <= 0)
     {
+        player->Remove_Temporary_Modifiers();
         return false;
     }
+
+
+    player->Remove_Temporary_Modifiers();
 
 
     return true;
@@ -827,12 +888,48 @@ void Duo_Monster_Turn(Player* player, Monster& monster)
     cout << "==================================================" << endl;
 
 
+
+    //==================================================
+    // 최종보스 전용 스킬
+    //==================================================
+
+    if (monster.getMonsterType() == Monster_Type::KIM_DONG_HYUN_MANAGER)
+    {
+        int chance = rand() % 100;
+
+        if (chance < 30)
+        {
+            Kim_Dong_Hyun_Manager_Skill(player, monster);
+            return;
+        }
+    }
+
+
+    if (monster.getMonsterType() == Monster_Type::MOON_SEUNG_HO_MANAGER)
+    {
+        int chance = rand() % 100;
+
+        if (chance < 30)
+        {
+            Moon_Seung_Ho_Manager_Skill(player, monster);
+            return;
+        }
+    }
+
+
+
+    //==================================================
     // 최종보스 전용 공격 대사 출력
+    //==================================================
+
     monster.Print_Attack_Message();
 
 
 
-    // 최종보스 기믹 스킬 체크
+    //==================================================
+    // 기존 최종보스 기믹 스킬 체크
+    //==================================================
+
     static int finalBossTurnCount = 1;
 
 
@@ -841,16 +938,22 @@ void Duo_Monster_Turn(Player* player, Monster& monster)
         cout << endl;
         cout << "[ 최종 검증 패턴 발동 ]" << endl;
 
+
         Execute_Elite_Skill(player, monster);
 
+
         finalBossTurnCount++;
+
 
         return;
     }
 
 
 
+    //==================================================
     // 기본 공격
+    //==================================================
+
     int damage = monster.getPower() - player->Get_DEF();
 
 
@@ -871,9 +974,12 @@ void Duo_Monster_Turn(Player* player, Monster& monster)
         << endl;
 
 
+
     int currentHP = player->Get_Hp();
 
+
     player->Set_Hp(currentHP - damage);
+
 
 
     if (player->Get_Hp() < 0)
@@ -882,10 +988,10 @@ void Duo_Monster_Turn(Player* player, Monster& monster)
     }
 
 
+
     cout << "현재 HP : "
         << player->Get_Hp()
         << endl;
-
 
     finalBossTurnCount++;
 }
@@ -1008,9 +1114,29 @@ void Kim_Dong_Hyun_Manager_Skill(
         cout << "추가 피해 발생!" << endl;
 
 
-        player->Set_Hp(
-            player->Get_Hp() - 20
-        );
+        int damage = 20;
+
+        int currentHP = player->Get_Hp();
+
+        int afterHP = currentHP - damage;
+
+
+        if (afterHP < 0)
+        {
+            afterHP = 0;
+        }
+
+
+        player->Set_Hp(afterHP);
+
+
+        cout << "받은 피해 : "
+            << damage
+            << endl;
+
+        cout << "현재 HP : "
+            << player->Get_Hp()
+            << endl;
     }
 }
 
@@ -1059,9 +1185,29 @@ void Moon_Seung_Ho_Manager_Skill(
         cout << "포인터 오류 공격!" << endl;
 
 
-        player->Set_Hp(
-            player->Get_Hp() - 30
-        );
+        int damage = 30;
+
+        int currentHP = player->Get_Hp();
+
+        int afterHP = currentHP - damage;
+
+
+        if (afterHP < 0)
+        {
+            afterHP = 0;
+        }
+
+
+        player->Set_Hp(afterHP);
+
+
+        cout << "받은 피해 : "
+            << damage
+            << endl;
+
+        cout << "현재 HP : "
+            << player->Get_Hp()
+            << endl;
     }
 }
 

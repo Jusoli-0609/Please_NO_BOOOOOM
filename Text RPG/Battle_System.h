@@ -31,6 +31,8 @@ void Attack(Player* player, Monster& monster);
 bool Skill_Menu_Process(Player* player, Monster& monster);
 void Skill(Player* player, Monster& monster);
 
+
+
 void Monster_Turn(Player* player, Monster& monster, int turnCount);
 void Monster_Attack(Player* player, Monster& monster);
 
