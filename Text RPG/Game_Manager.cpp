@@ -104,6 +104,7 @@ void Game_Manager::Show_Main_Menu()
         cout << "2. 인벤토리" << endl;
         cout << "3. 캐릭터 정보" << endl;
         cout << "4. 내일배움캠프 재정비소" << endl;
+		cout << "5. 튜터 선택" << endl;
         cout << "0. 게임 종료" << endl;
         cout << "선택: ";
 
@@ -146,6 +147,12 @@ void Game_Manager::Show_Main_Menu()
 
             break;
         }
+
+		case 5:
+		{
+			Print_Tutor_Menu(_Inventory, _Currently_Equipped_Tutor, _Player);
+			break;
+		}
 
         case 0:
             cout << "게임 종료!" << endl;
