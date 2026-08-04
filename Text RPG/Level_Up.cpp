@@ -114,8 +114,22 @@ void Level_Up::ProcessLevelUp(Player* player)
     }
     cout << "====================================\n\n";
 
-    // [추가된 부분] C++ 표준 입력을 활용한 깔끔한 일시정지 처리
-    cout << "\n계속하려면 Enter를 누르세요...";
+    // [추가된 부분] 레벨에 따라 대사가 3가지로 다채롭게 바뀌는 일시정지 처리
+    int messageIndex = _current_level % 3;
+
+    if (messageIndex == 1)
+    {
+        cout << "야호!! 신난다! 다음으로 넘어가자! (Enter를 누르세요)";
+    }
+    else if (messageIndex == 2)
+    {
+        cout << "한층 성장한 느낌이다! (Enter를 누르세요)";
+    }
+    else
+    {
+        cout << "스파르타!! 이 기세로 달려간다! (Enter를 누르세요)";
+    }
+
     cin.ignore();
     cin.get();
 }
