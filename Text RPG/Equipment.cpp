@@ -937,12 +937,12 @@
         const Equipment& equipment
     )
     {
-        if (index<0 || index>_Equipments.size())
+        if (index < 0 || index >= static_cast<int>(_Equipments.size()))
         {
             return false;
         }
 
-        // TODO: _Equipments[index]에 equipment 대입
+        _Equipments[index] = equipment;
 
         return true;
     }

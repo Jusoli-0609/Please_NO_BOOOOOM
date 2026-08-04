@@ -866,5 +866,51 @@ void Inventory<T>::Print_Inventory_Menu(
 
         return count;
     }
+    template <typename T>//12.판매용
+    int Inventory<T>::Get__Current_Quantity_Of_Items() const
+    {
+        return _Current_Quantity_Of_Items;
+    }
+    template<typename T>//13.아이템 인덱스로 없애기
+    bool Inventory<T>::Remove_Item_By_Index_And_Count(int index, int count)
+    {
+        
+            if (index < 0 || index >= _Current_Quantity_Of_Items)
+            {
+                return false;
+            }
 
+            if (count <= 0)
+            {
+                return false;
+            }
+
+            // TODO: 선택한 아이템 현재 개수 int 변수 선언
+            int currentItemCount = _Inventory_Items[index]._Item_Count;
+
+            if (count > currentItemCount)
+            {
+                return false;
+            }
+
+            if (count < currentItemCount)
+            {
+              
+                _Inventory_Items[index]._Item_Count -= count;
+
+ 
+                return true;
+            }
+
+            for (int i = index; i < _Current_Quantity_Of_Items - 1; i++)
+            {
+                
+                _Inventory_Items[i] = _Inventory_Items[i + 1];
+            }
+
+            _Current_Quantity_Of_Items--;
+
+            return true;
+        
+    }
     template class Inventory<Item>; // 명시적 인스턴스화

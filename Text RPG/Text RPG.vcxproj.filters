@@ -1,426 +1,133 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="소스 파일">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="헤더 파일">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="소스 파일\Item">
-      <UniqueIdentifier>{8988196a-4e5c-4e99-b320-05500c7e7f27}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="헤더 파일\Item">
-      <UniqueIdentifier>{2ff36e5c-cac5-435e-b9d1-884c08bd12bb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="헤더 파일\Item\Engine">
-      <UniqueIdentifier>{186a03a0-3db8-4140-8660-4d0fefa6e0cd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Item\Engine">
-      <UniqueIdentifier>{7431470b-a202-4c5e-9e37-d54e70cc31d6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="헤더 파일\Item\Glasses">
-      <UniqueIdentifier>{1701b1f6-9817-4ef1-8443-db1e22fb7313}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Item\Glasses">
-      <UniqueIdentifier>{44db6bca-7e09-48f7-a692-2ef1ea733b43}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="헤더 파일\Item\Keyboard">
-      <UniqueIdentifier>{750e265a-3dbd-4caf-ae64-a9c4f5f97518}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Item\Keyboard">
-      <UniqueIdentifier>{3c861b07-22fb-4024-a160-f91c3313a4cd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Item\Mouse">
-      <UniqueIdentifier>{2ce446ad-310d-44d7-af42-c483f29bf294}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="헤더 파일\Item\Mouse">
-      <UniqueIdentifier>{e2c2bc97-91ea-43d5-b762-66316bfe91ac}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Item\Headset">
-      <UniqueIdentifier>{a93390e1-ed3a-4af2-b9c7-bfae052de8ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="헤더 파일\Item\Headset">
-      <UniqueIdentifier>{5c9b705b-5fe0-4256-b35d-53938ff1c5dd}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="Ascii_Art_Manager.cpp" />
+    <ClCompile Include="Battle_Elite_Skill.cpp" />
+    <ClCompile Include="Camp_Manager.cpp" />
+    <ClCompile Include="Character_Creator.cpp" />
+    <ClCompile Include="Console_Manager.cpp" />
+    <ClCompile Include="Craft_Item.cpp" />
+    <ClCompile Include="Battle_System.cpp" />
+    <ClCompile Include="Equipment.cpp" />
+    <ClCompile Include="Game_Manager.cpp" />
+    <ClCompile Include="Intro.cpp" />
+    <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Items_Equipments_Repository.cpp" />
+    <ClCompile Include="Job_Selection.cpp" />
+    <ClCompile Include="JSR.cpp" />
+    <ClCompile Include="JWH.cpp" />
+    <ClCompile Include="JYJ.cpp" />
+    <ClCompile Include="Level_1_Engine.cpp" />
+    <ClCompile Include="Level_1_Glasses.cpp" />
+    <ClCompile Include="Level_1_Headset.cpp" />
+    <ClCompile Include="Level_1_Keyboard.cpp" />
+    <ClCompile Include="Level_1_Mouse.cpp" />
+    <ClCompile Include="Level_2_Engine.cpp" />
+    <ClCompile Include="Level_2_Glasses.cpp" />
+    <ClCompile Include="Level_2_Headset.cpp" />
+    <ClCompile Include="Level_2_Keyboard.cpp" />
+    <ClCompile Include="Level_2_Mouse.cpp" />
+    <ClCompile Include="Level_3_Engine.cpp" />
+    <ClCompile Include="Level_3_Glasses.cpp" />
+    <ClCompile Include="Level_3_Headset.cpp" />
+    <ClCompile Include="Level_3_Keyboard.cpp" />
+    <ClCompile Include="Level_3_Mouse.cpp" />
+    <ClCompile Include="Level_4_Engine.cpp" />
+    <ClCompile Include="Level_4_Glasses.cpp" />
+    <ClCompile Include="Level_4_Headset.cpp" />
+    <ClCompile Include="Level_4_Keyboard.cpp" />
+    <ClCompile Include="Level_4_Mouse.cpp" />
+    <ClCompile Include="Level_5_Engine.cpp" />
+    <ClCompile Include="Level_5_Glasses.cpp" />
+    <ClCompile Include="Level_5_Headset.cpp" />
+    <ClCompile Include="Level_5_Keyboard.cpp" />
+    <ClCompile Include="Level_5_Mouse.cpp" />
+    <ClCompile Include="Level_Up.cpp" />
+    <ClCompile Include="LMR.cpp" />
+    <ClCompile Include="LYB.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="All_Recipes.cpp" />
+    <ClCompile Include="DungeonManager.cpp" />
+    <ClCompile Include="PSB.cpp" />
+    <ClCompile Include="Quiz_Bank.cpp" />
+    <ClCompile Include="Recipe_Repository.cpp" />
+    <ClCompile Include="Tutor.cpp" />
+    <ClCompile Include="Tutor_Engine.cpp" />
+    <ClCompile Include="Tutor_Glasses.cpp" />
+    <ClCompile Include="Tutor_Headset.cpp" />
+    <ClCompile Include="Tutor_Keyboard.cpp" />
+    <ClCompile Include="Tutor_Mouse.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Monster.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Battle_System.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Craft_Item.cpp">
-      <Filter>소스 파일\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="All_Recipes.cpp">
-      <Filter>소스 파일\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="Inventory.cpp">
-      <Filter>소스 파일\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>소스 파일\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="DungeonManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Character_Creator.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Console_Manager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Game_Manager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Intro.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Job_Selection.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Level_Up.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="JYJ.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Battle_Elite_Skill.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Equipment.cpp">
-      <Filter>소스 파일\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="Items_Equipments_Repository.cpp">
-      <Filter>소스 파일\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="Ascii_Art_Manager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Quiz_Bank.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Camp_Manager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Recipe_Repository.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Level_1_Engine.cpp">
-      <Filter>소스 파일\Item\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Level_2_Engine.cpp">
-      <Filter>소스 파일\Item\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Level_3_Engine.cpp">
-      <Filter>소스 파일\Item\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Level_4_Engine.cpp">
-      <Filter>소스 파일\Item\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Level_5_Engine.cpp">
-      <Filter>소스 파일\Item\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Level_5_Mouse.cpp">
-      <Filter>소스 파일\Item\Mouse</Filter>
-    </ClCompile>
-    <ClCompile Include="Level_5_Keyboard.cpp">
-      <Filter>소스 파일\Item\Keyboard</Filter>
-    </ClCompile>
-    <ClCompile Include="Level_5_Headset.cpp">
-      <Filter>소스 파일\Item\Headset</Filter>
-    </ClCompile>
-    <ClCompile Include="Level_5_Glasses.cpp">
-      <Filter>소스 파일\Item\Glasses</Filter>
-    </ClCompile>
-    <ClCompile Include="Level_4_Mouse.cpp">
-      <Filter>소스 파일\Item\Mouse</Filter>
-    </ClCompile>
-    <ClCompile Include="Level_4_Keyboard.cpp">
-      <Filter>소스 파일\Item\Keyboard</Filter>
-    </ClCompile>
-    <ClCompile Include="Level_4_Headset.cpp">
-      <Filter>소스 파일\Item\Headset</Filter>
-    </ClCompile>
-    <ClCompile Include="Level_4_Glasses.cpp">
-      <Filter>소스 파일\Item\Glasses</Filter>
-    </ClCompile>
-    <ClCompile Include="Level_3_Mouse.cpp">
-      <Filter>소스 파일\Item\Mouse</Filter>
-    </ClCompile>
-    <ClCompile Include="Level_3_Keyboard.cpp">
-      <Filter>소스 파일\Item\Keyboard</Filter>
-    </ClCompile>
-    <ClCompile Include="Level_3_Headset.cpp">
-      <Filter>소스 파일\Item\Headset</Filter>
-    </ClCompile>
-    <ClCompile Include="Level_3_Glasses.cpp">
-      <Filter>소스 파일\Item\Glasses</Filter>
-    </ClCompile>
-    <ClCompile Include="Level_2_Mouse.cpp">
-      <Filter>소스 파일\Item\Mouse</Filter>
-    </ClCompile>
-    <ClCompile Include="Level_2_Keyboard.cpp">
-      <Filter>소스 파일\Item\Keyboard</Filter>
-    </ClCompile>
-    <ClCompile Include="Level_2_Headset.cpp">
-      <Filter>소스 파일\Item\Headset</Filter>
-    </ClCompile>
-    <ClCompile Include="Level_2_Glasses.cpp">
-      <Filter>소스 파일\Item\Glasses</Filter>
-    </ClCompile>
-    <ClCompile Include="Level_1_Mouse.cpp">
-      <Filter>소스 파일\Item\Mouse</Filter>
-    </ClCompile>
-    <ClCompile Include="Level_1_Keyboard.cpp">
-      <Filter>소스 파일\Item\Keyboard</Filter>
-    </ClCompile>
-    <ClCompile Include="Level_1_Headset.cpp">
-      <Filter>소스 파일\Item\Headset</Filter>
-    </ClCompile>
-    <ClCompile Include="Level_1_Glasses.cpp">
-      <Filter>소스 파일\Item\Glasses</Filter>
-    </ClCompile>
-    <ClCompile Include="Tutor_Engine.cpp">
-      <Filter>소스 파일\Item\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Tutor_Glasses.cpp">
-      <Filter>소스 파일\Item\Glasses</Filter>
-    </ClCompile>
-    <ClCompile Include="Tutor_Headset.cpp">
-      <Filter>소스 파일\Item\Headset</Filter>
-    </ClCompile>
-    <ClCompile Include="Tutor_Keyboard.cpp">
-      <Filter>소스 파일\Item\Keyboard</Filter>
-    </ClCompile>
-    <ClCompile Include="Tutor_Mouse.cpp">
-      <Filter>소스 파일\Item\Mouse</Filter>
-    </ClCompile>
-    <ClCompile Include="Tutor.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-<<<<<<< HEAD
-=======
-    <ClCompile Include="JSR.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="JWH.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="LMR.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="LYB.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="PSB.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
->>>>>>> origin/고친-메리호-적재
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Main.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Monster.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Battle_System.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="All_Recipes.h">
-      <Filter>헤더 파일\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Craft_Item.h">
-      <Filter>헤더 파일\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>헤더 파일\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Inventory.h">
-      <Filter>헤더 파일\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="DungeonManager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Character_Creator.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Console_Manager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Game_Manager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Job_Selection.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="JYJ.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Level_Up.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Player_Stat_Index.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Battle_Elite_Skill.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Equipment.h">
-      <Filter>헤더 파일\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Items_Equipments_Repository.h">
-      <Filter>헤더 파일\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Stat_Modifier.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Ascii_Art_Manager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Intro.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Quiz_Bank.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Camp_Manager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Recipe_Repository.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Level_1_Engine.h">
-      <Filter>헤더 파일\Item\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Level_1_Glasses.h">
-      <Filter>헤더 파일\Item\Glasses</Filter>
-    </ClInclude>
-    <ClInclude Include="Level_1_Headset.h">
-      <Filter>헤더 파일\Item\Headset</Filter>
-    </ClInclude>
-    <ClInclude Include="Level_1_Keyboard.h">
-      <Filter>헤더 파일\Item\Keyboard</Filter>
-    </ClInclude>
-    <ClInclude Include="Level_1_Mouse.h">
-      <Filter>헤더 파일\Item\Mouse</Filter>
-    </ClInclude>
-    <ClInclude Include="Level_2_Engine.h">
-      <Filter>헤더 파일\Item\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Level_2_Glasses.h">
-      <Filter>헤더 파일\Item\Glasses</Filter>
-    </ClInclude>
-    <ClInclude Include="Level_2_Headset.h">
-      <Filter>헤더 파일\Item\Headset</Filter>
-    </ClInclude>
-    <ClInclude Include="Level_2_Keyboard.h">
-      <Filter>헤더 파일\Item\Keyboard</Filter>
-    </ClInclude>
-    <ClInclude Include="Level_2_Mouse.h">
-      <Filter>헤더 파일\Item\Mouse</Filter>
-    </ClInclude>
-    <ClInclude Include="Level_3_Engine.h">
-      <Filter>헤더 파일\Item\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Level_3_Glasses.h">
-      <Filter>헤더 파일\Item\Glasses</Filter>
-    </ClInclude>
-    <ClInclude Include="Level_3_Headset.h">
-      <Filter>헤더 파일\Item\Headset</Filter>
-    </ClInclude>
-    <ClInclude Include="Level_3_Keyboard.h">
-      <Filter>헤더 파일\Item\Keyboard</Filter>
-    </ClInclude>
-    <ClInclude Include="Level_3_Mouse.h">
-      <Filter>헤더 파일\Item\Mouse</Filter>
-    </ClInclude>
-    <ClInclude Include="Level_4_Engine.h">
-      <Filter>헤더 파일\Item\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Level_4_Glasses.h">
-      <Filter>헤더 파일\Item\Glasses</Filter>
-    </ClInclude>
-    <ClInclude Include="Level_4_Headset.h">
-      <Filter>헤더 파일\Item\Headset</Filter>
-    </ClInclude>
-    <ClInclude Include="Level_4_Keyboard.h">
-      <Filter>헤더 파일\Item\Keyboard</Filter>
-    </ClInclude>
-    <ClInclude Include="Level_4_Mouse.h">
-      <Filter>헤더 파일\Item\Mouse</Filter>
-    </ClInclude>
-    <ClInclude Include="Level_5_Engine.h">
-      <Filter>헤더 파일\Item\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Level_5_Glasses.h">
-      <Filter>헤더 파일\Item\Glasses</Filter>
-    </ClInclude>
-    <ClInclude Include="Level_5_Headset.h">
-      <Filter>헤더 파일\Item\Headset</Filter>
-    </ClInclude>
-    <ClInclude Include="Level_5_Keyboard.h">
-      <Filter>헤더 파일\Item\Keyboard</Filter>
-    </ClInclude>
-    <ClInclude Include="Level_5_Mouse.h">
-      <Filter>헤더 파일\Item\Mouse</Filter>
-    </ClInclude>
-    <ClInclude Include="Tutor_Engine.h">
-      <Filter>헤더 파일\Item\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Tutor_Glasses.h">
-      <Filter>헤더 파일\Item\Glasses</Filter>
-    </ClInclude>
-    <ClInclude Include="Tutor_Headset.h">
-      <Filter>헤더 파일\Item\Headset</Filter>
-    </ClInclude>
-    <ClInclude Include="Tutor_Keyboard.h">
-      <Filter>헤더 파일\Item\Keyboard</Filter>
-    </ClInclude>
-    <ClInclude Include="Tutor_Mouse.h">
-      <Filter>헤더 파일\Item\Mouse</Filter>
-    </ClInclude>
-    <ClInclude Include="Tutor.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-<<<<<<< HEAD
-=======
-    <ClInclude Include="JSR.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="JWH.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="LMR.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="LYB.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="PSB.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
->>>>>>> origin/고친-메리호-적재
+    <ClInclude Include="Ascii_Art_Manager.h" />
+    <ClInclude Include="Battle_Elite_Skill.h" />
+    <ClInclude Include="Camp_Manager.h" />
+    <ClInclude Include="Character_Creator.h" />
+    <ClInclude Include="Console_Manager.h" />
+    <ClInclude Include="Craft_Item.h" />
+    <ClInclude Include="Battle_System.h" />
+    <ClInclude Include="DungeonManager.h" />
+    <ClInclude Include="Equipment.h" />
+    <ClInclude Include="Game_Manager.h" />
+    <ClInclude Include="Intro.h" />
+    <ClInclude Include="Inventory.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="Items_Equipments_Repository.h" />
+    <ClInclude Include="Job_Selection.h" />
+    <ClInclude Include="JSR.h" />
+    <ClInclude Include="JWH.h" />
+    <ClInclude Include="JYJ.h" />
+    <ClInclude Include="Level_1_Engine.h" />
+    <ClInclude Include="Level_1_Glasses.h" />
+    <ClInclude Include="Level_1_Headset.h" />
+    <ClInclude Include="Level_1_Keyboard.h" />
+    <ClInclude Include="Level_1_Mouse.h" />
+    <ClInclude Include="Level_2_Engine.h" />
+    <ClInclude Include="Level_2_Glasses.h" />
+    <ClInclude Include="Level_2_Headset.h" />
+    <ClInclude Include="Level_2_Keyboard.h" />
+    <ClInclude Include="Level_2_Mouse.h" />
+    <ClInclude Include="Level_3_Engine.h" />
+    <ClInclude Include="Level_3_Glasses.h" />
+    <ClInclude Include="Level_3_Headset.h" />
+    <ClInclude Include="Level_3_Keyboard.h" />
+    <ClInclude Include="Level_3_Mouse.h" />
+    <ClInclude Include="Level_4_Engine.h" />
+    <ClInclude Include="Level_4_Glasses.h" />
+    <ClInclude Include="Level_4_Headset.h" />
+    <ClInclude Include="Level_4_Keyboard.h" />
+    <ClInclude Include="Level_4_Mouse.h" />
+    <ClInclude Include="Level_5_Engine.h" />
+    <ClInclude Include="Level_5_Glasses.h" />
+    <ClInclude Include="Level_5_Headset.h" />
+    <ClInclude Include="Level_5_Keyboard.h" />
+    <ClInclude Include="Level_5_Mouse.h" />
+    <ClInclude Include="Level_Up.h" />
+    <ClInclude Include="LMR.h" />
+    <ClInclude Include="LYB.h" />
+    <ClInclude Include="Main.h" />
+    <ClInclude Include="Monster.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="All_Recipes.h" />
+    <ClInclude Include="Player_Stat_Index.h" />
+    <ClInclude Include="PSB.h" />
+    <ClInclude Include="Quiz_Bank.h" />
+    <ClInclude Include="Recipe_Repository.h" />
+    <ClInclude Include="Stat_Modifier.h" />
+    <ClInclude Include="Tutor.h" />
+    <ClInclude Include="Tutor_Engine.h" />
+    <ClInclude Include="Tutor_Glasses.h" />
+    <ClInclude Include="Tutor_Headset.h" />
+    <ClInclude Include="Tutor_Keyboard.h" />
+    <ClInclude Include="Tutor_Mouse.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Title.txt" />
+    <Text Include="..\..\..\쿠키의 대장간 아스키아트.txt" />
+    <Text Include="..\..\..\Cookietheblacksmith.txt" />
+    <Text Include="..\..\..\naeilcampaskkkiart.txt" />
   </ItemGroup>
 </Project>

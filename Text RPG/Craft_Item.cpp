@@ -380,7 +380,7 @@ bool Craft_Work_Shop::Decomposition_Item(Inventory_For_Equipments_Only& equipmen
 			R"(+--------+
 |{CODE;} |
 |01010101|
-+--------+)";
++--------+)";//음침한 주소리님 여깁니당 근데 이건 미르님 파트에서 저도 따온 거라 책임 토스하겠슴당
 
 		item_inventory.Add_Or_Increase_Item(NewItem);
 	}
@@ -450,6 +450,11 @@ bool Craft_Work_Shop::Enhance_Item(
 
 		cout << "강화에 성공했다냥!" << endl;
 		return true;
+	}
+	else
+	{
+		cout << "강화에 실패했다냥..." << endl;
+		return false;
 	}
 	return false;
 }
