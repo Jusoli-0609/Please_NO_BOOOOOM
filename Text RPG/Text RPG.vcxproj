@@ -207,6 +207,7 @@
     </ClCompile>
     <ClCompile Include="Quiz_Bank.cpp" />
     <ClCompile Include="Recipe_Repository.cpp" />
+    <ClCompile Include="Tutor.cpp" />
     <ClCompile Include="Tutor_Engine.cpp" />
     <ClCompile Include="Tutor_Glasses.cpp" />
     <ClCompile Include="Tutor_Headset.cpp" />
@@ -296,6 +297,7 @@
     <ClInclude Include="Quiz_Bank.h" />
     <ClInclude Include="Recipe_Repository.h" />
     <ClInclude Include="Stat_Modifier.h" />
+    <ClInclude Include="Tutor.h" />
     <ClInclude Include="Tutor_Engine.h" />
     <ClInclude Include="Tutor_Glasses.h" />
     <ClInclude Include="Tutor_Headset.h" />
