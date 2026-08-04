@@ -119,7 +119,8 @@ void Camp_Manager::Give_Basic_Training_Item()
 void Camp_Manager::Open_Pep_Store_Menu()
 {
     cout << R"()";
-    //음침한 주소리님 여깁니당(FepStore)
+    Ascii_Art_Manager art;
+    art.Print("Art/Camp_Manager/TommorowLearnCamp.txt");
 
     while (true)
     {
