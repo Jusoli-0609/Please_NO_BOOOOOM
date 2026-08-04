@@ -3,7 +3,7 @@
 #include <map>
 #include <string>
 #include <vector>
-
+#include "Monster.h"
 using namespace std;
 
 Craft_Work_Shop::Craft_Work_Shop()
@@ -311,7 +311,6 @@ bool Craft_Work_Shop::Craft_Item
 bool Craft_Work_Shop::Decomposition_Item(Inventory_For_Equipments_Only& equipment_inventory, Inventory<Item>& item_inventory)
 {
 	cout << "장비 전용 인벤토리에 있는 장비만 분해할 수 있다냥." << endl;
-	
 	if (equipment_inventory.Get_Equipment_Current_Count() == 0)
         {
             cout << "텅 비어서 분해할 장비가 없다냥!" << endl;
@@ -331,64 +330,120 @@ bool Craft_Work_Shop::Decomposition_Item(Inventory_For_Equipments_Only& equipmen
         }
         int Vector_Index = choice - 1;
 		Equipment selected_Equipment = equipment_inventory.Get_Equipment_By_Index(Vector_Index);
-		equipment_inventory.Remove_Equipment_By_index(Vector_Index);
-        _Equipment_Current_Count--;
-        cout << Bye_Equipment << "과 작별했다!" << endl;
+		string Bye_Equipment = selected_Equipment.Get_Equipment_Name();
+		
 
-	Equipment selected_Equipment =
-		equipment_inventory.Get_Equipment_By_Index(equipment_Index);
-
-	string equipment_Name = selected_Equipment.Get_Equipment_Name();
-
-	const vector<All_Recipes>& recipes =
-		recipe_repository.Get_All_Recipes();
-
-	// TODO: 선택한 장비 이름과 같은 레시피를 저장할 포인터 변수 선언
-	const All_Recipes* found_recipe = nullptr;
-	for (const All_Recipes& recipe : recipes)
-	{
-		if (equipment_Name == recipe.Get_Recipe_Name())
+		const vector<All_Recipes>& recipes = recipe_repository.Get_All_Recipes();
+		const All_Recipes* found_recipe = nullptr;
+		for (const All_Recipes& recipe : recipes)
 		{
+		if (Bye_Equipment == recipe.Get_Recipe_Name())
+			{
 			found_recipe = &recipe;
+			}
 		}
-	}
 	if (found_recipe == nullptr)
 	{
-		cout << equipment_Name << "의 제작법을 찾지 못했다냥!" << endl;
+		cout << Bye_Equipment << "의 제작법을 찾지 못했다냥!" << endl;
 		return false;
 	}
+	equipment_inventory.Remove_Equipment_By_index(Vector_Index);
 	map<string, int> ingredients = found_recipe->Get_Ingredients();
 	for (const auto& ingredient : ingredients)
 	{
 		string Resolving_Item = ingredient.first;
 		int Resovling_Item_Count = ingredient.second;
-		item_inventory.Add_Or_Increase_Item(ingredient);
+		// TODO: Resolving_Item 이름과 Resovling_Item_Count 개수를 가진 Item 객체 생성
+		Item NewItem;
+		NewItem._Item_Name = Resolving_Item;
+		NewItem._Item_Count = Resovling_Item_Count;
+		NewItem._Item_Type_Usable = false;
+		NewItem._Item_Type_Wearable = false;
+		if (NewItem._Item_Name == "하급 코드 조각")
+		{
+			NewItem._Item_Price = 1;
+		}
+		else if (NewItem._Item_Name == "중급 코드 조각")
+		{
+			NewItem._Item_Price = 3;
+		}
+		else if (NewItem._Item_Name == "상급 코드 조각")
+		{
+			NewItem._Item_Price = 5;
+		}
+		NewItem._Item_Description =
+			"깨진 코드 몬스터에게서 떨어져 나온 코드 조각. "
+			"아이템 제작에 사용 할 수 있을거 같다.";
+		NewItem._Item_Ascii_Art =
+			R"(+--------+
+|{CODE;} |
+|01010101|
++--------+)";
+
+		item_inventory.Add_Or_Increase_Item(NewItem);
 	}
-	
-
-	cout << equipment_Name << "을(를) 분해했다냥!" << endl;
-
+	cout << Bye_Equipment << "를 분해했다냥!" << endl;
 	return true;
-
-	return false;
 }
 
 //=============================================================================
 // 5. 장비 강화
 //=============================================================================
 
-bool Craft_Work_Shop::Enhance_Item
-(
+bool Craft_Work_Shop::Enhance_Item(
 	Inventory_For_Equipments_Only& equipment_inventory
 )
 {
-	
-	//cout 안내 나오고 
-	//cin 선택
-	//이거 장비 전용창 현재 장비 중인 거로 장비창으로 해야되나, 그거 두개로 해야하면 장비 전용창에서 아니면 equipment로 둘 다 구할 수 있는 거면 그걸로 하고 너무 복잡해지면 그냥 장비 전용 인벤토리에서 강화하는 걸로 하자
-	// 장비 조회
-		//50퍼센트 확률로 강화도 enhance 1증가, 5가 최대니까 그거 이상 시도하면 if 문으로 못하게 막기
-		//성공 or 실패 출력
-	
-	return false;
+	cout << "장비 전용 인벤토리에 있는 장비만 강화할 수 있다냥." << endl;
+	if (equipment_inventory.Get_Equipment_Current_Count() == 0)
+	{
+		cout << "텅 비었다냥!" << endl;
+		return false;
+	}
+
+	equipment_inventory.Print_Equipment_Inventory();
+
+	int choice = -1;
+
+	cout << "강화할 장비를 고르라냥: ";
+	cin >> choice;
+
+	while (choice < 1 || equipment_inventory.Get_Equipment_Current_Count() < choice)
+	{
+		cout << "잘못된 입력이다냥! 다시 입력하라냥: ";
+		cin >> choice;
+	}
+
+	int Vector_Index = choice - 1;
+
+	Equipment selected_Equipment = equipment_inventory.Get_Equipment_By_Index(Vector_Index);
+
+	int currentEnhance = selected_Equipment.Get_Enhance_Count();
+	// TODO: Equipment 클래스에 강화 수치를 가져오는 getter 함수 이름 확인
+
+	if (currentEnhance >= 5)
+	{
+		cout << "이미 최대 강화 수치다냥!" << endl;
+		return false;
+	}
+
+	int randomValue = 0;
+	// TODO: 0 또는 1이 나오도록 랜덤 값 대입
+
+	if (randomValue == 1)
+	{
+		// TODO: selected_Equipment의 강화 수치 증가 함수 호출
+		// 예: selected_Equipment.Increase_Enhance_Count();
+
+		// TODO: 강화 수치가 오른 selected_Equipment를 장비 인벤토리에 다시 반영
+		// 예: equipment_inventory.Update_Equipment_By_Index(Vector_Index, selected_Equipment);
+
+		cout << "강화에 성공했다냥!" << endl;
+		return true;
+	}
+	else
+	{
+		cout << "강화에 실패했다냥..." << endl;
+		return false;
+	}
 }

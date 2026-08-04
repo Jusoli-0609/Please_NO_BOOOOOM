@@ -752,32 +752,18 @@
         cout << "장비 전용 인벤토리가 " << increase_count << "만큼 증가했다!" << endl;
     }
 
-    //장비 분해용 함수
-    void Inventory_For_Equipments_Only::Resolve_Away_Equipment()
+    //장비 분해용/판매용 함수
+    bool Inventory_For_Equipments_Only::Remove_Equipment_By_index(int index)
     {
-      
-        if (_Equipment_Current_Count == 0)
+        // TODO: index 범위 검사 조건문
+        if (index < 0 || _Equipment_Current_Count <= index)
         {
-            cout << "텅 비어서 분해할 장비가 없다냥!" << endl;
-            return;
+            cout << "잘못된 입력이다!" << endl;
+            return false;
         }
-
-        Print_Equipment_Inventory();
-
-        int choice = -1;
-        cout << "분해할 장비를 고르라냥: ";
-        cin >> choice;
-
-        while (choice < 1 ||_Equipment_Current_Count < choice)
-        {
-            cout << "잘못된 입력이다냥! 다시 입력하라냥: ";
-            cin >> choice;
-        }
-        int Vector_Index = choice - 1;
-        string Bye_Equipment = _Equipments[Vector_Index].Get_Equipment_Name();
-        _Equipments.erase(_Equipments.begin() + Vector_Index);
+        _Equipments.erase(_Equipments.begin() + index);
         _Equipment_Current_Count--;
-        cout << Bye_Equipment << "과 작별했다!" << endl;
+        return true;
     }
     //장비 정렬
     void Inventory_For_Equipments_Only::Sort_Equipment_Inventory()

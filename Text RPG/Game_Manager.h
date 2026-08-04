@@ -28,7 +28,6 @@ private:
     Inventory<Item>    _Inventory;
     Inventory_For_Equipments_Only _Equipment_Inventory;
     Currently_Equipped_Equipments _Currently_Equipped_Equipments;
-    Currently_Equipped_Equipments _Currently_Equipped_Equipments;
     Currently_Equipped_Tutor _Currently_Equipped_Tutor;
     Player* _Player;
 };
