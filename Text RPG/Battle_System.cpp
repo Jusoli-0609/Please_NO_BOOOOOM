@@ -10,6 +10,8 @@
 #include "Monster.h"
 #include "Player.h"
 
+#include "Sound_Manager.h"
+
 #include <iostream>
 #include <string>
 #include <iomanip>
@@ -22,6 +24,8 @@ using namespace std;
 void Battle(Player* player, Monster& monster, Inventory<Item>& inventory, Console_Manager& console)
 {
     if (player == nullptr) return;
+
+	Sound_Manager::Get_Instance().Play_BGM(BGM_Type::Battle);
 
     int turnCount = 1;
     Show_Battle_Start(player, monster);

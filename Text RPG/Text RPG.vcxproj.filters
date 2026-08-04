@@ -61,6 +61,7 @@
     <ClCompile Include="Tutor_Keyboard.cpp" />
     <ClCompile Include="Tutor_Mouse.cpp" />
     <ClCompile Include="UI_Manager.cpp" />
+    <ClCompile Include="Sound_Manager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ascii_Art_Manager.h" />
@@ -125,6 +126,7 @@
     <ClInclude Include="Tutor_Keyboard.h" />
     <ClInclude Include="Tutor_Mouse.h" />
     <ClInclude Include="UI_Manager.h" />
+    <ClInclude Include="Sound_Manager.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Title.txt" />

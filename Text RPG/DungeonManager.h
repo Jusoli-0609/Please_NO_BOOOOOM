@@ -3,7 +3,6 @@
 #include "Inventory.h"
 #include "Monster.h"
 #include "Player.h"
-#include "Console_Manager.h"
 #include <map>
 #include <string>
 
@@ -33,56 +32,45 @@ public:
 		Inventory_For_Equipments_Only&
 		equipment_Inventory,
 		const Currently_Equipped_Equipments&
-		equipped_Equipments,
-		Console_Manager& consol
+		equipped_Equipments
 	);
-
 	// 4. 던전 상태 조회 및 기록 출력 파트
 	bool Check_All_Chapter_Cleared() const;
 	bool Check_Game_Cleared() const;
 	int Get_Current_Chapter_Score() const;
 	void Print_Total_Monster_Kill_Log() const;
 	int Monster_Kill_Count = 0;
-
-	// 5. 최종보스방 입장 가능 여부 및 튜터 장비 상태 출력 파트
-	bool Check_Final_Boss_Room_Available(const Inventory_For_Equipments_Only&equipment_Inventory, const Currently_Equipped_Equipments&equipped_Equipments) const;
-	void Print_Tutor_Equipment_Status(const Inventory_For_Equipments_Only&equipment_Inventory, const Currently_Equipped_Equipments&equipped_Equipments) const;
+	// 5. 최종보스방 입장 가능 여부 및 튜터 시험 클리어 여부 확인 파트
+	bool Check_Final_Boss_Room_Available(const Inventory_For_Equipments_Only& equipment_Inventory, const Currently_Equipped_Equipments& equipped_Equipments) const;
+	void Print_Tutor_Equipment_Status(const Inventory_For_Equipments_Only& equipment_Inventory, const Currently_Equipped_Equipments& equipped_Equipments) const;
 
 private:
 	// 6. 현재 챕터 실행 파트
 	void Print_Current_Chapter() const;
-	void Run_Current_Chapter(Player* player, Inventory<Item>& inventory, Console_Manager& console);
-	void Select_Chapter_And_Enter
-	(Player* player, Inventory<Item>& inventory, Console_Manager& console);
+	void Run_Current_Chapter(Player* player, Inventory<Item>& inventory);
+	void Select_Chapter_And_Enter(Player* player,Inventory<Item>& inventory);
 	std::string Get_Chapter_Name(Chapter_Type chapter_Type) const;
-
 	// 7. 일반 몬스터 선택 파트
 	void Get_Current_Chapter_Monsters(Monster_Type monster_Types[]) const;
 	Monster_Type Get_Random_Normal_Monster() const;
-
 	// 8. 정예 몬스터 문제 파트
 	bool Check_Elite_Monster_Appearance();
 	bool Run_Elite_Quiz(Player* player,Monster& elite_Monster);
-
 	// 9. 튜터 문제 및 대사 파트
 	void Run_Tutor_Challenge(Player* player, Inventory_For_Equipments_Only&equipment_Inventory, const Currently_Equipped_Equipments&equipped_Equipments);
 	bool Run_Tutor_Code_Challenge(Player* player,Monster& tutor_Monster);
-
 	// 10. 기믹 실패 패널티
 	void Apply_Elite_Gimmick_Failure_Penalty(Player* player);
 	void Apply_Tutor_Gimmick_Failure_Penalty();
-
 	// 11. 처치 기록 및 일반 보상 파트
 	void Record_Monster_Kill(const Monster& monster);
 	void Give_Drop_Items_To_Inventory(const Monster& monster, Inventory<Item>& inventory);
-
 	// 12. 챕터 점수 및 이동 파트
 	void Add_Chapter_Score(int score_Reward);
 	int Get_Required_Tutor_Score() const;
 	bool Check_Tutor_Challenge_Available() const;
 	void Clear_Current_Chapter();
 	void Move_Next_Chapter();
-
 	// 13. 튜터 고유 아이템 및 최종보스방
 	Equipment Create_Tutor_Clear_Equipment(Chapter_Type chapter_Type) const;
 	bool Has_Tutor_Equipment(const Inventory_For_Equipments_Only&equipment_Inventory, const Currently_Equipped_Equipments&equipped_Equipments, const std::string& equipment_Name) const;
