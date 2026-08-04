@@ -3,6 +3,7 @@
 #include <thread>
 #include <chrono>
 #include <iostream>
+#include <conio.h>
 
 using namespace std;
 
@@ -109,4 +110,20 @@ void Console_Manager::Print_At(int x, int y, const std::string& text)
 {
     Set_Cursor_Position(x, y);
     std::cout << text << std::flush;
+}
+
+void Console_Manager::Print_Main_Menu()
+{
+    Print_At(0, 2, "========================================");
+    Print_At(0, 3, "1. 던전 입장");
+    Print_At(0, 4, "2. 인벤토리");
+    Print_At(0, 5, "3. 내일배움캠프 재정비소");
+    Print_At(0, 6, "0. 게임 종료");
+    Print_At(0, 8, "선택: ");
+}
+
+void Console_Manager::Wait_For_Key(const std::string& Message)
+{
+    std::cout << "\n" << Message << std::flush;
+    _getch();  //(엔터 없이도 바로 반응)
 }

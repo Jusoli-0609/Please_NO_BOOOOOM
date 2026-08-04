@@ -60,16 +60,17 @@ void Game_Manager::Show_Main_Menu()
     while (is_Running)
     {
         _Console.Clear();
-        cout << endl;
-        cout << "========================================" << endl;
-        cout << "1. 던전 입장" << endl;
-        cout << "2. 인벤토리" << endl;
-        cout << "3. 내일배움캠프 재정비소" << endl;
-        cout << "0. 게임 종료" << endl;
-        cout << "선택: ";
+        _Console.Print_Main_Menu();
 
         int choice = -1;
         cin >> choice;
+
+        if (cin.fail())
+        {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            choice = -1;
+        }
 
         switch (choice)
         {
@@ -110,6 +111,7 @@ void Game_Manager::Show_Main_Menu()
 
         default:
             _Console.Print_At(0, 7, "잘못된 선택!");
+            _Console.Wait_For_Key();
             break;
         }
 

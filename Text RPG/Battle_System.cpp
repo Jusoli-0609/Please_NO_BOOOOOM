@@ -2,6 +2,7 @@
 #include "Battle_Elite_Skill.h"
 #include "Stat_Modifier.h"
 #include "Ascii_Art_Manager.h"
+#include "Console_Manager.h"
 
 #include "Level_Up.h"
 #include "Item.h"
@@ -95,9 +96,9 @@ void Show_Battle_Menu()
     cout << "선택 : ";
 }
 
-void Show_Battle_End(Player* player, Monster& monster)
+void Show_Battle_End(Player* player, Monster& monster, Console_Manager& console);
 {
-    // 전투 종료 후 필요한 출력 처리
+    console.Wait_For_Key("계속하려면 아무 키나 누르세요...");
 }
 
 //======================================================

@@ -1,4 +1,4 @@
-#ifndef BATTLE_SYSTEM_H
+﻿#ifndef BATTLE_SYSTEM_H
 #define BATTLE_SYSTEM_H
 
 #include "Player.h"
@@ -45,5 +45,6 @@ void Boss_Battle(Player* player, Monster& monster, Inventory<Item>& inventory);
 bool Ask_Single_Quiz(const Quiz& quiz);
 void First_Impression_Quiz_Phase(Player* player, Monster& monster, std::vector<Quiz>& quizPool);
 void Final_Boss_Monster_Turn(Player* player, Monster& monster, int turnCount, std::vector<Quiz>& quizPool);
+void Show_Battle_End(Player* player, Monster& monster, Console_Manager& console);
 
 #endif // BATTLE_SYSTEM_H
