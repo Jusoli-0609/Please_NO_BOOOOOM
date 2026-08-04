@@ -2,16 +2,19 @@
 #include "Player.h"
 #include "Job_Selection.h"
 #include "JYJ.h"  
+#include "JSR.h"
+#include "JWH.h"
+#include "LYB.h"
+#include "LMR.h"
+#include "PSB.h"
 #include "Camp_Manager.h"
-#include "Console_Manager.h"
-
 #include <iostream>
 
 using namespace std;
 
 Game_Manager::Game_Manager()
-    : _Console(120, 50)
-    , _Inventory(20, 100) 
+    : _Console(120, 40)
+    , _Inventory(20, 100)
     , _Player(nullptr)
 {
     SetConsoleOutputCP(CP_UTF8);
@@ -27,11 +30,8 @@ void Game_Manager::Run()
 {
     _Console.Set_Console_Size();
     _Console.Clear();
-    _Intro.Show(_Console, _Art);
-    _Console.Clear();
-    _Console.Slow_Print("당신은 8시 55분에 눈을 떴다!", 50);
-    _Console.Slow_Print("익숙한 ZEP이 보인다!", 50);
-    _Console.Slow_Print("일단 아바타를 생성하자!", 50);
+
+    _Intro.Show(_Console, _Art);   // 멤버 함수 호출
 
     Create_Player();
     Show_Main_Menu();
@@ -98,12 +98,12 @@ void Game_Manager::Show_Main_Menu()
 
     while (is_Running)
     {
-        _Console.Clear();
         cout << endl;
         cout << "========================================" << endl;
         cout << "1. 던전 입장" << endl;
         cout << "2. 인벤토리" << endl;
-        cout << "3. 내일배움캠프 재정비소" << endl;
+        cout << "3. 캐릭터 정보" << endl;
+        cout << "4. 내일배움캠프 재정비소" << endl;
         cout << "0. 게임 종료" << endl;
         cout << "선택: ";
 
@@ -113,11 +113,6 @@ void Game_Manager::Show_Main_Menu()
         switch (choice)
         {
         case 1:
-            if (_Player == nullptr)
-            {
-                cout << "플레이어 정보를 찾을 수 없습니다." << endl;
-                break;
-            }
             _Dungeon.Open_Dungeon(_Player, _Inventory, _Equipment_Inventory, _Currently_Equipped_Equipments);
             break;
 
@@ -131,31 +126,41 @@ void Game_Manager::Show_Main_Menu()
         {
             if (_Player == nullptr)
             {
+                cout << "캐릭터 정보를 찾을 수 없습니다." << endl;
+                break;
+            }
+            _Player->Print_Status();
+            break;
+        }
+
+        case 4:
+        {
+            if (_Player == nullptr)
+            {
                 cout << "플레이어 정보를 찾을 수 없습니다." << endl;
                 break;
             }
 
-            Camp_Manager camp_Manager(*_Player, _Inventory,  _Equipment_Inventory, _Currently_Equipped_Equipments);
+            Camp_Manager camp_Manager(*_Player, _Inventory, _Equipment_Inventory, _Currently_Equipped_Equipments);
             camp_Manager.Open_Camp_Menu();
 
             break;
         }
 
         case 0:
-            _Console.Clear();
-            _Console.Print_At(0, 0, "게임 종료!");
+            cout << "게임 종료!" << endl;
             is_Running = false;
             break;
 
         default:
-            _Console.Print_At(0, 7, "잘못된 선택!");
+            cout << "잘못된 선택!" << endl;
             break;
         }
 
         if (_Player != nullptr && _Player->Get_Hp() <= 0)
         {
-            _Console.Clear();
-            _Console.Print_At(0, 0, "실패! 다시 시작해보자!");
+            cout << endl;
+            cout << "실패! 다시 시작해보자!" << endl;
             is_Running = false;
         }
     }
