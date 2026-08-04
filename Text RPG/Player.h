@@ -74,6 +74,8 @@ protected:
     );
     const Currently_Equipped_Equipments* currentlyEquippedEquipments;
     const Currently_Equipped_Tutor* currentlyEquippedTutor;
+    void Apply_Equipment_Buff(int equipmentAtk, int equipmentDef);
+    void Update_Equipment_Buff() const;
 
 public:
     Player(const std::string& name);
@@ -103,8 +105,10 @@ public:
     // 상태 출력
 // 플레이어 정보만 출력하는 기존 호환용 상태창
     void Print_Status() const;
-
-
+    // 장비 스탯 가져오기
+    void Apply_Equipment_Stats(
+        const Currently_Equipped_Equipments& equipments
+    );
 
     // 공통 데미지 계산
     int Calculate_Damage(
