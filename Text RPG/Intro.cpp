@@ -1,12 +1,16 @@
+﻿#define NOMINMAX
+#include <Windows.h>
 #include "Intro.h"
 #include "Console_Manager.h"
 #include "Ascii_Art_Manager.h"
+#include <iostream>
+#include <limits>
 
 void Intro::Show(Console_Manager& console, Ascii_Art_Manager& art)
 {
     art.Print("Title.txt");
+    console.Print_At(0, 45, "아무 키나 누르면 계속됩니다...");
 
-    console.Slow_Print("당신은 8시 55분에 눈을 떴다!", 50);
-    console.Slow_Print("익숙한 ZEP이 보인다!", 50);
-    console.Slow_Print("일단 아바타를 생성하자!", 50);
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cin.get(); //대기
 }
