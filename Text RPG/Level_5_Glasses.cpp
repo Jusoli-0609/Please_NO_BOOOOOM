@@ -14,7 +14,7 @@ Level_5_Glasses::Level_5_Glasses()
  '@@''@@')",
 		"설명",
 		2,
-		1
+		350
 	)
 {
 }

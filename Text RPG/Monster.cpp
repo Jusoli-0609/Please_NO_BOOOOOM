@@ -8,14 +8,14 @@ using namespace std;
 namespace
 {
 	// 기본 경험치 및 점수
-	constexpr int BASE_EXP_REWARD = 100;
+	constexpr int BASE_EXP_REWARD = 35;
 	constexpr int BASE_SCORE_REWARD = 100;
 	// 챕터별 보상 증가 배율
 	constexpr double CHAPTER_REWARD_MULTIPLIER = 1.3;
 	// 아이템별 독립 드롭 확률
-	constexpr int CODE_FRAGMENT_DROP_CHANCE = 60;
-	constexpr int CUP_RAMEN_DROP_CHANCE = 60;
-	constexpr int ENERGY_DRINK_DROP_CHANCE = 60;
+	constexpr int CODE_FRAGMENT_DROP_CHANCE = 45;
+	constexpr int CUP_RAMEN_DROP_CHANCE = 25;
+	constexpr int ENERGY_DRINK_DROP_CHANCE = 20;
 	// 아이템별 무게값
 	constexpr int CODE_FRAGMENT_WEIGHT = 1;
 	constexpr int CUP_RAMEN_WEIGHT = 1;
@@ -526,6 +526,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		break;
 	}
 	}
+	Apply_Normal_Balance_By_Rating();
 	_monster_Level = Generate_Random_Level();
 	Apply_Level_Bonus();
 	_exp_Reward = Calculate_Exp_Reward() + Calculate_Level_Exp_Bonus();
@@ -563,8 +564,7 @@ void Monster::Initialize_Elite_Monster(Chapter_Type chapter_Type)
 	_accuracy = 0;
 
 	_exp_Reward = Calculate_Exp_Reward() * 2;
-
-	_score_Reward = Calculate_Score_Reward() * 2;
+	_score_Reward = Calculate_Score_Reward();
 
 	_drop_Item_Name = "";
 	_drop_Item_Count = 0;
@@ -736,7 +736,6 @@ void Monster::Initialize_Tutor_Monster(Chapter_Type chapter_Type)
 	_drop_Item_Count = 0;
 	_gold_Reward = 0;
 }
-
 // 2-4. 최종보스 정보 초기화
 void Monster::Initialize_Final_Boss(Monster_Type final_Boss_Type)
 {
@@ -790,13 +789,13 @@ void Monster::Initialize_Final_Boss(Monster_Type final_Boss_Type)
              /_______||_______\)";
 		_monster_Level = 16;
 
-		_stat[MONSTER_HP] = 250;
+		_stat[MONSTER_HP] = 240;
 		_stat[MONSTER_MP] = 0;
-		_stat[MONSTER_POWER] = 30;
-		_stat[MONSTER_DEFENCE] = 15;
+		_stat[MONSTER_POWER] = 26;
+		_stat[MONSTER_DEFENCE] = 12;
 		_stat[MONSTER_SPEED] = 12;
 
-		_evasion = 85;
+		_evasion = 65;
 		_accuracy = 90;
 		_attack_Message = "자 여러분들 좋은 아침입니다. 코드카타 시작해보겠습니다.";
 
@@ -826,14 +825,14 @@ void Monster::Initialize_Final_Boss(Monster_Type final_Boss_Type)
               /       ||       \
              /________||________\)";
 
-		_stat[MONSTER_HP] = 320;
+		_stat[MONSTER_HP] = 280;
 		_stat[MONSTER_MP] = 0;
-		_stat[MONSTER_POWER] = 38;
-		_stat[MONSTER_DEFENCE] = 20;
-		_stat[MONSTER_SPEED] = 15;
+		_stat[MONSTER_POWER] = 30;
+		_stat[MONSTER_DEFENCE] = 15;
+		_stat[MONSTER_SPEED] = 14;
 
-		_evasion = 90;
-		_accuracy = 95;
+		_evasion = 70;
+		_accuracy = 90;
 		_attack_Message = "자 여러분들 잠깐 스포라이트 하겠습니다.";
 
 		break;
@@ -864,13 +863,13 @@ void Monster::Initialize_Final_Boss(Monster_Type final_Boss_Type)
              /_______||_______\)";
 		_monster_Level = 16;
 
-		_stat[MONSTER_HP] = 250;
+		_stat[MONSTER_HP] = 240;
 		_stat[MONSTER_MP] = 0;
-		_stat[MONSTER_POWER] = 30;
-		_stat[MONSTER_DEFENCE] = 15;
+		_stat[MONSTER_POWER] = 26;
+		_stat[MONSTER_DEFENCE] = 12;
 		_stat[MONSTER_SPEED] = 12;
 
-		_evasion = 85;
+		_evasion = 65;
 		_accuracy = 90;
 		_attack_Message = "자 여러분들 좋은 아침입니다. 코드카타 시작해보겠습니다.";
 
@@ -897,10 +896,10 @@ void Monster::Apply_Player_Level_Scaling(int player_Level)
 		player_Level = 1;
 	}
 
-	constexpr int HP_BONUS_PER_PLAYER_LEVEL = 1;
+	constexpr int HP_BONUS_PER_PLAYER_LEVEL = 3;
 	constexpr int POWER_BONUS_PER_PLAYER_LEVEL = 1;
-	constexpr int DEFENCE_BONUS_PER_PLAYER_LEVEL = 1;
-	constexpr int PLAYER_LEVELS_PER_SPEED_BONUS = 1;
+	constexpr int DEFENCE_BONUS_PER_PLAYER_LEVEL = 0;
+	constexpr int PLAYER_LEVELS_PER_SPEED_BONUS = 3;
 
 	int player_Level_Up_Count = player_Level - 1;
 
@@ -966,7 +965,7 @@ int Monster::Generate_Random_Level() const
 void Monster::Apply_Level_Bonus()
 {
 	constexpr int LEVELS_PER_CHAPTER = 3;
-	constexpr int HP_BONUS_PER_LEVEL = 2;
+	constexpr int HP_BONUS_PER_LEVEL = 4;
 	constexpr int POWER_BONUS_PER_LEVEL = 1;
 	constexpr int DEFENCE_BONUS_PER_LEVEL = 1;
 
@@ -983,7 +982,89 @@ void Monster::Apply_Level_Bonus()
 	_stat[MONSTER_POWER] += level_Offset * POWER_BONUS_PER_LEVEL;
 	_stat[MONSTER_DEFENCE] += level_Offset * DEFENCE_BONUS_PER_LEVEL;
 }
+// 3-5. 챕터별 몬스터 능력치 등급 보정
+void Monster::Apply_Normal_Balance_By_Rating()
+{
+	if (_monster_Grade != Monster_Grade::NORMAL)
+	{
+		return;
+	}
 
+	auto Clamp_Rating = [](int rating)
+		{
+			if (rating < 1)
+			{
+				return 1;
+			}
+
+			if (rating > 5)
+			{
+				return 5;
+			}
+
+			return rating;
+		};
+
+	int chapter_Index = Get_Chapter_Number() - 1;
+
+	if (chapter_Index < 0)
+	{
+		chapter_Index = 0;
+	}
+
+	if (chapter_Index > 4)
+	{
+		chapter_Index = 4;
+	}
+
+	int hp_Rating = Clamp_Rating(_stat[MONSTER_HP]) - 1;
+	int power_Rating = Clamp_Rating(_stat[MONSTER_POWER]) - 1;
+	int defence_Rating =Clamp_Rating(_stat[MONSTER_DEFENCE]) - 1;
+	int speed_Rating =Clamp_Rating(_stat[MONSTER_SPEED]) - 1;
+
+	const int HP_TABLE[5][5] =
+	{
+		{ 24, 28, 34, 40, 46 },
+		{ 38, 46, 54, 62, 70 },
+		{ 54, 64, 74, 84, 94 },
+		{ 70, 82, 94, 106, 118 },
+		{ 88, 102, 116, 130, 145 }
+	};
+
+	const int POWER_TABLE[5][5] =
+	{
+		{ 7, 9, 11, 13, 15 },
+		{ 10, 12, 14, 16, 18 },
+		{ 13, 15, 17, 19, 21 },
+		{ 16, 18, 20, 23, 26 },
+		{ 20, 23, 26, 29, 32 }
+	};
+
+	const int DEFENCE_TABLE[5][5] =
+	{
+		{ 0, 1, 2, 3, 4 },
+		{ 2, 3, 4, 5, 6 },
+		{ 4, 5, 6, 8, 10 },
+		{ 6, 8, 10, 12, 14 },
+		{ 8, 10, 12, 14, 16 }
+	};
+
+	const int SPEED_TABLE[5][5] =
+	{
+		{ 4, 5, 6, 7, 8 },
+		{ 5, 6, 7, 8, 9 },
+		{ 6, 7, 8, 9, 10 },
+		{ 7, 8, 9, 10, 11 },
+		{ 8, 9, 10, 11, 12 }
+	};
+
+	_stat[MONSTER_HP] = HP_TABLE[chapter_Index][hp_Rating];
+	_stat[MONSTER_POWER] = POWER_TABLE[chapter_Index][power_Rating];
+	_stat[MONSTER_DEFENCE] = DEFENCE_TABLE[chapter_Index][defence_Rating];
+	_stat[MONSTER_SPEED] = SPEED_TABLE[chapter_Index][speed_Rating];
+	_evasion = 45 + (speed_Rating + 1) * 4;
+	_accuracy = 85 + speed_Rating * 2;
+}
 //=============================================================================
 // 4. 몬스터 보상 계산 파트
 //=============================================================================
@@ -1024,23 +1105,23 @@ int Monster::Get_Code_Fragment_Price() const
 	case Chapter_Type::VARIABLE_CONDITION_FOREST:
 	case Chapter_Type::ARRAY_LOOP_OCEAN:
 	{
-		return 1;
+		return 20;
 	}
 
 	case Chapter_Type::FUNCTION_RUINS:
 	case Chapter_Type::POINTER_MEMORY_GRAVEYARD:
 	{
-		return 3;
+		return 30;
 	}
 
 	case Chapter_Type::OBJECT_STL_FACTORY:
 	{
-		return 5;
+		return 50;
 	}
 
 	default:
 	{
-		return 1;
+		return 20;
 	}
 	}
 }
@@ -1063,7 +1144,7 @@ int Monster::Calculate_Exp_Reward() const
 int Monster::Calculate_Level_Exp_Bonus() const
 {
 	constexpr int LEVELS_PER_CHAPTER = 3;
-	constexpr int EXP_BONUS_PER_LEVEL = 20;
+	constexpr int EXP_BONUS_PER_LEVEL = 5;
 
 	int chapter_Number = Get_Chapter_Number();
 	int minimum_Level = (chapter_Number - 1) * LEVELS_PER_CHAPTER + 1;
@@ -1094,7 +1175,12 @@ int Monster::Calculate_Score_Reward() const
 // 4-5. 훈련장려금 랜덤 계산
 int Monster::Calculate_Gold_Reward() const
 {
-	return rand() % 31 + 20;
+	int chapter_Number = Get_Chapter_Number();
+
+	int min_Gold = 20 + (chapter_Number - 1) * 10;
+	int max_Gold = 45 + (chapter_Number - 1) * 15;
+
+	return rand() % (max_Gold - min_Gold + 1) + min_Gold;
 }
 
 //=============================================================================
@@ -1153,7 +1239,7 @@ void Monster::Generate_Drop_Reward()
  |RAMEN |
  |~~~~~~|
  '------')";
-		cup_Ramen._Item_Price = 0;
+		cup_Ramen._Item_Price = 15;
 		cup_Ramen._Item_Count = 1;
 		cup_Ramen._Item_Weight = CUP_RAMEN_WEIGHT;
 		cup_Ramen._Item_Type_Usable = true;
@@ -1175,7 +1261,7 @@ void Monster::Generate_Drop_Reward()
  |ENRG++|
  |[MP50]|
  '------')";
-		energy_Drink._Item_Price = 0;
+		energy_Drink._Item_Price = 15;
 		energy_Drink._Item_Count = 1;
 		energy_Drink._Item_Weight = ENERGY_DRINK_WEIGHT;
 		energy_Drink._Item_Type_Usable = true;

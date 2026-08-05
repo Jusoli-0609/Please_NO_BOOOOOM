@@ -242,7 +242,7 @@ void Camp_Manager::Open_Pep_Store_Menu()
                 inventory.Set_Money(inventory.Get_Money() + sellPrice);
                 cout << selectedequipment.Get_Equipment_Name()
                     << "을(를) 판매했다!" << endl;
-                cout << sellPrice << " 젬을 얻었다!" << endl;
+                cout << sellPrice << " 원을 얻었다!" << endl;
                 break;
             }
             break;
@@ -293,7 +293,7 @@ void Camp_Manager::Open_General_Store_Menu()
  |RAMEN |
  |~~~~~~|
  '------')";
-            selectedItem._Item_Price = 1;
+            selectedItem._Item_Price = 60;
             selectedItem._Item_Count = 1;
             selectedItem._Item_Weight = 1;
             selectedItem._Item_Type_Usable = true;
@@ -309,7 +309,7 @@ void Camp_Manager::Open_General_Store_Menu()
  |ENRG++|
  |[MP50]|
  '------')";
-            selectedItem._Item_Price = 1;
+            selectedItem._Item_Price = 60;
             selectedItem._Item_Count = 1;
             selectedItem._Item_Weight = 1;
             selectedItem._Item_Type_Usable = true;
@@ -393,7 +393,12 @@ void Camp_Manager::Open_Loot_Shop_Menu()
                 cout << "판매 개수가 잘못됐다." << endl;
                 break;
             }
-            int Total_Money_Earn = selectedItem->_Item_Price * sellcount;
+            int Total_Money_Earn = selectedItem->_Item_Price * sellcount / 2;
+
+            if (Total_Money_Earn <= 0)
+            {
+                Total_Money_Earn = sellcount;
+            }
 
 
             bool isRemoved = inventory.Remove_Item_By_Index_And_Count(sellIndex, sellcount);
@@ -406,7 +411,7 @@ void Camp_Manager::Open_Loot_Shop_Menu()
 
             inventory.Set_Money(inventory.Get_Money() + Total_Money_Earn);
             cout << selectedItem->_Item_Name << "을(를) 판매했다!" << endl;
-            cout << Total_Money_Earn << " 골드를 얻었다!" << endl;
+            cout << Total_Money_Earn << " 원를 얻었다!" << endl;
 
             break;
         }
