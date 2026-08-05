@@ -32,10 +32,14 @@ void Game_Manager::Run()
 {
     _Console.Set_Console_Size();
     _Console.Clear();
-
 	Sound_Manager::Get_Instance().Play_BGM(BGM_Type::Main);
 
     _Intro.Show(_Console, _Art);   // 멤버 함수 호출
+
+    _Console.Clear();
+    _Console.Slow_Print("당신은 8시 55분에 눈을 떴다!", 50);
+    _Console.Slow_Print("익숙한 ZEP이 보인다!", 50);
+    _Console.Slow_Print("일단 아바타를 생성하자!", 50);
     _Console.Clear();
 
     Create_Player();
