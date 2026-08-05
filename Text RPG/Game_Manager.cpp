@@ -10,6 +10,7 @@
 #include "Camp_Manager.h"
 #include "Sound_Manager.h"
 #include <iostream>
+#include "Ending.h"
 
 using namespace std;
 
@@ -47,6 +48,12 @@ void Game_Manager::Run()
 
     Create_Player();
     Show_Main_Menu();
+   
+    Ending ending;
+    ending.Print_Ending();
+
+
+
 }
 
 void Game_Manager::Create_Player()

@@ -9,6 +9,7 @@
 #include "Inventory.h"
 #include "Item.h"
 #include "Tutor.h"
+#include "Ending.h"
 
 class Player;
 

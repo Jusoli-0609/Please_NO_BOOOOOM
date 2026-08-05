@@ -129,7 +129,7 @@ void Ending::Print_Credit() const
 
     Wait();
 
-    cout << "Team Please_NO_BOOOOOM\n\n";
+    cout << "Team STS(Stealth Thieves Squad \n\n";
 
     Wait();
 
