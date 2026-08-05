@@ -190,7 +190,7 @@ void JYJ::Attack(Monster* monster)
 
 
     std::cout << name << "의 기본 공격!\n";
-    Print_Bright_Dialogue("평타 대사 입력\n");
+    Print_Bright_Dialogue("야차 ㄱ?\n");
     // 명중한 공격에 치명타 판정 적용
     Apply_Critical_Damage(damage);
 
