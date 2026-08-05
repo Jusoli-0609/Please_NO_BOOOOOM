@@ -1,5 +1,6 @@
 ﻿#include "Battle_Elite_Skill.h"
 
+#include "Console_Manager.h"
 #include <algorithm>
 #include <cctype>
 #include <iostream>
@@ -14,16 +15,79 @@ namespace
     {
         string normalized;
 
-        for (char character : answer){unsigned char converted = static_cast<unsigned char>(character);
+        for (char character : answer)
+        {
+            unsigned char converted = static_cast<unsigned char>(character);
 
             if (isspace(converted))
             {
                 continue;
             }
+
             normalized += static_cast<char>(tolower(converted));
         }
 
         return normalized;
+    }
+
+    void Draw_Elite_Fixed_Frame(Player* player, Monster& monster, const std::string& title)
+    {
+        Console_Manager console;
+
+        console.Clear();
+
+        monster.Print_Ascii_Art();
+
+        cout << "\n";
+        cout << "╔════════════════════════════════════════════════════╗\n";
+        cout << "  " << title << "\n";
+        cout << "╠════════════════════════════════════════════════════╣\n";
+
+        if (player != nullptr)
+        {
+            cout << "  PLAYER : " << player->Get_Name() << " / HP : " << player->Get_Hp() << "\n";
+        }
+
+        cout << "  ENEMY  : " << monster.getName() << " / HP : " << monster.getHP() << "\n";
+        cout << "╚════════════════════════════════════════════════════╝\n";
+        cout << "\n";
+    }
+
+    void Wait_Elite_Fixed_Screen()
+    {
+        Console_Manager console;
+
+        console.Wait_For_Key("확인 완료. 아무 키나 누르세요...");
+    }
+
+    void Draw_Elite_Question_Frame(Player* player, Monster& monster, const std::string& title)
+    {
+        Console_Manager console;
+
+        console.Clear();
+
+        monster.Print_Ascii_Art();
+
+        cout << "\n";
+        cout << "╔════════════════════════════════════════════════════╗\n";
+        cout << "  " << title << "\n";
+        cout << "╠════════════════════════════════════════════════════╣\n";
+
+        if (player != nullptr)
+        {
+            cout << "  PLAYER : " << player->Get_Name() << " / HP : " << player->Get_Hp() << "\n";
+        }
+
+        cout << "  ENEMY  : " << monster.getName() << " / HP : " << monster.getHP() << "\n";
+        cout << "╚════════════════════════════════════════════════════╝\n";
+        cout << "\n";
+    }
+
+    void Wait_Elite_Screen()
+    {
+        Console_Manager console;
+
+        console.Wait_For_Key("확인 완료. 아무 키나 누르세요...");
     }
 }
 //======================================================
@@ -68,6 +132,8 @@ bool Check_Elite_Skill(Monster& monster, int turnCount)
 
 bool Ask_Quiz(Player* player, Monster& monster, const Quiz& quiz)
 {
+    Draw_Elite_Question_Frame(player, monster, "정예 몬스터 코드 스니펫 문제");
+
     cout << "\n";
     cout << "──────────────────────────────────────────────────────\n";
     cout << quiz.question << "\n";
@@ -82,6 +148,7 @@ bool Ask_Quiz(Player* player, Monster& monster, const Quiz& quiz)
     cout << "══════════════════════════════════════════════════════\n";
 
     int answer;
+
     cout << "선택 : ";
     cin >> answer;
 
@@ -94,6 +161,8 @@ bool Ask_Quiz(Player* player, Monster& monster, const Quiz& quiz)
         cout << "║ 문제를 맞혔다!!!                                   ║\n";
         cout << "╚════════════════════════════════════════════════════╝\n";
 
+        Wait_Elite_Screen();
+
         return true;
     }
 
@@ -104,8 +173,11 @@ bool Ask_Quiz(Player* player, Monster& monster, const Quiz& quiz)
     cout << "║ 공부 하세요!!!                                     ║\n";
     cout << "╚════════════════════════════════════════════════════╝\n";
 
+    Wait_Elite_Screen();
+
     return false;
 }
+
 //======================================================
 // 엘리트 몬스터용 랜덤 1문제 출제
 //======================================================
@@ -175,6 +247,7 @@ bool Ask_Tutor_Question(const Tutor_Question& question)
 
     return false;
 }
+
 //======================================================
 // 튜터 보스용 시험 시스템 (3문제 중 2문제 이상 통과)
 //======================================================
@@ -187,27 +260,29 @@ bool Tutor_Test(Player* player, Monster& monster)
 
     const vector<Tutor_Question>* question_Bank = Get_Tutor_Question_Bank(monster.getChapterType());
 
-    if (question_Bank == nullptr || question_Bank->empty())
+    if (question_Bank == nullptr ||
+        question_Bank->empty())
     {
         cout << "문제가 다 떨어졌다.\n";
         return false;
     }
 
+    Console_Manager console;
+
     int question_Count = min(3, static_cast<int>(question_Bank->size()));
+
     int correct_Count = 0;
 
-    cout << "\n";
-    cout << "╔════════════════════════════════════════════════════╗\n";
-    cout << "║                  튜 터 시 험                       ║\n";
-    cout << "╠════════════════════════════════════════════════════╣\n";
-    cout << "  시험관 : " << monster.getName() << "\n";
-    cout << "║ 총 3문제 중 2문제 이상 정답 시 합격!               ║\n";
-    cout << "╚════════════════════════════════════════════════════╝\n";
+    Draw_Elite_Question_Frame(player, monster, "튜터님 코드 리뷰 시험");
 
-    for (int index = 0;
-        index < question_Count;
-        index++)
+    cout << "총 3문제 중 2문제 이상 정답 시 합격!\n";
+
+    console.Wait_For_Key("시험을 시작하려면 아무 키나 누르세요...");
+
+    for (int index = 0; index < question_Count; index++)
     {
+        Draw_Elite_Question_Frame(player, monster,"튜터님 코드 리뷰 시험");
+
         cout << "\n";
         cout << "══════════════════════════════════════════════════════\n";
         cout << "[ 문제 " << index + 1 << " / " << question_Count << " ]\n";
@@ -217,23 +292,32 @@ bool Tutor_Test(Player* player, Monster& monster)
         {
             correct_Count++;
         }
+
+        console.Wait_For_Key("다음 문제로 넘어가려면 아무 키나 누르세요...");
     }
+
+    Draw_Elite_Question_Frame(player, monster, "튜터님 코드 리뷰 시험 결과");
 
     cout << "\n";
     cout << "╔════════════════════════════════════════════════════╗\n";
     cout << "║                  시 험 결 과                       ║\n";
     cout << "╠════════════════════════════════════════════════════╣\n";
-    cout << "  정답 : " << correct_Count << " / "<< question_Count << "\n";
+    cout << "  정답 : "  << correct_Count  << " / " << question_Count << "\n";
 
     if (correct_Count >= 2)
     {
         cout << "                ★ 시험 통과! ★\n";
         cout << "╚════════════════════════════════════════════════════╝\n";
+
+        console.Wait_For_Key("시험 결과 확인 완료. 아무 키나 누르세요...");
+
         return true;
     }
 
     cout << "                시험 실패...\n";
     cout << "╚════════════════════════════════════════════════════╝\n";
+
+    console.Wait_For_Key("시험 결과 확인 완료. 아무 키나 누르세요...");
 
     return false;
 }
