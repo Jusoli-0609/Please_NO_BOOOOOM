@@ -150,8 +150,8 @@ JYJ::JYJ(const std::string& name)
     defenceDecreaseValue = 0.00f;
 
     Set_Start_Stat(
-        180, // HP
-        90, // MP
+        999, // HP
+        999, // MP
         999,  // ATK
         999, // DEF
         100, // AP
