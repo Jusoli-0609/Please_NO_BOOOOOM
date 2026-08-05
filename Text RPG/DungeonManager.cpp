@@ -296,6 +296,7 @@ void Dungeon_Manager::Open_Dungeon(Player* player,Inventory<Item>& inventory, In
 		break;
 	case 3:
 		Run_Tutor_Challenge(player, equipment_Inventory, equipped_Equipments);
+		console.Wait_For_Key("아무 키나 누르면 돌아갑니다...");
 		break;
 	case 0:
 		cout << "메인 메뉴로 돌아간다." << endl;
