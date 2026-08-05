@@ -107,7 +107,7 @@ void Inventory<T>::Print_Inventory() const
     if (_Current_Quantity_Of_Items == 0)
     {
         cout << "텅 비었다!" << endl;
-        cout << "현재 총 젬: " << Get_Money() << endl;
+        cout << "현재 총 훈련장려금: " << Get_Money() << endl;
         cout << "현재 무게: " << Get_Total_Weight() << endl;
         cout << "최대 허용 무게: " << _Max_Capacity << endl;
         cout << "남은 허용 무게: " << _Max_Capacity - Get_Total_Weight() << endl;
@@ -128,7 +128,7 @@ void Inventory<T>::Print_Inventory() const
         _Inventory_Items[i].Print_Info();
         cout << endl;
     }
-    cout << "현재 총 젬: " << Get_Money() << endl;
+    cout << "현재 총 훈련장려금: " << Get_Money() << endl;
     cout << "현재 무게: " << Get_Total_Weight() << endl;
     cout << "최대 허용 무게: " << _Max_Capacity << endl;
     cout << "남은 허용 무게: " << _Max_Capacity - Get_Total_Weight() << endl;

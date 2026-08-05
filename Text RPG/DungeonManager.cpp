@@ -28,7 +28,7 @@ namespace
 	constexpr int NORMAL_MONSTER_TYPE_COUNT = 3;
 	constexpr int ELITE_APPEARANCE_RATE = 20;
 	constexpr int ELITE_GIMMICK_HP_PENALTY =20;
-	constexpr int TUTOR_GIMMICK_SCORE_PENALTY =50;
+	constexpr int TUTOR_GIMMICK_SCORE_PENALTY = 100;
 	constexpr int MINIMUM_BATTLE_HP =1;
 }
 namespace
@@ -724,8 +724,8 @@ void Dungeon_Manager::Apply_Elite_Gimmick_Failure_Penalty(Player* player)
 void Dungeon_Manager::Apply_Tutor_Gimmick_Failure_Penalty()
 {
 	int previous_Score = _current_Chapter_Score;
-
-	_current_Chapter_Score -= TUTOR_GIMMICK_SCORE_PENALTY;
+	int score_Penalty = Get_Required_Tutor_Score() / 5;
+	_current_Chapter_Score -= score_Penalty;
 
 	if (_current_Chapter_Score < 0)
 	{

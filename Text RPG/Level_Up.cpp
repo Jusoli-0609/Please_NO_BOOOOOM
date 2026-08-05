@@ -11,7 +11,7 @@ using namespace std;
 // 생성자: 최초 레벨 및 경험치 초기화
 // ==========================================
 Level_Up::Level_Up()
-    : _current_level(1), _current_exp(0), _max_exp(100), _stat_points(0)
+    : _current_level(1), _current_exp(0), _max_exp(150), _stat_points(0)
 {
 }
 
@@ -66,21 +66,26 @@ void Level_Up::ProcessLevelUp(Player* player)
     _current_exp -= _max_exp;
     _current_level++;
     player->Set_Level(_current_level);
-    _stat_points += 5;
+    _stat_points += 3;
 
     cout << "╔════════════════════════════════════════════════════╗\n";
     string levelUpMsg = "  ★  LEVEL UP! (Lv." + to_string(_current_level - 1) + " -> Lv." + to_string(_current_level) + ") ★\n";
     console.Slow_Print(levelUpMsg, 50);
     cout << "╚════════════════════════════════════════════════════╝\n";
 
-    int addedHp = _current_level * 20;
-    int addedPower = _current_level * 5;
+    _stat_points += 3;
+
+    int addedHp = 10;
+    int addedMp = 5;
+    int addedPower = 2;
 
     player->Add_Base_MaxHP(addedHp);
+    player->Add_Base_MaxMP(addedMp);
     player->Add_Base_ATK(addedPower);
-    player->Add_Stat_Points(5);
+    player->Add_Stat_Points(3);
 
     cout << "  -> 레벨업 보너스: 최대 체력 +" << addedHp << " (최대 HP: " << player->GetMaxHP() << ")\n";
+    cout << "  -> 레벨업 보너스: 최대 MP +" << addedMp  << " (최대 MP: "  << player->GetMaxMP() << ")\n";
     cout << "  -> 레벨업 보너스: 공격력 +" << addedPower << " (공격력: " << player->GetPower() << ")\n";
 
     player->SetHP(player->GetMaxHP());

@@ -136,6 +136,7 @@ private:
     int Get_Chapter_Number() const; // 11-1. 챕터 번호 변환
     int Generate_Random_Level() const; // 11-2. 챕터별 랜덤 레벨 생성
     void Apply_Level_Bonus(); // 11-3. 랜덤 레벨 보너스 적용
+	void Apply_Normal_Balance_By_Rating();// 11-4. 등급별 능력치 밸런스 적용
 
     // 12. 몬스터 보상 계산 파트
     std::string Get_Code_Fragment_Name() const; // 12-1. 챕터별 코드 조각 이름 결정
