@@ -233,6 +233,7 @@ void Dungeon_Manager::Open_Dungeon(Player* player,Inventory<Item>& inventory, In
 		case 2:
 		{
 			Print_Total_Monster_Kill_Log();
+			console.Wait_For_Key("기록 확인 완료. 아무 키나 누르면 돌아갑니다...");
 
 			break;
 		}
@@ -291,6 +292,7 @@ void Dungeon_Manager::Open_Dungeon(Player* player,Inventory<Item>& inventory, In
 		break;
 	case 2:
 		Print_Total_Monster_Kill_Log();
+		console.Wait_For_Key("기록 확인 완료. 아무 키나 누르면 돌아갑니다...");
 		break;
 	case 3:
 		Run_Tutor_Challenge(player, equipment_Inventory, equipped_Equipments);
@@ -821,7 +823,7 @@ void Dungeon_Manager::Print_Total_Monster_Kill_Log() const
 	cout << "	[ 전체 코드 해결 기록 ]" << endl;
 	cout << "╠════════════════════════════════════════════════════╣\n";
 	cout << endl;
-	cout << "	1. 코드 및 코드 스니펫" << endl;
+	cout << "	1. 아직 해결한 오류 코드가 없습니다." << endl;
 	cout << "╠════════════════════════════════════════════════════╣\n";
 
 	if (normal_Elite_Kill_Log.empty())
