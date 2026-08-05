@@ -252,7 +252,7 @@ void Player::Print_Status(Console_Manager& console) const
 
             Add_Stat(
                 output,
-                "MAX HP(최대 체력)",
+                "MAX HP",
                 baseStat.maxHp,
                 maxhp
             );
@@ -261,7 +261,7 @@ void Player::Print_Status(Console_Manager& console) const
 
             Add_Stat(
                 output,
-                "MAX MP(최대 마나)",
+                "MAX MP",
                 baseStat.maxMp,
                 maxmp
             );
@@ -270,7 +270,7 @@ void Player::Print_Status(Console_Manager& console) const
 
             Add_Stat(
                 output,
-                "ATK(공격력)",
+                "ATK",
                 baseStat.atk,
                 atk
             );
@@ -279,7 +279,7 @@ void Player::Print_Status(Console_Manager& console) const
 
             Add_Stat(
                 output,
-                "DEF(방어력)",
+                "DEF",
                 baseStat.def,
                 def
             );
@@ -288,7 +288,7 @@ void Player::Print_Status(Console_Manager& console) const
 
             Add_Stat(
                 output,
-                "AP(주문력)",
+                "AP",
                 baseStat.ap,
                 ap
             );
@@ -297,7 +297,7 @@ void Player::Print_Status(Console_Manager& console) const
 
             Add_Stat(
                 output,
-                "SNE(음침함)",
+                "SNE",
                 baseStat.sne,
                 sne
             );
@@ -306,7 +306,7 @@ void Player::Print_Status(Console_Manager& console) const
 
             Add_Stat(
                 output,
-                "AGI(민첩성)",
+                "AGI",
                 baseStat.agi,
                 agi
             );
