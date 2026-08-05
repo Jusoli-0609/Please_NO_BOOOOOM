@@ -28,7 +28,7 @@ bool Item::Item_Effect(Player& player, Monster& monster)
         player.Set_Hp(
                       min(player.Get_Hp() + 50, player.GetMaxHP()));
 
-        cout << "체력을 회복해 현재 체력은 "
+        cout << "배가 불러 현재 체력은 "
             << player.Get_Hp()
             << "이다."
             << endl;
@@ -38,7 +38,7 @@ bool Item::Item_Effect(Player& player, Monster& monster)
     else if (_Item_Name == "에너지드링크")
     {
         player.Set_Mp(min(player.Get_Mp() + 50, player.GetMaxMP()));
-        cout << "마나를 회복해 현재 마나는 "
+        cout << "카페인이 들어가 현재 마나는 "
             << player.Get_Mp()
             << "이다."
             << endl;

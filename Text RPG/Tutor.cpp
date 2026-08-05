@@ -43,7 +43,7 @@ namespace
 Tutor::Tutor()
     : _Tutor_Name("없음"),
     _Required_Item_Name(""),
-    _Tutor_Description("장착 중인 튜터가 없다.")
+    _Tutor_Description("담당 튜터님이 없다.")
 {
 }
 
@@ -107,7 +107,7 @@ bool Currently_Equipped_Tutor::Equip_Tutor(
 
     if (tutor.Is_Empty())
     {
-        cout << "선택할 수 없는 튜터다!" << endl;
+        cout << "선택할 수 없는 튜터님이다!" << endl;
         return false;
     }
 
@@ -141,7 +141,7 @@ bool Currently_Equipped_Tutor::Unequip_Tutor(
 
     if (_Has_Equipped_Tutor == false)
     {
-        cout << "선택 중인 튜터가 없다!" << endl;
+        cout << "선택 중인 튜터님이 없다!" << endl;
         return false;
     }
 
@@ -152,7 +152,7 @@ bool Currently_Equipped_Tutor::Unequip_Tutor(
     _Equipped_Tutor = Tutor();
     _Has_Equipped_Tutor = false;
 
-    cout << "튜터 선택을 해제했다!" << endl;
+    cout << "튜터님 선택을 해제했다!" << endl;
 
     return true;
 }
@@ -176,12 +176,12 @@ void Currently_Equipped_Tutor::Print_Currently_Equipped_Tutor() const
 {
     cout << endl;
     cout << "========================================" << endl;
-    cout << "              현재 튜터" << endl;
+    cout << "              현재 튜터님" << endl;
     cout << "========================================" << endl;
 
     if (_Has_Equipped_Tutor == false)
     {
-        cout << "선택 중인 튜터가 없다!" << endl;
+        cout << "선택 중인 튜터님이 없다!" << endl;
     }
     else
     {
@@ -200,7 +200,7 @@ Tutor Create_Tutor_By_Number(int tutor_number)
         Stat_Modifier Tutor_Modifier =
             Create_Tutor_Modifier(
                 "Tutor_Son_Seung_Hyun",
-                "손승현 튜터 효과",
+                "손승현 튜터님 효과",
                 0, 0, 10, 0, 0, 0, 10
             );
 
@@ -217,7 +217,7 @@ Tutor Create_Tutor_By_Number(int tutor_number)
         Stat_Modifier Tutor_Modifier =
             Create_Tutor_Modifier(
                 "Tutor_Park_Eun_Il",
-                "박은일 튜터 효과",
+                "박은일님 튜터 효과",
                 0, 0, 0, 0, 10, 10, 0
             );
 
@@ -234,7 +234,7 @@ Tutor Create_Tutor_By_Number(int tutor_number)
         Stat_Modifier Tutor_Modifier =
             Create_Tutor_Modifier(
                 "Tutor_Kang_Sin_Ho",
-                "강신호 튜터 효과",
+                "강신호님 튜터 효과",
                 20, 0, 0, 10, 0, 0, 0
             );
 
@@ -251,7 +251,7 @@ Tutor Create_Tutor_By_Number(int tutor_number)
         Stat_Modifier Tutor_Modifier =
             Create_Tutor_Modifier(
                 "Tutor_Moon_Seung_Hyun",
-                "문승현 튜터 효과",
+                "문승현님 튜터 효과",
                 0, 20, 0, 0, 0, 10, 0
             );
 
@@ -268,7 +268,7 @@ Tutor Create_Tutor_By_Number(int tutor_number)
         Stat_Modifier Tutor_Modifier =
             Create_Tutor_Modifier(
                 "Tutor_Kim_Ha_Neul",
-                "김하늘 튜터 효과",
+                "김하늘님 튜터 효과",
                 0, 0, 0, 5, 15, 0, 0
             );
 
@@ -324,7 +324,7 @@ void Print_Tutor_Menu(
 
         cout << endl;
         cout << "========================================" << endl;
-        cout << "              튜터 선택" << endl;
+        cout << "              튜터님 선택" << endl;
         cout << "========================================" << endl;
 
         for (int Tutor_Number = 1;
@@ -353,7 +353,7 @@ void Print_Tutor_Menu(
                 << endl;
         }
 
-        cout << "6. 튜터 선택 해제" << endl;
+        cout << "6. 튜터님 선택 해제" << endl;
         cout << "0. 되돌아가기" << endl;
         cout << "----------------------------------------" << endl;
         cout << "무엇을 할까?: ";

@@ -91,7 +91,7 @@ bool Ask_Quiz(Player* player, Monster& monster, const Quiz& quiz)
         cout << "╔════════════════════════════════════════════════════╗\n";
         cout << "║                     정 답 !                        ║\n";
         cout << "╠════════════════════════════════════════════════════╣\n";
-        cout << "║ 문제를 정확히 맞혔습니다!                          ║\n";
+        cout << "║ 문제를 맞혔다!!!                                   ║\n";
         cout << "╚════════════════════════════════════════════════════╝\n";
 
         return true;
@@ -101,7 +101,7 @@ bool Ask_Quiz(Player* player, Monster& monster, const Quiz& quiz)
     cout << "╔════════════════════════════════════════════════════╗\n";
     cout << "║                     오 답 !                        ║\n";
     cout << "╠════════════════════════════════════════════════════╣\n";
-    cout << "║ 아쉽습니다. 다음 기회에 다시 도전하세요.           ║\n";
+    cout << "║ 공부 하세요!!!                                     ║\n";
     cout << "╚════════════════════════════════════════════════════╝\n";
 
     return false;
@@ -121,7 +121,7 @@ bool Ask_Random_Elite_Question(Player* player, Monster& monster)
     if (question_Bank == nullptr ||
         question_Bank->empty())
     {
-        cout << "현재 챕터의 정예 문제를 찾을 수 없습니다.\n";
+        cout << "문제가 다 떨어졌다.\n";
         return false;
     }
 
@@ -167,11 +167,11 @@ bool Ask_Tutor_Question(const Tutor_Question& question)
 
     if (is_Correct)
     {
-        cout << "정답입니다.\n";
+        cout << "정답.\n";
         return true;
     }
 
-    cout << "오답입니다. 정답: " << question.correct_Answer << "\n";
+    cout << "오답. 정답: " << question.correct_Answer << "\n";
 
     return false;
 }
@@ -189,7 +189,7 @@ bool Tutor_Test(Player* player, Monster& monster)
 
     if (question_Bank == nullptr || question_Bank->empty())
     {
-        cout << "현재 챕터의 튜터 문제를 찾을 수 없습니다.\n";
+        cout << "문제가 다 떨어졌다.\n";
         return false;
     }
 
@@ -260,12 +260,12 @@ void Execute_Elite_Skill(Player* player, Monster& monster)
     {
         if (Tutor_Test(player, monster))
         {
-            cout << endl << "튜터 시험을 통과했습니다!" << endl;
+            cout << endl << "튜터님에게 인정 받았다!!" << endl;
             monster.setHP(0);
         }
         else
         {
-            cout << endl << "튜터 시험에 실패했습니다..." << endl;
+            cout << endl << "튜터이 잔소리를 하셨다..." << endl;
             player->Set_Hp(0);
         }
         break;

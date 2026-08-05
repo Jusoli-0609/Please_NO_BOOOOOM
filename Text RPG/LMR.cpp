@@ -299,7 +299,7 @@ void LMR::Skill2(Monster* monster)
     );
 
     std::cout << name << "의 " << skill2Name << "!\n";
-    Print_Bright_Dialogue("어디까지 하셨나요?\n"); // 여기 대사 추가해야됨
+    Print_Bright_Dialogue("크아아가악?\n"); // 여기 대사 추가해야됨
     // 명중한 공격에 치명타 판정 적용
     Apply_Critical_Damage(damage);
 
@@ -355,7 +355,7 @@ void LMR::Skill3(Monster* monster)
     );
 
     std::cout << name << "의 " << skill3Name << "!\n";
-    Print_Bright_Dialogue("크크크(웃기)\n"); //여기 대사 추가해야됨
+    Print_Bright_Dialogue("크아아아아악!!!\n"); //여기 대사 추가해야됨
     // 명중한 공격에 치명타 판정 적용
     Apply_Critical_Damage(damage);
 

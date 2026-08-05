@@ -138,7 +138,7 @@ void Camp_Manager::Open_Pep_Store_Menu()
         {
             if (inventory.Get_Money() <= 0)
             {
-                cout << "골드가 없다!\n";
+                cout << "돈이 부족하다...\n";
                 break;
             }
           
@@ -191,7 +191,7 @@ void Camp_Manager::Open_Pep_Store_Menu()
 
             if (inventory.Get_Money() < selectedEquipmentPrice)
             {
-                cout << "골드가 부족하다!" << endl;
+                cout << "돈이 부족하다..." << endl;
                 break;
             }
 

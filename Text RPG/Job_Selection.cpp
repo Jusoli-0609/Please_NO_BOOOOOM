@@ -6,7 +6,7 @@ int Job_Selection()
 {
     int jobChoice = 0;
 
-    std::cout << "직업을 선택해주세요.\n";
+    std::cout << "시작 할 조원을 선택해 주세요!!\n";
     std::cout << "1. JYJ\n";
     std::cout << "2. JSR\n";
     std::cout << "3. JWH\n";

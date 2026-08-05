@@ -370,8 +370,8 @@ bool Check_Battle_End(Player* player, Monster& monster, Inventory<Item>& invento
             cout << "║                 튜터 시험 통과!                    ║\n";
             cout << "╠════════════════════════════════════════════════════╣\n";
             cout << "║                                                    ║\n";
-            cout << "║   축하한다!                                        ║\n";
-            cout << "║   다음 챕터 해금!                                  ║\n";
+            cout << "║   축하합니다.                                      ║\n";
+            cout << "║   다음 챕터로 이동해주세요.                        ║\n";
             cout << "║                                                    ║\n";
             cout << "╚════════════════════════════════════════════════════╝\n";
 
@@ -384,7 +384,7 @@ bool Check_Battle_End(Player* player, Monster& monster, Inventory<Item>& invento
         cout << "║                    전 투 승 리                     ║\n";
         cout << "╠════════════════════════════════════════════════════╣\n";
         cout << "║                                                    ║\n";
-        cout << "    " << monster.getName() << " 처치 완료!\n";
+        cout << "    " << monster.getName() << " 오류 해결!!\n";
         cout << "║                                                    ║\n";
         cout << "╚════════════════════════════════════════════════════╝\n";
 
@@ -416,7 +416,7 @@ void Give_Battle_Item_Reward(Player* player, Monster& monster, Inventory<Item>& 
 
     if (!dropItems.empty())
     {
-        cout << endl << "[아이템 획득]" << endl;
+        cout << endl << "[보상 획득]" << endl;
         for (const Item& dropItem : dropItems)
         {
             inventory.Add_Or_Increase_Item(dropItem);
@@ -741,10 +741,10 @@ namespace
     {
         cout << "\n";
         cout << "==================================================\n";
-        cout << "[ 매니저님들이 문재를 냈다. ]\n";
+        cout << "[ 매니저님들이 문제를 냈다. ]\n";
         cout << "==================================================\n";
-        cout << "두 매니저님의 코드 검증 패턴이 변화했다.\n";
-        cout << "문제를 해결하면 반격 기회를 얻을 수 있다.\n";
+        cout << "매니저님이 시험을 어렵게 낸다...\n";
+        cout << "문제를 해결하면 매니저님들을 놀라게 할 수도?\n";
         cout << "==================================================\n";
     }
 
@@ -796,7 +796,7 @@ namespace
 
         cout << "\n";
         cout << "==================================================\n";
-        cout << "[ 객관식 정답 - 광역 피해 ]\n";
+        cout << "[ 매니저님들이 당황하셨다.]\n";
         cout << "==================================================\n";
 
         Monster* bosses[2] =
@@ -841,9 +841,9 @@ namespace
 
         cout << "\n";
         cout << "==================================================\n";
-        cout << "[ 주관식 정답 - 그로기 공격 ]\n";
+        cout << "[ 매니저님들이 놀라셨다. ]\n";
         cout << "사용 기술: " << player->Get_Groggy_Attack_Name() << "\n";
-        cout << "그로기 공격을 사용할 대상을 선택하세요.\n";
+        cout << "매니저님 한분을 지목하세요.\n";
         cout << "==================================================\n";
 
         Monster* selected_Target = Select_Final_Boss_Target(first_Boss, second_Boss);
@@ -891,10 +891,10 @@ namespace
 
         cout << "\n";
         cout << "==================================================\n";
-        cout << "[ 기믹 실패 - 2배 피해 ]\n";
+        cout << "[ 매니저님에게 GPT 사용을 걸렸다. ]\n";
         cout << "==================================================\n";
-        cout << "코드 검증 실패로 보스들의 공격이 강화됩니다.\n";
-        cout << "살아 있는 보스가 일반 공격을 2회 사용합니다.\n";
+        cout << "매니저님들이 실망했다.\n";
+        cout << "매니저님들의 잔소리.\n";
         cout << "==================================================\n";
 
         if (first_Boss.getHP() > 0)
@@ -931,7 +931,7 @@ bool Final_Boss_Duo_Battle(Player* player, Monster& first_Boss, Monster& second_
 
     if (question_Pool.empty())
     {
-        cout << "최종보스 문제를 찾을 수 없습니다.\n";
+        cout << "문제가 다 떨어졌다.\n";
         return false;
     }
 
@@ -947,10 +947,11 @@ bool Final_Boss_Duo_Battle(Player* player, Monster& first_Boss, Monster& second_
     cout << "==================================================\n";
     cout << "[ 최종 보스 2인 동시 전투 ]\n";
     cout << "==================================================\n";
-    cout << "일반 공격과 스킬은 선택한 한 명에게 적용됩니다.\n";
-    cout << "객관식 정답: 두 보스에게 광역 피해를 줍니다.\n";
-    cout << "주관식 정답: 두 보스 중 하나를 선택해 그로기 공격을 사용합니다.\n";
-    cout << "오답: 매니저님이 GPT를 뺏어갔다.\n";
+    cout << "최종보스 기본 패턴: 일반 공격!" << endl;
+	cout << "랜덤 코드 검증 기믹 발동!" << endl;
+	cout << "객관식 정답: 전체 광역 피해!" << endl;
+	cout << "주관식 정답: 대상 선택 후 그로기 공격!" << endl;
+	cout << "오답: 보스 공격 2배 강화!" << endl;
     cout << "==================================================\n";
 
     while (player->Get_Hp() > 0 && (first_Boss.getHP() > 0 || second_Boss.getHP() > 0))
@@ -972,7 +973,7 @@ bool Final_Boss_Duo_Battle(Player* player, Monster& first_Boss, Monster& second_
         {
             cout << "\n";
             cout << "==================================================\n";
-            cout << "[ 최종보스 일반 공격 ]\n";
+            cout << "[ 매니저님의 기습 세션 ]\n";
             cout << "==================================================\n";
 
             Final_Boss_Duo_Attack(player, first_Boss, second_Boss);

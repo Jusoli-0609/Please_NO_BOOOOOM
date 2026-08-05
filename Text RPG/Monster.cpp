@@ -71,7 +71,6 @@ Monster::Monster(string monster_Name, int monster_HP, int monster_Power, int mon
 	_accuracy(80),
 	_exp_Reward(0),
 	_score_Reward(0),
-	_attack_Message(monster_Name + "이(가) 공격했다."),
 	_drop_Item_Name(drop_Item_Name),
 	_drop_Item_Price(drop_Item_Price),
 	_drop_Item_Count(0),
@@ -799,7 +798,7 @@ void Monster::Initialize_Final_Boss(Monster_Type final_Boss_Type)
 
 		_evasion = 85;
 		_accuracy = 90;
-		_attack_Message = "대사추천.";
+		_attack_Message = "자 여러분들 좋은 아침입니다. 코드카타 시작해보겠습니다.";
 
 		break;
 	}
@@ -835,7 +834,7 @@ void Monster::Initialize_Final_Boss(Monster_Type final_Boss_Type)
 
 		_evasion = 90;
 		_accuracy = 95;
-		_attack_Message = "대사추천";
+		_attack_Message = "자 여러분들 잠깐 스포라이트 하겠습니다.";
 
 		break;
 	}
@@ -873,7 +872,7 @@ void Monster::Initialize_Final_Boss(Monster_Type final_Boss_Type)
 
 		_evasion = 85;
 		_accuracy = 90;
-		_attack_Message = "대사추천";
+		_attack_Message = "자 여러분들 좋은 아침입니다. 코드카타 시작해보겠습니다.";
 
 		break;
 	}

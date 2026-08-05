@@ -152,7 +152,7 @@
         cout << "장비 이름: " << _Equipment_Name << endl;
         cout << "장비 설명: " << _Equipment_Description << endl;
         cout << "장비 타입: " << Equipment_Type_To_String(_Equipment_Type) << endl;
-        cout <<  "장비 무게: " << _Equipment_Weight << endl;
+        cout << "장비 무게: " << _Equipment_Weight << endl;
         cout << "공격력: " << _Attack_Stat << " + " << (static_cast<int>(_Attack_Stat * (1.0f + (_Enhance_Level * 0.05f) + (static_cast<float>(_Grade) * 0.1f)))-_Attack_Stat) << " = " << static_cast<int>(_Attack_Stat * (1.0f + (_Enhance_Level * 0.05f) + (static_cast<float>(_Grade) * 0.1f))) << endl;
         cout << "방어력: " << _Defence_Stat << " + " << (static_cast<int>(_Defence_Stat * (1.0f + (_Enhance_Level * 0.05f) + (static_cast<float>(_Grade) * 0.1f))) - _Defence_Stat) << " = " << static_cast<int>(_Defence_Stat * (1.0f + (_Enhance_Level * 0.05f) + (static_cast<float>(_Grade) * 0.1f))) << endl;
         cout << "등급: " << Equipment_Grade_To_String(_Grade) << endl;
