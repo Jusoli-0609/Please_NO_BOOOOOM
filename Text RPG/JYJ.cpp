@@ -420,7 +420,7 @@ void JYJ::Groggy_Attack(Monster* monster)
     );
 
     std::cout << name << "의 " << groggyAttackName << "!\n";
-    Print_Bright_Dialogue("대신 해주십시요.\n");
+    Print_Bright_Dialogue("그로기 공격 대사 입력\n");
     // 명중한 공격에 치명타 판정 적용
     Apply_Critical_Damage(damage);
 
