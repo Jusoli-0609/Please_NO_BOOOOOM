@@ -40,6 +40,9 @@ void Game_Manager::Run()
     _Console.Slow_Print("당신은 8시 55분에 눈을 떴다!", 50);
     _Console.Slow_Print("익숙한 ZEP이 보인다!", 50);
     _Console.Slow_Print("일단 아바타를 생성하자!", 50);
+
+    _Console.Wait_For_Key("(아무 키나 누르면 아바타 생성으로 이동!)");
+
     _Console.Clear();
 
     Create_Player();
