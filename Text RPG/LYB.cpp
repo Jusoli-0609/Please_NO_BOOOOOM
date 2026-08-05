@@ -145,7 +145,7 @@ LYB::LYB(const std::string& name)
     skill3Name = "츄르 바르기(강공격)";
     groggyAttackName = "자동차 고장(이동 능력 감소시키기)";
 
-
+   
     Set_Start_Stat(
         180, // HP
         90, // MP
