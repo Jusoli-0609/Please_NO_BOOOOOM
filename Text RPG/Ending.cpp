@@ -72,7 +72,7 @@ void Ending::Print_Story() const
     cout << "당신은 이제...\n";
     Wait();
 
-    cout << "『진정한 내일배움캠프 수료생』이 되었다.\n\n";
+    cout << "『CODE MASTER』가 되었다.\n\n";
 }
 
 void Ending::Print_Funny_Ending() const
