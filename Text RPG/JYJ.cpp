@@ -152,8 +152,8 @@ JYJ::JYJ(const std::string& name)
     Set_Start_Stat(
         180, // HP
         90, // MP
-        20,  // ATK
-        7,  // DEF
+        999,  // ATK
+        999, // DEF
         100, // AP
         3,   // SNE
         5,  // AGI
